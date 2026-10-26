@@ -2,22 +2,22 @@
    fugue / V. The florid voice                                                  
    Ionian  seed 0  cantus below              .              .           .       
          .                                              |                       
- Treble 1          2          3                4        | Editing bar 10     .  
- G5                         .     . |                   | Bar 10, beat 1:8      
- F5    |----------|----------|--|---|---|-----|-------| |  ..                   
- E5    |   .   |  |  |       |  |   |   |.  | |    .  | | P8 perfect            
- D5   .|-------|--|--|----|--|--|--*----|---|-|-------| | C5    .               
- C5    |      *   | *     |  | *       *    | | *     | | consonance            
- B4    |-r--------|------*---|-------------*--|-------|.| strong beat           
- A4   .|      \___|/         |                |      .| | Figure allowed    .   
- G4    |----------|----------|----------------|-------| | No local break        
- F4    |          |       .  |                |       | |      .                
- E4    |----------|----------|o---------------|-------| |               .      .
- D4                o          Sm6 wm7 wm6 wP5.          |       .    .          
- C4    -o-.        Sm7  wM6   /4  /4  /4  /4  -o-       | Breaks: whole page  . 
- B3     r    wP8   /2   /2                   . SP8      |.                   .  
- A3 .   /2   /2   .                           ./1       |  .                    
-        .         .                             ^       |            .          
+ Treble 2          3          .     4        5     >>   | Editing bar 10     .  
+ G5                      |  .     .                     | Bar 10, beat 1:8      
+ F5    |----------|--|---|---|-----|--------|---------| |  ..                   
+ E5    |  |.      |  |   |   |   | |     .  | .    .  | | P8 perfect            
+ D5   .|--|----|--|--|--*----|---|-|--------|---------| | C5    .               
+ C5    | *     |  | *       *    | | *      |  |      | | consonance            
+ B4    |------*---|-------------*--|--------|--|------|.| strong beat           
+ A4   .|          |                |        | *      .| | Figure allowed    .   
+ G4    |----------|----------------|--------|---------| | No local break        
+ F4    |          |       .        |        |o        | |      .                
+ E4    |----------|o---------------|--------|---------| |               .      .
+ D4     o          Sm6 wm7 wm6 wP5           SM3        |       .    .          
+ C4     Sm7  wM6   /4  /4 ./4  /4  -o-       /2         | Breaks: bar 10      . 
+ B3     /2   /2                     SP8      .          |.No break in this bar  
+ A3 .             .                 /1        .         |  .                    
+        .         .                  ^                  |            .          
                                                       . |   .                   
                                                         |          .          . 
   [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check    

@@ -2,7 +2,7 @@
    fugue / V. The florid voice                      .                          .
    Ionian  seed 6  cantus above           .                 .                   
                                                         |                       
- Bass   1          2          3                4     .  | Editing bar 1         
+ Bass   1          2          3                4   >>.  | Editing bar 1         
  A4                   .       .               .    .    | Bar 1, beat 2:8       
  G4                                                     |                       
  F4         .                                           | P8 perfect            
@@ -13,12 +13,12 @@
  A3    |----------|----------|----------------|-------| | No local break        
  G3    |   .      |          |            .   |   .   | |        .              
  F3    |----------|--|----|--|--|---|---|---|-|-------| |                       
- E3    |  |  . |  |  |  . |  |  |   |   |   | | *     | |  .  .                 
- D3    |--|----|--|-*----*---|--|---|---|---|-|-------| | Breaks: whole page    
- C3    |n*    *   |          | *   *   *   *  |.      | | bar 2 - parallel-perf 
- B2    |----------|----------|----------------|-------| | bar 2 - accented-para 
-        SP8  wP8   SP8  wP8   SP8 wP8 wP8 wP8  SP8      | bar 2 - same-beat-par 
-     .  /2   /2    /2   /2    /4  /4  /4  /4.  /1       |                       
-         ^                           .                  |                       
+ E3    |  |  . |  |  |  . |  |  |   |   |   | |       | |  .  .                 
+ D3    |--|----|--|-*----*---|--|---|---|---|-|-------| | Breaks: bar 1         
+ C3    |n*    *   |          | *   *   *   *  |.      | | bar 1 - sequence      
+ B2    |----------|----------|----------------|-------| | bar 1 - repeat        
+        SP8  wP8   SP8  wP8   SP8 wP8 wP8 wP8           |          . .   .      
+     .  /2   /2    /2   /2    /4  /4  /4  /4.           |                       
+         .^                          .                  |                       
   [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check    
                                                                           .     

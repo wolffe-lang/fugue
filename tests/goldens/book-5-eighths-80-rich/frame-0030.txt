@@ -10,11 +10,11 @@
  C5    │       |   |     │          │  |   |   |   |  │ | unlicensed-eighth     
  B4    │─r────●────|───|'│──────────│─●───●───●───●───│·| weak beat             
  A4   ·│          ●    | │  |    |  │                ·│ | Figure not allowed·   
- G4    │───────────────|─│──|────|──│─────────────────│ | paired-eighths        
- F4    │             ♮●  │·●    ●   │                 │ | passing-dissonance    
+ G4    │───────────────|─│──|────|──│─────────────────│ | bar 1 - paired-eighth 
+ F4    │             ♮●  │·●    ●   │                 │ | bar 1 - passing-disso 
  E4    │─────────────────│──────────│○────────────────│ |               ·      ·
  D4                   \___/\___/     SP5 wP5 wP5 wP5    |       ·    ·          
- C4    ─○─·               Sm3  wm3   /4  /4  /4  /4     | Breaks: whole page  · 
+ C4    ─○─·               Sm3  wm3   /4  /4  /4  /4     | Breaks: bar 1       · 
  B3     r    wM7 wM6 wP4  /2   /2            ·          |·bar 1 - opening    ·  
  A3 ·   /2   /4  /8  /8                       ·         | bar 1 - passing-disso 
         ·^        ·                                     | bar 1 - paired-eighth 

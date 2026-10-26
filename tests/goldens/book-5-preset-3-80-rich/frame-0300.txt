@@ -2,23 +2,23 @@
    fugue / V. The florid voice                  ·                 ·  ·          
    Mixolydian  seed 2  cantus below                      ·                      
                           ·                             |                       
- Treble 7                8      9 ·        10           | Editing bar 10        
+ Treble 7                8        9         10          | Editing bar 10        
  E6       |         ·                        · · ·      | Bar 10, beat 1:8      
  D6·      |       |                                 ·   |                ··     
  C6       |   |   |   |                                 | P8 perfect            
  B5      ●    | · | · |   ●                  ·          |·G5                    
- A5     ───   | ─●─   |  ───       ·   |        ·       | consonance            
-·G5     ○    ●       ●            |·   |   ♮●          ·| strong beat           
- F5    │────────────────│──────│──|──♯●───│───────────│ | Figure allowed        
- E5    │                │      │ ●   ·    │           │ | No local break        
- D5 ·  │────────────────│──────│──────────│───────────│ |                       
- C5    │                │      │· ·       │           │ |    ·                  
- B4    │────────────────│──────│──────────│───────────│ |             ·         
- A4  · │                │      │○·  ·     │           │ | Breaks: whole page    
- G4    │────────────────│○─────│──────────│○──────────│ |     ·                 
- F4    │·               │  ·   │          │           │ |                       
-      · SM3 wP1 wM2 wP1  SM10   SP5  wM6   SP8          |·      ·               
-  ·     /4  /4  /4  /4   /1     /2 · /2    /1       ·   |                       
-      ·                            ·        ^           |                       
+ A5     ───   | ─●─   |  ───       ·     |      ·       | consonance            
+·G5     ○    ●       ●             ·|    |   ♮●        ·| strong beat           
+ F5    │────────────────│────────│──|──♯●───│─────────│ | Figure allowed        
+ E5    │                │        │ ● ·      │         │ | No local break        
+ D5 ·  │────────────────│────────│──────────│─────────│ |                       
+ C5    │                │       ·│·         │         │ |    ·                  
+ B4    │────────────────│────────│──────────│─────────│ |             ·         
+ A4  · │                │        │○ ·       │         │ | Breaks: bar 10 ·      
+ G4    │────────────────│○───────│──────────│○────────│ | No break in this bar  
+ F4    │·               │  ·     │          │         │ |                       
+      · SM3 wP1 wM2 wP1  SM10     SP5  wM6   SP8        |·      ·               
+  ·     /4  /4  /4  /4   /1       /2   /2    /1     ·   |                       
+      ·                            ·          ^         |                       
   [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check    
 ··    ·                    ·                      ·  ·                          

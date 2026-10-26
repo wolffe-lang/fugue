@@ -2,23 +2,23 @@
    fugue / V. The florid voice                  .                 .  .          
    Mixolydian  seed 2  cantus below                      .                      
                           .                             |                       
- Treble 1          2          3   .            4        | Editing bar 1         
+ Treble 1          2          3   .            4   >>   | Editing bar 1         
  E6                 .                        . . .      | Bar 1, beat 1:8       
  D6.      .                                         .   |                ..     
  C6                                                     | rest     .            
- B5             .   .           |   |   |   |.  *       |.D5                    
- A5       .           .         |  .|   |   |  ---      | rest                  
+ B5             .   .           |   |   |   |.          |.D5                    
+ A5       .           .         |  .|   |   |   .       | rest                  
 .G5                       |     |  .|   |   |          .| strong beat           
  F5    |-------|--|--|----|--|-*---*---*---*--|-------| | Figure allowed        
  E5    |       |  |  |   *   |       .        |o      | | No local break        
  D5 .  |------*---|-*--------|----------------|-------| |                       
  C5    |          |          |  . .           |       | |    .                  
  B4    |-r----\___|/---------|o---------------|-------| |             .         
- A4  . |          |o         |   .  .         |       | | Breaks: whole page    
- G4    |o---------|----------|----------------|-------| | bar 2 - downbeat-cons 
- F4    |.         |        . |                |       | | bar 2 - same-beat-par 
-      . r    wP5   SP4  wP5   Sd5 wd5 wd5 wd5. SP5      |.bar 3 - downbeat-cons 
-  .     /2   /2    /2   /2    /4  /4  /4  /4   /1   .   |                       
+ A4  . |          |o         |   .  .         |       | | Breaks: bar 1  .      
+ G4    |o---------|----------|----------------|-------| | No break in this bar  
+ F4    |.         |        . |                |       | |                       
+      . r    wP5   SP4  wP5   Sd5 wd5 wd5 wd5.          |.      .               
+  .     /2   /2    /2   /2    /4  /4  /4  /4        .   |                       
       .  ^                         .                    |                       
   [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check    
 ..    .                    .                      .  .                          
