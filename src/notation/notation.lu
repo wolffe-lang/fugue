@@ -222,7 +222,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     for bar in start..s.cantus.len {
         if manuscript.event_column(s, start, rhythm.at(s.beats, bar * 8)) >= margin - 3 { break }
         let x = manuscript.event_column(s, start, rhythm.at(s.beats, bar * 8))
-        text(mut g, top - 1, x - 2, "{bar + 1}", ink, bg, true)
+        text(mut g, top - 1, x - (if bar >= 9 then 2 else 1), "{bar + 1}", ink, bg, true)
         let lit = s.hearing >= 0 && s.hearing / session.ticks_per_whole() == bar
         let _ = staff.head(mut g, v, s.cantus[bar], x - 1, t, true, false, lit)
         for i in 0..s.voice.len {
