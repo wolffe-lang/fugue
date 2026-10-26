@@ -1,0 +1,333 @@
+//! Rhythmic counterpoint: every sounding event is checked independently.
+
+use first
+use rhythm
+use theory
+
+fn delta(a: theory.Pitch, b: theory.Pitch) -> int { theory.position(b) - theory.position(a) }
+
+/// A passing note has a step in and a step out in the same direction.
+pub fn passing(cp: List[theory.Pitch], beats: List[rhythm.Beat], i: int) -> bool {
+    if i == 0 || i + 1 >= cp.len || beats[i - 1].rest || beats[i + 1].rest { return false }
+    let a = delta(cp[i - 1], cp[i]), b = delta(cp[i], cp[i + 1])
+    theory.magnitude(a) == 1 && a == b
+}
+
+/// Parallel perfects include compound equivalents and require motion in both voices.
+pub fn parallel(a: theory.Pitch, b: theory.Pitch, c: theory.Pitch, d: theory.Pitch) -> bool {
+    let old = theory.interval(a, b), next = theory.interval(c, d)
+    let x = theory.chromatic(c) - theory.chromatic(a), y = theory.chromatic(d) - theory.chromatic(b)
+    old.consonance == 0 &&
+        next.consonance == 0 &&
+        (old.number - 1) % 7 == (next.number - 1) % 7 &&
+        x != 0 &&
+        y != 0 &&
+        theory.direction(x) == theory.direction(y)
+}
+
+/// Classifier precedence is rhythmic, not a special exemption in the verdict.
+pub fn classify(
+    cf: List[theory.Pitch],
+    cp: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+    i: int,
+    book: int,
+    below: bool,
+) -> str {
+    if i < 0 || i >= cp.len || beats.len != cp.len { return "invalid" }
+    let time = rhythm.onset(beats, i)
+    if time / 8 >= cf.len { return "invalid" }
+    if beats[i].rest { return "rest" }
+    if theory.interval(cf[time / 8], cp[i]).consonance != 2 { return "consonance" }
+    if time % 8 == 0 { return "unprepared" }
+    if book >= 2 && passing(cp, beats, i) { return "passing" }
+    "unlicensed"
+}
+
+fn blank() -> first.Verdict {
+    first.Verdict {
+        breaks: List[theory.Break](),
+        stars: 0,
+        contrary: 0,
+        steps: 0,
+        separate_climax: false,
+        parallel_limit: true,
+        variety: 0,
+    }
+}
+
+/// Local vertical, rhythm and motion rules; safe for prefix pruning.
+pub fn vertical(
+    cf: List[theory.Pitch],
+    cp: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+    below: bool,
+    book: int,
+    complete: bool,
+) -> List[theory.Break] {
+    var out = List[theory.Break]()
+    if cp.len > beats.len {
+        theory.require(mut out, false, 1, "voice-length", "Every note needs a value.")
+        return out
+    }
+    var last = -1, first_note = true
+    for i in 0..cp.len {
+        let time = rhythm.onset(beats, i), bar = time / 8
+        if bar >= cf.len {
+            theory.require(
+                mut out,
+                false,
+                bar + 1,
+                "voice-length",
+                "End together with the given voice.",
+            )
+            return out
+        }
+        let b = copy beats[i]
+        let ending = bar == cf.len - 1
+        theory.require(
+            mut out,
+            b.length == (if ending then 8 else 4),
+            bar + 1,
+            "second-rhythm",
+            "Write two halves, then one whole at the close.",
+        )
+        theory.require(
+            mut out,
+            !b.tied,
+            bar + 1,
+            "second-tie",
+            "In this book, strike each half anew.",
+        )
+        if b.rest {
+            theory.require(
+                mut out,
+                i == 0 && b.length == 4,
+                bar + 1,
+                "opening-rest",
+                "Only the opening half may be silent.",
+            )
+            continue
+        }
+        let iv = theory.interval(cf[bar], cp[i])
+        let c = theory.chromatic(cf[bar]), p = theory.chromatic(cp[i])
+        theory.require(
+            mut out,
+            if below then p <= c else p >= c,
+            bar + 1,
+            "crossing",
+            "Keep the voices on their own sides.",
+        )
+        if first_note {
+            theory.require(
+                mut out,
+                iv.quality == "P" && (iv.number == 8 || iv.number == (if below then 1 else 5)),
+                bar + 1,
+                "opening",
+                "Begin on a perfect interval allowed for this voice.",
+            )
+            first_note = false
+        }
+        if time % 8 == 0 {
+            theory.require(
+                mut out,
+                iv.consonance != 2,
+                bar + 1,
+                "downbeat-consonance",
+                "Let the strong beat stand on a consonance.",
+            )
+            theory.require(
+                mut out,
+                iv.number != 1 || bar == 0 || ending,
+                bar + 1,
+                "downbeat-unison",
+                "Reserve a strong-beat unison for the edges.",
+            )
+        } else if iv.consonance == 2 && (complete || i + 1 < cp.len) {
+            theory.require(
+                mut out,
+                passing(cp, beats, i),
+                bar + 1,
+                "passing-dissonance",
+                "Walk through the rubbing note by steps in one direction.",
+            )
+        }
+        if last >= 0 {
+            let old_bar = rhythm.onset(beats, last) / 8
+            let old_c = theory.chromatic(cf[old_bar]), old_p = theory.chromatic(cp[last])
+            theory.require(
+                mut out,
+                !(if below then p > old_c || c < old_p else p < old_c || c > old_p),
+                bar + 1,
+                "overlap",
+                "Do not pass the other voice's last sounding pitch.",
+            )
+            let par = parallel(cf[old_bar], cp[last], cf[bar], cp[i])
+            theory.require(
+                mut out,
+                !par,
+                bar + 1,
+                "parallel-perfect",
+                "Perfect intervals must not travel in parallel.",
+            )
+            let same = c != old_c &&
+                p != old_p &&
+                theory.direction(c - old_c) == theory.direction(p - old_p)
+            theory.require(
+                mut out,
+                !same || iv.consonance != 0 || par,
+                bar + 1,
+                "hidden-perfect",
+                "Turn a voice on the way into a perfect interval.",
+            )
+        }
+        if bar > 0 && time % 8 == 0 {
+            let old = rhythm.at(beats, time - 8)
+            if old < cp.len && !beats[old].rest {
+                theory.require(
+                    mut out,
+                    !parallel(cf[bar - 1], cp[old], cf[bar], cp[i]),
+                    bar + 1,
+                    "accented-parallel",
+                    "The downbeats still count: do not hide parallel perfects between them.",
+                )
+            }
+        }
+        last = i
+    }
+    out
+}
+
+/// Complete line: melodic canon over attacks, cadence over the final weak beat.
+pub fn check(
+    cf: List[theory.Pitch],
+    cp: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+    mode: int,
+    below: bool,
+    book: int,
+) -> first.Verdict {
+    var v = blank()
+    if cf.len < 2 || cp.len != beats.len || !rhythm.valid(beats, cf.len) {
+        theory.require(
+            mut v.breaks,
+            false,
+            1,
+            "voice-length",
+            "Fill each cantus bar, and close together.",
+        )
+        return v
+    }
+    v.breaks = vertical(cf, cp, beats, below, book, true)
+    var line = List[theory.Pitch](), times = List[int]()
+    for i in 0..cp.len {
+        if !beats[i].rest && !beats[i].tied {
+            (mut line).push(copy cp[i])
+            (mut times).push(rhythm.onset(beats, i))
+        }
+    }
+    if line.len < 2 {
+        theory.require(
+            mut v.breaks,
+            false,
+            1,
+            "attacks",
+            "Give the voice a beginning and an ending.",
+        )
+        return v
+    }
+    let n = cp.len
+    let last = theory.interval(cf[cf.len - 1], cp[n - 1])
+    theory.require(
+        mut v.breaks,
+        !beats[n - 1].rest && last.quality == "P" && (last.number == 1 || last.number == 8),
+        cf.len,
+        "closing",
+        "Close together on a unison or octave.",
+    )
+    let penult = theory.interval(cf[cf.len - 2], cp[n - 2])
+    let approach = theory.magnitude(delta(cp[n - 2], cp[n - 1])) == 1 &&
+        theory.magnitude(delta(cf[cf.len - 2], cf[cf.len - 1])) == 1
+    let shape = last.number == 8 && penult.number == 6 && penult.quality == "M" ||
+        last.number == 1 && penult.number == 3 && penult.quality == "m"
+    theory.require(
+        mut v.breaks,
+        approach && shape,
+        cf.len - 1,
+        "two-voice-cadence",
+        "Let the last weak beat be a major sixth opening out, or a minor third closing in.",
+    )
+    var normalized = List[theory.Pitch]()
+    let shift = (line[line.len - 1].octave - 4) * 7
+    for p in line {
+        var q = theory.pitch(theory.position(p) - shift)
+        q.accidental = p.accidental
+        (mut normalized).push(q)
+    }
+    for b in theory.validate(normalized, mode) {
+        if b.rule != "length" && b.rule != "final" && b.rule != "cadence" {
+            var finding = copy b
+            if b.bar > 0 && b.bar <= times.len { finding.bar = times[b.bar - 1] / 8 + 1 }
+            (mut v.breaks).push(finding)
+        }
+    }
+    var high = -1,
+        peaks = 0,
+        peak = 0,
+        cf_high = -1,
+        cf_peak = 0,
+        contrary = 0,
+        changes = 0,
+        steps = 0
+    var seen: int = 0
+    var run = 1
+    for i in 0..cf.len {
+        if theory.chromatic(cf[i]) > cf_high { cf_high = theory.chromatic(cf[i]); cf_peak = i }
+    }
+    for i in 0..line.len {
+        let p = theory.chromatic(line[i]), bar = times[i] / 8
+        if p > high {
+            high = p
+            peak = bar
+            peaks = 1
+        } else if p == high {
+            peaks += 1
+        }
+        let iv = theory.interval(cf[bar], line[i])
+        seen |= 1 << (iv.number - 1) % 7 + 1
+        if i > 0 {
+            if theory.magnitude(delta(line[i - 1], line[i])) == 1 { steps += 1 }
+            let old_bar = times[i - 1] / 8
+            if old_bar != bar {
+                changes += 1
+                if theory.motion(cf[old_bar], line[i - 1], cf[bar], line[i]) == "contrary" {
+                    contrary += 1
+                }
+            }
+        }
+    }
+    for bar in 1..cf.len {
+        let i = rhythm.at(beats, bar * 8), j = rhythm.at(beats, (bar - 1) * 8)
+        let a = theory.interval(cf[bar], cp[i]), b = theory.interval(cf[bar - 1], cp[j])
+        if a.number == b.number &&
+            (a.number % 7 == 3 || a.number % 7 == 6) &&
+            theory.motion(cf[bar - 1], cp[j], cf[bar], cp[i]) == "parallel" {
+            run += 1
+        } else {
+            run = 1
+        }
+        if run > 3 { v.parallel_limit = false }
+    }
+    for bit in 1..8 { if seen & 1 << bit != 0 { v.variety += 1 } }
+    v.steps = steps * 100 / (line.len - 1)
+    v.contrary = if changes > 0 then contrary * 100 / changes else 0
+    v.separate_climax = peaks == 1 && peak != cf_peak
+    var goals = 0
+    if v.steps >= 60 { goals += 1 }
+    if v.contrary >= 50 { goals += 1 }
+    if v.separate_climax { goals += 1 }
+    if v.parallel_limit { goals += 1 }
+    if v.variety >= 3 { goals += 1 }
+    if v.breaks.len == 0 { v.stars = if goals == 5 then 3 else if goals >= 3 then 2 else 1 }
+    v
+}

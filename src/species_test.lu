@@ -1,0 +1,78 @@
+use rhythm
+use species
+use theory
+
+fn pitches(values: List[int]) -> List[theory.Pitch] {
+    var out = List[theory.Pitch]()
+    for n in values { (mut out).push(theory.pitch(n)) }
+    out
+}
+
+fn broken(out: List[theory.Break], name: str) -> bool {
+    for b in out { if b.rule == name { return true } }
+    false
+}
+
+fn test_second_passing_has_direction_and_two_steps() {
+    let beats = rhythm.pattern(2, 3)
+    let cf = pitches([28, 28, 28])
+    assert(species.classify(cf, pitches([33, 34, 35]), beats[0..3], 1, 2, false) == "passing")
+    assert(species.classify(cf, pitches([33, 34, 33]), beats[0..3], 1, 2, false) == "unlicensed")
+    assert(!species.passing(pitches([33, 34, 36]), beats, 1))
+}
+
+fn test_accented_parallel_is_never_accepted() {
+    let cf = pitches([28, 29, 28])
+    let beats = rhythm.pattern(2, 3)
+    let bad = species.vertical(cf, pitches([32, 30, 33, 34, 35]), beats, false, 2, true)
+    assert(broken(bad, "accented-parallel"))
+    let good = species.vertical(cf, pitches([32, 30, 31, 34, 35]), beats, false, 2, true)
+    assert(!broken(good, "accented-parallel"))
+}
+
+fn test_second_strong_dissonance_and_unison() {
+    let cf = pitches([28, 29, 28]), beats = rhythm.pattern(2, 3)
+    assert(
+        broken(
+            species.vertical(cf, pitches([32, 33, 30, 34, 35]), beats, false, 2, true),
+            "downbeat-consonance",
+        ),
+    )
+    assert(
+        !broken(
+            species.vertical(cf, pitches([32, 33, 31, 34, 35]), beats, false, 2, true),
+            "downbeat-consonance",
+        ),
+    )
+    assert(
+        broken(
+            species.vertical(cf, pitches([32, 33, 29, 34, 35]), beats, false, 2, true),
+            "downbeat-unison",
+        ),
+    )
+}
+
+fn test_second_only_opening_half_can_rest() {
+    let cf = pitches([28, 29, 28]), cp = pitches([32, 35, 31, 34, 35])
+    var beats = rhythm.pattern(2, 3)
+    beats[0].rest = true
+    assert(!broken(species.vertical(cf, cp, beats, false, 2, true), "opening-rest"))
+    beats[2].rest = true
+    assert(broken(species.vertical(cf, cp, beats, false, 2, true), "opening-rest"))
+}
+
+fn test_second_weak_neighbour_is_refused() {
+    let cf = pitches([28, 28, 28]), beats = rhythm.pattern(2, 3)
+    assert(
+        !broken(
+            species.vertical(cf, pitches([33, 34, 35, 37, 35]), beats, false, 2, true),
+            "passing-dissonance",
+        ),
+    )
+    assert(
+        broken(
+            species.vertical(cf, pitches([33, 34, 33, 37, 35]), beats, false, 2, true),
+            "passing-dissonance",
+        ),
+    )
+}
