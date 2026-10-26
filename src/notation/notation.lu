@@ -222,7 +222,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     for bar in start..s.cantus.len {
         if manuscript.event_column(s, start, rhythm.at(s.beats, bar * 8)) >= margin - 3 { break }
         let x = manuscript.event_column(s, start, rhythm.at(s.beats, bar * 8))
-        text(mut g, top - 1, x - 1, "{bar + 1}", ink, bg, true)
+        text(mut g, top - 1, x - 2, "{bar + 1}", ink, bg, true)
         let lit = s.hearing >= 0 && s.hearing / session.ticks_per_whole() == bar
         let _ = staff.head(mut g, v, s.cantus[bar], x - 1, t, true, false, lit)
         for i in 0..s.voice.len {
@@ -314,7 +314,13 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
             if iy + 1 < rows - 2 {
                 text(mut g, iy + 1, nx - 1, "/{rhythm.value_name(beat.length)}", blue, bg, false)
             }
-            if i == focus && iy + 2 < rows - 2 { text(mut g, iy + 2, nx, "^", blue, bg, true) }
+            if i == focus {
+                // Navigation follows cursor time, not just the held event's head.
+                let offset = if s.hearing >= 0 then 0 else s.within / session.editor_unit(s)
+                // The compact grand system spends the lower rows on intervals/hints.
+                let cy = if iy + 2 < rows - 2 then iy + 2 else top - 1
+                text(mut g, cy, nx + offset, "^", blue, bg, true)
+            }
         }
     }
     staff.panel(mut g, s, margin, t)

@@ -22,6 +22,9 @@ pub fn event_width(s: session.State, event: int) -> int {
     var width = minimum
     if name_width > width { width = name_width }
     if interval_width > width { width = interval_width }
+    // A held event needs a distinct caret cell for every editable time unit.
+    let slots = (b.length + session.editor_unit(s) - 1) / session.editor_unit(s)
+    if slots > width { width = slots }
     width
 }
 
