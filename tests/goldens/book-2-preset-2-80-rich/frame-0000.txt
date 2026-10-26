@@ -14,10 +14,10 @@
  G4    │──────────│──────────│○─────────│─────────────│ |                       
  F4    │          │ ·        │          │     ·       │ | ·                     
  E4    │──────────│○─────────│──────────│─────────────│ |         ·             
- D4     ○  ·       SP5  wP5   SP5  wP5 · ○              | Breaks: whole page    
- C4     SP5 ·wP5   /2   /2   ·/2   /2    SP5  wP5   ·   | bar 2 - parallel-perf 
- B3     /2   /2 ·                        /2   /2    ·  ·| bar 2 - accented-para 
-         ^                            · ·               | bar 3 - parallel-perf 
+ D4     ○  ·       SP5  wP5   SP5  wP5 · ○              | Breaks: bar 1         
+ C4     SP5 ·wP5   /2   /2   ·/2   /2    SP5  wP5   ·   | bar 1 - sequence      
+ B3     /2   /2 ·                        /2   /2    ·  ·| bar 1 - repeat        
+         ^                            · ·               |                    ·  
   ·                 ·             ·                     |  ·              ·     
                      ·       ·                          |                      ·
   Arrows write  h hear  Enter check  u undo  n next  b books  q quit            
