@@ -1,0 +1,48 @@
+pk 1
+seed 7
+tier rich
+size 80x24
+start 18101
+# score 3
+t 9 check
+t 13 right
+t 13 right
+t 13 up
+t 13 right
+t 13 right
+t 13 right
+t 13 down
+t 13 down
+t 13 right
+t 13 right
+t 13 up
+t 13 right
+t 13 right
+t 13 up
+t 13 right
+t 13 right
+t 13 up
+t 13 right
+t 13 down
+t 13 down
+t 13 right
+t 13 down
+t 13 down
+t 13 down
+t 13 down
+t 13 right
+t 13 right
+t 13 up
+t 13 up
+t 13 up
+t 13 right
+t 13 right
+t 13 up
+t 13 right
+t 13 up
+t 13 up
+t 13 up
+t 25 hear
+t 364 check
+t 370 quit
+# books fugue 1 0 0 0 0 0

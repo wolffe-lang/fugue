@@ -1,0 +1,24 @@
+                      .   .                .         .                  .  .    
+   fugue / IV. The suspended voice                  .                          .
+   Ionian  seed 6  cantus above           .                 .                   
+                                                        .                       
+   .    1         2         3         4              .  |                       
+ A4                   .       .               .    .    | Bar 1 / 1:8           
+ G4                                                     |                       
+ F4         .                                           | C3                    
+ E4    |---------|---------|---------|o--------|------- |       ..              
+ D4.   |         |o        |  .      |         |        | h hear both voices    
+ C4   .|o--------|---------|o--------|---------|------- |                 .     
+ B3.   | r       |         |    .    |         |        | S strong / w weak     
+ A3    |---------|---------|---------|---------|------- | .            .        
+ G3    |   .     |         |         |    . |  |  .     | \_/ tie, r rest       
+ F3    |---------|--|---|--|---------|------|--|------- | t tie  0 first rest   
+ E3    |     .|  |  |   |  |  |   |  |  |  *   |        |  .  .                 
+ D3    |------|--|-*---*---|--|---|--|--|------|------- |                       
+ C3          *               *   *     *       .        |      .                
+ B2                                                     | parallel-perfect      
+        r   wP8   SP8 wP8   SP8 wP8   SM10wP8           |          . .   .      
+     .  /2  /2    /2  /2    /2  /2    /2  /2.           |                       
+         ^                           .                                          
+   Arrows write  h hear  Enter check  u undo  n next  b books  q quit    .      
+                                                                          .     
