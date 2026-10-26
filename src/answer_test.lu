@@ -4,7 +4,7 @@ use theory
 
 fn test_real_answers_preserve_spelling_and_semitones_both_sides() {
     for index in 0..3 {
-        let s = subject.tutorial(index)
+        let s = if index == 1 then opening_fifth() else subject.tutorial(index)
         for below in [false, true] {
             let a = answer.make(s, below, false)
             assert(answer.check(s, a.notes, a.beats, below).kind == "Real answer")
@@ -24,7 +24,7 @@ fn test_real_answers_preserve_spelling_and_semitones_both_sides() {
 
 fn test_tonal_answer_is_never_misread_as_real() {
     for index in [1, 2] {
-        let s = subject.tutorial(index)
+        let s = if index == 1 then opening_fifth() else subject.tutorial(index)
         for below in [false, true] {
             let a = answer.make(s, below, true)
             let v = answer.check(s, a.notes, a.beats, below)
@@ -37,7 +37,7 @@ fn test_tonal_answer_is_never_misread_as_real() {
 }
 
 fn test_wrong_transposition_and_misplaced_mutation_name_the_bar() {
-    let s = subject.tutorial(1)
+    let s = opening_fifth()
     var a = answer.make(s, false, true)
     a.notes[5] = theory.pitch(theory.position(a.notes[5]) - 1)
     let v = answer.check(s, a.notes, a.beats, false)
@@ -79,3 +79,12 @@ fn test_answer_census_lydian() { answer_census(3) }
 fn test_answer_census_mixolydian() { answer_census(4) }
 
 fn test_answer_census_aeolian() { answer_census(5) }
+
+fn opening_fifth() -> subject.Line {
+    var s = subject.tutorial(0)
+    s.mode = 1
+    s.notes = []
+    for d in [0, 4, 3, 4, 5, 4, 3, 0, 1, 0] { (mut s.notes).push(theory.pitch(29 + d)) }
+    s.beats = subject.values(1)
+    s
+}

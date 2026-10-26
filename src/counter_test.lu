@@ -1,0 +1,62 @@
+use answer
+use counter
+use subject
+use theory
+
+fn named(breaks: List[theory.Break], rule: str) -> bool {
+    for b in breaks { if b.rule == rule { return true } }
+    false
+}
+
+fn test_invertible_references_earn_three_stars_both_ways() {
+    for index in 0..3 {
+        let s = subject.tutorial(index), cs = counter.reference(index)
+        assert(subject.validate(s).len == 0)
+        for below in [false, true] {
+            let a = answer.make(s, below, index > 0)
+            let v = counter.check(a, cs, below, !below)
+            if v.stars != 3 { print("reference {index} below {below} {v}") }
+            assert(v.stars == 3)
+            assert(answer.check(s, a.notes, a.beats, below).breaks.len == 0)
+        }
+    }
+}
+
+fn test_inversion_fifth_is_never_accepted() {
+    let a = answer.make(subject.tutorial(0), false, false)
+    var cs = counter.octave(counter.reference(0), 1)
+    cs.notes[0] = theory.pitch(theory.position(a.notes[0]) + 4)
+    let v = counter.check(a, cs, false, false)
+    assert(v.stars == 0)
+    assert(named(v.breaks, "inversion-fifth"))
+    assert(named(v.breaks, "inverted-downbeat-consonance"))
+}
+
+fn test_counter_rules_reject_named_mutations() {
+    let a = answer.make(subject.tutorial(0), false, false)
+    let good = counter.octave(counter.reference(0), 1)
+    var cs = copy good
+    cs.notes[3] = theory.pitch(theory.position(a.notes[3]) - 1)
+    assert(named(counter.check(a, cs, false, false).breaks, "crossing"))
+    cs = copy good
+    cs.notes[3].octave += 2
+    assert(named(counter.check(a, cs, false, false).breaks, "inversion-span"))
+    cs = copy good
+    cs.beats[2].tied = true
+    assert(named(counter.check(a, cs, false, false).breaks, "tie-pitch"))
+    cs = copy good
+    cs.beats[0].length = 1
+    assert(named(counter.check(a, cs, false, false).breaks, "counter-rhythm"))
+    cs = copy good
+    cs.notes[2] = copy cs.notes[1]
+    assert(named(counter.check(a, cs, false, false).breaks, "repeat"))
+    cs = copy good
+    cs.notes[4].accidental = 1
+    assert(named(counter.check(a, cs, false, false).breaks, "diatonic"))
+}
+
+fn test_counter_search_certifies_its_output() {
+    let a = answer.make(subject.tutorial(0), false, false)
+    let proof = counter.solve(a, false) else { assert(false); return }
+    assert(counter.check(a, proof, false, false).stars == 3)
+}

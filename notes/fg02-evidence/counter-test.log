@@ -1,0 +1,34 @@
+test src/answer_test.lu::test_real_answers_preserve_spelling_and_semitones_both_sides ... ok
+test src/answer_test.lu::test_tonal_answer_is_never_misread_as_real ... ok
+test src/answer_test.lu::test_wrong_transposition_and_misplaced_mutation_name_the_bar ... ok
+answer census Ionian real 50 tonal 18 real-only 32
+test src/answer_test.lu::test_answer_census_ionian ... ok
+answer census Dorian real 50 tonal 19 real-only 31
+test src/answer_test.lu::test_answer_census_dorian ... ok
+answer census Phrygian real 50 tonal 32 real-only 18
+test src/answer_test.lu::test_answer_census_phrygian ... ok
+answer census Lydian real 50 tonal 32 real-only 18
+test src/answer_test.lu::test_answer_census_lydian ... ok
+answer census Mixolydian real 50 tonal 18 real-only 32
+test src/answer_test.lu::test_answer_census_mixolydian ... ok
+answer census Aeolian real 50 tonal 21 real-only 29
+test src/answer_test.lu::test_answer_census_aeolian ... ok
+test src/counter_test.lu::test_invertible_references_earn_three_stars_both_ways ... ok
+test src/counter_test.lu::test_inversion_fifth_is_never_accepted ... ok
+test src/counter_test.lu::test_counter_rules_reject_named_mutations ... ok
+test src/counter_test.lu::test_counter_search_certifies_its_output ... ok
+subject census Ionian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_ionian_50 ... ok
+subject census Dorian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_dorian_50 ... ok
+subject census Phrygian valid 50/50 pool 60
+test src/subject_test.lu::test_subject_census_phrygian_50 ... ok
+subject census Lydian valid 50/50 pool 44
+test src/subject_test.lu::test_subject_census_lydian_50 ... ok
+subject census Mixolydian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_mixolydian_50 ... ok
+subject census Aeolian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_aeolian_50 ... ok
+test src/subject_test.lu::test_subject_unrecovered_tail_is_never_admitted ... ok
+test src/subject_test.lu::test_three_original_tutorial_subjects ... ok
+wolf test: 21 passed; 0 failed; 0 rejected; 0 unsupported; 0 filtered out

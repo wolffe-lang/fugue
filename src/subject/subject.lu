@@ -194,13 +194,13 @@ pub fn generate(seed: int, mode: int) -> Line ! {empty} { choose(candidates(mode
 
 /// Three original, explicitly written tutorial subjects; no historical music.
 pub fn tutorial(index: int) -> Line {
-    let mode = if index == 0 then 0 else if index == 1 then 1 else 3
+    let mode = if index == 0 then 0 else if index == 1 then 2 else 3
     let degrees = match index {
         0 => [0, 2, 3, 4, 3, 2, 0, 2, 1, 0],
-        1 => [0, 4, 3, 4, 5, 4, 3, 0, 1, 0],
-        _ => [4, 6, 5, 4, 5, 7, 5, 6, 5, 4],
+        1 => [4, 2, 3, 2, 4, 5, 3, 2, 3, 4],
+        _ => [4, 2, 1, 2, 3, 5, 4, 2, 3, 4],
     }
     var notes = List[theory.Pitch]()
     for d in degrees { (mut notes).push(theory.pitch(28 + mode + d)) }
-    Line { notes: notes, beats: values(index), mode: mode }
+    Line { notes: notes, beats: values(if index == 2 then 1 else 0), mode: mode }
 }
