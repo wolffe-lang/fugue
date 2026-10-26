@@ -109,7 +109,7 @@ pub fn draw_staff(mut g: grid.Grid, v: Viewport, t: int, bars: List[int]) {
     lines(mut g, v, t)
     let bg = if t == 1 then 230 else 7
     for y in v.top..v.bottom + 1 {
-        let p = pitch_of(v, y)
+        let p = pitch_of(v, y + 1)
         text(mut g, y, 1, theory.name(p), if t == 1 then 94 else 3, bg, theory.position(p) == 28)
     }
     for x in bars {
