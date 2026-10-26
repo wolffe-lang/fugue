@@ -23,3 +23,8 @@ plain tier does not claim an exact RGB parchment colour.
 `tools/staff-check.py` computes relative-luminance contrast for inks 130 and 24
 against ground indices 230, 223 and 222, requiring at least 3:1 for these glyphs.
 The cantus and player retain hollow and filled heads respectively; no halo is used.
+
+Measured rich contrasts (relative luminance): burnt orange 130 is 4.605:1 on
+230, 3.496:1 on 223, and 3.436:1 on 222. Dark blue 24 is respectively 6.876:1,
+5.220:1 and 5.130:1. These are the checked cube values, not photographs of a
+particular terminal theme or a claim that colour alone conveys voice identity.

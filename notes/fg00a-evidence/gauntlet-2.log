@@ -1,0 +1,373 @@
+build: target/native/fugue
+build: target/release/fugue
+goldens: wrote tests/goldens/critic-120-rich
+goldens: wrote tests/goldens/critic-120-plain
+goldens: wrote tests/goldens/critic-80-rich
+goldens: wrote tests/goldens/critic-80-plain
+goldens: wrote tests/goldens/hear-120-rich
+goldens: wrote tests/goldens/hear-120-plain
+goldens: wrote tests/goldens/hear-80-rich
+goldens: wrote tests/goldens/hear-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-plain
+goldens: wrote tests/goldens/staff-120-rich
+goldens: wrote tests/goldens/staff-120-plain
+goldens: wrote tests/goldens/staff-80-rich
+goldens: wrote tests/goldens/staff-80-plain
+goldens: wrote tests/goldens/title-120-rich
+goldens: wrote tests/goldens/title-120-plain
+goldens: wrote tests/goldens/title-80-rich
+goldens: wrote tests/goldens/title-80-plain
+goldens: wrote tests/goldens/walk-120-rich
+goldens: wrote tests/goldens/walk-120-plain
+goldens: wrote tests/goldens/walk-80-rich
+goldens: wrote tests/goldens/walk-80-plain
+goldens: wrote tests/goldens/art
+check-fmt: canonical
+test src/clock/clock_test.lu::test_no_tick_before_its_time ... ok
+test src/clock/clock_test.lu::test_one_tick_on_time ... ok
+test src/clock/clock_test.lu::test_late_frames_drop_renders_not_ticks ... ok
+test src/clock/clock_test.lu::test_ms_until_rounds_up ... ok
+test src/clock/clock_test.lu::test_thirty_ticks_a_second ... ok
+test src/ear_test.lu::test_hear_score_contains_two_timbres_and_every_bar ... ok
+test src/ear_test.lu::test_hear_key_and_complete_cursor_pass ... ok
+preset 1: three stars, contrary 55, steps 66, variety 4
+preset 2: three stars, contrary 55, steps 66, variety 4
+preset 3: three stars, contrary 55, steps 66, variety 4
+test src/first_test.lu::test_three_tutorial_reference_solutions_have_three_stars ... ok
+test src/first_test.lu::test_first_species_hard_rules_have_legal_and_illegal_witnesses ... ok
+test src/first_test.lu::test_hidden_fifth_is_never_accepted ... ok
+test src/grid/grid_test.lu::test_empty_diff_writes_nothing ... ok
+test src/grid/grid_test.lu::test_one_cell_diff ... ok
+test src/grid/grid_test.lu::test_full_repaint_is_contiguous ... ok
+test src/grid/grid_test.lu::test_style_run_sets_sgr_once ... ok
+test src/grid/grid_test.lu::test_rgb_dialect ... ok
+test src/grid/grid_test.lu::test_sixteen_dialect_bright ... ok
+test src/grid/grid_test.lu::test_utf8_lengths ... ok
+test src/grid/grid_test.lu::test_property_apply_diff_equals_next ... ok
+test src/grid/grid_test.lu::test_property_holds_in_the_rgb_dialect ... ok
+test src/grid/grid_test.lu::test_model_wraps_and_scrolls ... ok
+test src/grid/grid_test.lu::test_model_private_modes ... ok
+test src/grid/grid_test.lu::test_model_malformed_utf8 ... ok
+test src/grid/grid_test.lu::test_dump_text_and_styles ... ok
+test src/grid/grid_test.lu::test_plain_ok ... ok
+test src/grid/grid_test.lu::test_bounds_are_soft ... ok
+test src/input/input_test.lu::test_csi_arrows ... ok
+test src/input/input_test.lu::test_ss3_arrows ... ok
+test src/input/input_test.lu::test_shift_arrows_are_their_own_keys ... ok
+test src/input/input_test.lu::test_other_modifiers_are_the_bare_arrow ... ok
+test src/input/input_test.lu::test_plain_keys ... ok
+test src/input/input_test.lu::test_lone_esc_waits_for_the_timeout ... ok
+test src/input/input_test.lu::test_esc_then_bracket_late_is_still_a_sequence ... ok
+test src/input/input_test.lu::test_esc_then_plain_byte_is_esc_and_the_byte ... ok
+test src/input/input_test.lu::test_ignored_forms ... ok
+test src/input/input_test.lu::test_unknown_bytes_are_dropped_and_counted ... ok
+test src/input/input_test.lu::test_two_sequences_in_one_read ... ok
+test src/input/input_test.lu::test_a_tap_holds_for_the_tap_ticks ... ok
+test src/input/input_test.lu::test_a_repeat_run_releases_one_interval_after_the_last_press ... ok
+test src/replay/replay_test.lu::test_vocabulary ... ok
+test src/replay/replay_test.lu::test_parse_sample ... ok
+test src/replay/replay_test.lu::test_round_trip ... ok
+test src/replay/replay_test.lu::test_refusals ... ok
+test src/replay/replay_test.lu::test_parse_size ... ok
+test src/replay/replay_test.lu::test_start_is_read_written_and_defaults_to_zero ... ok
+test src/replay/replay_test.lu::test_the_score_comment_is_written_read_and_optional ... ok
+test src/staff_test.lu::test_dissonance_is_never_drawn_green ... ok
+test src/staff_test.lu::test_plain_staff_and_grain ... ok
+test src/staff_test.lu::test_editor_step_undo_and_octave ... ok
+test src/staff_test.lu::test_hearing_locks_edits_and_card_return_resets_the_cursor ... ok
+test src/staff_test.lu::test_cadence_sharp_only_at_the_leading_note ... ok
+test src/staff_test.lu::test_five_staff_lines_are_unbroken_on_both_tiers ... ok
+test src/staff_test.lu::test_pitch_row_margin_round_trip_whole_viewport ... ok
+test src/staff_test.lu::test_bar_lines_survive_every_up_down_frame ... ok
+test src/staff_test.lu::test_cantus_keeps_its_hollow_head_and_contrasting_ink ... ok
+test src/theory_test.lu::test_spelled_intervals_and_motion ... ok
+census Ionian valid 50/50 length10 50 leaps2 3 leaps3 24 leaps4 23 pool 64
+test src/theory_test.lu::test_census_ionian_50 ... ok
+census Dorian valid 50/50 length10 50 leaps2 3 leaps3 27 leaps4 20 pool 64
+test src/theory_test.lu::test_census_dorian_50 ... ok
+census Phrygian valid 50/50 length10 50 leaps2 3 leaps3 25 leaps4 22 pool 64
+test src/theory_test.lu::test_census_phrygian_50 ... ok
+census Lydian valid 50/50 length10 50 leaps2 0 leaps3 35 leaps4 15 pool 50
+test src/theory_test.lu::test_census_lydian_50 ... ok
+census Mixolydian valid 50/50 length10 50 leaps2 3 leaps3 24 leaps4 23 pool 64
+test src/theory_test.lu::test_census_mixolydian_50 ... ok
+census Aeolian valid 50/50 length10 50 leaps2 3 leaps3 30 leaps4 17 pool 64
+test src/theory_test.lu::test_census_aeolian_50 ... ok
+test src/theory_test.lu::test_generated_repeated_note_is_rejected ... ok
+test src/theory_test.lu::test_every_cantus_rule_has_a_positive_and_negative_witness ... ok
+Fux Dorian breaks 5
+  bar 3: sequence
+  bar 5: sequence
+  bar 7: sequence
+  bar 8: sequence
+  bar 1: balance
+Fux Phrygian breaks 1
+  bar 3: sequence
+Fux Lydian breaks 4
+  bar 5: successive-leaps
+  bar 9: recovery
+  bar 10: successive-leaps
+  bar 1: leap-count
+Fux Mixolydian breaks 6
+  bar 6: recovery
+  bar 6: successive-leaps
+  bar 9: recovery
+  bar 9: sequence
+  bar 10: successive-leaps
+  bar 1: leap-count
+Fux Aeolian breaks 7
+  bar 1: sequence
+  bar 2: sequence
+  bar 3: sequence
+  bar 7: sequence
+  bar 7: sequence
+  bar 8: sequence
+  bar 9: sequence
+Fux Ionian breaks 1
+  bar 9: sequence
+test src/theory_test.lu::test_fux_oracles_from_original_print ... ok
+test src/world/world_test.lu::test_deterministic ... ok
+test src/world/world_test.lu::test_seeds_differ ... ok
+test src/world/world_test.lu::test_noise_bounds_and_continuity ... ok
+test src/world/world_test.lu::test_forest_density_rises ... ok
+test src/world/world_test.lu::test_clearing_reads_and_a_stand_is_the_woods_with_more_trunks ... ok
+test src/world/world_test.lu::test_density_bands_are_ordered ... ok
+test src/world/world_test.lu::test_hash_range ... ok
+wolf test: 71 passed; 0 failed; 0 rejected; 0 unsupported; 0 filtered out
+test: 0 SKIP lines
+build: target/native/fugue
+build: target/release/fugue
+selftest: ok (the decoder table whole and split at every byte; the diff property over 12 frames)
+goldens: critic-120-rich ok
+goldens: critic-120-plain ok
+goldens: critic-80-rich ok
+goldens: critic-80-plain ok
+goldens: hear-120-rich ok
+goldens: hear-120-plain ok
+goldens: hear-80-rich ok
+goldens: hear-80-plain ok
+fugue: verified score 3
+goldens: preset-1-120-rich ok
+fugue: verified score 3
+goldens: preset-1-120-plain ok
+fugue: verified score 3
+goldens: preset-1-80-rich ok
+fugue: verified score 3
+goldens: preset-1-80-plain ok
+fugue: verified score 3
+goldens: preset-2-120-rich ok
+fugue: verified score 3
+goldens: preset-2-120-plain ok
+fugue: verified score 3
+goldens: preset-2-80-rich ok
+fugue: verified score 3
+goldens: preset-2-80-plain ok
+fugue: verified score 3
+goldens: preset-3-120-rich ok
+fugue: verified score 3
+goldens: preset-3-120-plain ok
+fugue: verified score 3
+goldens: preset-3-80-rich ok
+fugue: verified score 3
+goldens: preset-3-80-plain ok
+goldens: staff-120-rich ok
+goldens: staff-120-plain ok
+goldens: staff-80-rich ok
+goldens: staff-80-plain ok
+goldens: title-120-rich ok
+goldens: title-120-plain ok
+goldens: title-80-rich ok
+goldens: title-80-plain ok
+goldens: walk-120-rich ok
+goldens: walk-120-plain ok
+goldens: walk-80-rich ok
+goldens: walk-80-plain ok
+goldens: art ok
+pty: quit ok (linux x86_64, exit 0, 9119 bytes captured)
+pty: ctrl-c ok (linux x86_64, exit 0, 9119 bytes captured)
+pty: trap ok (linux x86_64, exit 134, 9119 bytes captured)
+pty: agree-rich ok (linux x86_64, exit 0, 10646 bytes captured)
+pty: agree-plain ok (linux x86_64, exit 0, 5139 bytes captured)
+sound: note-bank render_us 23375 base 22
+sound: wav-sink 1 /work/target/pty/audio/note-23-0.wav
+sound: wav-sink 2 /work/target/pty/audio/note-22-0.wav
+sound: whole-render /work/target/pty/audio/whole-1.wav ticks 300
+sound: wav-sink 3 /work/target/pty/audio/whole-1.wav
+fugue: ended by the quit key
+
+pty: editor-ear ok (linux x86_64, exit 0, 9705 bytes captured)
+pty: title-quit ok (linux x86_64, exit 0, 4935 bytes captured)
+pty: staff-quit ok (linux x86_64, exit 0, 10045 bytes captured)
+pty: card-quit ok (linux x86_64, exit 0, 12571 bytes captured)
+pty: escape ok (linux x86_64, exit 0, 4935 bytes captured)
+pty: solved-record ok (linux x86_64, exit 0, 27261 bytes captured)
+pty: panel-right-twice ok (linux x86_64, exit 0, 11685 bytes captured)
+whole WAV /work/target/pty/hear-whole/whole-1.wav duration 10.000000s PCM sha256 b558957b00de6c4b92494e872e088a9eb16aabf23a3a25bcff8e7d40738c17c6
+sound: note-bank render_us 30046 base 22
+sound: whole-render /work/target/pty/hear-whole/whole-1.wav ticks 300
+sound: wav-sink 1 /work/target/pty/hear-whole/whole-1.wav
+fugue: ended by the quit key
+
+pty: hear-whole-is-played ok (linux x86_64, exit 0, 9230 bytes captured)
+check-linux: green
+goldens: critic-120-rich ok
+goldens: critic-120-plain ok
+goldens: critic-80-rich ok
+goldens: critic-80-plain ok
+goldens: hear-120-rich ok
+goldens: hear-120-plain ok
+goldens: hear-80-rich ok
+goldens: hear-80-plain ok
+fugue: verified score 3
+goldens: preset-1-120-rich ok
+fugue: verified score 3
+goldens: preset-1-120-plain ok
+fugue: verified score 3
+goldens: preset-1-80-rich ok
+fugue: verified score 3
+goldens: preset-1-80-plain ok
+fugue: verified score 3
+goldens: preset-2-120-rich ok
+fugue: verified score 3
+goldens: preset-2-120-plain ok
+fugue: verified score 3
+goldens: preset-2-80-rich ok
+fugue: verified score 3
+goldens: preset-2-80-plain ok
+fugue: verified score 3
+goldens: preset-3-120-rich ok
+fugue: verified score 3
+goldens: preset-3-120-plain ok
+fugue: verified score 3
+goldens: preset-3-80-rich ok
+fugue: verified score 3
+goldens: preset-3-80-plain ok
+goldens: staff-120-rich ok
+goldens: staff-120-plain ok
+goldens: staff-80-rich ok
+goldens: staff-80-plain ok
+goldens: title-120-rich ok
+goldens: title-120-plain ok
+goldens: title-80-rich ok
+goldens: title-80-plain ok
+goldens: walk-120-rich ok
+goldens: walk-120-plain ok
+goldens: walk-80-rich ok
+goldens: walk-80-plain ok
+goldens: art ok
+legal: stars 3
+consonance: stars 0 | bar 2 consonance | bar 1 leap-count
+opening: stars 0 | bar 1 opening | bar 1 sequence
+closing: stars 0 | bar 10 hidden-perfect | bar 10 closing | bar 9 two-voice-cadence | bar 7 sequence
+two-voice-cadence: stars 0 | bar 9 consonance | bar 9 two-voice-cadence | bar 9 repeat
+parallel-perfect: stars 0 | bar 2 parallel-perfect | bar 1 sequence
+hidden-perfect: stars 0 | bar 3 hidden-perfect | bar 1 sequence | bar 2 sequence | bar 3 leap-quality | bar 3 sequence
+crossing: stars 0 | bar 2 consonance | bar 2 crossing | bar 3 overlap | bar 3 recovery | bar 4 recovery | bar 1 leap-count
+overlap: stars 0 | bar 5 crossing | bar 6 overlap | bar 6 leap-quality | bar 6 recovery | bar 6 one-climax
+interior-unison: stars 0 | bar 2 interior-unison | bar 3 overlap | bar 2 sequence | bar 3 recovery | bar 4 recovery | bar 1 leap-count
+game-census Ionian valid 50/50 length10 50
+game-census Dorian valid 50/50 length10 50
+game-census Phrygian valid 50/50 length10 50
+game-census Lydian valid 50/50 length10 50
+game-census Mixolydian valid 50/50 length10 50
+game-census Aeolian valid 50/50 length10 50
+game-census valid 300/300 leaps2 9 leaps3 167 leaps4 124
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: invalid option or small size (minimum 80x24)
+fugue: invalid option or small size (minimum 80x24)
+fugue: verified score 3
+gameplay: census, three references, score-tampering and minimum refusals green
+legal: stars 3
+consonance: stars 0 | bar 2 consonance | bar 1 leap-count
+opening: stars 0 | bar 1 opening | bar 1 sequence
+closing: stars 0 | bar 10 hidden-perfect | bar 10 closing | bar 9 two-voice-cadence | bar 7 sequence
+two-voice-cadence: stars 0 | bar 9 consonance | bar 9 two-voice-cadence | bar 9 repeat
+parallel-perfect: stars 0 | bar 2 parallel-perfect | bar 1 sequence
+hidden-perfect: stars 0 | bar 3 hidden-perfect | bar 1 sequence | bar 2 sequence | bar 3 leap-quality | bar 3 sequence
+crossing: stars 0 | bar 2 consonance | bar 2 crossing | bar 3 overlap | bar 3 recovery | bar 4 recovery | bar 1 leap-count
+overlap: stars 0 | bar 5 crossing | bar 6 overlap | bar 6 leap-quality | bar 6 recovery | bar 6 one-climax
+interior-unison: stars 0 | bar 2 interior-unison | bar 3 overlap | bar 2 sequence | bar 3 recovery | bar 4 recovery | bar 1 leap-count
+game-census Ionian valid 50/50 length10 50
+game-census Dorian valid 50/50 length10 50
+game-census Phrygian valid 50/50 length10 50
+game-census Lydian valid 50/50 length10 50
+game-census Mixolydian valid 50/50 length10 50
+game-census Aeolian valid 50/50 length10 50
+game-census valid 300/300 leaps2 9 leaps3 167 leaps4 124
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: invalid option or small size (minimum 80x24)
+fugue: invalid option or small size (minimum 80x24)
+fugue: verified score 3
+gameplay: census, three references, score-tampering and minimum refusals green
+glyphs: 6 non-ASCII code points, both-way inventory green; plain is ASCII
+staff-check: 80x24 rich: forty walk frames, eleven listening frames green
+staff-check: 80x24 plain: forty walk frames, eleven listening frames green
+staff-check: 120x40 rich: forty walk frames, eleven listening frames green
+staff-check: 120x40 plain: forty walk frames, eleven listening frames green
+staff-check: palette 130 on 230 contrast 4.605:1
+staff-check: palette 130 on 223 contrast 3.496:1
+staff-check: palette 130 on 222 contrast 3.436:1
+staff-check: palette 24 on 230 contrast 6.876:1
+staff-check: palette 24 on 223 contrast 5.220:1
+staff-check: palette 24 on 222 contrast 5.130:1
+staff-check: audio bar 1 RMS L/R 179.1/189.9
+staff-check: audio bar 2 RMS L/R 179.9/194.5
+staff-check: audio bar 3 RMS L/R 180.5/192.7
+staff-check: audio bar 4 RMS L/R 180.7/193.9
+staff-check: audio bar 5 RMS L/R 176.6/187.0
+staff-check: audio bar 6 RMS L/R 177.1/189.6
+staff-check: audio bar 7 RMS L/R 182.9/199.1
+staff-check: audio bar 8 RMS L/R 180.8/194.1
+staff-check: audio bar 9 RMS L/R 180.5/192.5
+staff-check: audio bar 10 RMS L/R 180.8/194.0
+staff-check: exact ten-second PCM golden green
+staff-check: 80x24 rich: forty walk frames, eleven listening frames green
+staff-check: 80x24 plain: forty walk frames, eleven listening frames green
+staff-check: 120x40 rich: forty walk frames, eleven listening frames green
+staff-check: 120x40 plain: forty walk frames, eleven listening frames green
+staff-check: palette 130 on 230 contrast 4.605:1
+staff-check: palette 130 on 223 contrast 3.496:1
+staff-check: palette 130 on 222 contrast 3.436:1
+staff-check: palette 24 on 230 contrast 6.876:1
+staff-check: palette 24 on 223 contrast 5.220:1
+staff-check: palette 24 on 222 contrast 5.130:1
+staff-check: audio bar 1 RMS L/R 179.1/189.9
+staff-check: audio bar 2 RMS L/R 179.9/194.5
+staff-check: audio bar 3 RMS L/R 180.5/192.7
+staff-check: audio bar 4 RMS L/R 180.7/193.9
+staff-check: audio bar 5 RMS L/R 176.6/187.0
+staff-check: audio bar 6 RMS L/R 177.1/189.6
+staff-check: audio bar 7 RMS L/R 182.9/199.1
+staff-check: audio bar 8 RMS L/R 180.8/194.1
+staff-check: audio bar 9 RMS L/R 180.5/192.5
+staff-check: audio bar 10 RMS L/R 180.8/194.0
+staff-check: exact ten-second PCM golden green
