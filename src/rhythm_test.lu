@@ -1,4 +1,8 @@
+use manuscript
 use rhythm
+use session
+use sound
+use theory
 
 fn test_rhythm_books_fill_bars_and_close_whole() {
     for book in 1..6 {
@@ -19,4 +23,54 @@ fn test_rhythm_fourth_has_preparation_and_ties() {
     let beats = rhythm.pattern(4, 10)
     assert(beats[0].rest && !beats[1].rest)
     assert(!beats[1].tied && beats[2].tied && !beats[3].tied)
+}
+
+fn test_later_book_minimum_unit_and_reversible_rhythm_edit() {
+    var s = session.tutorial(0, false)
+    s.book = 5
+    session.step(mut s, 4)
+    assert(s.cursor == 0 && s.within == 1)
+    session.step(mut s, 22)
+    assert(s.beats[0].length == 4 && s.beats[1].length == 4)
+    assert(s.voice.len == 11 && rhythm.valid(s.beats, 10))
+    session.step(mut s, 11)
+    assert(s.voice.len == 10 && s.beats[0].length == 8 && s.within == 1)
+    session.step(mut s, 22)
+    session.step(mut s, 23)
+    assert(s.voice.len == 10 && s.beats[0].length == 8)
+}
+
+fn test_replay_book_namespace_preserves_old_selectors() {
+    assert(session.replay_start(1, 101) == 101)
+    assert(session.replay_start(2, 101) == 14101)
+    assert(session.replay_start(5, 1000) == 21000)
+}
+
+fn test_rhythm_columns_round_trip_every_unit() {
+    for book in 2..6 {
+        let unit = manuscript.unit(book), width = manuscript.bar_width(book)
+        for bar in 0..10 {
+            var offset = 0
+            while offset < 8 {
+                let col = manuscript.column(book, 0, bar * 8 + offset)
+                assert((col - 9) / width == bar)
+                assert((col - 9) % width / 4 * unit == offset)
+                offset += unit
+            }
+        }
+    }
+}
+
+fn test_rhythmic_part_lengths_and_outgoing_tie() {
+    var s = session.tutorial(0, false)
+    s.book = 4
+    s.beats = rhythm.pattern(4, 10)
+    s.voice = List[theory.Pitch]()
+    for i in 0..s.beats.len { (mut s.voice).push(theory.pitch(35)) }
+    let part = manuscript.part(s, 240)
+    assert(part.contains("voice r/2 C5/2~\nbar 2"))
+    assert(part.contains("voice C5/2 C5/2~\nbar 3"))
+    assert(part.ends_with("voice C5/1\n"))
+    let score = sound.read(part)
+    assert(score.err == "")
 }

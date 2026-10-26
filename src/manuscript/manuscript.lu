@@ -1,0 +1,41 @@
+//! Rhythmic layout and part text, independent of the terminal and output owner.
+
+use rhythm
+use session
+use theory
+
+/// The smallest editable unit, in eighths.
+pub fn unit(book: int) -> int {
+    if book == 1 then 8 else if book == 3 then 2 else if book == 5 then 1 else 4
+}
+
+/// Keep four cells per smallest subdivision plus the barline and its gutter.
+pub fn bar_width(book: int) -> int { 8 / unit(book) * 4 + 2 }
+
+/// A whole-bar viewport follows the cursor, without altering musical time.
+pub fn first_bar(s: session.State, columns: int) -> int {
+    let count = (columns - 32) / bar_width(s.book)
+    let bar = rhythm.onset(s.beats, s.cursor) / 8
+    bar / count * count
+}
+
+/// Event columns and cursor columns share exactly the same time-to-space map.
+pub fn column(book: int, first: int, time: int) -> int {
+    9 + (time / 8 - first) * bar_width(book) + time % 8 / unit(book) * 4
+}
+
+/// Both voices fill each bar exactly; incoming editor ties become outgoing part marks.
+pub fn part(s: session.State, tempo: int) -> str {
+    var text = "title Two voices\ntempo {tempo}\nmeter 4/4\npart cantus organ p pan -25\npart voice choir mp pan 25\n"
+    for bar in 0..s.cantus.len {
+        text += "bar {bar + 1}\ncantus {theory.name(s.cantus[bar])}/1\nvoice"
+        for i in 0..s.voice.len {
+            if rhythm.onset(s.beats, i) / 8 != bar { continue }
+            let b = copy s.beats[i]
+            text += " {if b.rest then "r" else theory.name(s.voice[i])}/{8 / b.length}"
+            if !b.rest && i + 1 < s.beats.len && s.beats[i + 1].tied { text += "~" }
+        }
+        text += "\n"
+    }
+    text
+}

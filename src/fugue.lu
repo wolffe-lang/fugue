@@ -8,8 +8,10 @@ use first
 use grid
 use headless
 use input
+use progress
 use replay
 use session
+use species
 use staff
 use term
 use theory
@@ -21,6 +23,7 @@ fn has(args: List[str], word: str) -> bool {
 }
 
 struct Options {
+    book: int,
     seed: int,
     cols: int,
     rows: int,
@@ -43,6 +46,7 @@ struct Options {
 
 fn options() -> Options ! {parse} {
     var o = Options {
+        book: 1,
         seed: 7,
         cols: 80,
         rows: 24,
@@ -83,7 +87,9 @@ fn options() -> Options ! {parse} {
         } else if a == "--mute" || a == "--no-truecolor" {} else if i + 1 < args.len {
             i += 1
             let v = args[i]
-            if a == "--seed" {
+            if a == "--book" {
+                o.book = v.to_int()?
+            } else if a == "--seed" {
                 o.seed = v.to_int()?
             } else if a == "--size" {
                 let (w, h) = replay.parse_size(v)?
@@ -117,6 +123,7 @@ fn options() -> Options ! {parse} {
         }
         i += 1
     }
+    if o.book < 1 || o.book > 5 { return parse }
     if o.cols < 80 || o.rows < 24 || o.every < 1 || o.frames < 0 { return parse }
     o
 }
@@ -125,6 +132,7 @@ fn load(o: Options) -> replay.Replay ! {parse} {
     if o.script == "" {
         var r = replay.new(o.seed, o.tier_id, o.cols, o.rows)
         if !has(env.args(), "--seed") && !has(env.args(), "--daily") { r.start = 1 }
+        r.start = session.replay_start(o.book, r.start)
         return r
     }
     let text = fs.read_text(o.script) else |_| { return parse }
@@ -216,6 +224,20 @@ fn live(o: Options, r: replay.Replay) -> int {
     }
     defer ear.close(mut audio)
     var s = session.from_replay(r, o.title && o.script == "")
+    let state_path = env.get("FUGUE_STATE") else ".fugue-state"
+    if o.script == "" {
+        let text = fs.read_text(state_path) else ""
+        let saved = progress.decode(text) else copy s.progress
+        s.progress = saved
+    }
+    let initial_progress = progress.format(s.progress)
+    defer {
+        if o.script == "" && progress.format(s.progress) != initial_progress {
+            fs.write_text(state_path, progress.format(s.progress)) else |_| {
+                eprint("fugue: could not save book progress")
+            }
+        }
+    }
     ear.prepare(mut audio, s) else |_| { eprint("fugue: note preparation failed"); return 2 }
     var t = term.open() else |e| { eprint(term.message("{e}", "fugue")); return 2 }
     if t.cols < r.cols || t.rows < r.rows {
@@ -235,7 +257,11 @@ fn live(o: Options, r: replay.Replay) -> int {
     var recorded = replay.new(r.seed, r.tier, r.cols, r.rows)
     recorded.start = r.start
     if o.title && o.script == "" {
-        recorded.start = if r.start >= 1 && r.start <= 3 then r.start + 100 else 1000
+        let old = if r.start >= 14000 then (r.start - 10000) % 2000 else r.start
+        recorded.start = session.replay_start(
+            s.book,
+            if old >= 1 && old <= 3 then old + 100 else 1000,
+        )
     }
     loop {
         let wake = clock.wait_until(mut c, clock.next_due_ns(c), term.signal_set()) else |_| {
@@ -400,12 +426,12 @@ fn main() -> int {
     let args = env.args()
     if has(args, "--help") || has(args, "-h") {
         print(
-            "fugue / Book I\n--seed N | --daily   --size WxH (minimum 80x24)   --plain   --mute\n--record FILE   --replay FILE   --ticks N\nArrows write, Shift-Up/Down octave, # cadence, Space sound, h hear, Enter check, u undo, n next, q quit.",
+            "fugue / Books I-V\n--book 1..5   --seed N | --daily   --size WxH (minimum 80x24)   --plain   --mute\n--record FILE   --replay FILE   --ticks N\nArrows write, Shift-Up/Down octave, # cadence, Space sound, h hear, Enter check, u undo, n next, q quit.",
         )
         return 0
     }
     if has(args, "--verdicts") { print_raw(first.verdict_study()); return 0 }
-    if has(args, "--version") { print("fugue 0.1.0 / Book I"); return 0 }
+    if has(args, "--version") { print("fugue 0.2.0 / Books I-V"); return 0 }
     if has(args, "--selftest") { return run_selftest() }
     if has(args, "--game-census") {
         var valid = 0, leap2 = 0, leap3 = 0, leap4 = 0
@@ -442,6 +468,32 @@ fn main() -> int {
                     }
                 }
                 print("solutions mode {mode} below {which} solved {solved}/16")
+            }
+        }
+        return 0
+    }
+    if has(args, "--species-report") {
+        for book in 2..6 {
+            for index in 0..3 {
+                let mode = if index == 0 then 0 else if index == 1 then 1 else 4
+                let e = species.exercise_goal(index, mode, false, book, 3) else {
+                    eprint("species EMPTY book {book} preset {index}")
+                    return 1
+                }
+                print(
+                    "preset {book} {index + 1} mode {mode} candidate {e.candidate} stars {e.proof.stars}",
+                )
+                print_raw("cantus")
+                for p in e.cantus { print_raw(" {theory.position(p)}:{p.accidental}") }
+                print("")
+                print_raw("answer")
+                for p in e.proof.notes { print_raw(" {theory.position(p)}:{p.accidental}") }
+                print("")
+                print_raw("beats")
+                for b in e.proof.beats {
+                    print_raw(" {b.length}:{if b.rest then 1 else 0}:{if b.tied then 1 else 0}")
+                }
+                print("")
             }
         }
         return 0
