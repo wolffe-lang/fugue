@@ -472,7 +472,17 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
     }
     draw_staff(mut g, v, t, bars)
     // The historical clef study is decorative, not a second pitch convention.
-    if drawn_clef { clef(mut g, top + 1, t, bg) }
+    if drawn_clef {
+        text(
+            mut g,
+            top - 1,
+            1,
+            if s.grand then "Grand" else if s.clef == 30 then "Treble" else "Bass",
+            ink,
+            bg,
+            true,
+        )
+    }
     for i in 0..s.cantus.len {
         let x = 8 + i * width
         text(mut g, top - 1, x, "{i + 1}", ink, bg, false)
@@ -600,8 +610,13 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
         false,
     )
     let verdict = session.verdict(s)
+    let local = if s.book >= 2 && s.book <= 5 {
+        species.event_breaks(s.cantus, s.voice, s.beats, s.below, s.book, i)
+    } else {
+        copy verdict.breaks
+    }
     var row = 12
-    for b in verdict.breaks {
+    for b in local {
         if b.bar == bar + 1 && row < 15 {
             text(
                 mut g,
@@ -615,7 +630,7 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
             row += 1
         }
     }
-    if row == 12 { text(mut g, row, margin + 2, "No breaks in bar", blue, bg, false) }
+    if row == 12 { text(mut g, row, margin + 2, "No local break", blue, bg, false) }
     text(mut g, 16, margin + 2, "Breaks: whole page", ink, bg, true)
     row = 17
     for b in verdict.breaks {

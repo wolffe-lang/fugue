@@ -32,7 +32,7 @@ a selected natural has an explicit natural sign. Adjacent heads and barlines
 are never overwritten by an accidental.
 
 The panel follows the selected event: **Bar N, beat B:8**, the interval and its
-class, the figure allowed at that beat, and named findings in that bar. The
+class, the figure allowed at that beat, and named local findings at that event. The
 separately titled **Breaks: whole page** list is not the selected-note status.
 The harmonic class and figure are separate: a passing dissonance remains
 labelled dissonant even when its figure is allowed.

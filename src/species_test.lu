@@ -1,3 +1,4 @@
+use presets
 use rhythm
 use species
 use theory
@@ -214,4 +215,18 @@ fn test_fourth_classifier_never_licenses_a_weak_passing_dissonance() {
     let cf = pitches([28, 28, 28])
     let cp = pitches([33, 34, 35, 37, 35])
     assert(species.classify(cf, cp, rhythm.pattern(2, 3), 1, 4, false) == "unlicensed")
+}
+
+fn test_selected_event_does_not_borrow_a_neighbours_break() {
+    let p = presets.page(3, 0)
+    var cp = copy p.answer
+    cp[0] = theory.pitch(29)
+    var first = false, second = false
+    for b in species.event_breaks(p.cantus, cp, p.beats, false, 3, 0) {
+        if b.rule == "downbeat-consonance" { first = true }
+    }
+    for b in species.event_breaks(p.cantus, cp, p.beats, false, 3, 1) {
+        if b.rule == "downbeat-consonance" { second = true }
+    }
+    assert(first && !second)
 }

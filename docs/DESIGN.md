@@ -148,6 +148,6 @@ staff it toggles a rest, while on the critic card it returns to editing.
 
 The selected-event panel derives its bar and eighth-beat from cursor time,
 its vertical interval from the two score pitches, and its figure from the
-existing classifier. Current judges report breaks by bar, not by event;
-therefore the panel lists the selected **bar's** findings without claiming
-finer error locations. The separate page-wide list keeps its own heading.
+existing classifier. `species.event_breaks` runs the same vertical/motion rule pass as the judge
+but retains only findings emitted at the selected event. Whole-line melodic
+findings remain in the separately titled page list, with their bar locations.

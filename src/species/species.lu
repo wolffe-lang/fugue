@@ -210,13 +210,14 @@ fn blank() -> first.Verdict {
 }
 
 /// Local vertical, rhythm and motion rules; safe for prefix pruning.
-pub fn vertical(
+fn vertical_at(
     cf: List[theory.Pitch],
     cp: List[theory.Pitch],
     beats: List[rhythm.Beat],
     below: bool,
     book: int,
     complete: bool,
+    selected: int,
 ) -> List[theory.Break] {
     var out = List[theory.Break]()
     if cp.len > beats.len {
@@ -225,6 +226,7 @@ pub fn vertical(
     }
     var last = -1, first_note = true
     for i in 0..cp.len {
+        let before = out.len
         let time = rhythm.onset(beats, i), bar = time / 8
         if bar >= cf.len {
             theory.require(
@@ -275,6 +277,9 @@ pub fn vertical(
                 "opening-rest",
                 "Only the opening half may be silent.",
             )
+            if selected >= 0 && selected != i {
+                while out.len > before { let _ = (mut out).pop() else { break } }
+            }
             continue
         }
         if b.tied {
@@ -408,6 +413,9 @@ pub fn vertical(
                     "Listen across bars too: equal beats must not carry parallel perfects.",
                 )
             }
+        }
+        if selected >= 0 && selected != i {
+            while out.len > before { let _ = (mut out).pop() else { break } }
         }
         last = i
     }
@@ -819,4 +827,28 @@ pub fn cadential_sixth(line: List[theory.Pitch], mode: int, index: int) -> bool 
         theory.position(line[index + 1]) == final - 1 &&
         line[index + 1].accidental == 1 &&
         line[index + 2].accidental == 0
+}
+
+/// All local vertical/motion findings; selection never changes the judge.
+pub fn vertical(
+    cf: List[theory.Pitch],
+    cp: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+    below: bool,
+    book: int,
+    complete: bool,
+) -> List[theory.Break] {
+    vertical_at(cf, cp, beats, below, book, complete, -1)
+}
+
+/// The same rule pass, retaining only findings emitted at the selected event.
+pub fn event_breaks(
+    cf: List[theory.Pitch],
+    cp: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+    below: bool,
+    book: int,
+    event: int,
+) -> List[theory.Break] {
+    vertical_at(cf, cp, beats, below, book, true, event)
 }
