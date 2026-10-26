@@ -37,7 +37,8 @@ At the title, 1–6 chooses a book; Enter opens the current page. Left/Right
 moves by the book's smallest unit; Up/Down writes a note;
 Shift-Up/Down move an octave. Space auditions, h hears both voices, Enter checks,
 u undoes, n turns the page, and q or Escape quits. The permitted cadence sharp
-is #. In IV, t toggles a barline tie; in II and IV, 0 toggles the opening half rest.
+is #; in VI it cycles natural, sharp and flat anywhere.
+In IV, t toggles a barline tie; in II and IV, 0 toggles the opening half rest.
 In V, [ splits, ] joins, . dots, t ties to the next event, and r toggles a
 rest without changing its length. Every edit is undoable. b returns to the books.
 In VI, v changes the Answer/Countersubject writing desk.
