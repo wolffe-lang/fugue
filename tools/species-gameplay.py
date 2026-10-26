@@ -48,5 +48,5 @@ for book in range(2, 6):
     assert 'verified score 3' in result.stderr
 
 run(['--book', '0'], 2)
-run(['--book', '6'], 2)
+run(['--book', '7'], 2)
 print('species-gameplay: 48 certified seeds, 12 three-star references, four score refusals and four actual recordings green')

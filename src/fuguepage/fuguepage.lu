@@ -254,18 +254,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     )
     let lit_a = if s.hearing >= 0 then rhythm.at(first.beats, local_time) else -1
     let lit_b = if s.hearing >= duration then rhythm.at(second.beats, local_time) else -1
-    voice(
-        mut g,
-        v,
-        first,
-        start,
-        count,
-        t,
-        true,
-        -1,
-        lit_a,
-        bottom + 1,
-    )
+    voice(mut g, v, first, start, count, t, true, -1, lit_a, bottom + 1)
     if !solo {
         voice(
             mut g,
