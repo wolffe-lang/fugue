@@ -13,6 +13,71 @@ pub fn passing(cp: List[theory.Pitch], beats: List[rhythm.Beat], i: int) -> bool
     theory.magnitude(a) == 1 && a == b
 }
 
+/// Neighbours leave and return by opposite steps, never a leap.
+pub fn neighbour(cp: List[theory.Pitch], beats: List[rhythm.Beat], i: int) -> bool {
+    if i == 0 || i + 1 >= cp.len || beats[i - 1].rest || beats[i + 1].rest { return false }
+    let a = delta(cp[i - 1], cp[i]), b = delta(cp[i], cp[i + 1])
+    theory.magnitude(a) == 1 && a == -b
+}
+
+/// The five-note cambiata: step, descending third, two returning steps.
+/// The lower voice uses its mirror. The leap lands on a consonance.
+pub fn cambiata(
+    cf: List[theory.Pitch],
+    cp: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+    i: int,
+    below: bool,
+) -> bool {
+    if i == 0 || i + 3 >= cp.len || i + 3 >= beats.len { return false }
+    let start = rhythm.onset(beats, i - 1)
+    if start % 8 != 0 { return false }
+    let dir = if below then 1 else -1
+    if delta(cp[i - 1], cp[i]) != dir ||
+        delta(cp[i], cp[i + 1]) != dir * 2 ||
+        delta(cp[i + 1], cp[i + 2]) != -dir ||
+        delta(cp[i + 2], cp[i + 3]) != -dir {
+        return false
+    }
+    for j in i - 1..i + 4 {
+        if beats[j].rest || beats[j].tied { return false }
+        if j < i + 3 && beats[j].length != 2 { return false }
+        let bar = rhythm.onset(beats, j) / 8
+        if bar >= cf.len { return false }
+        if j != i && theory.interval(cf[bar], cp[j]).consonance == 2 { return false }
+    }
+    true
+}
+
+/// Two intervening quarters connect consonant endpoints by three steps.
+pub fn double_passing(
+    cf: List[theory.Pitch],
+    cp: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+    i: int,
+) -> bool {
+    for offset in 1..3 {
+        let start = i - offset
+        if start < 0 || start + 3 >= cp.len { continue }
+        if rhythm.onset(beats, start) % 8 != 0 { continue }
+        let dir = delta(cp[start], cp[start + 1])
+        if theory.magnitude(dir) != 1 { continue }
+        var good = true
+        for j in start..start + 4 {
+            if beats[j].rest || beats[j].tied || beats[j].length != 2 { good = false }
+            if j > start && delta(cp[j - 1], cp[j]) != dir { good = false }
+        }
+        let bar = rhythm.onset(beats, start) / 8
+        if bar >= cf.len { continue }
+        if theory.interval(cf[bar], cp[start]).consonance == 2 ||
+            theory.interval(cf[bar], cp[start + 3]).consonance == 2 {
+            good = false
+        }
+        if good { return true }
+    }
+    false
+}
+
 /// Parallel perfects include compound equivalents and require motion in both voices.
 pub fn parallel(a: theory.Pitch, b: theory.Pitch, c: theory.Pitch, d: theory.Pitch) -> bool {
     let old = theory.interval(a, b), next = theory.interval(c, d)
@@ -40,6 +105,11 @@ pub fn classify(
     if beats[i].rest { return "rest" }
     if theory.interval(cf[time / 8], cp[i]).consonance != 2 { return "consonance" }
     if time % 8 == 0 { return "unprepared" }
+    if book >= 3 && book != 4 {
+        if cambiata(cf, cp, beats, i, below) { return "cambiata" }
+        if double_passing(cf, cp, beats, i) { return "double-passing" }
+        if neighbour(cp, beats, i) { return "neighbour" }
+    }
     if book >= 2 && passing(cp, beats, i) { return "passing" }
     "unlicensed"
 }
@@ -87,10 +157,10 @@ pub fn vertical(
         let ending = bar == cf.len - 1
         theory.require(
             mut out,
-            b.length == (if ending then 8 else 4),
+            b.length == (if ending then 8 else if book == 3 then 2 else 4),
             bar + 1,
-            "second-rhythm",
-            "Write two halves, then one whole at the close.",
+            if book == 3 then "third-rhythm" else "second-rhythm",
+            "Use this book's equal subdivisions, then a whole at the close.",
         )
         theory.require(
             mut out,
@@ -146,10 +216,16 @@ pub fn vertical(
         } else if iv.consonance == 2 && (complete || i + 1 < cp.len) {
             theory.require(
                 mut out,
-                passing(cp, beats, i),
+                passing(cp, beats, i) ||
+                    book == 3 &&
+                        (
+                            neighbour(cp, beats, i) ||
+                                double_passing(cf, cp, beats, i) ||
+                                cambiata(cf, cp, beats, i, below)
+                        ),
                 bar + 1,
-                "passing-dissonance",
-                "Walk through the rubbing note by steps in one direction.",
+                if book == 3 then "third-dissonance" else "passing-dissonance",
+                "Give the dissonance a complete passing, neighbour or cambiata figure allowed in this book.",
             )
         }
         if last >= 0 {
@@ -190,6 +266,18 @@ pub fn vertical(
                     bar + 1,
                     "accented-parallel",
                     "The downbeats still count: do not hide parallel perfects between them.",
+                )
+            }
+        }
+        if book == 3 && bar > 0 && time % 8 != 0 {
+            let old = rhythm.at(beats, time - 8)
+            if old < cp.len && !beats[old].rest {
+                theory.require(
+                    mut out,
+                    !parallel(cf[bar - 1], cp[old], cf[bar], cp[i]),
+                    bar + 1,
+                    "same-beat-parallel",
+                    "Listen across bars too: equal beats must not carry parallel perfects.",
                 )
             }
         }
