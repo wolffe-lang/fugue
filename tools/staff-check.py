@@ -60,10 +60,10 @@ def luminance(index):
     v = [c/255 for c in rgb(index)]
     linear = [c/12.92 if c <= .04045 else ((c+.055)/1.055)**2.4 for c in v]
     return sum(x*w for x,w in zip(linear, [.2126,.7152,.0722]))
-for ink in [130,24]:
+for ink in [52,24]:
     for ground in [230,223,222]:
         contrast = (luminance(ground)+.05)/(luminance(ink)+.05)
-        assert contrast >= 3, (ink,ground,contrast)
+        assert contrast >= (7 if ink == 52 else 3), (ink,ground,contrast)
         print(f'staff-check: palette {ink} on {ground} contrast {contrast:.3f}:1')
 
 pcm_path = root/'target/staff-check/whole-seed7.pcm'

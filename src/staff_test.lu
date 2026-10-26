@@ -152,7 +152,7 @@ fn test_cantus_keeps_its_hollow_head_and_contrasting_ink() {
         let cp_y = staff.head(mut g, v, theory.pitch(32), 13, t, false, true, true)
         assert(cp_y == y)
         assert(g.cells[y * 80 + 12].cp == (if t == 1 then 0x25cb else 111))
-        assert(g.cells[y * 80 + 12].fg == (if t == 1 then 130 else 1))
+        assert(g.cells[y * 80 + 12].fg == (if t == 1 then 52 else 9))
         assert(g.cells[y * 80 + 13].cp == (if t == 1 then 0x25cf else 42))
         assert(g.cells[y * 80 + 13].fg == (if t == 1 then 24 else 4))
         assert(g.cells[y * 80 + 13].bg == (if t == 1 then 222 else 11))

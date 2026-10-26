@@ -97,8 +97,8 @@ pub fn row_of(v: Viewport, p: theory.Pitch) -> int { v.bottom - (theory.position
 /// Return the natural pitch named by this viewport row.
 pub fn pitch_of(v: Viewport, row: int) -> theory.Pitch { theory.pitch(v.base + v.bottom - row) }
 
-/// Saturated burnt orange against parchment; the player's ink remains blue.
-pub fn cantus_ink(t: int) -> int { if t == 1 then 130 else 1 }
+/// Deep red, at least 7:1 on every parchment ground; plain bright red.
+pub fn cantus_ink(t: int) -> int { if t == 1 then 52 else 9 }
 
 /// Dark blue distinguishes the editable voice.
 pub fn player_ink(t: int) -> int { if t == 1 then 24 else 4 }
@@ -213,7 +213,7 @@ pub fn head(
             cp,
             if cantus then cantus_ink(t) else player_ink(t),
             if lit then (if t == 1 then 222 else 11) else cell.bg,
-            if selected || lit then 1 else 0,
+            if cantus || selected || lit then 1 else 0,
         ),
     )
     if p.accidental == 1 {
@@ -454,7 +454,7 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
     text(mut g, 13, margin + 2, "P perfect", harmony_ink(0, t), bg, false)
     text(mut g, 14, margin + 2, "i imperfect", harmony_ink(1, t), bg, false)
     text(mut g, 15, margin + 2, "x dissonant", harmony_ink(2, t), bg, false)
-    text(mut g, rows - 1, 3, "o cantus: burnt orange", cantus_ink(t), bg, false)
+    text(mut g, rows - 1, 3, "o cantus: deep red", cantus_ink(t), bg, false)
     text(mut g, rows - 1, 27, "* player: dark blue", blue, bg, false)
     text(
         mut g,
