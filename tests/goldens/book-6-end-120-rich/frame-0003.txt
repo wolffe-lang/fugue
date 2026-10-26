@@ -1,40 +1,40 @@
        ·                                    ·                                                                           
-   fugue / VI. The fugue                                                                          VI. The fugue         
-        ·                              ·                                                                                
-                                                                        ·                         Writing Counter       
-                                                                                                                      · 
-                                                                                                  Bar 1                 
-                                                                                                                        
-                                                                                                  Real only             
-                                                                                                                        
-                                                                                                  Real answer           
-                                                      ·               ·                                                 
-                                                                                                                   ·    
- Treble 7          8      9          10              11     12                                                          
- B6                                                                                               Values /2 : /2        
- A6            ·                                                                        ·                               
- G6                                                       ·                                       h exposition          
- F6                                                                          · ·                  Answer               ·
- E6                                                          ·                 ·                  One voice given    ·  
- D6                                   |    |                                                                            
- C6                                   |    |                                          ·                                 
- B5                             |    ○     |    |                                                                       
- A5           |            |    |   ───  ─○─    |                                                                       
- G5           |            |   ○    ·           |    ○                                                                  
- F5    │────♯○────│──────│○♯────────│─────────♯○────│──────│○♯────────────────────────────────│                         
- E5    │          │○     │          │               │      │                                · │                         
- D5    │─|────────│──────│──────────│───────────────│──────│──────────────────────────────────│               ·         
- C5    │ |        │      │          │           ·   │      │                                  │                         
- B4    │○─────────│──────│──────────│───────────────│──────│──────────────────────────────────│   Countersubject        
- A4    │          │      │          │       |    |  │      │                                  │                         
- G4    │──|────|──│──────│──|────|──│──|────|────|──│──────│──────────────────────────────────│                         
- F4    │  | ·  |  │  ·   │  |    |  │  |    |    |  │      │                                  │                         
- E4    │♮●────●───│─●────│─●────●───│─●────●────●───│─●────│─●────────────────────────────────│                         
- D4     SP5  wM9   SP8    SM9  wm10  SP12 wP11 wM9   Sm10   SM9                                                         
- C4     /2   /2    /1     /2   /2    /2   /4   /4    /1     /1                                                          
- B3                                                             ·                ·                                      
- A3                          ·                                                               ·                          
- G3                                                              ·                                                      
-                                                                                                                        
+   fugue / VI. The fugue                                                                          Countersubject desk   
+        ·                              ·                                                          Answer+Countersubject 
+                                                                        ·                       |                       
+                                                                                                | Editing bar 1       · 
+                                                                                                | Bar 1, beat 1:8       
+                                                                                                |                       
+                                                                                                | P5 perfect            
+                                                                                                | E4                    
+                                                                                                | consonance            
+                                                      ·               ·                         | strong beat           
+                                                                                                | Figure allowed   ·    
+ Treble 1          2        3          4               5        6                               | No local break        
+ B6                                                                                             |                       
+ A6            ·                                                                        ·       |                       
+ G6                                                       ·                                     |                       
+ F6                                                                          · ·                | Breaks: bar 1        ·
+ E6                                                          ·                 ·                | bar 1 - downbeat-cons 
+ D6                                     |    |                                                  | bar 1 - florid-disson 
+ C6                                     |    |                                        ·         | bar 1 - downbeat-cons 
+ B5                               |    ○     |    |                                             | bar 1 - florid-disson 
+ A5           |              |    |   ───  ─○─    |                                             | bar 1 - crossing      
+ G5           |              |   ○  ·             |    ○                                        | bar 1 - overlap       
+ F5    │────♯○────│────────│○♯────────│─────────♯○────│────────│○♯────────────────────────────│ | bar 1 - inverted-flor 
+ E5    │          │○       │          │               │        │                            · │ | bar 1 - inverted-flor 
+ D5    │─|────────│────────│──────────│───────────────│────────│──────────────────────────────│ | bar 1 - sequence      
+ C5    │ |        │        │          │         ·     │        │                              │ | bar 1 - sequence      
+ B4    │○─────────│────────│──────────│───────────────│────────│──────────────────────────────│ | bar 1 - repeat        
+ A4    │          │        │          │       |    |  │        │                              │ | bar 1 - sequence      
+ G4    │──|────|──│────────│──|────|──│──|────|────|──│────────│──────────────────────────────│ | bar 1 - sequence      
+ F4    │  | ·  |  │  ·     │  |    |  │  |    |    |  │        │                              │ | bar 1 - one-climax    
+ E4    │♮●────●───│─●──────│─●────●───│─●────●────●───│─●──────│─●────────────────────────────│ | bar 1 - climax-positi 
+ D4     SP5  wM9   SP8      SM9  wm10  SP12 wP11 wM9   Sm10   · SM9                             | bar 1 - direction-cha 
+ C4     /2   /2    /1       /2   /2    /2   /4   /4    /1       /1                              | bar 1 - leap-count    
+ B3      ^                                                      ·                ·              |                       
+ A3                          ·                                                               ·  |                       
+ G3                                                              ·                              |                       
+                                                                                                |                       
   [ ] . t r rhythm  Arrows/# pitch  v voice  h hear  Enter check  n b q                                                 
     ··                                          ·                                             ·                         

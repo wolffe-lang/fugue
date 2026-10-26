@@ -1,0 +1,24 @@
+                                                                                
+   fugue / VI. The fugue                                  Answer desk           
+                                                          Subject+Answer        
+ Treble 1          2      3          4             >>   |                       
+ B5                                                     | Editing bar 1         
+ A5                                                     | Bar 1, beat 1:8       
+ G5                                                     |                       
+ F5    │──────────│──────│──────────│─||───||─────│───│ | P1 perfect            
+ E5    │ ||       │      │          │ ||   ||     │   │ | C5                    
+ D5    │─||───────│──────│──────||──│○●────||──||─│───│ | answer-transposition  
+ C5    │○●♮   ||  │      │ ||   ||  │     ○●   || │   │ | strong beat           
+ B4    │──────||──│──────│─||──○●───│──────────||─│───│ | Figure not allowed    
+ A4    │     ○●   │      │○●        │         ○●  │   │ | bar 1 - answer-transp 
+ G4    │──────────│○●────│──────────│─────────────│───│ |                       
+ F4    │          │      │          │             │   │ |                       
+ E4    │──────────│──────│──────────│─────────────│───│ |                       
+ D4     SP1  wP1   SP1    SP1  wP1   SP1  wP1 wP1       | Breaks: bar 1         
+ C4     /2   /2    /1     /2   /2    /2   /4 ·/4        | bar 1 - downbeat-cons 
+ B3      ^            ·                                 | bar 1 - downbeat-cons 
+ A3                                                    ·| bar 1 - diatonic      
+ G3                                                     |                       
+                                                        |                       
+  Arrows/# pitch   v voice   h exposition   Enter check   n next b q            
+                                                                                

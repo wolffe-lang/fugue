@@ -1,24 +1,24 @@
                                                                                 
-   fugue / VI. The fugue                                  VI. The fugue         
-                                                                                
- Treble 1          2      3          4             >>     Writing Answer        
- B5                                                                             
- A5                                                       Subject+Answer        
- G5                                                       Bar 1                 
- F5    |----------|------|----------|-||---||-----|---|                         
- E5    | ||       |      |          | ||   ||     |   |   Real or tonal         
- D5    |-||-------|------|------||--|o*----||--||-|---|                         
- C5    |o*n   ||  |      | ||   ||  |     o*   || |   |   refused               
- B4    |------||--|------|-||--o*---|----------||-|---|             .           
- A4    |     o*   |      |o*        |         o*  |   |                         
- G4    |----------|o*----|----------|-------------|---|                         
- F4    |          |      |          |             |   |   Values /2 : /2        
- E4    |----------|------|----------|-------------|---|                         
- D4     SP1  wP1   SP1    SP1  wP1   SP1  wP1 wP1         h exposition          
- C4     /2   /2    /1     /2   /2    /2   /4 ./4                                
- B3                   .                                   v change voice        
- A3                                                    .                        
- G3                                                                             
-                                                                                
+   fugue / VI. The fugue                                  Answer desk           
+                                                          Subject+Answer        
+ Treble 1          2      3          4             >>   |                       
+ B5                                                     | Editing bar 1         
+ A5                                                     | Bar 1, beat 1:8       
+ G5                                                     |                       
+ F5    |----------|------|----------|-||---||-----|---| | P1 perfect            
+ E5    | ||       |      |          | ||   ||     |   | | C5                    
+ D5    |-||-------|------|------||--|o*----||--||-|---| | answer-transposition  
+ C5    |o*n   ||  |      | ||   ||  |     o*   || |   | | strong beat           
+ B4    |------||--|------|-||--o*---|----------||-|---| | Figure not allowed    
+ A4    |     o*   |      |o*        |         o*  |   | | bar 1 - answer-transp 
+ G4    |----------|o*----|----------|-------------|---| |                       
+ F4    |          |      |          |             |   | |                       
+ E4    |----------|------|----------|-------------|---| |                       
+ D4     SP1  wP1   SP1    SP1  wP1   SP1  wP1 wP1       | Breaks: bar 1         
+ C4     /2   /2    /1     /2   /2    /2   /4 ./4        | bar 1 - downbeat-cons 
+ B3      ^            .                                 | bar 1 - downbeat-cons 
+ A3                                                    .| bar 1 - diatonic      
+ G3                                                     |                       
+                                                        |                       
   Arrows/# pitch   v voice   h exposition   Enter check   n next b q            
                                                                                 

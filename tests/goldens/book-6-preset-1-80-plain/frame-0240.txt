@@ -1,24 +1,24 @@
                                                                                 
    fugue / VI. The fugue                                  VI. The fugue         
-                                                                                
- Treble 7             8          9      10         >>     Writing Answer        
- B5                .                                                            
- A5                                                       Answer                
- G5                                                       Bar 2                 
- F5    |----------|--|-|--------|------|----------|---|                         
- E5    |      |   |  | |    |   |      | .        |   |   Countersubject        
- D5.   |------|---|--|o-----|---|------|------|---|---|   Real only             
- C5    |      |  o   |     o |  |      |      |   |   |                         
- B4    |-|---o-------|-------|--|o-----|-|---o----|---|   Real answer           
- A4    | |         | |  |   *   |      | |        |   |     .                   
- G4    |o-|----|---|-|--|-------|------|o-|-------|---|                         
- F4    |  |    |   | |#*        |      |  |    |  |  .|                         
- E4    |-*-----|--*--|----------|------|-*-----|--|---|   Values /2 : /2        
- D4     Sm3   *  wm6  Sm6  wm3    *     Sm3   *              .                  
- C4     /2   wM6 /4   /2   /2    SM6    /2   wM6          h exposition          
- B3          /4                  /1      .   /2               .                 
- A3     .                                        .        One voice given       
- G3                                                                             
-                                                                                
+                                                          Answer+Countersubject 
+ Treble 7             8          9     10         1>>   |                       
+ B5                .                                    | Editing bar 6         
+ A5                                                     | Bar 6, beat 1:8       
+ G5                                                     |                       
+ F5    |----------|--|-|--------|------|----------|---| | P5 perfect            
+ E5    |      |   |  | |    |   |      | .        |   | | G4                    
+ D5.   |------|---|--|o-----|---|------|------|---|---| | exact-answer          
+ C5    |      |  o   |     o |  |      |      |   |   | | strong beat           
+ B4    |-|---o-------|-------|--|o-----|-|---o----|---| | Figure allowed        
+ A4    | |         | |  |   *   |      | |        |   | | No local break        
+ G4    |o-|----|---|-|--|-------|------|o-|-------|---| |                       
+ F4    |  |    |   | |#*        |      |  |    |  |  .| |                       
+ E4    |-*-----|--*--|----------|------|-*-----|--|---| |                       
+ D4     Sm3   *  wm6  Sm6  wm3    *     Sm3   *         | Breaks: bar 6         
+ C4     /2   wM6 /4   /2   /2    SM6    /2   wM6        | No break in this bar  
+ B3          /4             ^    /1      .   /2         |     .                 
+ A3     .                                        .      |                       
+ G3                                                     |                       
+                                                        |                       
   Arrows/# pitch   h exposition   Enter check   n next   b books   q quit       
                                                                                 

@@ -1,24 +1,24 @@
                                                                                 
-   fugue / VI. The fugue                                  VI. The fugue         
-                                                                                
- Treble 8      9          10            11     12         Answer                
- B5                                                       Writing Counter       
- A5                  |   -o-        |                     Countersubject        
- G5             |    |     |   o    |          o          Bar 6                 
- F5    |------|-|--#o-|--|-|----|---||-|o#----|-------|                         
- E5    |      |o |    |  |  |   || o | |      |       |   Real or tonal         
- D5    |o-----|--|---*---|--|---||---|-|------|-------|                         
- C5    |      | *        | *     |  *  |      |       |   Tonal answer          
- B4    |-*----|----------|------*------|------|-------|             .           
- A4    |      |          |             | *    |       |   Mutation attack 1     
- G4    |------|----------|-------------|------|n*-----|                         
- F4    |      |          |             |      |       |   Values /1 : /1        
- E4    |------|----------|-------------|------|-------|                         
- D4     Sm3    SM3  wM3   SM6  wm6 wM3  SM6    SP8        h exposition          
- C4     /1     /2   /2    /2   /4  /4   /1   . /1                               
- B3                   .                                   v change voice        
- A3                                                    .                        
- G3                                                                             
-                                                                                
+   fugue / VI. The fugue                                  Countersubject desk   
+                                                          Answer+Countersubject 
+ Treble 3          4             5        6             |                       
+ B5                                                     | Editing bar 6         
+ A5           |   -o-        |                          | Bar 6, beat 1:8       
+ G5      |    |     |   o    |            o             |                       
+ F5    |-|--#o-|--|-|----|---||-|o#------|------------| | P8 perfect            
+ E5    |o |    |  |  |   || o | |        |            | | G4                    
+ D5    |--|---*---|--|---||---|-|--------|------------| | consonance            
+ C5    | *        | *     |  *  |        |            | | strong beat           
+ B4    |----------|------*------|--------|------------| | Figure allowed        
+ A4    |          |             | *      |            | | No local break        
+ G4    |----------|-------------|--------|n*----------| |                       
+ F4    |          |             |        |            | |                       
+ E4    |----------|-------------|--------|------------| |                       
+ D4     SM3  wM3   SM6  wm6 wM3  SM6      SP8           | Breaks: bar 6         
+ C4     /2   /2    /2   /4  /4   /1       /1 .          | No break in this bar  
+ B3                   .                    ^            |                       
+ A3                                                    .|                       
+ G3                                                     |                       
+                                                        |                       
   [ ] . t r rhythm  Arrows/# pitch  v voice  h hear  Enter check  n b q         
                                                                                 

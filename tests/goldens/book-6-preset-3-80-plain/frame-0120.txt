@@ -1,24 +1,24 @@
                                                                                 
    fugue / VI. The fugue                                  VI. The fugue         
-                                                                                
- Treble 1          2      3          4             >>     Subject alone         
- B5                                                                             
- A5                                                       Subject               
- G5                                                       Bar 4                 
- F5    |----------|------|----------|-|----|------|---|                         
- E5    | |        |      |          | |    |      |   |   Real or tonal         
- D5    |-|--------|------|------|---|o-----|---|--|---|                         
- C5    |o     |   |      | |    |   |     o    |  |   |   Tonal answer          
- B4    |------|---|------|-|---o----|----------|--|---|             .           
- A4    |     o    |      |o         |         o   |   |   Mutation attack 1     
- G4    |----------|o-----|----------|-------------|---|                         
- F4    |          |      |          |             |   |   Values /4 : /4        
- E4    |----------|------|----------|-------------|---|                         
- D4     /2   /2    /1     /2   /2    /2   /4  /4          h exposition          
- C4                                          .                                  
- B3                   .                                   v change voice        
- A3                                                    .                        
- G3                                                                             
-                                                                                
+                                                          Subject               
+ Treble 1          2        3          4           >>   |                       
+ B5                                                     | Editing bar 6         
+ A5                                                     | Bar 6, beat 1:8       
+ G5                                                     |                       
+ F5    |----------|--------|----------|-|----|--------| | P8 perfect            
+ E5    | |        |        |          | |    |        | | G4                    
+ D5    |-|--------|--------|------|---|o-----|---|----| | consonance            
+ C5    |o     |   |        | |    |   |     o    |    | | strong beat           
+ B4    |------|---|--------|-|---o----|----------|----| | Figure allowed        
+ A4    |     o    |        |o         |         o     | | No local break        
+ G4    |----------|o-------|----------|---------------| |                       
+ F4    |          |        |          |               | |                       
+ E4    |----------|--------|----------|---------------| |                       
+ D4     /2   /2    /1       /2   /2    /2   /4  /4      | Breaks: bar 6         
+ C4                                          .          | No break in this bar  
+ B3                   .                          ^      |                       
+ A3                                                    .|                       
+ G3                                                     |                       
+                                                        |                       
   [ ] . t r rhythm  Arrows/# pitch  v voice  h hear  Enter check  n b q         
                                                                                 
