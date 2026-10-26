@@ -86,11 +86,11 @@ first line continues to identify the selected edit location.
 
 Playback rhythm has three named seams: `session.ticks_per_whole()` is the
 single duration constant; `session.piece_ticks(state)` gives the phrase span;
-`session.event_at(state, elapsed_ticks)` finds the lit event. Book I divides by
-the whole-note span; rhythm can replace that lookup with beat lengths without
-changing the staff or player owner. `ear.part(cantus, voice)` produces score
-text from the event lists (currently pitches, all wholes); `whole_part(state)`
-is only its adapter. Tempo and PCM duration derive from the same session clock.
+`session.event_at(state, elapsed_ticks)` finds the lit event through the rhythmic
+grid, including Book I's wholes. `ear.part(cantus, voice)` remains the whole-note
+adapter; `whole_part(state)` uses `manuscript.part` for later books' lengths,
+rests and ties. Tempo and PCM duration derive from the same session clock.
+Neither adapter changes the player owner.
 ## The rhythmic books
 
 `rhythm` stores integer eighth-note lengths, rests and incoming ties. `species`

@@ -50,3 +50,16 @@ Normal play does not emit per-cue diagnostic lines. The Mac pty row requires
 an owned `/usr/bin/afplay` child with the whole WAV argument, observes it alive,
 and waits for its successful exit and reap. Linux's named WAV sink is not
 claimed as speaker evidence. A rendered file without the output handoff fails.
+
+## Rhythmic books
+
+Books II–V send their written values and outgoing ties to the same part reader.
+A whole still lasts one second; a half, quarter and eighth divide that time
+exactly. Incoming editor ties become outgoing `~` marks in the score text.
+The viewport and note lights follow this same clock. The later-book note bank
+also contains the permitted cadence accidentals in the editable register.
+
+The rhythmic audio gate compares the complete PCM with each isolated voice,
+checks its exact duration and nonzero samples on both compiled backends, and
+a live Book V terminal row verifies that h reaches the existing output owner.
+These checks do not claim a physical loudspeaker or headphone listening test.

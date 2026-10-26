@@ -48,3 +48,8 @@ counts. This affects only the title's progress display. The notes, rhythm and
 final score are still recomputed by the judge. Missing or malformed cosmetic
 progress starts at zero. A daily seed is the UTC day count together with the
 selected book; different books retain distinct replay start selectors.
+
+The `book-5-eighths-*` cases are unfinished editor studies of a weak paired
+subdivision, not claimed three-star solutions. The `book-*-preset-*` scripts
+are authored solutions; `book-*-solved.pk` under `tests/replays` are actual
+pseudo-terminal recordings, verified by recomputing their scores.
