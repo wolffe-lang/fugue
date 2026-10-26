@@ -1,0 +1,110 @@
+read 1
+57870143ebbb4806b8bee40379e8c6e781f50842
+# fg00: trunk read twice before implementation.
+57870143ebbb4806b8bee40379e8c6e781f50842
+# lair — the pinned toolchain, for the engine and for every game that pins
+# the engine (a game's tools are the engine's, run from its staged `.lair/`,
+# so this one file names the compiler for the whole collection).
+#
+# wolf and lupin come from their RELEASE ARCHIVES, pinned by sha256 digest,
+# never from a source build (the shape yew, boreutils and pelt pin with).
+# `tools/fetch-toolchain` downloads the archive for this host, refuses on a
+# digest mismatch, and stages the whole archive into `.wolf-bin/`
+# (gitignored); the native tier needs `libwolf_rt.a` beside the driver.
+# Identity is the first line of `--version`: `tools/lib-toolchain.sh`
+# refuses when it drifts from `version_line`.
+#
+# ## The first pin: 0.2.35 / 0.1.56 (pack's pk00, 2026-10-25; moved here by cb00)
+#
+# Digests read twice from the release API (wolf-lang release `v0.2.35`,
+# wolf-interp release `v0.1.56`; `gh release view --json assets`, two
+# passes at 04:33:42Z, identical) and equal to yew's fourth pin (yw07).
+# The std pin is the commit the 0.2.35 archive bundles (`std/STD-REV`),
+# wolf-std 2386522e, confirmed from the downloaded archive by
+# tools/fetch-toolchain. Windows is out of scope (pack is a POSIX terminal
+# program); linux aarch64 is pinned so a future PAX or Pi lane has it.
+
+[wolf]
+version = "0.2.35"
+repo = "wolffe-lang/wolf-lang"
+rev = "cf0c13d38479f444b69bb8356ad5709d07eff323"
+version_line = "wolf 0.2.35 (wolfgang, pin cf0c13d)"
+aarch64-apple-darwin = "240b84d079b1b9a0d88681ac08fca4816f84778e2d6c94c435ceb2dd6a5f042a"
+x86_64-unknown-linux-gnu = "4cc4045bbbb605c07835bc4f32685953c784eeef4cd3139a48b457dfc90dad1a"
+aarch64-unknown-linux-gnu = "30ccded432264b7ddd4ebf738d4f895d12091ca604e2da4c2f831da807886f3e"
+
+[lupin]
+version = "0.1.56"
+repo = "wolffe-lang/wolf-interp"
+rev = "28547b4324524d5477a6e54e4f6888462461a21f"
+version_line = "lupin 0.1.56 (wolf-interp, reference interpreter at pin 294d626)"
+aarch64-apple-darwin = "9133bfdbb95f6a18745439bf0b2b5280860a5bfeaf9ae038ea120a72d58f7687"
+x86_64-unknown-linux-gnu = "ad703550ac4787e8e4bb26989d591a731410274d7332f2b4e8b9a64c878822cc"
+aarch64-unknown-linux-gnu = "e2719ab28df566ad7b92714191bac00599fbca6c95b6b579d470497b482dd591"
+
+[std]
+# The exact tree the 0.2.35 archive bundles (its STD-REV).
+repo = "wolffe-lang/wolf-std"
+rev = "2386522eb059cca5a84108562c2c0a0e72345d34"
+x86_64-unknown-linux-gnu wolf=4cc4045bbbb605c07835bc4f32685953c784eeef4cd3139a48b457dfc90dad1a lupin=ad703550ac4787e8e4bb26989d591a731410274d7332f2b4e8b9a64c878822cc std=2386522eb059cca5a84108562c2c0a0e72345d34
+a368c8eccce8b1800c80aa818ae482e541aa9636b676540851e23863d333eb8b  .wolf-bin/_wolf
+9efc68e1d0c3a1e1c5c1b43ab1448a3c1b42963596b8d8d106e4fbda12ebbee7  .wolf-bin/libwolf_rt.a
+991d54cf28e4f182b339d9eeb4dba7b2df3ad2618acb3bb53bddca42856b4bb9  .wolf-bin/lupin
+wolf 0.2.35 (wolfgang, pin cf0c13d)
+paired with lupin 0.1.56 (reference interpreter), pin 294d626
+lupin 0.1.56 (wolf-interp, reference interpreter at pin 294d626)
+read 2
+57870143ebbb4806b8bee40379e8c6e781f50842
+# fg00: trunk read twice before implementation.
+57870143ebbb4806b8bee40379e8c6e781f50842
+# lair — the pinned toolchain, for the engine and for every game that pins
+# the engine (a game's tools are the engine's, run from its staged `.lair/`,
+# so this one file names the compiler for the whole collection).
+#
+# wolf and lupin come from their RELEASE ARCHIVES, pinned by sha256 digest,
+# never from a source build (the shape yew, boreutils and pelt pin with).
+# `tools/fetch-toolchain` downloads the archive for this host, refuses on a
+# digest mismatch, and stages the whole archive into `.wolf-bin/`
+# (gitignored); the native tier needs `libwolf_rt.a` beside the driver.
+# Identity is the first line of `--version`: `tools/lib-toolchain.sh`
+# refuses when it drifts from `version_line`.
+#
+# ## The first pin: 0.2.35 / 0.1.56 (pack's pk00, 2026-10-25; moved here by cb00)
+#
+# Digests read twice from the release API (wolf-lang release `v0.2.35`,
+# wolf-interp release `v0.1.56`; `gh release view --json assets`, two
+# passes at 04:33:42Z, identical) and equal to yew's fourth pin (yw07).
+# The std pin is the commit the 0.2.35 archive bundles (`std/STD-REV`),
+# wolf-std 2386522e, confirmed from the downloaded archive by
+# tools/fetch-toolchain. Windows is out of scope (pack is a POSIX terminal
+# program); linux aarch64 is pinned so a future PAX or Pi lane has it.
+
+[wolf]
+version = "0.2.35"
+repo = "wolffe-lang/wolf-lang"
+rev = "cf0c13d38479f444b69bb8356ad5709d07eff323"
+version_line = "wolf 0.2.35 (wolfgang, pin cf0c13d)"
+aarch64-apple-darwin = "240b84d079b1b9a0d88681ac08fca4816f84778e2d6c94c435ceb2dd6a5f042a"
+x86_64-unknown-linux-gnu = "4cc4045bbbb605c07835bc4f32685953c784eeef4cd3139a48b457dfc90dad1a"
+aarch64-unknown-linux-gnu = "30ccded432264b7ddd4ebf738d4f895d12091ca604e2da4c2f831da807886f3e"
+
+[lupin]
+version = "0.1.56"
+repo = "wolffe-lang/wolf-interp"
+rev = "28547b4324524d5477a6e54e4f6888462461a21f"
+version_line = "lupin 0.1.56 (wolf-interp, reference interpreter at pin 294d626)"
+aarch64-apple-darwin = "9133bfdbb95f6a18745439bf0b2b5280860a5bfeaf9ae038ea120a72d58f7687"
+x86_64-unknown-linux-gnu = "ad703550ac4787e8e4bb26989d591a731410274d7332f2b4e8b9a64c878822cc"
+aarch64-unknown-linux-gnu = "e2719ab28df566ad7b92714191bac00599fbca6c95b6b579d470497b482dd591"
+
+[std]
+# The exact tree the 0.2.35 archive bundles (its STD-REV).
+repo = "wolffe-lang/wolf-std"
+rev = "2386522eb059cca5a84108562c2c0a0e72345d34"
+x86_64-unknown-linux-gnu wolf=4cc4045bbbb605c07835bc4f32685953c784eeef4cd3139a48b457dfc90dad1a lupin=ad703550ac4787e8e4bb26989d591a731410274d7332f2b4e8b9a64c878822cc std=2386522eb059cca5a84108562c2c0a0e72345d34
+a368c8eccce8b1800c80aa818ae482e541aa9636b676540851e23863d333eb8b  .wolf-bin/_wolf
+9efc68e1d0c3a1e1c5c1b43ab1448a3c1b42963596b8d8d106e4fbda12ebbee7  .wolf-bin/libwolf_rt.a
+991d54cf28e4f182b339d9eeb4dba7b2df3ad2618acb3bb53bddca42856b4bb9  .wolf-bin/lupin
+wolf 0.2.35 (wolfgang, pin cf0c13d)
+paired with lupin 0.1.56 (reference interpreter), pin 294d626
+lupin 0.1.56 (wolf-interp, reference interpreter at pin 294d626)
