@@ -53,3 +53,33 @@ being played. Quit always works. Terminal restoration happens before waiting
 for any remaining audio release tail. The engine's decoder currently ignores
 CSI-u keys; legacy Enter and arrow sequences work. Enhanced keyboard decoding
 is an engine follow-on, not implemented privately here.
+
+
+## Staff drawing seam
+
+The staff helpers are pure over a supplied grid: no session mutation, clock,
+terminal writes or sound preparation. Rhythm drawing can use them without
+reimplementing geometry:
+
+- `viewport(top, bottom, base, left, right) -> Viewport`: base is the diatonic
+  position at the bottom; at least ten row steps are required. The lower line
+  is `base + 2`. Supply in-grid rows and columns with space for margin names.
+- `row_of(view, pitch) -> int` and `pitch_of(view, row) -> Pitch` are inverses
+  for natural pitches; accidentals retain the letter's row. Rows outside the
+  viewport remain mathematical rows, not clamped positions.
+- `lines(mut grid, view, tier)` draws five uninterrupted horizontal runs.
+- `draw_staff(mut grid, view, tier, bars)` adds the margin names and vertical
+  crossings at supplied bar columns. Lay down grain/current-bar shading first.
+- `ledger(mut grid, view, pitch, column, tier, cantus) -> int` adds three-cell
+  ledgers or an edge ^/v, returning the unclamped row. It preserves existing
+  bar crossings and heads.
+- `head(mut grid, view, pitch, column, tier, cantus, selected, lit) -> int`
+  calls the ledger helper and draws the hollow cantus or filled player head.
+  It returns that same row for stems and ties. Supply a head column inside a
+  bar with one cell of room on either side; this function never owns rhythm.
+  A cadence sharp uses the free adjacent cell, not a cantus head or boundary.
+
+Draw bar backgrounds and names before heads, then attach rhythm marks. Book I
+uses two adjacent head columns, so unisons remain distinct. The editor and the
+playback cursor are separate: playback shades its bar while the right panel's
+first line continues to identify the selected edit location.

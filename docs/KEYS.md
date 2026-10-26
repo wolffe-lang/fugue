@@ -20,3 +20,10 @@ CSI modifier form; the pinned engine does not yet decode CSI-u forms.
 
 `--mute` and `FUGUE_SOUND=0` suppress preparation and audio output, but not the
 listening animation. `--plain` selects ASCII and the sixteen console colours.
+
+
+The persistent bottom hint begins `h hear   Space sound   Enter check`.
+`h` begins at the first bar, regardless of the editing cursor, and plays both
+voices through the last. The moving bar shade, caret and two lit heads show
+what sounds. **Editing bar N** is the panel's first line; **First break** below
+it names a critic finding, which need not change when the cursor moves.

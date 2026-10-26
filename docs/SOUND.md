@@ -29,3 +29,24 @@ The engine's WAV owner has only a blocking finish operation, not a nonblocking
 reap or cancellation API. Fugue therefore owns the small afplay adapter through
 wolf-std rather than calling the engine's blocking finish from its frame loop.
 It still uses the engine's reader, synthesis, prepare and WAV encoding unchanged.
+
+
+`--sound-replay FILE` writes raw 48 kHz stereo S16_LE PCM for the written score
+at the end of a replay (`--script FILE --frames N`), or the initial seeded page.
+It does not start an audio player. The live `h` path uses the same renderer,
+with exactly one second per bar rather than an extra second of silent padding.
+The committed `tests/goldens/audio/whole-seed7.sha256` pins all 1,920,000 PCM
+bytes of the ten-bar seed-7 piece. Both compiled backends export and compare it;
+the pty row independently compares the actual `h` WAV's payload to that digest.
+Every bar has nonzero energy in both channels, no clipped samples, and a stereo
+RMS ratio below 2. Distinct timbres and p/mp dynamics (five dB favouring the
+choir), with opposing modest pans, are retained; listening remains the final
+judgement of their balance, not a claim inferred solely from stereo RMS.
+
+`FUGUE_AUDIO_TRACE=1` logs whole-render, output-start and player-end evidence.
+Redirect stderr to a file when using this diagnostic in a real terminal;
+otherwise diagnostics could move the terminal cursor outside the draw pen.
+Normal play does not emit per-cue diagnostic lines. The Mac pty row requires
+an owned `/usr/bin/afplay` child with the whole WAV argument, observes it alive,
+and waits for its successful exit and reap. Linux's named WAV sink is not
+claimed as speaker evidence. A rendered file without the output handoff fails.

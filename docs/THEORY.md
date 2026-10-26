@@ -72,3 +72,22 @@ The only borrowed music is the six cantus firmi transcribed in
 https://archive.org/details/gradusadparnassu00fuxj_0 . Their exact named breaks
 are expected test results, not errors suppressed to make the historical examples
 fit. No Fux line or counterpoint appears in a playable level.
+
+
+## Reading the shared staff
+
+The named staff is a diatonic pitch-space viewport, not a fixed treble or bass
+clef. Position 28 is C4; each row upward is the next letter, and an accidental
+shares that letter's row. All six modes use this white-key step series; a
+mode changes its final, not the meaning of a pitch name. The lower line is two
+steps above the bottom pitch of the current viewport. Lines are two steps
+apart, with one intervening space each. Every viewport row is named, including
+spaces and ledger positions; C4 is bold.
+
+For bottom C4, the lines are exactly the conventional treble E4 G4 B4 D5 F5,
+and the spaces are F4 A4 C5 E5. In a lower register the named lines move with
+the viewport so all five remain visible; they do not silently retain treble
+names. The optional spiral art study is not a treble clef. This shared space
+makes the interval between both voices readable without a second staff.
+`test_pitch_row_margin_round_trip_whole_viewport` holds names, C4, line/space
+steps, ledger continuation and both mapping directions to the same convention.
