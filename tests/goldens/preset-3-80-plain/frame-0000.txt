@@ -14,10 +14,10 @@
  A4 .  |   |o  |   |   |   |   |   |   |o  |          | |                       
  G4    |on-|---|---|o--|---|---|---|---|---|o---------| |    .                  
  F4    |   |   |   |   |   |   |   |   |   |    .     | |             .         
- E4  . |---|---|---|---|---|---|---|---|---|----------| | Breaks: whole page    
- D4     P5  P5  x5  P5  P5. x5  P5  x5 .P5  P5     .    | bar 2 - parallel-perf 
- C4     ^                  .                            | bar 3 - consonance    
-      .                   .                  .          |.bar 4 - hidden-perfec 
+ E4  . |---|---|---|---|---|---|---|---|---|----------| | Breaks: bar 1  .      
+ D4     P5  P5  x5  P5  P5. x5  P5  x5 .P5  P5     .    | No break in this bar  
+ C4     ^                  .                            |                       
+      .                   .                  .          |.      .               
   .                                .                .   |                       
       .                            .                    |                       
    h hear   Space sound   Enter check   Arrows write   u undo   q quit          

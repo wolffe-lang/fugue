@@ -1,0 +1,24 @@
+                ·                          ·     ·  ·  ·                        
+   fugue / V. The florid voice                                                  
+         ·          ·                        ·              ·           ·       
+         ·                                                                      
+    Not yet    0 / 3 stars    ·                                    ·         ·  
+                            ·     ·                            ·                
+    Contrary 0% / 50%    Steps 29% / 60%          ·        ··                   
+  · Climaxes apart: false    Short parallel runs: true                          
+    Intervals 1 / 3    Hard breaks 35                           ·               
+    Note values 3 / 3    Tied time 10% / 10%               ·                    
+        ·   ·                    ·  ·                  ·                        
+    Bar 2: downbeat-consonance / Let the strong beat stand on a consonance. ·   
+    Bar 2: same-beat-parallel / Listen across bars too: equal beats must not    
+ ·  Bar 3: parallel-perfect / Perfect intervals must not travel in parallel.    
+    Bar 3: same-beat-parallel / Listen across bars too: equal beats must not   ·
+    Bar 3: same-beat-parallel / Listen across bars too: equal beats must not    
+    Bar 4: parallel-perfect / Perfect intervals must not travel in parallel.  · 
+    Bar 4: accented-parallel / The downbeats still count: do not hide parall ·  
+    Bar 5: parallel-perfect / Perfect intervals must not travel in parallel.    
+    Bar 5: accented-parallel / The downbeats still count: do not hide parall    
+    Bar 5: same-beat-parallel / Listen across bars too: equal beats must not    
+                                                                   ·          · 
+   r edit   n next   b books   Up/Down scroll   q quit                          
+                                                   ·               ·       ·    

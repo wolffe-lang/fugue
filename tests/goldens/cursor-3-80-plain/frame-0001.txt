@@ -10,14 +10,14 @@
  E5    |   |   |   |   |   |   |   |   |   |          | | consonance            
  D5    |---|---|---|---|---|---|-*-|---|---|----------|.| strong beat           
  C5   .|   |   |   |   | * |   |   |   |   |         .| | Figure allowed    .   
- B4    |---|---|n*-|---|---|-*-|---|-*-|---|----------| | parallel-perfect      
+ B4    |---|---|n*-|---|---|-*-|---|-*-|---|----------| | bar 3 - parallel-perf 
  A4    |   | * |   |   |  .|   |   |   | * |          | |      .                
  G4    |-*-|---|---|-*-|---|---|o--|---|---|-*--------| |               .      .
  F4    |   |   |   |   |o  |   |   |   |   | .        | |       .    .          
- E4    |---|---|on-|---|---|o--|---|o--|---|----------| | Breaks: whole page  . 
- D4         o.  P5      P5  P5  P5  P5  o    .          |.bar 2 - parallel-perf 
- C4 .  -o-  P5  ^ .-o-                  P5 -o-.         | bar 3 - parallel-perf 
-        P5        . P5                      P5          | bar 4 - parallel-perf 
+ E4    |---|---|on-|---|---|o--|---|o--|---|----------| | Breaks: bar 3       . 
+ D4         o.  P5      P5  P5  P5  P5  o    .          |.bar 3 - parallel-perf 
+ C4 .  -o-  P5  ^ .-o-                  P5 -o-.         |  .                    
+        P5        . P5                      P5          |            .          
                                                       . |   .                   
                                                         |          .          . 
    h hear   Space sound   Enter check   Arrows write   u undo   q quit          

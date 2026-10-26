@@ -10,11 +10,11 @@
  D5    │──|'──────────────│──────────│──|───|───|─────│ | unlicensed-eighth     
  C5    │·   ·  |'  |      │      ·| ·│  |   |   |     │·| strong beat           
  B4   ·│───────|───|───|──│──|────|──│─●───●───●──────│ | Figure not allowed·   
- A4    │       |   |   |  │  |   ●   │            ·   │ | paired-eighths        
- G4    │──────●───●───●───│─●────────│────────────────│ | opening               
+ A4    │       |   |   |  │  |   ●   │            ·   │ | bar 1 - paired-eighth 
+ G4    │──────●───●───●───│─●────────│────────────────│ | bar 1 - opening       
  F4    │    ·             │       ·  │           ··  ·│ |               ·      ·
  E4    │──────────────\___│/─────────│○───────────────│ |       ·    ·          
- D4       ·               ·○          SP5 wP5 wP5       | Breaks: whole page  · 
+ D4       ·               ·○          SP5 wP5 wP5       | Breaks: bar 1       · 
  C4    ─○─   ·             SP4  wP5   /4  /4 ·/4        |·bar 1 - paired-eighth 
  B3 ·   SP12 wP5 wP5 wP5   /2   /2            ·         | bar 1 - opening       
         /8   /8  /4  /2                                 | bar 1 - paired-eighth 

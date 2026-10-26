@@ -14,10 +14,10 @@
  A4    │♮● │   │   │ ● │   │·  │○ ·│   │   │ ●        │ |                       
  G4    │───│───│───│───│○──│───│───│───│───│──────────│ | ·                     
  F4    │   │   │○  │   │  ·│○  │   │○  │   │          │ |         ·             
- E4    │───│○──│───│───│───│───│───│───│○──│──────────│ | Breaks: whole page    
- D4    ♮○   P5 ·P5  ○   P5  P5  P5  P5  P5  ○       ·   | bar 2 - parallel-perf 
- C4     P5      ·   P5                      P5      ·  ·| bar 3 - parallel-perf 
-        ^                             · ·               | bar 4 - parallel-perf 
+ E4    │───│○──│───│───│───│───│───│───│○──│──────────│ | Breaks: bar 1         
+ D4    ♮○   P5 ·P5  ○   P5  P5  P5  P5  P5  ○       ·   | No break in this bar  
+ C4     P5      ·   P5                      P5      ·  ·|                       
+        ^                             · ·               |                    ·  
   ·                 ·             ·                     |  ·              ·     
                      ·       ·                          |                      ·
    h hear   Space sound   Enter check   Arrows write   u undo   q quit          

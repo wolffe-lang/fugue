@@ -10,14 +10,14 @@
  A4    │   │ ● │   │   │   │   │   │   │ ● │          │ | consonance            
  G4    │───│───│───│─●─│───│───│○──│───│───│─●────────│·| strong beat           
  F4   ·│   │   │   │   │○  │   │   │   │   │         ·│ | Figure allowed    ·   
- E4    │───│───│○──│───│───│○──│───│○──│───│──────────│ | crossing   ·          
- D4         ○   P5      P5· P5  P5  P5  ○               | leap-count            
- C4    ♮○── P5     ─○─            ·     P5 ─○─   ··  ·  | range         ·      ·
+ E4    │───│───│○──│───│───│○──│───│○──│───│──────────│ | bar 1 - crossing      
+ D4         ○   P5      P5· P5  P5  P5  ○               | bar 1 - leap-count    
+ C4    ♮○── P5     ─○─            ·     P5 ─○─   ··  ·  | bar 1 - range ·      ·
  B3                 P5                      P5          |       ·    ·          
- A3     ───               ·                             | Breaks: whole page  · 
+ A3     ───               ·                             | Breaks: bar 1       · 
  G3          ·                               ·          |·bar 1 - crossing   ·  
- F3 ·   ♮●─       ·                           ·         | bar 2 - overlap       
-        P5        ·                                     | bar 2 - parallel-perf 
+ F3 ·   ♮●─       ·                           ·         | bar 1 - leap-count    
+        P5        ·                                     | bar 1 - range         
         ^                                             · |   ·                   
                                                         |          ·          · 
    h hear   Space sound   Enter check   Arrows write   u undo   q quit          

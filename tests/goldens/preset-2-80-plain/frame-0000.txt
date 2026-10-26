@@ -14,10 +14,10 @@
  A4    |n* |   |   | * |   |.  |o .|   |   | *        | |                       
  G4    |---|---|---|---|o--|---|---|---|---|----------| | .                     
  F4    |   |   |o  |   |  .|o  |   |o  |   |          | |         .             
- E4    |---|o--|---|---|---|---|---|---|o--|----------| | Breaks: whole page    
- D4    no   P5 .P5  o   P5  P5  P5  P5  P5  o       .   | bar 2 - parallel-perf 
- C4     P5      .   P5                      P5      .  .| bar 3 - parallel-perf 
-        ^                             . .               | bar 4 - parallel-perf 
+ E4    |---|o--|---|---|---|---|---|---|o--|----------| | Breaks: bar 1         
+ D4    no   P5 .P5  o   P5  P5  P5  P5  P5  o       .   | No break in this bar  
+ C4     P5      .   P5                      P5      .  .|                       
+        ^                             . .               |                    .  
   .                 .             .                     |  .              .     
                      .       .                          |                      .
    h hear   Space sound   Enter check   Arrows write   u undo   q quit          

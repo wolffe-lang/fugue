@@ -14,10 +14,10 @@
  F4    |         \___|/   .     |                |    | |      .                
  E4    |-------------|----------|o---------------|----| |               .      .
  D4                   o          SP5 wP5 wP5 wP5        |       .    .          
- C4    -o-.           SP4 .wP5   /4  /4  /4  /4  -o-    | Breaks: whole page  . 
+ C4    -o-.           SP4 .wP5   /4  /4  /4  /4  -o-    | Breaks: bar 1       . 
  B3     SP5 wP5 wP5   /2   /2                .          |.bar 1 - paired-eighth 
- A3 .   /4. /8  /2.                           .         | bar 2 - downbeat-cons 
-        .^        .                                     | bar 2 - same-beat-par 
+ A3 .   /4. /8  /2.                           .         | bar 1 - repeat        
+        .^        .                                     | bar 1 - repeat        
                                                       . |   .                   
                                                         |          .          . 
   [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check    

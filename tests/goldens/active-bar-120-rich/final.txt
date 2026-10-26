@@ -1,0 +1,40 @@
+                ·                          ·     ·  ·  ·                             ·                                · 
+   fugue / V. The florid voice                                                                                ·       · 
+         ·          ·                        ·              ·           ·                          ·       ·            
+         ·                                                                                                              
+    Not yet    0 / 3 stars    ·                                    ·         ·             ·                            
+                            ·     ·                            ·                                                        
+    Contrary 0% / 50%    Steps 29% / 60%          ·        ··                                     · ·                   
+  · Climaxes apart: false    Short parallel runs: true                                                               ·  
+    Intervals 1 / 3    Hard breaks 35                           ·                                   ·                   
+    Note values 3 / 3    Tied time 10% / 10%               ·                                    ·                       
+        ·   ·                    ·  ·                  ·                            ·           ·                 ·     
+    Bar 2: downbeat-consonance / Let the strong beat stand on a consonance. ·       ·                         ·         
+    Bar 2: same-beat-parallel / Listen across bars too: equal beats must not carry parallel perfects.                   
+ ·  Bar 3: parallel-perfect / Perfect intervals must not travel in parallel.                                            
+    Bar 3: same-beat-parallel / Listen across bars too: equal beats must not carry parallel perfects.                   
+    Bar 3: same-beat-parallel / Listen across bars too: equal beats must not carry parallel perfects.       ·           
+    Bar 4: parallel-perfect / Perfect intervals must not travel in parallel.  · ·                                       
+    Bar 4: accented-parallel / The downbeats still count: do not hide parallel perfects between them.        ·       · ·
+    Bar 5: parallel-perfect / Perfect intervals must not travel in parallel.                                            
+    Bar 5: accented-parallel / The downbeats still count: do not hide parallel perfects between them.                   
+    Bar 5: same-beat-parallel / Listen across bars too: equal beats must not carry parallel perfects.                   
+    Bar 6: same-beat-parallel / Listen across bars too: equal beats must not carry parallel perfects.                   
+    Bar 7: parallel-perfect / Perfect intervals must not travel in parallel.            ·                        ·      
+    Bar 7: same-beat-parallel / Listen across bars too: equal beats must not carry parallel perfects.                   
+   ·Bar 7: same-beat-parallel / Listen across bars too: equal beats must not carry parallel perfects.                   
+    Bar 8: parallel-perfect / Perfect intervals must not travel in parallel.   ·                                        
+    Bar 8: accented-parallel / The downbeats still count: do not hide parallel perfects between them.               ·   
+    Bar 9: parallel-perfect / Perfect intervals must not travel in parallel.  ·                      ·   ·              
+    Bar 9: accented-parallel / The downbeats still count: do not hide parallel perfects between them.                   
+    Bar 9: same-beat-parallel / Listen across bars too: equal beats must not carry parallel perfects.               ·   
+    Bar 10: parallel-perfect / Perfect intervals must not travel in parallel.                  ·            ·           
+    Bar 10: accented-parallel / The downbeats still count: do not hide parallel perfects between them.             ·    
+    Bar 10: closing / Close together on a unison or octave.                                                   ·         
+    Bar 9: two-voice-cadence / Let the last weak beat be a major sixth opening out, or a minor third closing in.    ·   
+    Bar 3: sequence / Change the figure instead of repeating its shape in sequence.                                     
+    Bar 3: repeat / Let the melody move rather than repeat its note.                                ·    ·              
+    Bar 3: repeat / Let the melody move rather than repeat its note.                           ·              ·      ·  
+          ·    ·                                ·                    ·        ·                             ·           
+   r edit   n next   b books   Up/Down scroll   q quit          ·       ·    ·     ·                ·                   
+               ·                        ·              ·  ·                                                             

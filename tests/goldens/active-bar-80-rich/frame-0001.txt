@@ -1,0 +1,24 @@
+                ·                          ·     ·  ·  ·                        
+   fugue / V. The florid voice                                                  
+   Ionian  seed 0  cantus below              ·              ·           ·       
+         ·                                              |                       
+ Treble 1          2          3                4   >>   | Editing bar 3      ·  
+ G5                         ·     ·                     | Bar 3, beat 1:8       
+ F5    │──────────│──────────│────────────────│───────│ |  ··                   
+ E5    │   ·      │          │  |   |   |·  | │    ·  │ | P5 perfect            
+ D5   ·│──────────│──────────│──|───|───|───|─│───────│ | B4    ·               
+ C5    │          │       |  │  |   |   |   | │       │ | consonance            
+ B4    │─r─────|──│──|────|──│♮●───●───●───●──│───────│·| strong beat           
+ A4   ·│       |  │  |   ●   │                │      ·│ | Figure allowed    ·   
+ G4    │──────●───│─●────────│────────────────│───────│ | bar 3 - parallel-perf 
+ F4    │      \___│/      ·  │                │       │ |      ·                
+ E4    │──────────│──────────│○───────────────│───────│ |               ·      ·
+ D4                ○          SP5 wP5 wP5 wP5·          |       ·    ·          
+ C4    ─○─·        SP4  wP5   /4  /4  /4  /4  ─○─       | Breaks: bar 3       · 
+ B3     r    wP5   /2   /2     ^             ·          |·bar 3 - parallel-perf 
+ A3 ·   /2   /2   ·                           ·         | bar 3 - same-beat-par 
+        ·         ·                                     | bar 3 - same-beat-par 
+                                                      · |   ·                   
+                                                        |          ·          · 
+  [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check    
+                                                   ·               ·       ·    
