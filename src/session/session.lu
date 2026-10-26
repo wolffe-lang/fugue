@@ -1,10 +1,11 @@
 use first
 use replay
 use rhythm
+use species
 use theory
 
 /// A reversible single-note edit.
-pub struct Edit { bar: int, before: theory.Pitch }
+pub struct Edit { bar: int, within: int, notes: List[theory.Pitch], beats: List[rhythm.Beat] }
 
 /// Deterministic editor state; no terminal or clock ownership.
 pub struct State {
@@ -12,6 +13,8 @@ pub struct State {
     beats: List[rhythm.Beat],
     seed: int,
     cursor: int,
+    within: int,
+    progress: List[int],
     phase: int,
     quit: bool,
     mode: int,
@@ -39,6 +42,8 @@ pub fn new(seed: int, title: bool) -> State {
         beats: rhythm.pattern(1, cantus.len),
         seed: seed,
         cursor: 0,
+        within: 0,
+        progress: [0, 0, 0, 0, 0],
         phase: if title then 0 else 1,
         quit: false,
         mode: mode,
@@ -72,6 +77,16 @@ pub fn vocab() -> replay.Vocab {
             "retry",
             "quit",
             "interrupt",
+            "book-1",
+            "book-2",
+            "book-3",
+            "book-4",
+            "book-5",
+            "desk",
+            "split",
+            "join",
+            "tie",
+            "rest",
         ],
         take List[str](),
     )
@@ -91,32 +106,49 @@ pub fn key(n: int) -> int {
         1110 => 12,
         1114 => 13,
         1113 => 14,
+        1049..=1053 => n - 1033,
+        1098 => 21,
+        1093 => 22,
+        1091 => 23,
+        1116 => 24,
+        1048 => 25,
         _ => 0,
     }
 }
 
 /// Advance one 30 Hz replay tick; one whole note sounds for one second.
 pub fn tick(mut s: State) {
-    if s.hearing >= 0 { s.hearing += 1; if s.hearing >= s.voice.len * 30 { s.hearing = -1 } }
+    if s.hearing >= 0 { s.hearing += 1; if s.hearing >= s.cantus.len * 30 { s.hearing = -1 } }
 }
 
 /// Apply one replay key without reading any host state.
 pub fn step(mut s: State, k: int) {
     if k == 14 || k == 15 { s.quit = true; return }
-    if s.phase == 0 && k != 0 { s.phase = 1; return }
     if s.hearing >= 0 { return }
+    if k == 21 { s.phase = 0; return }
+    if s.phase == 0 && k >= 16 && k <= 20 {
+        let progress = copy s.progress
+        s = with_book(take tutorial(0, false), k - 15)
+        s.progress = progress
+        return
+    }
+    if s.phase == 0 && k != 0 { s.phase = 1; return }
     if k == 12 {
         let next = if s.level < 2 {
             tutorial(s.level + 1, false)
         } else {
             new(if s.seed == 9223372036854775807 then 0 else s.seed + 1, false)
         }
-        s = next
+        let book = s.book
+        let progress = copy s.progress
+        s = if book == 1 then next else with_book(take next, book)
+        s.progress = progress
         return
     }
     if k == 13 {
         s.phase = 1
         s.cursor = 0
+        s.within = 0
         return
     }
     if s.phase == 2 {
@@ -125,26 +157,48 @@ pub fn step(mut s: State, k: int) {
         return
     }
     if s.phase != 1 { return }
-    if k == 3 && s.cursor > 0 { s.cursor -= 1 }
-    if k == 4 && s.cursor + 1 < s.voice.len { s.cursor += 1 }
+    let unit = if s.book == 1 then 8 else if s.book == 3 then 2 else if s.book == 5 then 1 else 4
+    if k == 3 {
+        if s.within >= unit {
+            s.within -= unit
+        } else if s.cursor > 0 {
+            s.cursor -= 1
+            s.within = s.beats[s.cursor].length - unit
+        }
+    }
+    if k == 4 {
+        if s.within + unit < s.beats[s.cursor].length {
+            s.within += unit
+        } else if s.cursor + 1 < s.voice.len {
+            s.cursor += 1
+            s.within = 0
+        }
+    }
     if k == 9 && s.hearing < 0 { s.hearing = 0 }
     if k == 8 { s.audition += 1 }
-    if k == 10 { s.phase = 2; s.cursor = 0 }
+    if k == 10 {
+        let stars = score(s)
+        if stars > s.progress[s.book - 1] { s.progress[s.book - 1] = stars }
+        s.phase = 2
+        s.cursor = 0
+        s.within = 0
+    }
     if k == 11 {
         let edit = (mut s.history).pop() else { return }
-        s.voice[edit.bar] = edit.before
+        s.voice = edit.notes
+        s.beats = edit.beats
         s.cursor = edit.bar
+        s.within = edit.within
     }
+    if k >= 22 && k <= 25 { edit_rhythm(mut s, k); return }
     if k >= 1 && k <= 2 || k == 5 || k == 6 || k == 7 {
         let before = copy s.voice[s.cursor]
         var next = copy before
         if k == 7 {
-            let final = 28 + s.mode + (if s.below then 0 else 7)
-            if s.cursor != s.voice.len - 2 ||
-                theory.position(before) != final - 1 ||
-                !theory.raises(s.mode) {
-                return
-            }
+            let degree = (theory.position(before) - 28 - s.mode + 70) % 7
+            let seventh = s.cursor == s.voice.len - 2 && degree == 6 && theory.raises(s.mode)
+            let sixth = s.cursor == s.voice.len - 3 && degree == 5 && s.mode == 5 && s.book > 1
+            if !seventh && !sixth { return }
             next.accidental = 1 - next.accidental
         } else {
             let delta = match k {
@@ -154,12 +208,20 @@ pub fn step(mut s: State, k: int) {
                 _ => -7,
             }
             let pos = theory.position(before) + delta
-            let bottom = if s.below then 21 + s.mode else 28 + s.mode
+            let bottom = if s.below {
+                (if s.book == 1 then 21 + s.mode else 20 + s.mode)
+            } else {
+                28 + s.mode
+            }
             if pos < bottom || pos > bottom + 14 { return }
             next = theory.pitch(pos)
         }
-        (mut s.history).push(Edit { bar: s.cursor, before: before })
-        s.voice[s.cursor] = next
+        remember(mut s)
+        var start = s.cursor
+        while start > 0 && s.beats[start].tied { start -= 1 }
+        s.voice[start] = copy next
+        var end = start + 1
+        while end < s.voice.len && s.beats[end].tied { s.voice[end] = copy next; end += 1 }
         s.audition += 1
         s.hearing = -1
     }
@@ -177,6 +239,8 @@ pub fn tutorial(index: int, title: bool) -> State {
         beats: rhythm.pattern(1, cf.len),
         seed: index,
         cursor: 0,
+        within: 0,
+        progress: [0, 0, 0, 0, 0],
         phase: if title then 0 else 1,
         quit: false,
         mode: mode,
@@ -191,10 +255,22 @@ pub fn tutorial(index: int, title: bool) -> State {
 }
 
 /// A score is recomputed from notes, never loaded from a replay comment.
-pub fn score(s: State) -> int { first.check(s.cantus, s.voice, s.mode, s.below).stars }
+pub fn verdict(s: State) -> first.Verdict {
+    if s.book == 1 { return first.check(s.cantus, s.voice, s.mode, s.below) }
+    species.check(s.cantus, s.voice, s.beats, s.mode, s.below, s.book)
+}
+
+/// Recompute the score from the current notes and rhythm.
+pub fn score(s: State) -> int { verdict(s).stars }
 
 /// Initialize from the replay's optional tutorial start selector.
 pub fn from_replay(r: replay.Replay, title: bool) -> State {
+    if r.start >= 14000 && r.start < 22000 {
+        var old = copy r
+        let book = (r.start - 10000) / 2000
+        old.start = (r.start - 10000) % 2000
+        return with_book(take from_replay(old, title), book)
+    }
     if r.start == 99 { return tutorial(0, true) }
     if r.start >= 101 && r.start <= 103 { return tutorial(r.start - 101, true) }
     if r.start == 1000 { return new(r.seed, true) }
@@ -206,7 +282,16 @@ pub fn from_replay(r: replay.Replay, title: bool) -> State {
 pub fn with_book(take s: State, book: int) -> State {
     var next = s
     next.book = book
-    next.beats = rhythm.pattern(book, next.cantus.len)
+    if book == 1 { return next }
+    let e = species.exercise_goal(
+        next.seed,
+        next.mode,
+        next.below,
+        book,
+        if next.level < 3 then 3 else 1,
+    ) else { assert(false); return next }
+    next.cantus = e.cantus
+    next.beats = e.proof.beats
     next.voice = List[theory.Pitch]()
     for i in 0..next.beats.len {
         let bar = rhythm.onset(next.beats, i) / 8
@@ -216,4 +301,61 @@ pub fn with_book(take s: State, book: int) -> State {
     }
     next.cursor = 0
     next
+}
+
+fn remember(mut s: State) {
+    (mut s.history).push(Edit {
+        bar: s.cursor,
+        within: s.within,
+        notes: copy s.voice,
+        beats: copy s.beats,
+    })
+}
+
+/// Rhythm edits are ordinary undoable events; no edit crosses a barline.
+fn edit_rhythm(mut s: State, k: int) {
+    let i = s.cursor
+    let time = rhythm.onset(s.beats, i)
+    if k == 25 && (s.book == 2 || s.book == 4 || s.book == 5) && i == 0 && s.beats[0].length == 4 {
+        remember(mut s)
+        s.beats[0].rest = !s.beats[0].rest
+        s.beats[0].tied = false
+        return
+    }
+    if k == 24 && (s.book == 4 || s.book == 5) && i > 0 && time % 8 == 0 {
+        remember(mut s)
+        s.beats[i].tied = !s.beats[i].tied
+        if s.beats[i].tied { s.voice[i] = copy s.voice[i - 1] }
+        return
+    }
+    if s.book != 5 || time / 8 == s.cantus.len - 1 { return }
+    let split = k == 22 && s.beats[i].length > 1
+    let join = k == 23 &&
+        i + 1 < s.beats.len &&
+        s.beats[i].length == s.beats[i + 1].length &&
+        time % 8 + s.beats[i].length * 2 <= 8
+    if !split && !join { return }
+    remember(mut s)
+    var beats = List[rhythm.Beat](), notes = List[theory.Pitch]()
+    for j in 0..s.beats.len {
+        if join && j == i + 1 { continue }
+        var b = copy s.beats[j]
+        if j == i { b.length = if split then b.length / 2 else b.length * 2 }
+        (mut beats).push(copy b)
+        (mut notes).push(copy s.voice[j])
+        if j == i && split {
+            b.tied = false
+            b.rest = false
+            (mut beats).push(b)
+            (mut notes).push(copy s.voice[j])
+        }
+    }
+    s.beats = beats
+    s.voice = notes
+    s.within = 0
+}
+
+/// Encode the same old start selector inside a book-specific namespace.
+pub fn replay_start(book: int, start: int) -> int {
+    if book == 1 then start else 10000 + book * 2000 + start
 }
