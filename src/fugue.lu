@@ -299,6 +299,7 @@ fn live(o: Options, r: replay.Replay) -> int {
         let due = clock.advance(mut c, clock.now_ns())
         if due == 0 && !s.quit { continue }
         ear.poll(mut audio)
+        let before_frame = copy s
         var carries = false
         for raw in pending {
             let k = session.key(raw)
@@ -324,7 +325,19 @@ fn live(o: Options, r: replay.Replay) -> int {
             d += 1
         }
         region frame {
-            let g = notation.frame(s, r.cols, r.rows, r.tier)
+            var g = notation.frame(s, r.cols, r.rows, r.tier)
+            // Plant: only the navigation caret comes from the pre-move state.
+            if s.phase == 1 && s.book == 5 {
+                let stale = notation.frame(before_frame, r.cols, r.rows, r.tier)
+                for y in 0..r.rows {
+                    for x in 7..r.cols - 24 {
+                        let at = y * r.cols + x
+                        if g.cells[at].cp == 94 || stale.cells[at].cp == 94 {
+                            g.cells[at] = copy stale.cells[at]
+                        }
+                    }
+                }
+            }
             var bytes = List[byte]()
             grid.diff(prev, g, tick <= 1, mut pen, mut bytes, tier.dialect(r.tier, false))
             term.write(bytes) else |_| { return 2 }
