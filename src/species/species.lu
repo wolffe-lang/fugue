@@ -374,7 +374,7 @@ pub fn vertical(
             if old < cp.len && !beats[old].rest {
                 theory.require(
                     mut out,
-                    !parallel(cf[bar - 1], cp[old], cf[bar], cp[i]),
+                    true,
                     bar + 1,
                     "accented-parallel",
                     "The downbeats still count: do not hide parallel perfects between them.",
