@@ -154,3 +154,20 @@ including melodic findings at that bar. Each finding row names its bar.
 The critic card after Enter retains the complete verdict and global counts.
 The caret uses the same event column plus the editable within-event offset;
 held values reserve a distinct cell for each selectable time unit.
+
+
+## Supplied panel status
+
+`staff.panel_data(mut grid, data: staff.PanelData, margin, tier)` is the common
+column renderer. It owns geometry, palette, named bar rows and filtering both
+finding lists to the active bar. `staff.panel` retains the session adapter for
+Books I–V; a page with another judge or moving voice supplies data directly.
+No session state, judge callback, clock or audio owner is held by the renderer.
+
+`PanelFinding` has one-based `bar: int` and `rule: str`. `PanelData` has one-based
+`bar: int` and eighth-beat `beat: int`; `interval: str`, `consonance: int` (the
+existing 0/1/2 roles), `pitch: str`, `figure: str`, `strong: bool`, `allowed: bool`,
+`local: List[PanelFinding]`, `findings: List[PanelFinding]`, and `notice: str`.
+The strings describe the supplied moving voice. Findings may contain other
+bars: the renderer, not the caller, enforces the active-bar rule. Global verdicts
+belong to the critic card, outside this column.

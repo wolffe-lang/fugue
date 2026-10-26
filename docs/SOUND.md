@@ -73,3 +73,9 @@ fixed-clef row coordinates and estimates each PCM fundamental by FFT. The peak
 search is not centred on the expected frequency; it groups window/vibrato
 sidebands and finds the lowest significant spectral peak. Every measured
 fundamental must lie within one percent of equal temperament.
+
+The note-bank timing diagnostic is also opt-in through `FUGUE_AUDIO_TRACE=1`.
+Normal page changes do not print preparation text into the terminal drawing.
+Left/Right navigation never prepares or auditions sound. Up/Down starts the
+already prepared WAV; a pty witness checks that twenty such auditions leave
+every note-bank file unchanged and emit no further preparation event.
