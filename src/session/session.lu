@@ -387,7 +387,9 @@ pub fn with_book(take s: State, book: int) -> State {
         }
         next.mode = p.given.mode
         next.cantus = []
-        for bar in 0..exposition.bars(p) { (mut next.cantus).push(copy p.given.notes[rhythm.at(p.given.beats, bar * 8)]) }
+        for bar in 0..exposition.bars(p) {
+            (mut next.cantus).push(copy p.given.notes[rhythm.at(p.given.beats, bar * 8)])
+        }
         let line = if p.editing == 0 then copy p.response else copy p.continuation
         next.voice = line.notes
         next.beats = line.beats
@@ -573,11 +575,16 @@ pub fn needs_system(cantus: List[theory.Pitch], voice: List[theory.Pitch]) -> bo
 
 /// Book VI supplies ranges and editing permissions to the shared editor.
 fn fugue_setup(mut s: State) {
-    s.range_low = 21; s.range_high = 49
+    s.range_low = 21
+    s.range_high = 49
     s.rhythm_editable = s.fugue.editing == 1
     s.notice = ""
     var expected = List[theory.Pitch]()
-    for p in s.fugue.given.notes { (mut expected).push(theory.pitch(theory.position(p) + (if s.fugue.answer_below then -3 else 4))) }
+    for p in s.fugue.given.notes {
+        (mut expected).push(
+            theory.pitch(theory.position(p) + (if s.fugue.answer_below then -3 else 4)),
+        )
+    }
     s.clef = choose_clef(s.fugue.given.notes, expected)
     s.grand = needs_system(s.fugue.given.notes, expected)
     s.cantus_clef = choose_clef(s.fugue.given.notes, s.fugue.given.notes)

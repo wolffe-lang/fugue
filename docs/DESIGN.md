@@ -116,7 +116,7 @@ note/value lists, so undo restores duration, rests, ties and cursor offset as
 well as pitch. The final bar remains a whole. Playback uses the same lengths as
 the staff and score text, while the output owner remains in `ear`.
 
-`progress` validates a tiny versioned file containing only five best-star
+`progress` validates a tiny versioned file containing only six best-star
 counts. It cannot supply music or bypass the judge. Recordings snapshot those
 cosmetic title counts in an optional comment; the event stream still determines
 all notes, rhythm, verdicts and final stars.

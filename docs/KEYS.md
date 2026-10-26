@@ -30,7 +30,7 @@ lists only that bar's findings. A clean bar says **No break in this bar**.
 The critic card after Enter still reports every bar and the global counts.
 ## Books II–V
 
-At the title, 1–5 opens a book; b returns to that desk from a page or card.
+At the title, 1–6 opens a book; b returns to that desk from a page or card.
 Each book starts with three tutorials, then seeded pages. Best stars per book
 are saved in `.fugue-state`; set `FUGUE_STATE` to use another file. A corrupt or
 unknown-format file is ignored, never interpreted as an answer.
