@@ -2,7 +2,9 @@
 """Long, bounded whole-page pty traversal, with per-press p99/max latency.
 
 Four full out-and-back walks (632 presses at 30 Hz) cross every held value,
-barline and scrolling boundary. Geometry expectations are independent fixture
+barline and scrolling boundary. p99 must be <=70 ms and worst press <=100 ms,
+so an isolated blocking handoff cannot hide behind a fast median.
+Geometry expectations are independent fixture
 arithmetic, not an import or headless render of the game's layout function.
 """
 import json
@@ -109,6 +111,8 @@ def check(binary, ctx):
                 if len(presses)!=632 or wrong:
                     problems.append(f'{name}: {len(presses)}/632 captured; {len(wrong)} stale/late presses; '
                                     f'frame p99/max {percentile(frames,.99)}/{max(frames,default=0)}')
+                if wall and (percentile(wall,.99) > 70 or max(wall) > 100):
+                    problems.append(f'{name}: periodic wall stall: p99={percentile(wall,.99):.3f} ms, max={max(wall):.3f} ms (bars 70/100)')
                 summary = {'case':name,'count':len(presses),'recorded':len(events),'wrong':len(wrong),
                            'repeat_hz':30,'frame_p99':percentile(frames,.99),'frame_max':max(frames,default=0),
                            'wall_p99_ms':percentile(wall,.99),'wall_max_ms':max(wall,default=0),
