@@ -53,6 +53,9 @@ pub fn validate(s: Line) -> List[theory.Break] {
         )
         return out
     }
+    if theory.magnitude(theory.position(s.notes[n - 1]) - theory.position(s.notes[n - 2])) > 1 {
+        return out
+    }
     let root = 28 + s.mode
     let first = (theory.position(s.notes[0]) - root + 70) % 7
     let last = (theory.position(s.notes[n - 1]) - root + 70) % 7
