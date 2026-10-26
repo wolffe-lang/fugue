@@ -1,0 +1,467 @@
+//! Two moving florid voices; the same pair is judged on both sides of the octave.
+
+use first
+use rhythm
+use species
+use subject
+use theory
+
+/// Octave relocation preserves spelling, not merely MIDI pitch class.
+pub fn octave(s: subject.Line, amount: int) -> subject.Line {
+    var out = copy s
+    for i in 0..out.notes.len { out.notes[i].octave += amount }
+    out
+}
+
+fn sounding(s: subject.Line, time: int) -> theory.Pitch { copy s.notes[rhythm.at(s.beats, time)] }
+
+fn consonant(a: subject.Line, b: subject.Line, time: int) -> bool {
+    theory.interval(sounding(a, time), sounding(b, time)).consonance != 2
+}
+
+/// A suspension is tied across the real barline, prepared against the other
+/// voice at preparation time and resolved against its actual sounding pitch.
+fn suspension(a: subject.Line, b: subject.Line, i: int, below: bool) -> bool {
+    if i < 1 || i + 1 >= b.notes.len { return false }
+    let time = rhythm.onset(b.beats, i)
+    if time % 8 != 0 || time < 4 || !b.beats[i].tied || b.beats[i + 1].tied { return false }
+    if b.beats[i - 1].length != 4 || b.beats[i].length != 4 || b.beats[i + 1].length != 4 {
+        return false
+    }
+    if !consonant(a, b, time - 4) || !consonant(a, b, time + 4) { return false }
+    if theory.position(b.notes[i + 1]) - theory.position(b.notes[i]) != -1 { return false }
+    let held = theory.interval(sounding(a, time), b.notes[i])
+    let resolved = theory.interval(sounding(a, time + 4), b.notes[i + 1])
+    if held.quality == "A" || held.quality == "d" { return false }
+    if below { return held.number == 2 && resolved.number == 3 }
+    held.number == 7 && resolved.number == 6 ||
+        held.number == 4 && resolved.number == 3 ||
+        held.number == 9 && resolved.number == 8
+}
+
+fn cambiata(a: subject.Line, b: subject.Line, i: int, below: bool) -> bool {
+    if i < 1 || i + 3 >= b.notes.len || rhythm.onset(b.beats, i - 1) % 8 != 0 { return false }
+    let d = if below then 1 else -1
+    let deltas = [d, d * 2, -d, -d]
+    for j in i - 1..i + 4 {
+        if b.beats[j].rest || b.beats[j].tied { return false }
+        if j < i + 3 && b.beats[j].length != 2 { return false }
+        if j > i - 1 &&
+            theory.position(b.notes[j]) - theory.position(b.notes[j - 1]) != deltas[j - i] {
+            return false
+        }
+        if j != i && !consonant(a, b, rhythm.onset(b.beats, j)) { return false }
+    }
+    true
+}
+
+/// Classification retains Book V's figures while sampling the moving answer.
+pub fn classify(a: subject.Line, b: subject.Line, i: int, below: bool) -> str {
+    let time = rhythm.onset(b.beats, i)
+    if b.beats[i].rest { return "rest" }
+    if b.beats[i].length == 1 && !species.eighth_pair(b.notes, b.beats, i) {
+        return "unlicensed-eighth"
+    }
+    if consonant(a, b, time) { return "consonance" }
+    if time % 8 == 0 { return if suspension(a, b, i, below) then "suspension" else "unprepared" }
+    if cambiata(a, b, i, below) { return "cambiata" }
+    if species.passing(b.notes, b.beats, i) { return "passing" }
+    if species.neighbour(b.notes, b.beats, i) { return "neighbour" }
+    "unlicensed"
+}
+
+fn syntax(s: subject.Line, bars: int) -> bool {
+    s.notes.len == s.beats.len && s.notes.len > 1 && rhythm.valid(s.beats, bars)
+}
+
+/// Harmonic/figure checks for the union of both attack timelines, including
+/// equal-beat parallels across bars. Held notes never hide an answer attack.
+pub fn pair(a: subject.Line, b: subject.Line, below: bool) -> List[theory.Break] {
+    var out = List[theory.Break]()
+    let duration = subject.span(a.beats), bars = duration / 8
+    if !syntax(a, bars) || !syntax(b, bars) {
+        theory.require(
+            mut out,
+            false,
+            1,
+            "counter-rhythm",
+            "Fill the answer's bars with complete values.",
+        )
+        return out
+    }
+    for which in 0..2 {
+        let voice = if which == 0 then copy b else copy a
+        let other = if which == 0 then copy a else copy b
+        let under = if which == 0 then below else !below
+        for i in 0..voice.notes.len {
+            let time = rhythm.onset(voice.beats, i), bar = time / 8 + 1
+            let beat = copy voice.beats[i]
+            if beat.rest {
+                theory.require(
+                    mut out,
+                    i == 0 && beat.length == 4,
+                    bar,
+                    "opening-rest",
+                    "Only the opening half may be silent.",
+                )
+                continue
+            }
+            if beat.tied {
+                theory.require(
+                    mut out,
+                    i > 0 &&
+                        time % 8 == 0 &&
+                        !voice.beats[i - 1].rest &&
+                        theory.position(voice.notes[i]) == theory.position(voice.notes[i - 1]) &&
+                        voice.notes[i].accidental == voice.notes[i - 1].accidental,
+                    bar,
+                    "tie-pitch",
+                    "Carry one unchanged pitch through the barline tie.",
+                )
+            }
+            if beat.length == 1 {
+                theory.require(
+                    mut out,
+                    species.eighth_pair(voice.notes, voice.beats, i),
+                    bar,
+                    "paired-eighths",
+                    "Pair weak eighths by step.",
+                )
+            }
+            // A dissonance belongs to the voice that moves, or its prepared tie.
+            let fig = classify(other, voice, i, under)
+            if !consonant(a, b, time) {
+                let oi = rhythm.at(other.beats, time)
+                let other_onset = rhythm.onset(other.beats, oi) == time
+                let other_fig = classify(voice, other, oi, !under)
+                let legal = fig == "passing" ||
+                    fig == "neighbour" ||
+                    fig == "cambiata" ||
+                    fig == "suspension"
+                let other_legal = other_onset &&
+                    (
+                        other_fig == "passing" ||
+                            other_fig == "neighbour" ||
+                            other_fig == "cambiata" ||
+                            other_fig == "suspension"
+                    )
+                theory.require(
+                    mut out,
+                    legal || other_legal,
+                    bar,
+                    if time % 8 == 0 then "downbeat-consonance" else "florid-dissonance",
+                    "Give this sounding dissonance its complete florid figure in either moving voice.",
+                )
+            }
+        }
+    }
+    var previous = -1
+    for time in 0..duration {
+        let ai = rhythm.at(a.beats, time), bi = rhythm.at(b.beats, time)
+        if a.beats[ai].rest || b.beats[bi].rest { continue }
+        let attack = rhythm.onset(a.beats, ai) == time || rhythm.onset(b.beats, bi) == time
+        if !attack { continue }
+        let x = copy a.notes[ai],
+            y = copy b.notes[bi],
+            iv = theory.interval(x, y),
+            bar = time / 8 + 1
+        theory.require(
+            mut out,
+            if below {
+                theory.chromatic(y) <= theory.chromatic(x)
+            } else {
+                theory.chromatic(y) >= theory.chromatic(x)
+            },
+            bar,
+            "crossing",
+            "Keep this ordering of the two voices.",
+        )
+        theory.require(
+            mut out,
+            iv.number != 1 || time == 0 || time == duration - a.beats[a.beats.len - 1].length,
+            bar,
+            "interior-unison",
+            "Save a meeting in unison for the phrase's edges.",
+        )
+        if previous >= 0 {
+            let ox = sounding(a, previous), oy = sounding(b, previous)
+            let par = species.parallel(ox, oy, x, y)
+            theory.require(
+                mut out,
+                !par,
+                bar,
+                "parallel-perfect",
+                "Do not move perfect intervals together.",
+            )
+            let dx = theory.chromatic(x) - theory.chromatic(ox),
+                dy = theory.chromatic(y) - theory.chromatic(oy)
+            theory.require(
+                mut out,
+                !(
+                    dx != 0 &&
+                        dy != 0 &&
+                        theory.direction(dx) == theory.direction(dy) &&
+                        iv.consonance == 0
+                ) ||
+                    par,
+                bar,
+                "hidden-perfect",
+                "Turn one voice before arriving at a perfect interval.",
+            )
+            theory.require(
+                mut out,
+                !(
+                    if below {
+                        theory.chromatic(y) > theory.chromatic(ox) ||
+                            theory.chromatic(x) < theory.chromatic(oy)
+                    } else {
+                        theory.chromatic(y) < theory.chromatic(ox) ||
+                            theory.chromatic(x) > theory.chromatic(oy)
+                    }
+                ),
+                bar,
+                "overlap",
+                "Do not step beyond the other voice's previous pitch.",
+            )
+        }
+        if time >= 8 {
+            theory.require(
+                mut out,
+                !species.parallel(sounding(a, time - 8), sounding(b, time - 8), x, y),
+                bar,
+                "accented-parallel",
+                "Equal beats across bars must not hide perfect parallels.",
+            )
+        }
+        previous = time
+    }
+    out
+}
+
+/// Melodic canon on attacks, in the answer's transposed key. An exposition is
+/// an open phrase: neither its last degree nor a closed cantus cadence is imposed.
+pub fn melody(s: subject.Line, answer_below: bool) -> List[theory.Break] {
+    var notes = List[theory.Pitch](), times = List[int]()
+    for i in 0..s.notes.len {
+        if s.beats[i].rest || s.beats[i].tied { continue }
+        let p = copy s.notes[i]
+        var q = theory.pitch(theory.position(p) + (if answer_below then 3 else -4))
+        q.accidental = theory.chromatic(p) + (if answer_below then 5 else -7) - theory.chromatic(q)
+        (mut notes).push(q)
+        (mut times).push(rhythm.onset(s.beats, i))
+    }
+    var out = List[theory.Break]()
+    for b in theory.validate(notes, s.mode) {
+        if b.rule == "length" ||
+            b.rule == "final" ||
+            b.rule == "cadence" ||
+            b.rule == "leap-count" {
+            continue
+        }
+        var f = copy b
+        if f.bar > 0 && f.bar <= times.len { f.bar = times[f.bar - 1] / 8 + 1 }
+        (mut out).push(f)
+    }
+    theory.require(
+        mut out,
+        theory.leaps(notes) >= 2 && theory.leaps(notes) <= species.leap_limit(notes.len),
+        1,
+        "leap-count",
+        "Use two leaps, with at most four per ten attacks rounded up.",
+    )
+    out
+}
+
+/// Both dispositions are actually checked; a perfect fifth is explicitly
+/// named because its octave inversion is a fourth against the new bass.
+pub fn check(
+    a: subject.Line,
+    cs: subject.Line,
+    answer_below: bool,
+    cs_below: bool,
+) -> first.Verdict {
+    var v = first.Verdict {
+        breaks: List[theory.Break](),
+        stars: 0,
+        contrary: 0,
+        steps: 0,
+        separate_climax: false,
+        parallel_limit: true,
+        variety: 0,
+    }
+    if !syntax(a, subject.span(a.beats) / 8) || !syntax(cs, subject.span(a.beats) / 8) {
+        theory.require(
+            mut v.breaks,
+            false,
+            1,
+            "counter-rhythm",
+            "Fill the complete answer before testing inversion.",
+        )
+        return v
+    }
+    let upper = if cs_below then octave(cs, 1) else copy cs
+    let lower = octave(upper, -1)
+    v.breaks = pair(a, upper, false)
+    for b in pair(a, lower, true) {
+        var f = copy b
+        f.rule = "inverted-" + f.rule
+        f.reason = "After the octave exchange: " + f.reason
+        (mut v.breaks).push(f)
+    }
+    for b in melody(cs, answer_below) { (mut v.breaks).push(copy b) }
+    var seen: int = 0, steps = 0, moves = 0, contrary = 0, chain = 1
+    var top = -1, peak = 0, atop = -1, apeak = 0
+    for time in 0..subject.span(a.beats) {
+        let i = rhythm.at(upper.beats, time), j = rhythm.at(a.beats, time)
+        if upper.beats[i].rest || a.beats[j].rest { continue }
+        let iv = theory.interval(a.notes[j], upper.notes[i]), bar = time / 8 + 1
+        if iv.number == 5 && iv.quality == "P" {
+            theory.require(
+                mut v.breaks,
+                false,
+                bar,
+                "inversion-fifth",
+                "This perfect fifth becomes a fourth against the bass after octave inversion.",
+            )
+        }
+        theory.require(
+            mut v.breaks,
+            iv.number <= 8,
+            bar,
+            "inversion-span",
+            "Keep the pair inside the octave before exchanging its voices.",
+        )
+        if rhythm.onset(upper.beats, i) != time { continue }
+        seen |= 1 << (iv.number - 1) % 7
+        let height = theory.chromatic(upper.notes[i])
+        if height > top { top = height; peak = time }
+        if i > 0 && !upper.beats[i].tied {
+            if theory.magnitude(
+                theory.position(upper.notes[i]) - theory.position(upper.notes[i - 1]),
+            ) ==
+                1 {
+                steps += 1
+            }
+            let old_time = rhythm.onset(upper.beats, i - 1)
+            let olda = sounding(a, old_time), oldb = copy upper.notes[i - 1]
+            let motion = theory.motion(olda, oldb, a.notes[j], upper.notes[i])
+            if motion != "oblique" { moves += 1; if motion == "contrary" { contrary += 1 } }
+            let oldiv = theory.interval(olda, oldb)
+            if iv.number == oldiv.number && (iv.number == 3 || iv.number == 6) {
+                chain += 1
+            } else {
+                chain = 1
+            }
+            if chain > 3 { v.parallel_limit = false }
+        }
+    }
+    for i in 0..a.notes.len {
+        if theory.chromatic(a.notes[i]) > atop {
+            atop = theory.chromatic(a.notes[i])
+            apeak = rhythm.onset(a.beats, i)
+        }
+    }
+    v.separate_climax = peak != apeak
+    v.contrary = if moves > 0 then contrary * 100 / moves else 0
+    v.steps = if cs.notes.len > 1 then steps * 100 / (cs.notes.len - 1) else 0
+    for bit in 0..7 { if seen & 1 << bit != 0 { v.variety += 1 } }
+    if v.breaks.len == 0 {
+        var goals = 0
+        for good in [
+            v.contrary >= 50,
+            v.steps >= 60,
+            v.separate_climax,
+            v.parallel_limit,
+            v.variety >= 3,
+        ] { if good { goals += 1 } }
+        v.stars = if goals == 5 then 3 else if goals >= 3 then 2 else 1
+    }
+    v
+}
+
+fn search(
+    a: subject.Line,
+    mut cs: subject.Line,
+    below: bool,
+    mut visits: int,
+    mut best: subject.Line,
+    mut stars: int,
+) {
+    visits += 1
+    if visits > 30000 || stars == 3 { return }
+    let i = cs.notes.len
+    if i == a.notes.len {
+        let v = check(a, cs, below, false)
+        if v.stars > stars { stars = v.stars; best = copy cs }
+        return
+    }
+    for interval in [2, 5, 7, 0] {
+        if i > 0 && i < a.notes.len - 1 && (interval == 0 || interval == 7) { continue }
+        var p = theory.pitch(theory.position(a.notes[i]) + interval)
+        // The answer's key is the exact transposition of the subject's mode.
+        let original = theory.pitch(theory.position(p) + (if below then 3 else -4))
+        p.accidental = theory.chromatic(original) + (if below then -5 else 7) - theory.chromatic(p)
+        let inv = theory.pitch(theory.position(p) - 7)
+        var low = copy inv
+        low.accidental = p.accidental
+        if theory.interval(a.notes[i], p).consonance == 2 ||
+            theory.interval(a.notes[i], low).consonance == 2 {
+            continue
+        }
+        if i > 0 {
+            let old = copy cs.notes[i - 1]
+            if theory.magnitude(theory.position(p) - theory.position(old)) > 4 { continue }
+            if species.parallel(a.notes[i - 1], old, a.notes[i], p) { continue }
+            let dir = theory.direction(
+                theory.chromatic(a.notes[i]) - theory.chromatic(a.notes[i - 1]),
+            )
+            if (interval == 0 || interval == 7) &&
+                dir == theory.direction(theory.chromatic(p) - theory.chromatic(old)) {
+                continue
+            }
+            if theory.chromatic(p) < theory.chromatic(a.notes[i - 1]) ||
+                theory.chromatic(a.notes[i]) > theory.chromatic(old) {
+                continue
+            }
+            var oldlow = copy old
+            oldlow.octave -= 1
+            if theory.chromatic(low) > theory.chromatic(a.notes[i - 1]) ||
+                theory.chromatic(a.notes[i]) < theory.chromatic(oldlow) {
+                continue
+            }
+        }
+        (mut cs.notes).push(p)
+        if theory.prefix_with_leaps(cs.notes, species.leap_limit(a.notes.len)) {
+            search(a, mut cs, below, mut visits, mut best, mut stars)
+        }
+        let _ = (mut cs.notes).pop() else p
+    }
+}
+
+/// Independent bounded solution search, not a judge shortcut. No answer is
+/// offered unless this result passes the same complete check as player input.
+pub fn solve(a: subject.Line, below: bool) -> subject.Line ! {empty} {
+    var cs = subject.Line { notes: List[theory.Pitch](), beats: copy a.beats, mode: a.mode }
+    var best = copy cs, visits = 0, stars = 0
+    search(a, mut cs, below, mut visits, mut best, mut stars)
+    if stars == 0 { return empty }
+    best
+}
+
+/// Fixed original tutorial references, never supplied to a player as an answer
+/// except the first page's already-written subject continuation.
+pub fn reference(index: int) -> subject.Line {
+    var s = subject.tutorial(index)
+    let positions = match index {
+        0 => [30, 29, 30, 31, 33, 29, 30, 29, 28, 32],
+        1 => [30, 31, 32, 34, 33, 34, 35, 34, 32, 33],
+        _ => [33, 32, 34, 35, 36, 35, 34, 35, 33, 32],
+    }
+    s.notes = []
+    for i in 0..positions.len {
+        var p = theory.pitch(positions[i])
+        if index == 0 && i == 3 || index == 1 && i == 1 { p.accidental = 1 }
+        (mut s.notes).push(p)
+    }
+    s
+}
