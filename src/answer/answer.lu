@@ -81,7 +81,7 @@ pub fn check(
     }
     if out.breaks.len == 0 && is_real { out.kind = "Real answer"; return out }
     if out.breaks.len == 0 && is_tonal {
-        out.kind = "Tonal answer"
+        out.kind = "Real answer"
         out.mutation = point
         return out
     }
