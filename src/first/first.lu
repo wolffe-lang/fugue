@@ -81,7 +81,7 @@ pub fn vertical(cf: List[theory.Pitch], cp: List[theory.Pitch], below: bool) -> 
             let hidden = same && iv.consonance == 0 && !parallel
             theory.require(
                 mut out,
-                !hidden,
+                !hidden || iv.number == 5,
                 i + 1,
                 "hidden-perfect",
                 "Turn a voice before arriving at a perfect interval.",
