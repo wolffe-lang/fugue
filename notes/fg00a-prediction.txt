@@ -1,0 +1,17 @@
+Prediction (before implementation)
+The staff has fixed E4–F5 lines but a moving viewport: low exercises clip its
+upper lines and draw overlapping four-cell ledgers instead. No musical bar
+lines are drawn. I expect the pitch arithmetic itself to round-trip, but the
+five-line viewport invariant to fail. The side-panel cursor logic looks current;
+a real pty Right-twice witness must distinguish stale drawing from decoding.
+The h adapter appears wired to afplay; I predict discoverability rather than a
+missing child start, but will require the whole-file player lifecycle, duration
+and exact PCM witnesses. The existing render adds a full second of padding;
+I expect to remove that surplus while retaining the phrase's release.
+Staff, preset and art goldens will move on both sizes and tiers; title and critic
+should not. New walk and listening sequence goldens will hold redraw and cursor.
+The maintainer's erratum wins: retain hollow/filled glyphs, change cantus colour
+only (no halo). Expose pure viewport/background, head and ledger/overflow helpers
+for fg01's stems and ties. Recommend R-fg00a-2 A, not a ruling.
+The wrapper prohibits Markdown report files: the five-section final note will
+be in the PR body for materialisation by the coordinator.
