@@ -1,0 +1,2882 @@
+[
+  {
+    "case": "80x24-rich-sound",
+    "repeat_hz": 30,
+    "presses": [
+      {
+        "press": 1,
+        "key": "right",
+        "frame": 11,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 2,
+        "key": "left",
+        "frame": 17,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 3,
+        "key": "right",
+        "frame": 23,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 4,
+        "key": "right",
+        "frame": 24,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 5,
+        "key": "right",
+        "frame": 25,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 6,
+        "key": "right",
+        "frame": 26,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 7,
+        "key": "right",
+        "frame": 27,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 8,
+        "key": "right",
+        "frame": 28,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 9,
+        "key": "right",
+        "frame": 29,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 10,
+        "key": "right",
+        "frame": 30,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 11,
+        "key": "right",
+        "frame": 31,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 12,
+        "key": "right",
+        "frame": 32,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            22
+          ]
+        ],
+        "expected_x": 22,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 13,
+        "key": "left",
+        "frame": 39,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 14,
+        "key": "left",
+        "frame": 40,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 15,
+        "key": "left",
+        "frame": 41,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 16,
+        "key": "left",
+        "frame": 42,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 17,
+        "key": "left",
+        "frame": 43,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 18,
+        "key": "left",
+        "frame": 44,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 19,
+        "key": "left",
+        "frame": 45,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 20,
+        "key": "left",
+        "frame": 46,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 21,
+        "key": "left",
+        "frame": 47,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 22,
+        "key": "left",
+        "frame": 48,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      }
+    ],
+    "recorded": 22,
+    "final_time": 0
+  },
+  {
+    "case": "80x24-rich-mute",
+    "repeat_hz": 30,
+    "presses": [
+      {
+        "press": 1,
+        "key": "right",
+        "frame": 12,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 2,
+        "key": "left",
+        "frame": 18,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 3,
+        "key": "right",
+        "frame": 24,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 4,
+        "key": "right",
+        "frame": 25,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 5,
+        "key": "right",
+        "frame": 26,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 6,
+        "key": "right",
+        "frame": 27,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 7,
+        "key": "right",
+        "frame": 28,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 8,
+        "key": "right",
+        "frame": 29,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 9,
+        "key": "right",
+        "frame": 30,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 10,
+        "key": "right",
+        "frame": 31,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 11,
+        "key": "right",
+        "frame": 32,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 12,
+        "key": "right",
+        "frame": 33,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            22
+          ]
+        ],
+        "expected_x": 22,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 13,
+        "key": "left",
+        "frame": 40,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 14,
+        "key": "left",
+        "frame": 41,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 15,
+        "key": "left",
+        "frame": 42,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 16,
+        "key": "left",
+        "frame": 43,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 17,
+        "key": "left",
+        "frame": 44,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 18,
+        "key": "left",
+        "frame": 45,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 19,
+        "key": "left",
+        "frame": 46,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 20,
+        "key": "left",
+        "frame": 47,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 21,
+        "key": "left",
+        "frame": 48,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 22,
+        "key": "left",
+        "frame": 49,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      }
+    ],
+    "recorded": 22,
+    "final_time": 0
+  },
+  {
+    "case": "80x24-plain-sound",
+    "repeat_hz": 30,
+    "presses": [
+      {
+        "press": 1,
+        "key": "right",
+        "frame": 11,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 2,
+        "key": "left",
+        "frame": 17,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 3,
+        "key": "right",
+        "frame": 23,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 4,
+        "key": "right",
+        "frame": 24,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 5,
+        "key": "right",
+        "frame": 25,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 6,
+        "key": "right",
+        "frame": 26,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 7,
+        "key": "right",
+        "frame": 27,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 8,
+        "key": "right",
+        "frame": 28,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 9,
+        "key": "right",
+        "frame": 29,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 10,
+        "key": "right",
+        "frame": 30,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 11,
+        "key": "right",
+        "frame": 31,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 12,
+        "key": "right",
+        "frame": 32,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            22
+          ]
+        ],
+        "expected_x": 22,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 13,
+        "key": "left",
+        "frame": 39,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 14,
+        "key": "left",
+        "frame": 40,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 15,
+        "key": "left",
+        "frame": 41,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 16,
+        "key": "left",
+        "frame": 42,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 17,
+        "key": "left",
+        "frame": 43,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 18,
+        "key": "left",
+        "frame": 44,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 19,
+        "key": "left",
+        "frame": 45,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 20,
+        "key": "left",
+        "frame": 46,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 21,
+        "key": "left",
+        "frame": 47,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 22,
+        "key": "left",
+        "frame": 48,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      }
+    ],
+    "recorded": 22,
+    "final_time": 0
+  },
+  {
+    "case": "80x24-plain-mute",
+    "repeat_hz": 30,
+    "presses": [
+      {
+        "press": 1,
+        "key": "right",
+        "frame": 12,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 2,
+        "key": "left",
+        "frame": 18,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 3,
+        "key": "right",
+        "frame": 24,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 4,
+        "key": "right",
+        "frame": 25,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 5,
+        "key": "right",
+        "frame": 26,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 6,
+        "key": "right",
+        "frame": 27,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 7,
+        "key": "right",
+        "frame": 28,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 8,
+        "key": "right",
+        "frame": 29,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 9,
+        "key": "right",
+        "frame": 30,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 10,
+        "key": "right",
+        "frame": 31,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 11,
+        "key": "right",
+        "frame": 32,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 12,
+        "key": "right",
+        "frame": 33,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            22
+          ]
+        ],
+        "expected_x": 22,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 13,
+        "key": "left",
+        "frame": 40,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 14,
+        "key": "left",
+        "frame": 41,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            18,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 15,
+        "key": "left",
+        "frame": 42,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 16,
+        "key": "left",
+        "frame": 43,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 17,
+        "key": "left",
+        "frame": 44,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 18,
+        "key": "left",
+        "frame": 45,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 19,
+        "key": "left",
+        "frame": 46,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 20,
+        "key": "left",
+        "frame": 47,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 21,
+        "key": "left",
+        "frame": 48,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 22,
+        "key": "left",
+        "frame": 49,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            19,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      }
+    ],
+    "recorded": 22,
+    "final_time": 0
+  },
+  {
+    "case": "120x40-rich-sound",
+    "repeat_hz": 30,
+    "presses": [
+      {
+        "press": 1,
+        "key": "right",
+        "frame": 11,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 2,
+        "key": "left",
+        "frame": 17,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 3,
+        "key": "right",
+        "frame": 23,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 4,
+        "key": "right",
+        "frame": 24,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 5,
+        "key": "right",
+        "frame": 25,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 6,
+        "key": "right",
+        "frame": 26,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 7,
+        "key": "right",
+        "frame": 27,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 8,
+        "key": "right",
+        "frame": 28,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 9,
+        "key": "right",
+        "frame": 29,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 10,
+        "key": "right",
+        "frame": 30,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 11,
+        "key": "right",
+        "frame": 31,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 12,
+        "key": "right",
+        "frame": 32,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            22
+          ]
+        ],
+        "expected_x": 22,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 13,
+        "key": "left",
+        "frame": 39,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 14,
+        "key": "left",
+        "frame": 40,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 15,
+        "key": "left",
+        "frame": 41,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 16,
+        "key": "left",
+        "frame": 42,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 17,
+        "key": "left",
+        "frame": 43,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 18,
+        "key": "left",
+        "frame": 44,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 19,
+        "key": "left",
+        "frame": 45,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 20,
+        "key": "left",
+        "frame": 46,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 21,
+        "key": "left",
+        "frame": 47,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 22,
+        "key": "left",
+        "frame": 48,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      }
+    ],
+    "recorded": 22,
+    "final_time": 0
+  },
+  {
+    "case": "120x40-rich-mute",
+    "repeat_hz": 30,
+    "presses": [
+      {
+        "press": 1,
+        "key": "right",
+        "frame": 12,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 2,
+        "key": "left",
+        "frame": 18,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 3,
+        "key": "right",
+        "frame": 24,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 4,
+        "key": "right",
+        "frame": 25,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 5,
+        "key": "right",
+        "frame": 26,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 6,
+        "key": "right",
+        "frame": 27,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 7,
+        "key": "right",
+        "frame": 28,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 8,
+        "key": "right",
+        "frame": 29,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 9,
+        "key": "right",
+        "frame": 30,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 10,
+        "key": "right",
+        "frame": 31,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 11,
+        "key": "right",
+        "frame": 32,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 12,
+        "key": "right",
+        "frame": 33,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            22
+          ]
+        ],
+        "expected_x": 22,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 13,
+        "key": "left",
+        "frame": 40,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 14,
+        "key": "left",
+        "frame": 41,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 15,
+        "key": "left",
+        "frame": 42,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 16,
+        "key": "left",
+        "frame": 43,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 17,
+        "key": "left",
+        "frame": 44,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 18,
+        "key": "left",
+        "frame": 45,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 19,
+        "key": "left",
+        "frame": 46,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 20,
+        "key": "left",
+        "frame": 47,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 21,
+        "key": "left",
+        "frame": 48,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 22,
+        "key": "left",
+        "frame": 49,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      }
+    ],
+    "recorded": 22,
+    "final_time": 0
+  },
+  {
+    "case": "120x40-plain-sound",
+    "repeat_hz": 30,
+    "presses": [
+      {
+        "press": 1,
+        "key": "right",
+        "frame": 11,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 2,
+        "key": "left",
+        "frame": 17,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 3,
+        "key": "right",
+        "frame": 23,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 4,
+        "key": "right",
+        "frame": 24,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 5,
+        "key": "right",
+        "frame": 25,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 6,
+        "key": "right",
+        "frame": 26,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 7,
+        "key": "right",
+        "frame": 27,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 8,
+        "key": "right",
+        "frame": 28,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 9,
+        "key": "right",
+        "frame": 29,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 10,
+        "key": "right",
+        "frame": 30,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 11,
+        "key": "right",
+        "frame": 31,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 12,
+        "key": "right",
+        "frame": 32,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            22
+          ]
+        ],
+        "expected_x": 22,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 13,
+        "key": "left",
+        "frame": 39,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 14,
+        "key": "left",
+        "frame": 40,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 15,
+        "key": "left",
+        "frame": 41,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 16,
+        "key": "left",
+        "frame": 42,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 17,
+        "key": "left",
+        "frame": 43,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 18,
+        "key": "left",
+        "frame": 44,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 19,
+        "key": "left",
+        "frame": 45,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 20,
+        "key": "left",
+        "frame": 46,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 21,
+        "key": "left",
+        "frame": 47,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 22,
+        "key": "left",
+        "frame": 48,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      }
+    ],
+    "recorded": 22,
+    "final_time": 0
+  },
+  {
+    "case": "120x40-plain-mute",
+    "repeat_hz": 30,
+    "presses": [
+      {
+        "press": 1,
+        "key": "right",
+        "frame": 12,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 2,
+        "key": "left",
+        "frame": 18,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 3,
+        "key": "right",
+        "frame": 24,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 4,
+        "key": "right",
+        "frame": 25,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 5,
+        "key": "right",
+        "frame": 26,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 6,
+        "key": "right",
+        "frame": 27,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 7,
+        "key": "right",
+        "frame": 28,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 8,
+        "key": "right",
+        "frame": 29,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 9,
+        "key": "right",
+        "frame": 30,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 10,
+        "key": "right",
+        "frame": 31,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 11,
+        "key": "right",
+        "frame": 32,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 12,
+        "key": "right",
+        "frame": 33,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            22
+          ]
+        ],
+        "expected_x": 22,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 13,
+        "key": "left",
+        "frame": 40,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            21
+          ]
+        ],
+        "expected_x": 21,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 14,
+        "key": "left",
+        "frame": 41,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            27,
+            20
+          ]
+        ],
+        "expected_x": 20,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 15,
+        "key": "left",
+        "frame": 42,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            17
+          ]
+        ],
+        "expected_x": 17,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 16,
+        "key": "left",
+        "frame": 43,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            16
+          ]
+        ],
+        "expected_x": 16,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 17,
+        "key": "left",
+        "frame": 44,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            15
+          ]
+        ],
+        "expected_x": 15,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 18,
+        "key": "left",
+        "frame": 45,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            14
+          ]
+        ],
+        "expected_x": 14,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 19,
+        "key": "left",
+        "frame": 46,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            12
+          ]
+        ],
+        "expected_x": 12,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 20,
+        "key": "left",
+        "frame": 47,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            11
+          ]
+        ],
+        "expected_x": 11,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 21,
+        "key": "left",
+        "frame": 48,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            10
+          ]
+        ],
+        "expected_x": 10,
+        "aligned": true,
+        "coalesced": 1
+      },
+      {
+        "press": 22,
+        "key": "left",
+        "frame": 49,
+        "panel_frames": 1,
+        "cursor_frames": 1,
+        "caret": [
+          [
+            28,
+            9
+          ]
+        ],
+        "expected_x": 9,
+        "aligned": true,
+        "coalesced": 1
+      }
+    ],
+    "recorded": 22,
+    "final_time": 0
+  }
+]

@@ -1,0 +1,38 @@
+Pass 1
+wolf-0.2.35-aarch64-apple-darwin.tar.gz sha256:240b84d079b1b9a0d88681ac08fca4816f84778e2d6c94c435ceb2dd6a5f042a
+wolf-0.2.35-x86_64-unknown-linux-gnu.tar.gz sha256:4cc4045bbbb605c07835bc4f32685953c784eeef4cd3139a48b457dfc90dad1a
+lupin-0.1.56-aarch64-apple-darwin.tar.gz sha256:9133bfdbb95f6a18745439bf0b2b5280860a5bfeaf9ae038ea120a72d58f7687
+lupin-0.1.56-x86_64-unknown-linux-gnu.tar.gz sha256:ad703550ac4787e8e4bb26989d591a731410274d7332f2b4e8b9a64c878822cc
+Mac wolf sha256 8a88813e434bdbbe4ea2b2b718c9771f982d588597fe3e44af776c9c42029bcb
+Mac lupin sha256 5f010730c3e6b4cc806a9ff8eddb0582078585cafe13d86d5e438e45e3c3b7a8
+Mac libwolf_rt.a sha256 62eeafa9d275220e7ca5fff9ab1c34a688adfd0a658983f4d8c2057eb8f73f19
+Mac std 2386522eb059cca5a84108562c2c0a0e72345d34
+Mac lair 57870143ebbb4806b8bee40379e8c6e781f50842
+Pass 2
+wolf-0.2.35-aarch64-apple-darwin.tar.gz sha256:240b84d079b1b9a0d88681ac08fca4816f84778e2d6c94c435ceb2dd6a5f042a
+wolf-0.2.35-x86_64-unknown-linux-gnu.tar.gz sha256:4cc4045bbbb605c07835bc4f32685953c784eeef4cd3139a48b457dfc90dad1a
+lupin-0.1.56-aarch64-apple-darwin.tar.gz sha256:9133bfdbb95f6a18745439bf0b2b5280860a5bfeaf9ae038ea120a72d58f7687
+lupin-0.1.56-x86_64-unknown-linux-gnu.tar.gz sha256:ad703550ac4787e8e4bb26989d591a731410274d7332f2b4e8b9a64c878822cc
+Mac wolf sha256 8a88813e434bdbbe4ea2b2b718c9771f982d588597fe3e44af776c9c42029bcb
+Mac lupin sha256 5f010730c3e6b4cc806a9ff8eddb0582078585cafe13d86d5e438e45e3c3b7a8
+Mac libwolf_rt.a sha256 62eeafa9d275220e7ca5fff9ab1c34a688adfd0a658983f4d8c2057eb8f73f19
+Mac std 2386522eb059cca5a84108562c2c0a0e72345d34
+Mac lair 57870143ebbb4806b8bee40379e8c6e781f50842
+Linux pass 1
+def1d450147beaed53780481abb124bfa2882e3f8a79b095ae39107b63de7bcc  .wolf-bin/wolf
+991d54cf28e4f182b339d9eeb4dba7b2df3ad2618acb3bb53bddca42856b4bb9  .wolf-bin/lupin
+9efc68e1d0c3a1e1c5c1b43ab1448a3c1b42963596b8d8d106e4fbda12ebbee7  .wolf-bin/libwolf_rt.a
+2386522eb059cca5a84108562c2c0a0e72345d34
+57870143ebbb4806b8bee40379e8c6e781f50842
+wolf 0.2.35 (wolfgang, pin cf0c13d)
+paired with lupin 0.1.56 (reference interpreter), pin 294d626
+lupin 0.1.56 (wolf-interp, reference interpreter at pin 294d626)
+Linux pass 2
+def1d450147beaed53780481abb124bfa2882e3f8a79b095ae39107b63de7bcc  .wolf-bin/wolf
+991d54cf28e4f182b339d9eeb4dba7b2df3ad2618acb3bb53bddca42856b4bb9  .wolf-bin/lupin
+9efc68e1d0c3a1e1c5c1b43ab1448a3c1b42963596b8d8d106e4fbda12ebbee7  .wolf-bin/libwolf_rt.a
+2386522eb059cca5a84108562c2c0a0e72345d34
+57870143ebbb4806b8bee40379e8c6e781f50842
+wolf 0.2.35 (wolfgang, pin cf0c13d)
+paired with lupin 0.1.56 (reference interpreter), pin 294d626
+lupin 0.1.56 (wolf-interp, reference interpreter at pin 294d626)
