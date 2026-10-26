@@ -1,0 +1,12 @@
+build: target/native/fugue
+build: target/release/fugue
+goldens: wrote tests/goldens/staff-120-rich
+goldens: wrote tests/goldens/staff-120-plain
+goldens: wrote tests/goldens/staff-80-rich
+goldens: wrote tests/goldens/staff-80-plain
+goldens: wrote tests/goldens/art
+pty: quit ok (linux x86_64, exit 0, 2183 bytes captured)
+pty: ctrl-c ok (linux x86_64, exit 0, 2183 bytes captured)
+pty: trap ok (linux x86_64, exit 134, 2183 bytes captured)
+pty: agree-rich ok (linux x86_64, exit 0, 2183 bytes captured)
+pty: agree-plain ok (linux x86_64, exit 0, 2150 bytes captured)

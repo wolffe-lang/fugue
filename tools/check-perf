@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")/.."
+.lair/tools/build --release
+.lair/tools/perf
+python3 -I .lair/tools/perf-idle --bin target/release/fugue

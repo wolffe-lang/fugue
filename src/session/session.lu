@@ -1,0 +1,68 @@
+use replay
+
+/// Deterministic editor state; no terminal or clock ownership.
+pub struct State {
+    seed: int,
+    cursor: int,
+    pitch: int,
+    phase: int,
+    quit: bool,
+}
+
+/// Start at the title or staff with the supplied seed.
+pub fn new(seed: int, title: bool) -> State {
+    State { seed: seed, cursor: 0, pitch: 0, phase: if title then 0 else 1, quit: false }
+}
+
+/// Stable replay key numbers, independent of the terminal decoder.
+pub fn vocab() -> replay.Vocab {
+    replay.vocab(
+        take [
+            "",
+            "up",
+            "down",
+            "left",
+            "right",
+            "octave-up",
+            "octave-down",
+            "sharp",
+            "sound",
+            "hear",
+            "check",
+            "undo",
+            "new",
+            "retry",
+            "quit",
+            "interrupt",
+        ],
+        take List[str](),
+    )
+}
+
+/// Map terminal keys to replay vocabulary; zero means unhandled.
+pub fn key(n: int) -> int {
+    match n {
+        1..=6 => n,
+        9 => 14,
+        10 => 15,
+        11 => 10,
+        1035 => 7,
+        1032 => 8,
+        1104 => 9,
+        1117 => 11,
+        1110 => 12,
+        1114 => 13,
+        1113 => 14,
+        _ => 0,
+    }
+}
+
+/// Apply one replay key without reading any host state.
+pub fn step(mut s: State, k: int) {
+    if k == 14 || k == 15 { s.quit = true; return }
+    if s.phase == 0 && k != 0 { s.phase = 1; return }
+    if k == 1 { s.pitch += 1 }
+    if k == 2 { s.pitch -= 1 }
+    if k == 3 && s.cursor > 0 { s.cursor -= 1 }
+    if k == 4 && s.cursor < 9 { s.cursor += 1 }
+}

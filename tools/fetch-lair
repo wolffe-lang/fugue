@@ -1,0 +1,57 @@
+#!/bin/sh
+# fetch-lair — stage the engine at the commit lair.pin names into .lair/.
+#
+# The tree is fetched from wolffe-lang/lair at that commit (never a branch:
+# the pin is the point) and REFUSED unless the commit fetched is the one
+# pinned; `.lair/LAIR-REV` records it and every engine tool checks it. A
+# stage that already holds the pin is left alone, so the tool is cheap to
+# run before every build. LAIR_GIT names another source (a lane's local
+# clone, `LAIR_GIT=~/lanes/x/lair`): the commit staged is still the pin's.
+#
+# The shape is the toolchain fetcher's (tools/fetch-toolchain in lair, yew's
+# before it): a pin by identity, a refusal by name, a stamp.
+#
+# The engine's modules reach the compiler as symlinks src/<module> ->
+# ../.lair/src/<module>, because a wolf.pkg path dependency cannot import
+# its own sibling modules at wolf 0.2.35 (E0301; the reproducer is lair's
+# notes/cb00-evidence/probes/dep-sibling/, the wolf-lang issue cb00 asked to
+# be filed). When that is answered the pin stays and the symlinks go.
+set -eu
+GAME_ROOT=$(cd "$(dirname "$0")" && pwd -L)
+GAME_ROOT=${GAME_ROOT%/*}
+cd "$GAME_ROOT"
+pin=$(sed -n 's/^\([0-9a-f]\{40\}\).*/\1/p' lair.pin | head -1)
+[ -n "$pin" ] || { echo "fetch-lair: lair.pin names no 40-hex commit on its first line" >&2; exit 2; }
+if [ -L .lair ]; then
+    echo "fetch-lair: .lair is a symlink (a lane's development tree); not touched. LAIR_UNPINNED=1 builds on it" >&2
+    exit 1
+fi
+if [ -f .lair/LAIR-REV ] && [ "$(cat .lair/LAIR-REV)" = "$pin" ]; then
+    echo "fetch-lair: .lair/ already holds $pin"
+    exit 0
+fi
+src=${LAIR_GIT:-https://github.com/wolffe-lang/lair}
+tmp=$(mktemp -d "${TMPDIR:-/tmp}/lair-fetch.XXXXXX")
+trap 'rm -rf "$tmp"' EXIT
+echo "fetch-lair: $src at $pin"
+git init -q "$tmp/lair"
+git -C "$tmp/lair" fetch -q --depth 1 "$src" "$pin"
+have=$(git -C "$tmp/lair" rev-parse FETCH_HEAD)
+if [ "$have" != "$pin" ]; then
+    echo "fetch-lair: REFUSED — fetched $have, lair.pin wants $pin" >&2
+    exit 1
+fi
+rm -rf .lair
+mkdir -p .lair
+git -C "$tmp/lair" archive FETCH_HEAD | tar -x -C .lair
+echo "$have" >.lair/LAIR-REV
+# `src/*`, never `src/*/`: a dangling symlink is no directory and the
+# slashed glob skipped exactly the links this looks for (cb00's pin plant
+# passed this check and died at the planner instead).
+for d in src/*; do
+    if [ -L "$d" ] && [ ! -e "$d" ]; then
+        echo "fetch-lair: REFUSED — $d points at nothing in the staged engine; the pin and the game disagree" >&2
+        exit 1
+    fi
+done
+echo "fetch-lair: staged lair $pin into .lair/"

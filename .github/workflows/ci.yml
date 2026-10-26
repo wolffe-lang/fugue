@@ -1,0 +1,200 @@
+# fugue — CI. The tiers are the engine's planner's (lair's ci/tiers.py, run
+# from the staged .lair/; clef's shape, the house rule); a job marked
+# `# tier: pr` runs for a pull request, the rest for trunk, the nightly, a
+# dispatch and the `full-matrix` label:
+#   tier pr    the planner's test and the Linux leg (fmt, the unit tests on
+#              the checked machine, both builds, the selftest, the goldens
+#              on both tiers, the pty rows in the container);
+#   tier full  the above plus the macOS leg (the build, the goldens and the
+#              pty rows on a macOS runner) and performance gates.
+# Every job first stages the engine at lair.pin (tools/fetch-lair) and the
+# toolchain by digest (.lair/tools/fetch-toolchain). Every step runs bare
+# and its exit code is read directly: no pipes. A red nightly opens one
+# issue (lair's ci/nightly-red.sh).
+name: ci
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+  push:
+    branches: [trunk]
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+    inputs:
+      jobs:
+        description: 'Job ids, space separated; empty runs every job'
+        type: string
+        default: ''
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('ci-pr-{0}-{1}', github.head_ref, (github.event.action == 'labeled' && github.event.label.name != 'full-matrix') && format('noop-{0}', github.run_id) || (contains(github.event.pull_request.labels.*.name, 'full-matrix') && 'full' || 'pr')) || format('ci-{0}', github.run_id) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      tier: ${{ steps.plan.outputs.tier }}
+      jobs: ${{ steps.plan.outputs.jobs }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: the engine, at lair.pin
+        run: tools/fetch-lair
+      - id: plan
+        env:
+          EVENT: ${{ github.event_name }}
+          ACTION: ${{ github.event.action }}
+          LABEL: ${{ github.event.label.name }}
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          IN_JOBS: ${{ inputs.jobs }}
+        run: python3 .lair/ci/tiers.py plan --merge --github-output "$GITHUB_OUTPUT"
+  plan-test:
+    # tier: pr
+    needs: plan
+    if: contains(fromJSON(needs.plan.outputs.jobs || '[]'), 'plan-test')
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: the engine, at lair.pin
+        run: tools/fetch-lair
+      - run: python3 -I .lair/ci/tiers-test.py
+      - run: python3 -I .lair/ci/memgate-test.py
+  linux:
+    # tier: pr
+    name: linux x86-64 (fmt, tests, builds, goldens, pty rows in the container)
+    needs: plan
+    if: contains(fromJSON(needs.plan.outputs.jobs || '[]'), 'linux')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: the engine, at lair.pin
+        run: tools/fetch-lair
+      - uses: actions/cache@v4
+        with:
+          path: .wolf-bin
+          key: lair-toolchain-linux-${{ hashFiles('.lair/wolf-toolchain.toml') }}
+      - name: the pinned toolchain, by digest
+        run: .lair/tools/fetch-toolchain
+      - name: the Linux leg, in the container
+        env:
+          LAIR_ENGINE: docker
+        run: .lair/tools/in-container tools/check-linux
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: linux-evidence
+          path: |
+            target/goldens
+            target/pty
+            target/test.log
+            target/gameplay
+  macos:
+    name: macOS arm64 (build, goldens, pty rows)
+    needs: plan
+    if: contains(fromJSON(needs.plan.outputs.jobs || '[]'), 'macos')
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: the engine, at lair.pin
+        run: tools/fetch-lair
+      - uses: actions/cache@v4
+        with:
+          path: .wolf-bin
+          key: lair-toolchain-macos-${{ hashFiles('.lair/wolf-toolchain.toml') }}
+      - name: the pinned toolchain, by digest
+        run: .lair/tools/fetch-toolchain
+      - name: wolf fmt --check
+        run: .lair/tools/check-fmt
+      - name: the unit tests
+        run: .lair/tools/test
+      # RULES section 4's memory gate is nomad's (the maintainer's Mac); the
+      # runner's free-memory figure means nothing for it (lair's lib-mem.sh).
+      - name: build, both tiers
+        env:
+          LAIR_MEMORY_GATE: '0'
+        run: .lair/tools/build --all
+      - name: the goldens, both tiers
+        env:
+          LAIR_MEMORY_GATE: '0'
+        run: .lair/tools/goldens
+      - name: native goldens and gameplay semantics on both backends
+        env:
+          LAIR_MEMORY_GATE: '0'
+        run: |
+          .lair/tools/goldens --bin target/native/fugue
+          target/native/fugue --selftest
+          target/release/fugue --selftest
+      - name: the pty rows
+        env:
+          LAIR_MEMORY_GATE: '0'
+        run: python3 -I .lair/tools/pty --bin target/release/fugue
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: macos-evidence
+          path: |
+            target/goldens
+            target/pty
+  perf:
+    name: performance (render, idle, input latency)
+    needs: plan
+    if: contains(fromJSON(needs.plan.outputs.jobs || '[]'), 'perf')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - run: tools/fetch-lair
+      - uses: actions/cache@v4
+        with:
+          path: .wolf-bin
+          key: lair-toolchain-linux-${{ hashFiles('.lair/wolf-toolchain.toml') }}
+      - run: .lair/tools/fetch-toolchain
+      - name: release bench and live latency, in the container
+        env:
+          LAIR_ENGINE: docker
+        run: .lair/tools/in-container tools/check-perf
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: perf-evidence
+          path: target/perf
+  tier:
+    name: tier ${{ needs.plan.outputs.tier || 'unplanned' }}
+    if: ${{ !cancelled() }}
+    needs:
+      - plan
+      - plan-test
+      - linux
+      - macos
+      - perf
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: the engine, at lair.pin
+        run: tools/fetch-lair
+      - env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: python3 .lair/ci/tiers.py verdict
+  nightly-red:
+    name: nightly red, an issue
+    needs: tier
+    if: ${{ failure() && github.event_name == 'schedule' }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: the engine, at lair.pin
+        run: tools/fetch-lair
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          WORKFLOW: ${{ github.workflow }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: .lair/ci/nightly-red.sh

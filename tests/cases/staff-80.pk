@@ -1,0 +1,7 @@
+pk 1
+seed 7
+tier rich
+size 80x24
+# frames 12 every 12
+t 1 up
+t 2 right

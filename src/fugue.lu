@@ -1,0 +1,263 @@
+use std.env
+use std.fs
+use std.signal
+use clock
+use grid
+use headless
+use input
+use replay
+use session
+use staff
+use term
+use tier
+
+fn has(args: List[str], word: str) -> bool {
+    for a in args { if a == word { return true } }
+    false
+}
+
+struct Options {
+    seed: int,
+    cols: int,
+    rows: int,
+    tier_id: int,
+    frames: int,
+    every: int,
+    from: int,
+    script: str,
+    dump: str,
+    record: str,
+    apply: str,
+    headless: bool,
+    art: bool,
+    bench: bool,
+    title: bool,
+    trap_at: int,
+    trace: bool,
+}
+
+fn options() -> Options ! {parse} {
+    var o = Options {
+        seed: 7,
+        cols: 80,
+        rows: 24,
+        tier_id: 1,
+        frames: 0,
+        every: 10,
+        from: 0,
+        script: "",
+        dump: "",
+        record: "",
+        apply: "",
+        headless: false,
+        art: false,
+        bench: false,
+        title: true,
+        trap_at: -1,
+        trace: false,
+    }
+    let args = env.args()
+    var i = 0
+    while i < args.len {
+        let a = args[i]
+        if a == "--headless" {
+            o.headless = true
+        } else if a == "--art-study" {
+            o.art = true
+        } else if a == "--bench" {
+            o.bench = true
+        } else if a == "--no-title" {
+            o.title = false
+        } else if a == "--plain" {
+            o.tier_id = 0
+        } else if a == "--trace" {
+            o.trace = true
+        } else if a == "--mute" || a == "--no-truecolor" {} else if i + 1 < args.len {
+            i += 1
+            let v = args[i]
+            if a == "--seed" {
+                o.seed = v.to_int()?
+            } else if a == "--size" {
+                let (w, h) = replay.parse_size(v)?
+                o.cols = w
+                o.rows = h
+            } else if a == "--tier" {
+                o.tier_id = tier.of_name(v)?
+            } else if a == "--frames" || a == "--ticks" {
+                o.frames = v.to_int()?
+            } else if a == "--every" {
+                o.every = v.to_int()?
+            } else if a == "--from" {
+                o.from = v.to_int()?
+            } else if a == "--trap-at" {
+                o.trap_at = v.to_int()?
+            } else if a == "--script" || a == "--replay" {
+                o.script = v
+            } else if a == "--dump" {
+                o.dump = v
+            } else if a == "--record" {
+                o.record = v
+            } else if a == "--apply" {
+                o.apply = v
+            } else {
+                return parse
+            }
+        } else {
+            return parse
+        }
+        i += 1
+    }
+    if o.cols < 80 || o.rows < 24 || o.every < 1 || o.frames < 0 { return parse }
+    o
+}
+
+fn load(o: Options) -> replay.Replay ! {parse} {
+    if o.script == "" { return replay.new(o.seed, o.tier_id, o.cols, o.rows) }
+    let text = fs.read_text(o.script) else |_| { return parse }
+    var r = replay.from_text(text, session.vocab())?
+    let args = env.args()
+    if has(args, "--seed") { r.seed = o.seed }
+    if has(args, "--size") { r.cols = o.cols; r.rows = o.rows }
+    if has(args, "--tier") || has(args, "--plain") { r.tier = o.tier_id }
+    r
+}
+
+fn apply_events(mut s: session.State, r: replay.Replay, tick: int) {
+    var keys = List[int]()
+    let _ = replay.at(r, tick, mut keys)
+    for k in keys { session.step(mut s, k) }
+}
+
+fn offline(o: Options, r: replay.Replay) -> int {
+    var s = session.new(r.seed, false)
+    let count = if o.frames > 0 then o.frames else 60
+    var prev = grid.new(r.rows, r.cols)
+    var pen = grid.pen_new()
+    var total: int = 0
+    var worst: int = 0
+    for tick in 0..count {
+        region frame {
+            apply_events(mut s, r, tick)
+            let begin = clock.now_ns()
+            let g = staff.frame(s, r.cols, r.rows, r.tier)
+            var bytes = List[byte]()
+            grid.diff(prev, g, tick == 0, mut pen, mut bytes, tier.dialect(r.tier, false))
+            let cost = (clock.now_ns() - begin) / 1000
+            total += cost
+            if cost > worst { worst = cost }
+            if !o.bench && tick >= o.from && tick % o.every == 0 {
+                headless.write_frame(o.dump, "frame-{headless.pad4(tick)}", g) else |_| { return 2 }
+            }
+            if tick == count - 1 && !o.bench {
+                headless.write_frame(o.dump, "final", g) else |_| { return 2 }
+            }
+            for j in 0..g.cells.len { prev.cells[j] = g.cells[j] }
+        }
+    }
+    if o.bench {
+        print("bench {r.cols}x{r.rows} {tier.name(r.tier)} avg_us {total / count} max_us {worst}")
+    }
+    0
+}
+
+fn live(o: Options, r: replay.Replay) -> int {
+    var t = term.open() else |e| { eprint(term.message("{e}", "fugue")); return 2 }
+    if t.cols < r.cols || t.rows < r.rows {
+        eprint("fugue: small (needs {r.cols}x{r.rows})")
+        return 2
+    }
+    term.enter(mut t) else |_| { term.leave(mut t); return 2 }
+    defer term.leave(mut t)
+    var s = session.new(r.seed, o.title && o.script == "")
+    var dec = input.new()
+    var pending = List[int]()
+    var c = clock.new(clock.now_ns())
+    var prev = grid.new(r.rows, r.cols)
+    var pen = grid.pen_new()
+    var reason = "--ticks"
+    var tick = 0
+    var recorded = replay.new(r.seed, r.tier, r.cols, r.rows)
+    loop {
+        let wake = clock.wait_until(mut c, clock.next_due_ns(c), term.signal_set()) else |_| {
+            return 2
+        }
+        if wake.meaning != 0 && wake.meaning != signal.resize() {
+            reason = "the interrupt"
+            session.step(mut s, 15)
+            replay.push_key(mut recorded, tick, 15)
+        }
+        if wake.input_ready {
+            let bytes = term.read_keys(256) else |_| { break }
+            for b in bytes { input.feed(mut dec, b, clock.now_ns() / 1000000, mut pending) }
+        }
+        input.flush(mut dec, clock.now_ns() / 1000000, mut pending)
+        let due = clock.advance(mut c, clock.now_ns())
+        if due == 0 && !s.quit { continue }
+        var carries = false
+        for raw in pending {
+            let k = session.key(raw)
+            if k != 0 && (o.script == "" || k == 14 || k == 15) {
+                if k == 14 { reason = "the quit key" }
+                if k == 15 { reason = "the interrupt" }
+                session.step(mut s, k)
+                replay.push_key(mut recorded, tick, k)
+                carries = true
+            }
+        }
+        pending = List[int]()
+        var d = 0
+        while d < due {
+            if o.script != "" { apply_events(mut s, r, tick) }
+            if o.trap_at == tick { assert(false) }
+            tick += 1
+            d += 1
+        }
+        region frame {
+            let g = staff.frame(s, r.cols, r.rows, r.tier)
+            var bytes = List[byte]()
+            grid.diff(prev, g, tick <= 1, mut pen, mut bytes, tier.dialect(r.tier, false))
+            term.write(bytes) else |_| { return 2 }
+            for j in 0..g.cells.len { prev.cells[j] = g.cells[j] }
+        }
+        if carries && o.trace { eprint("trace frame {tick} carries_key") }
+        if s.quit || o.frames > 0 && tick >= o.frames { break }
+    }
+    if o.record != "" {
+        var bytes = List[byte]()
+        replay.format_scored(recorded, session.vocab(), 0, mut bytes)
+        fs.write_bytes(o.record, bytes) else |_| { return 2 }
+    }
+    eprint("fugue: ended by {reason}")
+    0
+}
+
+fn main() -> int {
+    let args = env.args()
+    if has(args, "--selftest") {
+        let n = headless.diff_property()
+        if n == 0 { print("selftest: diff property ok") }
+        return if n == 0 then 0 else 1
+    }
+    let o = options() else |_| {
+        eprint("fugue: invalid option or small size (minimum 80x24)")
+        return 2
+    }
+    if o.apply != "" {
+        let bytes = fs.read_bytes(o.apply) else |_| { return 2 }
+        var out = fs.stdout()
+        fs.write_chunk(mut out, headless.apply(bytes, o.cols, o.rows)) else |_| { return 2 }
+        return 0
+    }
+    if o.dump != "" { fs.create_dir_all(o.dump) else |_| { return 2 } }
+    let r = load(o) else |_| { eprint("fugue: invalid replay"); return 2 }
+    if o.art {
+        let s = session.new(7, false)
+        for t in 0..2 {
+            let g = staff.frame(s, 80, 24, t)
+            headless.write_frame(o.dump, "staff-{tier.name(t)}", g) else |_| { return 2 }
+        }
+        return 0
+    }
+    if o.headless || o.bench { return offline(o, r) }
+    live(o, r)
+}

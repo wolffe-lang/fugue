@@ -1,0 +1,24 @@
+               .       ...  .    .                                           .  
+ . F U G U E   /   Book I                       .   .                           
+              .                          .                 .                    
+   The staff is being prepared    .             . .                             
+                                                       .                        
+                    . .                                  . .     .              
+                                                                 .             .
+         .                                    .                 .               
+     .                                                                          
+ .                       .                                     .                
+                    .  .                       .            .                   
+                                 .                                  .           
+                        .                                                       
+  .   ..      .                               .                   .             
+          .                                                   . .               
+    .              .                                                            
+.                                                                    .          
+           .   .       .             .                                 .        
+    .                                   .            .                          
+                                                                                
+     .                         . .                                   .          
+              .                 .          .                    .               
+   Arrows move | Enter checks | h hears | q quits .     .        .              
+     .                                                                          

@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")/.."
+.lair/tools/check-linux
+.lair/tools/goldens --bin target/native/fugue
