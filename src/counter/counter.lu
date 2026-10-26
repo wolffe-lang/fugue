@@ -128,6 +128,7 @@ pub fn pair(a: subject.Line, b: subject.Line, below: bool) -> List[theory.Break]
                     "Pair weak eighths by step.",
                 )
             }
+            if other.beats[rhythm.at(other.beats, time)].rest { continue }
             // A dissonance belongs to the voice that moves, or its prepared tie.
             let fig = classify(other, voice, i, under)
             if !consonant(a, b, time) {
@@ -309,11 +310,12 @@ pub fn check(
         (mut v.breaks).push(f)
     }
     for b in melody(cs, answer_below) { (mut v.breaks).push(copy b) }
-    var seen: int = 0, steps = 0, moves = 0, contrary = 0, chain = 1
+    var seen: int = 0, steps = 0, moves = 0, contrary = 0, chain = 1, attacks = 0
     var top = -1, peak = 0, atop = -1, apeak = 0
     for time in 0..subject.span(a.beats) {
         let i = rhythm.at(upper.beats, time), j = rhythm.at(a.beats, time)
         if upper.beats[i].rest || a.beats[j].rest { continue }
+        if rhythm.onset(upper.beats, i) != time && rhythm.onset(a.beats, j) != time { continue }
         let iv = theory.interval(a.notes[j], upper.notes[i]), bar = time / 8 + 1
         if iv.number == 5 && iv.quality == "P" {
             theory.require(
@@ -333,6 +335,7 @@ pub fn check(
         )
         if rhythm.onset(upper.beats, i) != time { continue }
         seen |= 1 << (iv.number - 1) % 7
+        if !upper.beats[i].tied { attacks += 1 }
         let height = theory.chromatic(upper.notes[i])
         if height > top { top = height; peak = time }
         if i > 0 && !upper.beats[i].tied {
@@ -344,7 +347,12 @@ pub fn check(
             }
             let old_time = rhythm.onset(upper.beats, i - 1)
             let olda = sounding(a, old_time), oldb = copy upper.notes[i - 1]
-            let motion = theory.motion(olda, oldb, a.notes[j], upper.notes[i])
+            let motion = theory.motion(
+                sounding(a, time - 1),
+                sounding(upper, time - 1),
+                a.notes[j],
+                upper.notes[i],
+            )
             if motion != "oblique" { moves += 1; if motion == "contrary" { contrary += 1 } }
             let oldiv = theory.interval(olda, oldb)
             if iv.number == oldiv.number && (iv.number == 3 || iv.number == 6) {
@@ -363,7 +371,7 @@ pub fn check(
     }
     v.separate_climax = peak != apeak
     v.contrary = if moves > 0 then contrary * 100 / moves else 0
-    v.steps = if cs.notes.len > 1 then steps * 100 / (cs.notes.len - 1) else 0
+    v.steps = if attacks > 1 then steps * 100 / (attacks - 1) else 0
     for bit in 0..7 { if seen & 1 << bit != 0 { v.variety += 1 } }
     if v.breaks.len == 0 {
         var goals = 0

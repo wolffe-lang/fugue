@@ -39,3 +39,36 @@ fn test_three_original_tutorial_subjects() {
         assert(subject.validate(s).len == 0)
     }
 }
+
+fn subject_named(s: subject.Line, name: str) -> bool {
+    for b in subject.validate(s) { if b.rule == name { return true } }
+    return false
+}
+
+fn test_subject_envelope_rules_are_independently_named() {
+    let good = subject.tutorial(0)
+    var s = copy good
+    s.beats[0].length = 1
+    assert(subject_named(s, "subject-length"))
+    s = copy good
+    s.beats[0].length = 3
+    assert(subject_named(s, "subject-rhythm"))
+    s = copy good
+    s.notes[0] = theory.pitch(29)
+    assert(subject_named(s, "subject-start"))
+    s = copy good
+    s.notes[9] = theory.pitch(29)
+    assert(subject_named(s, "subject-end"))
+    s = copy good
+    s.notes[1] = theory.pitch(29)
+    assert(subject_named(s, "subject-head"))
+    s = copy good
+    s.notes[5].octave += 2
+    assert(subject_named(s, "subject-range"))
+    s = copy good
+    s.notes[3].accidental = 1
+    assert(subject_named(s, "subject-mode"))
+    s = copy good
+    s.beats[2].rest = true
+    assert(subject_named(s, "subject-attack"))
+}

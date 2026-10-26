@@ -34,7 +34,7 @@ pub fn blank() -> Page {
 pub fn exercise(seed: int, mode: int, below: bool) -> subject.Line ! {empty} {
     let pool = subject.candidates(mode)
     for offset in 0..pool.len {
-        let s = subject.choose(pool, seed + offset) else { continue }
+        let s = subject.choose(pool, seed % pool.len + offset) else { continue }
         for tonal in [true, false] {
             if tonal && answer.mutation(s) < 0 { continue }
             let a = answer.make(s, below, tonal)

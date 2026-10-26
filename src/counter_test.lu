@@ -1,5 +1,6 @@
 use answer
 use counter
+use rhythm
 use subject
 use theory
 
@@ -59,4 +60,31 @@ fn test_counter_search_certifies_its_output() {
     let a = answer.make(subject.tutorial(0), false, false)
     let proof = counter.solve(a, false) else { assert(false); return }
     assert(counter.check(a, proof, false, false).stars == 3)
+}
+
+fn test_moving_answer_is_checked_between_counter_attacks() {
+    var a = subject.tutorial(0), b = subject.tutorial(0)
+    a.notes = [theory.pitch(28), theory.pitch(29), theory.pitch(30)]
+    a.beats = [
+        rhythm.Beat { length: 4, rest: false, tied: false },
+        rhythm.Beat { length: 4, rest: false, tied: false },
+        rhythm.Beat { length: 8, rest: false, tied: false },
+    ]
+    b.notes = [theory.pitch(30), theory.pitch(32)]
+    b.beats = rhythm.pattern(1, 2)
+    assert(counter.classify(b, a, 1, true) == "passing")
+    assert(counter.pair(a, b, false).len == 0)
+    a.notes[1] = theory.pitch(27)
+    assert(counter.classify(b, a, 1, true) == "unlicensed")
+    assert(named(counter.pair(a, b, false), "florid-dissonance"))
+}
+
+fn test_parallel_perfects_on_moving_timeline_are_refused() {
+    var a = subject.tutorial(0), b = subject.tutorial(0)
+    a.notes = [theory.pitch(28), theory.pitch(29)]
+    b.notes = [theory.pitch(32), theory.pitch(33)]
+    a.beats = rhythm.pattern(1, 2)
+    b.beats = rhythm.pattern(1, 2)
+    assert(named(counter.pair(a, b, false), "parallel-perfect"))
+    assert(named(counter.pair(a, b, false), "accented-parallel"))
 }

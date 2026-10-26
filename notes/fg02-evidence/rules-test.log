@@ -1,0 +1,22 @@
+test src/counter_test.lu::test_invertible_references_earn_three_stars_both_ways ... ok
+test src/counter_test.lu::test_inversion_fifth_is_never_accepted ... ok
+test src/counter_test.lu::test_counter_rules_reject_named_mutations ... ok
+test src/counter_test.lu::test_counter_search_certifies_its_output ... ok
+test src/counter_test.lu::test_moving_answer_is_checked_between_counter_attacks ... ok
+test src/counter_test.lu::test_parallel_perfects_on_moving_timeline_are_refused ... ok
+subject census Ionian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_ionian_50 ... ok
+subject census Dorian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_dorian_50 ... ok
+subject census Phrygian valid 50/50 pool 60
+test src/subject_test.lu::test_subject_census_phrygian_50 ... ok
+subject census Lydian valid 50/50 pool 44
+test src/subject_test.lu::test_subject_census_lydian_50 ... ok
+subject census Mixolydian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_mixolydian_50 ... ok
+subject census Aeolian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_aeolian_50 ... ok
+test src/subject_test.lu::test_subject_unrecovered_tail_is_never_admitted ... ok
+test src/subject_test.lu::test_three_original_tutorial_subjects ... ok
+test src/subject_test.lu::test_subject_envelope_rules_are_independently_named ... ok
+wolf test: 15 passed; 0 failed; 0 rejected; 0 unsupported; 0 filtered out
