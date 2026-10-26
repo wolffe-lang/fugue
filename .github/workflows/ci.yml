@@ -92,6 +92,7 @@ jobs:
             target/pty
             target/test.log
             target/gameplay
+            target/species-gameplay
   macos:
     name: macOS arm64 (build, goldens, pty rows)
     needs: plan
@@ -129,11 +130,18 @@ jobs:
           .lair/tools/goldens --bin target/native/fugue
           python3 -I tools/gameplay.py --bin target/native/fugue
           python3 -I tools/gameplay.py --bin target/release/fugue
+          python3 -I tools/species-gameplay.py --bin target/native/fugue
+          python3 -I tools/species-gameplay.py --bin target/release/fugue
           python3 -I tools/glyphs.py
       - name: manuscript frame costs
         run: |
           target/release/fugue --bench --size 120x40 --tier rich --frames 300 --mute
           target/release/fugue --bench --size 120x40 --tier plain --frames 300 --mute
+          for book in 2 3 4 5; do
+            for tier in rich plain; do
+              target/release/fugue --bench --script "tests/cases/book-$book-preset-1-120.pk" --size 120x40 --tier "$tier" --frames 300 --mute
+            done
+          done
       - name: the pty rows
         env:
           LAIR_MEMORY_GATE: '0'

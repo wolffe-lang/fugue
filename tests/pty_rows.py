@@ -150,3 +150,78 @@ def hear_whole_is_played(bin, ctx):
 
 ROWS['panel-right-twice'] = panel_right_twice
 ROWS['hear-whole-is-played'] = hear_whole_is_played
+def rhythmic_record(bin, ctx, book):
+    """Record ordinary editor keys, hear the rhythm, then verify the recorded score."""
+    root = Path(ctx.ROOT) / 'target/pty'
+    path = root / f'book-{book}-solved.pk'
+    env = ctx.env_for()
+    env['FUGUE_STATE'] = str(root / f'book-{book}-state')
+    s = ctx.Session([bin, '--book', str(book), '--mute', '--record', str(path)], 24, 80, env)
+    s.type(b'\r', .1)
+    keys = {'up': b'\x1b[A', 'down': b'\x1b[B', 'right': b'\x1b[C', 'sharp': b'#'}
+    source = Path(ctx.ROOT) / f'tests/cases/book-{book}-preset-1-80.pk'
+    batch = b''.join(keys[line.split()[-1]] for line in source.read_text().splitlines()
+                     if line.startswith('t 1 '))
+    s.type(batch, .4)
+    s.type(b'h', .2)
+    deadline = time.monotonic() + 11
+    while time.monotonic() < deadline:
+        s.pump(.1)
+    s.type(b'\r', .2)
+    problems = []
+    screen = ctx.screen_text(bin, s.out)
+    if 'Legal    3 / 3 stars' not in screen:
+        problems.append(f'Book {book}: ordinary inputs did not reach a three-star card')
+    s.type(b'q'); s.finish()
+    ctx.common_checks(s, 0, problems)
+    if not path.exists():
+        problems.append('no rhythmic recording')
+        return s, problems
+    text = path.read_text()
+    if '# score 3' not in text:
+        problems.append('recorded rhythmic score is not three')
+    ticks = max(int(line.split()[1]) for line in text.splitlines() if line.startswith('t ')) + 1
+    p = subprocess.run([bin, '--headless', '--script', str(path), '--frames', str(ticks),
+                        '--every', str(ticks), '--dump', str(root / f'book-{book}-verify'), '--mute'],
+                       capture_output=True, text=True, timeout=30)
+    if p.returncode or 'verified score 3' not in p.stderr:
+        problems.append('rhythmic recording did not verify: ' + p.stderr)
+    saved = Path(env['FUGUE_STATE'])
+    if not saved.exists() or saved.read_text().split()[book + 1] != '3':
+        problems.append('best stars were not saved for the selected book')
+    return s, problems
+
+
+for _book in range(2, 6):
+    ROWS[f'book-{_book}-record'] = lambda bin, ctx, book=_book: rhythmic_record(bin, ctx, book)
+
+
+def rhythmic_ear(bin, ctx):
+    root = Path(ctx.ROOT) / 'target/pty/rhythmic-audio'
+    if root.exists(): shutil.rmtree(root)
+    root.mkdir(parents=True)
+    env = ctx.env_for()
+    env['FUGUE_WAV_DIR'] = str(root)
+    env['FUGUE_AUDIO_TRACE'] = '1'
+    env['FUGUE_STATE'] = str(root / 'progress')
+    s = ctx.Session([bin, '--book', '5', '--no-title'], 24, 80, env)
+    deadline = time.monotonic() + 20
+    while b'note-bank render_us' not in s.err and time.monotonic() < deadline: s.pump(.1)
+    s.type(b'h', .2)
+    deadline = time.monotonic() + 20
+    while not list(root.glob('whole-*.wav')) and time.monotonic() < deadline: s.pump(.1)
+    s.pump(.2)
+    s.type(b'q'); s.finish(timeout=20)
+    problems = []
+    ctx.common_checks(s, 0, problems)
+    files = list(root.glob('whole-*.wav'))
+    if not files: problems.append('rhythmic h produced no WAV')
+    for path in files:
+        data = path.read_bytes()
+        if len(data) != 44 + 10 * 192000: problems.append('rhythmic WAV duration differs from ten bars')
+        if len(set(data[44:])) <= 1: problems.append('rhythmic WAV is silent')
+    if b'whole-render' not in s.err: problems.append('rhythmic score never reached the output owner')
+    return s, problems
+
+
+ROWS['book-5-ear'] = rhythmic_ear
