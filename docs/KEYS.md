@@ -63,3 +63,13 @@ answer. Its `#` cycles natural → sharp → flat → natural anywhere; Books I�
 retain their cadence-only guard. The cursor uses eighths for an editable
 rhythm and the shortest written value for a fixed one. `v` is reserved for
 Book VI's voice switch.
+
+## Book VI
+
+6 opens the fugue book. Its first page edits the answer, its second edits the
+countersubject, and its third and seeded pages use `v` to switch between both.
+Switching keeps the notes but starts a fresh undo history on the new desk.
+The answer must preserve the given rhythm; the critic names changes rather
+than silently correcting them. `h` plays the whole exposition: subject alone,
+then answer with countersubject. The end card follows three passed tutorials;
+`n` then opens a seeded page and `b` shows the lit sixth book.

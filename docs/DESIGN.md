@@ -171,3 +171,25 @@ existing 0/1/2 roles), `pitch: str`, `figure: str`, `strong: bool`, `allowed: bo
 The strings describe the supplied moving voice. Findings may contain other
 bars: the renderer, not the caller, enforces the active-bar rule. Global verdicts
 belong to the critic card, outside this column.
+
+## The exposition
+
+`subject` owns short, rhythmic modal lines, their independent validator and
+bounded seed enumeration. `answer` compares spelled transpositions and the
+single tonal head mutation. `counter` samples the union of two moving attack
+timelines and checks the pair above and below the octave. `exposition` owns the
+given subject and the two independent written lines; `session.voice` and
+`session.beats` are the active desk, copied back before switching, judging,
+rendering or playing. A reference never bypasses a judge.
+
+`fuguepage` uses the shared staff/head API for the Book VI page, entry labels,
+critic and end card. The exposition has two successive six-bar spans: subject
+alone, then answer with continuation. Its named three-track part uses explicit
+rests, preserving `ear`'s output owner. The clock is twelve wholes, not the
+subject's ten attacks. No third entry is implied by the three track names.
+
+Progress version 2 stores six best-star counts and reads version 1 with a zero
+sixth count. The sixth count is earned only after all three tutorials pass.
+The current three tutorial scores live in the session; a completed sixth-book
+light persists, but an interrupted tutorial sequence restarts at its first
+page. Replay keys 26 (book-6) and 27 (voice) append to the old vocabulary.

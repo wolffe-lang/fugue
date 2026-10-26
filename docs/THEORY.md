@@ -185,3 +185,94 @@ dot, outgoing tie and rest edits are reversible. Values are integer eighths:
 from the following event, so every bar still totals eight. The same figure
 classifier and melodic checker judge the edited line. An interior rest, an
 unprepared tie or an unpaired eighth remains a named error, not an editor ban.
+
+## Sixth book: the fugue
+
+A subject is a small musical thought with a recognizable head and a stepping
+last three notes. Keep it in its mode, within a ninth, for four to eight bars.
+Begin on the final or fifth and leave on either of those degrees. A leap or a
+turning step figure marks the head. At least sixty percent of its motions are
+steps. The melodic rules from Book I still apply: one summit, balanced motion,
+recovered wide leaps, no altered leaps, repeats, sequences or outlined tritones.
+The length now counts bars, not attacks. This book's subjects strike each note;
+they have no rests or tied repetitions. Values come from the florid grid;
+eighths, when used, must be weak pairs moving by step.
+
+The generator writes ten attacks in six bars, mixing quarters, halves and
+wholes. It enumerates at most 200,000 prefixes for each opening degree, keeps
+up to thirty-two valid lines from each, and the seed selects one. The three
+tutorial subjects are original, explicitly written lines. None comes from a
+published fugue. Every generated subject is checked by the same named rules.
+
+### Answer the head
+
+The answer enters after the subject. When the subject is the lower voice,
+answer a perfect fifth above; when it is the upper voice, answer a perfect
+fourth below. A **real answer** preserves every spelled interval and every
+value exactly. Transposition may introduce an accidental: B becomes F-sharp
+at the fifth above. This is not a wrong note simply because the subject used
+only white keys.
+
+A **tonal answer** makes one exchange at the head. If the subject begins on
+the fifth degree, that first attack answers on the tonic. If it begins with
+final then fifth, the second attack answers on the tonic. This is one diatonic
+step below the corresponding real answer; everything after it remains exact.
+For a C subject beginning C–G, the real answer begins G–D, while the tonal
+answer begins G–C. For a subject beginning G, the real answer begins D and
+the tonal answer begins C. The octave follows the chosen upper or lower entry.
+Other heads have a real answer only. Where this exchange is available, either
+form is allowed: the card names **Real answer** or **Tonal answer**, and names
+the mutation's attack and bar. A mutation elsewhere is a wrong transposition,
+reported at its bar, not an alternative interpretation.
+
+### Continue, then exchange places
+
+The first voice continues as the countersubject while the answer enters.
+Write florid counterpoint against the answer's actual moving notes. A note
+held across an answer attack is still checked; passing notes, neighbours,
+cambiatas, weak paired eighths and prepared suspensions keep their complete
+figures. Crossing, overlap, hidden and parallel perfect intervals remain
+forbidden, including equal beats in adjacent bars.
+
+The countersubject must work **both ways up at the octave**. The judge first
+places it above the answer, then lowers it exactly an octave and checks the
+whole pair again. Keep their span within an octave. Thirds become sixths;
+sixths become thirds. A perfect fifth becomes a fourth against the new bass:
+the critic calls this **inversion-fifth**, rather than saying vaguely that the
+second version sounds wrong. This book excludes those fifths even on weak
+beats. Errors found only after the exchange have an `inverted-` name.
+
+These are entries, not closed cantus exercises. Their melodic and florid rules
+remain, but neither voice must end on the original tonic or make Book V's
+sixth-to-octave closing cadence. For example, a C subject ending on G can have
+a real answer ending on D; a consonant counterpoint there leaves the exposition
+open without being an unfinished cadence exercise. A third subject entry and
+a final closing cadence are not part of these pages.
+
+### The last pages and their stars
+
+The first tutorial asks for the answer, with the first voice's continuation
+already written. The second supplies the subject and tonal answer and asks
+for the countersubject. The third asks for both. On that page and seeded pages,
+`v` changes the writing desk without losing either voice. Undo belongs to the
+current desk; switching starts a new undo history. `h` plays the subject alone,
+then the answer and countersubject together, naming the entries as they sound.
+After all three tutorials pass, the end card counts the three pieces and their
+stars, and the sixth book lights on the title. Seeded pages follow.
+
+Stars return to the five melodic and harmonic goals: contrary motion at least
+fifty percent, steps at least sixty percent, separate climaxes, no run longer
+than three parallel thirds or sixths, and at least three interval classes.
+All five give three stars, three give two, and other legal answers give one.
+Both answer and inversion checks must pass first. Unlike Book V, this book
+does not ask for a proportion of tied notes: the answer must copy a subject's
+exact attacks, and these short subjects have no ties. Rhythm stays a hard
+musical check, not a reward for changing the given subject.
+
+A seeded page is offered only after a separate bounded search finds a legal
+invertible countersubject. That search tries the answer's rhythm, thirds and
+sixths, with unisons or octaves at the edges, for at most 30,000 prefixes.
+It does not explore every florid rhythm. A search miss is not proof that the
+subject has no good counterpoint; it is skipped, never admitted under weaker
+rules. The seed may share a page with another seed, and three stars are not
+promised for every admitted page.

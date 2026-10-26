@@ -79,3 +79,14 @@ Normal page changes do not print preparation text into the terminal drawing.
 Left/Right navigation never prepares or auditions sound. Up/Down starts the
 already prepared WAV; a pty witness checks that twenty such auditions leave
 every note-bank file unchanged and emit no further preparation event.
+
+## The fugue's entries
+
+Book VI uses three named tracks but only two musical voices at once. The
+subject's organ sounds alone for six bars; its organ continuation then plays
+the countersubject while the choir enters with the answer. Explicit rests keep
+the entries aligned. The twelve-bar exposition lasts exactly twelve seconds
+on the shared clock. `h`, replay PCM export and the entry lights all use that
+same written pair. No third entry or closing cadence is synthesized off-screen.
+The Book VI audition bank includes natural, sharp and flat spellings throughout
+its editable C3–C7 range; preparations still happen outside frame rendering.
