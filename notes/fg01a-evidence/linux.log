@@ -1,0 +1,1521 @@
+classifier book 2 expected passing actual passing
+classifier book 2 expected unlicensed actual unlicensed
+classifier book 3 expected neighbour actual neighbour
+classifier book 3 expected double-passing actual double-passing
+classifier book 3 expected cambiata actual cambiata
+classifier book 3 expected unlicensed actual unlicensed
+classifier book 3 expected cambiata actual cambiata
+classifier book 4 expected suspension actual suspension
+classifier book 4 expected unprepared actual unprepared
+classifier book 4 expected suspension actual suspension
+classifier book 4 expected rest actual rest
+classifier book 4 expected consonance actual consonance
+classifier book 5 expected cambiata actual cambiata
+classifier book 5 expected suspension actual suspension
+classifier book 5 expected eighth-pair actual eighth-pair
+classifier book 5 expected unlicensed-eighth actual unlicensed-eighth
+classifier book 3 expected unlicensed-eighth actual unlicensed-eighth
+test src/classifier_test.lu::test_species_classifier_confusion_matrix ... ok
+test src/clock/clock_test.lu::test_no_tick_before_its_time ... ok
+test src/clock/clock_test.lu::test_one_tick_on_time ... ok
+test src/clock/clock_test.lu::test_late_frames_drop_renders_not_ticks ... ok
+test src/clock/clock_test.lu::test_ms_until_rounds_up ... ok
+test src/clock/clock_test.lu::test_thirty_ticks_a_second ... ok
+test src/ear_test.lu::test_hear_score_contains_two_timbres_and_every_bar ... ok
+test src/ear_test.lu::test_hear_key_and_complete_cursor_pass ... ok
+preset 1: three stars, contrary 55, steps 66, variety 4
+preset 2: three stars, contrary 55, steps 66, variety 4
+preset 3: three stars, contrary 55, steps 66, variety 4
+test src/first_test.lu::test_three_tutorial_reference_solutions_have_three_stars ... ok
+test src/first_test.lu::test_first_species_hard_rules_have_legal_and_illegal_witnesses ... ok
+test src/first_test.lu::test_hidden_fifth_is_never_accepted ... ok
+test src/first_test.lu::test_wide_invalid_counterpoint_reports_range_without_trapping ... ok
+test src/grid/grid_test.lu::test_empty_diff_writes_nothing ... ok
+test src/grid/grid_test.lu::test_one_cell_diff ... ok
+test src/grid/grid_test.lu::test_full_repaint_is_contiguous ... ok
+test src/grid/grid_test.lu::test_style_run_sets_sgr_once ... ok
+test src/grid/grid_test.lu::test_rgb_dialect ... ok
+test src/grid/grid_test.lu::test_sixteen_dialect_bright ... ok
+test src/grid/grid_test.lu::test_utf8_lengths ... ok
+test src/grid/grid_test.lu::test_property_apply_diff_equals_next ... ok
+test src/grid/grid_test.lu::test_property_holds_in_the_rgb_dialect ... ok
+test src/grid/grid_test.lu::test_model_wraps_and_scrolls ... ok
+test src/grid/grid_test.lu::test_model_private_modes ... ok
+test src/grid/grid_test.lu::test_model_malformed_utf8 ... ok
+test src/grid/grid_test.lu::test_dump_text_and_styles ... ok
+test src/grid/grid_test.lu::test_plain_ok ... ok
+test src/grid/grid_test.lu::test_bounds_are_soft ... ok
+test src/input/input_test.lu::test_csi_arrows ... ok
+test src/input/input_test.lu::test_ss3_arrows ... ok
+test src/input/input_test.lu::test_shift_arrows_are_their_own_keys ... ok
+test src/input/input_test.lu::test_other_modifiers_are_the_bare_arrow ... ok
+test src/input/input_test.lu::test_plain_keys ... ok
+test src/input/input_test.lu::test_lone_esc_waits_for_the_timeout ... ok
+test src/input/input_test.lu::test_esc_then_bracket_late_is_still_a_sequence ... ok
+test src/input/input_test.lu::test_esc_then_plain_byte_is_esc_and_the_byte ... ok
+test src/input/input_test.lu::test_ignored_forms ... ok
+test src/input/input_test.lu::test_unknown_bytes_are_dropped_and_counted ... ok
+test src/input/input_test.lu::test_two_sequences_in_one_read ... ok
+test src/input/input_test.lu::test_a_tap_holds_for_the_tap_ticks ... ok
+test src/input/input_test.lu::test_a_repeat_run_releases_one_interval_after_the_last_press ... ok
+test src/notation_test.lu::test_book_2_frames_80 ... ok
+test src/notation_test.lu::test_book_2_frames_120 ... ok
+test src/notation_test.lu::test_book_3_frames_80 ... ok
+test src/notation_test.lu::test_book_3_frames_120 ... ok
+test src/notation_test.lu::test_book_4_frames_80 ... ok
+test src/notation_test.lu::test_book_4_frames_120 ... ok
+test src/notation_test.lu::test_book_5_frames_80 ... ok
+test src/notation_test.lu::test_book_5_frames_120 ... ok
+test src/notation_test.lu::test_playback_cursor_tracks_rhythmic_events_and_scrolls ... ok
+test src/notation_test.lu::test_eighths_share_the_same_integer_playback_clock ... ok
+test src/notation_test.lu::test_partial_measure_space_and_cursor_never_cut ... ok
+test src/notation_test.lu::test_mixed_values_show_numbered_partial_measures ... ok
+book 2 preset 1: stars 3 contrary 88 steps 77
+book 2 preset 2: stars 3 contrary 88 steps 77
+book 2 preset 3: stars 3 contrary 66 steps 76
+book 3 preset 1: stars 3 contrary 77 steps 88
+book 3 preset 2: stars 3 contrary 66 steps 88
+book 3 preset 3: stars 3 contrary 88 steps 61
+book 4 preset 1: stars 3 contrary 66 steps 63
+book 4 preset 2: stars 3 contrary 50 steps 66
+book 4 preset 3: stars 3 contrary 50 steps 66
+book 5 preset 1: stars 3 contrary 71 steps 76
+book 5 preset 2: stars 3 contrary 57 steps 76
+book 5 preset 3: stars 3 contrary 71 steps 76
+test src/presets_test.lu::test_twelve_original_species_references_have_three_stars ... ok
+test src/progress_test.lu::test_book_progress_round_trip_and_refusals ... ok
+test src/replay/replay_test.lu::test_vocabulary ... ok
+test src/replay/replay_test.lu::test_parse_sample ... ok
+test src/replay/replay_test.lu::test_round_trip ... ok
+test src/replay/replay_test.lu::test_refusals ... ok
+test src/replay/replay_test.lu::test_parse_size ... ok
+test src/replay/replay_test.lu::test_start_is_read_written_and_defaults_to_zero ... ok
+test src/replay/replay_test.lu::test_the_score_comment_is_written_read_and_optional ... ok
+test src/rhythm_test.lu::test_rhythm_books_fill_bars_and_close_whole ... ok
+test src/rhythm_test.lu::test_rhythm_rejects_crossed_bar_and_bad_duration ... ok
+test src/rhythm_test.lu::test_rhythm_fourth_has_preparation_and_ties ... ok
+test src/rhythm_test.lu::test_later_book_minimum_unit_and_reversible_rhythm_edit ... ok
+test src/rhythm_test.lu::test_replay_book_namespace_preserves_old_selectors ... ok
+test src/rhythm_test.lu::test_rhythm_columns_round_trip_every_unit ... ok
+test src/rhythm_test.lu::test_rhythmic_part_lengths_and_outgoing_tie ... ok
+test src/rhythm_test.lu::test_rhythm_keys_split_join_dot_tie_rest_are_undoable ... ok
+test src/rhythm_test.lu::test_split_preserves_every_bar_sum ... ok
+test src/rhythm_test.lu::test_join_refuses_crossed_bar_by_name ... ok
+test src/species_test.lu::test_second_passing_has_direction_and_two_steps ... ok
+test src/species_test.lu::test_accented_parallel_is_never_accepted ... ok
+test src/species_test.lu::test_second_strong_dissonance_and_unison ... ok
+test src/species_test.lu::test_second_only_opening_half_can_rest ... ok
+test src/species_test.lu::test_second_weak_neighbour_is_refused ... ok
+test src/species_test.lu::test_cambiata_is_never_misclassified ... ok
+test src/species_test.lu::test_third_neighbour_and_double_passing ... ok
+test src/species_test.lu::test_third_same_beats_do_not_hide_parallels ... ok
+test src/species_test.lu::test_suspension_resolving_up_is_never_accepted ... ok
+test src/species_test.lu::test_suspension_types_and_preparation ... ok
+test src/species_test.lu::test_florid_classifier_eighths_and_species_figures ... ok
+test src/species_test.lu::test_rhythm_style_counts_values_and_tied_time ... ok
+test src/species_test.lu::test_later_species_leap_budget_scales_attack_density ... ok
+test src/species_test.lu::test_aeolian_sixth_is_only_raised_in_the_final_step_pair ... ok
+test src/species_test.lu::test_lower_phrygian_tenth_contracts_to_octave ... ok
+test src/species_test.lu::test_aeolian_fifth_sixth_cadence_has_no_altered_step ... ok
+test src/species_test.lu::test_fourth_classifier_never_licenses_a_weak_passing_dissonance ... ok
+test src/species_test.lu::test_selected_event_does_not_borrow_a_neighbours_break ... ok
+test src/staff_test.lu::test_dissonance_is_never_drawn_green ... ok
+test src/staff_test.lu::test_plain_staff_and_grain ... ok
+test src/staff_test.lu::test_editor_step_undo_and_octave ... ok
+test src/staff_test.lu::test_hearing_locks_edits_and_card_return_resets_the_cursor ... ok
+test src/staff_test.lu::test_cadence_sharp_only_at_the_leading_note ... ok
+test src/staff_test.lu::test_five_staff_lines_are_unbroken_on_both_tiers ... ok
+test src/staff_test.lu::test_pitch_row_margin_round_trip_whole_viewport ... ok
+test src/staff_test.lu::test_bar_lines_survive_every_up_down_frame ... ok
+test src/staff_test.lu::test_cantus_keeps_its_hollow_head_and_contrasting_ink ... ok
+test src/staff_test.lu::test_treble_second_line_is_G4_and_bass_top_is_A3 ... ok
+test src/staff_test.lu::test_editor_reaches_three_ledgers_below_without_changing_clef ... ok
+test src/staff_test.lu::test_interval_label_uses_pitch_not_row ... ok
+test src/staff_test.lu::test_grand_system_retains_both_fixed_clefs ... ok
+test src/staff_test.lu::test_book_six_accidentals_and_page_range_are_spelled ... ok
+test src/theory_test.lu::test_spelled_intervals_and_motion ... ok
+census Ionian valid 50/50 length10 50 leaps2 3 leaps3 24 leaps4 23 pool 64
+test src/theory_test.lu::test_census_ionian_50 ... ok
+census Dorian valid 50/50 length10 50 leaps2 3 leaps3 27 leaps4 20 pool 64
+test src/theory_test.lu::test_census_dorian_50 ... ok
+census Phrygian valid 50/50 length10 50 leaps2 3 leaps3 25 leaps4 22 pool 64
+test src/theory_test.lu::test_census_phrygian_50 ... ok
+census Lydian valid 50/50 length10 50 leaps2 0 leaps3 35 leaps4 15 pool 50
+test src/theory_test.lu::test_census_lydian_50 ... ok
+census Mixolydian valid 50/50 length10 50 leaps2 3 leaps3 24 leaps4 23 pool 64
+test src/theory_test.lu::test_census_mixolydian_50 ... ok
+census Aeolian valid 50/50 length10 50 leaps2 3 leaps3 30 leaps4 17 pool 64
+test src/theory_test.lu::test_census_aeolian_50 ... ok
+test src/theory_test.lu::test_generated_repeated_note_is_rejected ... ok
+test src/theory_test.lu::test_every_cantus_rule_has_a_positive_and_negative_witness ... ok
+Fux Dorian breaks 5
+  bar 3: sequence
+  bar 5: sequence
+  bar 7: sequence
+  bar 8: sequence
+  bar 1: balance
+Fux Phrygian breaks 1
+  bar 3: sequence
+Fux Lydian breaks 4
+  bar 5: successive-leaps
+  bar 9: recovery
+  bar 10: successive-leaps
+  bar 1: leap-count
+Fux Mixolydian breaks 6
+  bar 6: recovery
+  bar 6: successive-leaps
+  bar 9: recovery
+  bar 9: sequence
+  bar 10: successive-leaps
+  bar 1: leap-count
+Fux Aeolian breaks 7
+  bar 1: sequence
+  bar 2: sequence
+  bar 3: sequence
+  bar 7: sequence
+  bar 7: sequence
+  bar 8: sequence
+  bar 9: sequence
+Fux Ionian breaks 1
+  bar 9: sequence
+test src/theory_test.lu::test_fux_oracles_from_original_print ... ok
+test src/world/world_test.lu::test_deterministic ... ok
+test src/world/world_test.lu::test_seeds_differ ... ok
+test src/world/world_test.lu::test_noise_bounds_and_continuity ... ok
+test src/world/world_test.lu::test_forest_density_rises ... ok
+test src/world/world_test.lu::test_clearing_reads_and_a_stand_is_the_woods_with_more_trunks ... ok
+test src/world/world_test.lu::test_density_bands_are_ordered ... ok
+test src/world/world_test.lu::test_hash_range ... ok
+wolf test: 120 passed; 0 failed; 0 rejected; 0 unsupported; 0 filtered out
+test: 0 SKIP lines
+build: target/native/fugue
+build: target/release/fugue
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-3-80-plain
+goldens: wrote tests/goldens/book-2-seed-120-rich
+goldens: wrote tests/goldens/book-2-seed-120-plain
+goldens: wrote tests/goldens/book-2-seed-80-rich
+goldens: wrote tests/goldens/book-2-seed-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-3-80-plain
+goldens: wrote tests/goldens/book-3-seed-120-rich
+goldens: wrote tests/goldens/book-3-seed-120-plain
+goldens: wrote tests/goldens/book-3-seed-80-rich
+goldens: wrote tests/goldens/book-3-seed-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-3-80-plain
+goldens: wrote tests/goldens/book-4-seed-120-rich
+goldens: wrote tests/goldens/book-4-seed-120-plain
+goldens: wrote tests/goldens/book-4-seed-80-rich
+goldens: wrote tests/goldens/book-4-seed-80-plain
+goldens: wrote tests/goldens/book-5-eighths-120-rich
+goldens: wrote tests/goldens/book-5-eighths-120-plain
+goldens: wrote tests/goldens/book-5-eighths-80-rich
+goldens: wrote tests/goldens/book-5-eighths-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-3-80-plain
+goldens: wrote tests/goldens/book-5-seed-120-rich
+goldens: wrote tests/goldens/book-5-seed-120-plain
+goldens: wrote tests/goldens/book-5-seed-80-rich
+goldens: wrote tests/goldens/book-5-seed-80-plain
+goldens: wrote tests/goldens/critic-120-rich
+goldens: wrote tests/goldens/critic-120-plain
+goldens: wrote tests/goldens/critic-80-rich
+goldens: wrote tests/goldens/critic-80-plain
+goldens: wrote tests/goldens/cursor-1-120-rich
+goldens: wrote tests/goldens/cursor-1-120-plain
+goldens: wrote tests/goldens/cursor-1-80-rich
+goldens: wrote tests/goldens/cursor-1-80-plain
+goldens: wrote tests/goldens/cursor-3-120-rich
+goldens: wrote tests/goldens/cursor-3-120-plain
+goldens: wrote tests/goldens/cursor-3-80-rich
+goldens: wrote tests/goldens/cursor-3-80-plain
+goldens: wrote tests/goldens/hear-120-rich
+goldens: wrote tests/goldens/hear-120-plain
+goldens: wrote tests/goldens/hear-80-rich
+goldens: wrote tests/goldens/hear-80-plain
+goldens: wrote tests/goldens/ledger-120-rich
+goldens: wrote tests/goldens/ledger-120-plain
+goldens: wrote tests/goldens/ledger-80-rich
+goldens: wrote tests/goldens/ledger-80-plain
+goldens: wrote tests/goldens/partial-120-rich
+goldens: wrote tests/goldens/partial-120-plain
+goldens: wrote tests/goldens/partial-80-rich
+goldens: wrote tests/goldens/partial-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-plain
+goldens: wrote tests/goldens/rhythm-edit-120-rich
+goldens: wrote tests/goldens/rhythm-edit-120-plain
+goldens: wrote tests/goldens/rhythm-edit-80-rich
+goldens: wrote tests/goldens/rhythm-edit-80-plain
+goldens: wrote tests/goldens/staff-120-rich
+goldens: wrote tests/goldens/staff-120-plain
+goldens: wrote tests/goldens/staff-80-rich
+goldens: wrote tests/goldens/staff-80-plain
+goldens: wrote tests/goldens/title-120-rich
+goldens: wrote tests/goldens/title-120-plain
+goldens: wrote tests/goldens/title-80-rich
+goldens: wrote tests/goldens/title-80-plain
+goldens: wrote tests/goldens/walk-120-rich
+goldens: wrote tests/goldens/walk-120-plain
+goldens: wrote tests/goldens/walk-80-rich
+goldens: wrote tests/goldens/walk-80-plain
+goldens: wrote tests/goldens/art
+check-fmt: canonical
+classifier book 2 expected passing actual passing
+classifier book 2 expected unlicensed actual unlicensed
+classifier book 3 expected neighbour actual neighbour
+classifier book 3 expected double-passing actual double-passing
+classifier book 3 expected cambiata actual cambiata
+classifier book 3 expected unlicensed actual unlicensed
+classifier book 3 expected cambiata actual cambiata
+classifier book 4 expected suspension actual suspension
+classifier book 4 expected unprepared actual unprepared
+classifier book 4 expected suspension actual suspension
+classifier book 4 expected rest actual rest
+classifier book 4 expected consonance actual consonance
+classifier book 5 expected cambiata actual cambiata
+classifier book 5 expected suspension actual suspension
+classifier book 5 expected eighth-pair actual eighth-pair
+classifier book 5 expected unlicensed-eighth actual unlicensed-eighth
+classifier book 3 expected unlicensed-eighth actual unlicensed-eighth
+test src/classifier_test.lu::test_species_classifier_confusion_matrix ... ok
+test src/clock/clock_test.lu::test_no_tick_before_its_time ... ok
+test src/clock/clock_test.lu::test_one_tick_on_time ... ok
+test src/clock/clock_test.lu::test_late_frames_drop_renders_not_ticks ... ok
+test src/clock/clock_test.lu::test_ms_until_rounds_up ... ok
+test src/clock/clock_test.lu::test_thirty_ticks_a_second ... ok
+test src/ear_test.lu::test_hear_score_contains_two_timbres_and_every_bar ... ok
+test src/ear_test.lu::test_hear_key_and_complete_cursor_pass ... ok
+preset 1: three stars, contrary 55, steps 66, variety 4
+preset 2: three stars, contrary 55, steps 66, variety 4
+preset 3: three stars, contrary 55, steps 66, variety 4
+test src/first_test.lu::test_three_tutorial_reference_solutions_have_three_stars ... ok
+test src/first_test.lu::test_first_species_hard_rules_have_legal_and_illegal_witnesses ... ok
+test src/first_test.lu::test_hidden_fifth_is_never_accepted ... ok
+test src/first_test.lu::test_wide_invalid_counterpoint_reports_range_without_trapping ... ok
+test src/grid/grid_test.lu::test_empty_diff_writes_nothing ... ok
+test src/grid/grid_test.lu::test_one_cell_diff ... ok
+test src/grid/grid_test.lu::test_full_repaint_is_contiguous ... ok
+test src/grid/grid_test.lu::test_style_run_sets_sgr_once ... ok
+test src/grid/grid_test.lu::test_rgb_dialect ... ok
+test src/grid/grid_test.lu::test_sixteen_dialect_bright ... ok
+test src/grid/grid_test.lu::test_utf8_lengths ... ok
+test src/grid/grid_test.lu::test_property_apply_diff_equals_next ... ok
+test src/grid/grid_test.lu::test_property_holds_in_the_rgb_dialect ... ok
+test src/grid/grid_test.lu::test_model_wraps_and_scrolls ... ok
+test src/grid/grid_test.lu::test_model_private_modes ... ok
+test src/grid/grid_test.lu::test_model_malformed_utf8 ... ok
+test src/grid/grid_test.lu::test_dump_text_and_styles ... ok
+test src/grid/grid_test.lu::test_plain_ok ... ok
+test src/grid/grid_test.lu::test_bounds_are_soft ... ok
+test src/input/input_test.lu::test_csi_arrows ... ok
+test src/input/input_test.lu::test_ss3_arrows ... ok
+test src/input/input_test.lu::test_shift_arrows_are_their_own_keys ... ok
+test src/input/input_test.lu::test_other_modifiers_are_the_bare_arrow ... ok
+test src/input/input_test.lu::test_plain_keys ... ok
+test src/input/input_test.lu::test_lone_esc_waits_for_the_timeout ... ok
+test src/input/input_test.lu::test_esc_then_bracket_late_is_still_a_sequence ... ok
+test src/input/input_test.lu::test_esc_then_plain_byte_is_esc_and_the_byte ... ok
+test src/input/input_test.lu::test_ignored_forms ... ok
+test src/input/input_test.lu::test_unknown_bytes_are_dropped_and_counted ... ok
+test src/input/input_test.lu::test_two_sequences_in_one_read ... ok
+test src/input/input_test.lu::test_a_tap_holds_for_the_tap_ticks ... ok
+test src/input/input_test.lu::test_a_repeat_run_releases_one_interval_after_the_last_press ... ok
+test src/notation_test.lu::test_book_2_frames_80 ... ok
+test src/notation_test.lu::test_book_2_frames_120 ... ok
+test src/notation_test.lu::test_book_3_frames_80 ... ok
+test src/notation_test.lu::test_book_3_frames_120 ... ok
+test src/notation_test.lu::test_book_4_frames_80 ... ok
+test src/notation_test.lu::test_book_4_frames_120 ... ok
+test src/notation_test.lu::test_book_5_frames_80 ... ok
+test src/notation_test.lu::test_book_5_frames_120 ... ok
+test src/notation_test.lu::test_playback_cursor_tracks_rhythmic_events_and_scrolls ... ok
+test src/notation_test.lu::test_eighths_share_the_same_integer_playback_clock ... ok
+test src/notation_test.lu::test_partial_measure_space_and_cursor_never_cut ... ok
+test src/notation_test.lu::test_mixed_values_show_numbered_partial_measures ... ok
+book 2 preset 1: stars 3 contrary 88 steps 77
+book 2 preset 2: stars 3 contrary 88 steps 77
+book 2 preset 3: stars 3 contrary 66 steps 76
+book 3 preset 1: stars 3 contrary 77 steps 88
+book 3 preset 2: stars 3 contrary 66 steps 88
+book 3 preset 3: stars 3 contrary 88 steps 61
+book 4 preset 1: stars 3 contrary 66 steps 63
+book 4 preset 2: stars 3 contrary 50 steps 66
+book 4 preset 3: stars 3 contrary 50 steps 66
+book 5 preset 1: stars 3 contrary 71 steps 76
+book 5 preset 2: stars 3 contrary 57 steps 76
+book 5 preset 3: stars 3 contrary 71 steps 76
+test src/presets_test.lu::test_twelve_original_species_references_have_three_stars ... ok
+test src/progress_test.lu::test_book_progress_round_trip_and_refusals ... ok
+test src/replay/replay_test.lu::test_vocabulary ... ok
+test src/replay/replay_test.lu::test_parse_sample ... ok
+test src/replay/replay_test.lu::test_round_trip ... ok
+test src/replay/replay_test.lu::test_refusals ... ok
+test src/replay/replay_test.lu::test_parse_size ... ok
+test src/replay/replay_test.lu::test_start_is_read_written_and_defaults_to_zero ... ok
+test src/replay/replay_test.lu::test_the_score_comment_is_written_read_and_optional ... ok
+test src/rhythm_test.lu::test_rhythm_books_fill_bars_and_close_whole ... ok
+test src/rhythm_test.lu::test_rhythm_rejects_crossed_bar_and_bad_duration ... ok
+test src/rhythm_test.lu::test_rhythm_fourth_has_preparation_and_ties ... ok
+test src/rhythm_test.lu::test_later_book_minimum_unit_and_reversible_rhythm_edit ... ok
+test src/rhythm_test.lu::test_replay_book_namespace_preserves_old_selectors ... ok
+test src/rhythm_test.lu::test_rhythm_columns_round_trip_every_unit ... ok
+test src/rhythm_test.lu::test_rhythmic_part_lengths_and_outgoing_tie ... ok
+test src/rhythm_test.lu::test_rhythm_keys_split_join_dot_tie_rest_are_undoable ... ok
+test src/rhythm_test.lu::test_split_preserves_every_bar_sum ... ok
+test src/rhythm_test.lu::test_join_refuses_crossed_bar_by_name ... ok
+test src/species_test.lu::test_second_passing_has_direction_and_two_steps ... ok
+test src/species_test.lu::test_accented_parallel_is_never_accepted ... ok
+test src/species_test.lu::test_second_strong_dissonance_and_unison ... ok
+test src/species_test.lu::test_second_only_opening_half_can_rest ... ok
+test src/species_test.lu::test_second_weak_neighbour_is_refused ... ok
+test src/species_test.lu::test_cambiata_is_never_misclassified ... ok
+test src/species_test.lu::test_third_neighbour_and_double_passing ... ok
+test src/species_test.lu::test_third_same_beats_do_not_hide_parallels ... ok
+test src/species_test.lu::test_suspension_resolving_up_is_never_accepted ... ok
+test src/species_test.lu::test_suspension_types_and_preparation ... ok
+test src/species_test.lu::test_florid_classifier_eighths_and_species_figures ... ok
+test src/species_test.lu::test_rhythm_style_counts_values_and_tied_time ... ok
+test src/species_test.lu::test_later_species_leap_budget_scales_attack_density ... ok
+test src/species_test.lu::test_aeolian_sixth_is_only_raised_in_the_final_step_pair ... ok
+test src/species_test.lu::test_lower_phrygian_tenth_contracts_to_octave ... ok
+test src/species_test.lu::test_aeolian_fifth_sixth_cadence_has_no_altered_step ... ok
+test src/species_test.lu::test_fourth_classifier_never_licenses_a_weak_passing_dissonance ... ok
+test src/species_test.lu::test_selected_event_does_not_borrow_a_neighbours_break ... ok
+test src/staff_test.lu::test_dissonance_is_never_drawn_green ... ok
+test src/staff_test.lu::test_plain_staff_and_grain ... ok
+test src/staff_test.lu::test_editor_step_undo_and_octave ... ok
+test src/staff_test.lu::test_hearing_locks_edits_and_card_return_resets_the_cursor ... ok
+test src/staff_test.lu::test_cadence_sharp_only_at_the_leading_note ... ok
+test src/staff_test.lu::test_five_staff_lines_are_unbroken_on_both_tiers ... ok
+test src/staff_test.lu::test_pitch_row_margin_round_trip_whole_viewport ... ok
+test src/staff_test.lu::test_bar_lines_survive_every_up_down_frame ... ok
+test src/staff_test.lu::test_cantus_keeps_its_hollow_head_and_contrasting_ink ... ok
+test src/staff_test.lu::test_treble_second_line_is_G4_and_bass_top_is_A3 ... ok
+test src/staff_test.lu::test_editor_reaches_three_ledgers_below_without_changing_clef ... ok
+test src/staff_test.lu::test_interval_label_uses_pitch_not_row ... ok
+test src/staff_test.lu::test_grand_system_retains_both_fixed_clefs ... ok
+test src/staff_test.lu::test_book_six_accidentals_and_page_range_are_spelled ... ok
+test src/theory_test.lu::test_spelled_intervals_and_motion ... ok
+census Ionian valid 50/50 length10 50 leaps2 3 leaps3 24 leaps4 23 pool 64
+test src/theory_test.lu::test_census_ionian_50 ... ok
+census Dorian valid 50/50 length10 50 leaps2 3 leaps3 27 leaps4 20 pool 64
+test src/theory_test.lu::test_census_dorian_50 ... ok
+census Phrygian valid 50/50 length10 50 leaps2 3 leaps3 25 leaps4 22 pool 64
+test src/theory_test.lu::test_census_phrygian_50 ... ok
+census Lydian valid 50/50 length10 50 leaps2 0 leaps3 35 leaps4 15 pool 50
+test src/theory_test.lu::test_census_lydian_50 ... ok
+census Mixolydian valid 50/50 length10 50 leaps2 3 leaps3 24 leaps4 23 pool 64
+test src/theory_test.lu::test_census_mixolydian_50 ... ok
+census Aeolian valid 50/50 length10 50 leaps2 3 leaps3 30 leaps4 17 pool 64
+test src/theory_test.lu::test_census_aeolian_50 ... ok
+test src/theory_test.lu::test_generated_repeated_note_is_rejected ... ok
+test src/theory_test.lu::test_every_cantus_rule_has_a_positive_and_negative_witness ... ok
+Fux Dorian breaks 5
+  bar 3: sequence
+  bar 5: sequence
+  bar 7: sequence
+  bar 8: sequence
+  bar 1: balance
+Fux Phrygian breaks 1
+  bar 3: sequence
+Fux Lydian breaks 4
+  bar 5: successive-leaps
+  bar 9: recovery
+  bar 10: successive-leaps
+  bar 1: leap-count
+Fux Mixolydian breaks 6
+  bar 6: recovery
+  bar 6: successive-leaps
+  bar 9: recovery
+  bar 9: sequence
+  bar 10: successive-leaps
+  bar 1: leap-count
+Fux Aeolian breaks 7
+  bar 1: sequence
+  bar 2: sequence
+  bar 3: sequence
+  bar 7: sequence
+  bar 7: sequence
+  bar 8: sequence
+  bar 9: sequence
+Fux Ionian breaks 1
+  bar 9: sequence
+test src/theory_test.lu::test_fux_oracles_from_original_print ... ok
+test src/world/world_test.lu::test_deterministic ... ok
+test src/world/world_test.lu::test_seeds_differ ... ok
+test src/world/world_test.lu::test_noise_bounds_and_continuity ... ok
+test src/world/world_test.lu::test_forest_density_rises ... ok
+test src/world/world_test.lu::test_clearing_reads_and_a_stand_is_the_woods_with_more_trunks ... ok
+test src/world/world_test.lu::test_density_bands_are_ordered ... ok
+test src/world/world_test.lu::test_hash_range ... ok
+wolf test: 120 passed; 0 failed; 0 rejected; 0 unsupported; 0 filtered out
+test: 0 SKIP lines
+build: target/native/fugue
+build: target/release/fugue
+selftest: ok (the decoder table whole and split at every byte; the diff property over 12 frames)
+fugue: verified score 3
+goldens: book-2-preset-1-120-rich ok
+fugue: verified score 3
+goldens: book-2-preset-1-120-plain ok
+fugue: verified score 3
+goldens: book-2-preset-1-80-rich ok
+fugue: verified score 3
+goldens: book-2-preset-1-80-plain ok
+fugue: verified score 3
+goldens: book-2-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-2-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-2-preset-3-80-rich ok
+fugue: verified score 3
+goldens: book-2-preset-3-80-plain ok
+goldens: book-2-seed-120-rich ok
+goldens: book-2-seed-120-plain ok
+goldens: book-2-seed-80-rich ok
+goldens: book-2-seed-80-plain ok
+fugue: verified score 3
+goldens: book-3-preset-1-120-rich ok
+fugue: verified score 3
+goldens: book-3-preset-1-120-plain ok
+fugue: verified score 3
+goldens: book-3-preset-1-80-rich ok
+fugue: verified score 3
+goldens: book-3-preset-1-80-plain ok
+fugue: verified score 3
+goldens: book-3-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-3-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-3-preset-3-80-rich ok
+fugue: verified score 3
+goldens: book-3-preset-3-80-plain ok
+goldens: book-3-seed-120-rich ok
+goldens: book-3-seed-120-plain ok
+goldens: book-3-seed-80-rich ok
+goldens: book-3-seed-80-plain ok
+fugue: verified score 3
+goldens: book-4-preset-1-120-rich ok
+fugue: verified score 3
+goldens: book-4-preset-1-120-plain ok
+fugue: verified score 3
+goldens: book-4-preset-1-80-rich ok
+fugue: verified score 3
+goldens: book-4-preset-1-80-plain ok
+fugue: verified score 3
+goldens: book-4-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-4-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-4-preset-3-80-rich ok
+fugue: verified score 3
+goldens: book-4-preset-3-80-plain ok
+goldens: book-4-seed-120-rich ok
+goldens: book-4-seed-120-plain ok
+goldens: book-4-seed-80-rich ok
+goldens: book-4-seed-80-plain ok
+goldens: book-5-eighths-120-rich ok
+goldens: book-5-eighths-120-plain ok
+goldens: book-5-eighths-80-rich ok
+goldens: book-5-eighths-80-plain ok
+fugue: verified score 3
+goldens: book-5-preset-1-120-rich ok
+fugue: verified score 3
+goldens: book-5-preset-1-120-plain ok
+fugue: verified score 3
+goldens: book-5-preset-1-80-rich ok
+fugue: verified score 3
+goldens: book-5-preset-1-80-plain ok
+fugue: verified score 3
+goldens: book-5-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-5-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-5-preset-3-80-rich ok
+fugue: verified score 3
+goldens: book-5-preset-3-80-plain ok
+goldens: book-5-seed-120-rich ok
+goldens: book-5-seed-120-plain ok
+goldens: book-5-seed-80-rich ok
+goldens: book-5-seed-80-plain ok
+goldens: critic-120-rich ok
+goldens: critic-120-plain ok
+goldens: critic-80-rich ok
+goldens: critic-80-plain ok
+goldens: cursor-1-120-rich ok
+goldens: cursor-1-120-plain ok
+goldens: cursor-1-80-rich ok
+goldens: cursor-1-80-plain ok
+goldens: cursor-3-120-rich ok
+goldens: cursor-3-120-plain ok
+goldens: cursor-3-80-rich ok
+goldens: cursor-3-80-plain ok
+goldens: hear-120-rich ok
+goldens: hear-120-plain ok
+goldens: hear-80-rich ok
+goldens: hear-80-plain ok
+goldens: ledger-120-rich ok
+goldens: ledger-120-plain ok
+goldens: ledger-80-rich ok
+goldens: ledger-80-plain ok
+goldens: partial-120-rich ok
+goldens: partial-120-plain ok
+goldens: partial-80-rich ok
+goldens: partial-80-plain ok
+fugue: verified score 3
+goldens: preset-1-120-rich ok
+fugue: verified score 3
+goldens: preset-1-120-plain ok
+fugue: verified score 3
+goldens: preset-1-80-rich ok
+fugue: verified score 3
+goldens: preset-1-80-plain ok
+fugue: verified score 3
+goldens: preset-2-120-rich ok
+fugue: verified score 3
+goldens: preset-2-120-plain ok
+fugue: verified score 3
+goldens: preset-2-80-rich ok
+fugue: verified score 3
+goldens: preset-2-80-plain ok
+fugue: verified score 3
+goldens: preset-3-120-rich ok
+fugue: verified score 3
+goldens: preset-3-120-plain ok
+fugue: verified score 3
+goldens: preset-3-80-rich ok
+fugue: verified score 3
+goldens: preset-3-80-plain ok
+goldens: rhythm-edit-120-rich ok
+goldens: rhythm-edit-120-plain ok
+goldens: rhythm-edit-80-rich ok
+goldens: rhythm-edit-80-plain ok
+goldens: staff-120-rich ok
+goldens: staff-120-plain ok
+goldens: staff-80-rich ok
+goldens: staff-80-plain ok
+goldens: title-120-rich ok
+goldens: title-120-plain ok
+goldens: title-80-rich ok
+goldens: title-80-plain ok
+goldens: walk-120-rich ok
+goldens: walk-120-plain ok
+goldens: walk-80-rich ok
+goldens: walk-80-plain ok
+goldens: art ok
+pty: quit ok (linux x86_64, exit 0, 14520 bytes captured)
+pty: ctrl-c ok (linux x86_64, exit 0, 14520 bytes captured)
+pty: trap ok (linux x86_64, exit 134, 10183 bytes captured)
+pty: agree-rich ok (linux x86_64, exit 0, 12686 bytes captured)
+pty: agree-plain ok (linux x86_64, exit 0, 7432 bytes captured)
+sound: note-bank render_us 67587 base 7
+sound: wav-sink 1 /work/target/pty/audio/note-23-0.wav
+sound: wav-sink 2 /work/target/pty/audio/note-22-0.wav
+sound: whole-render /work/target/pty/audio/whole-1.wav ticks 300
+sound: wav-sink 3 /work/target/pty/audio/whole-1.wav
+fugue: ended by the quit key
+
+pty: editor-ear ok (linux x86_64, exit 0, 11308 bytes captured)
+pty: title-quit ok (linux x86_64, exit 0, 4964 bytes captured)
+pty: staff-quit ok (linux x86_64, exit 0, 11405 bytes captured)
+pty: card-quit ok (linux x86_64, exit 0, 14050 bytes captured)
+pty: escape ok (linux x86_64, exit 0, 4964 bytes captured)
+pty: solved-record ok (linux x86_64, exit 0, 33539 bytes captured)
+pty: panel-right-twice ok (linux x86_64, exit 0, 13802 bytes captured)
+whole WAV /work/target/pty/hear-whole/whole-1.wav duration 10.000000s PCM sha256 b558957b00de6c4b92494e872e088a9eb16aabf23a3a25bcff8e7d40738c17c6
+sound: note-bank render_us 82776 base 7
+sound: whole-render /work/target/pty/hear-whole/whole-1.wav ticks 300
+sound: wav-sink 1 /work/target/pty/hear-whole/whole-1.wav
+fugue: ended by the quit key
+
+pty: hear-whole-is-played ok (linux x86_64, exit 0, 10250 bytes captured)
+pty: book-2-record ok (linux x86_64, exit 0, 33676 bytes captured)
+pty: book-3-record ok (linux x86_64, exit 0, 58969 bytes captured)
+pty: book-4-record ok (linux x86_64, exit 0, 30184 bytes captured)
+pty: book-5-record ok (linux x86_64, exit 0, 47525 bytes captured)
+pty: book-5-ear ok (linux x86_64, exit 0, 8742 bytes captured)
+pty: three-ledgers-below-and-back ok (linux x86_64, exit 0, 15675 bytes captured)
+pty: selected-event-status ok (linux x86_64, exit 0, 19015 bytes captured)
+pty: book-5-rhythm-edits ok (linux x86_64, exit 0, 18582 bytes captured)
+check-linux: green
+fugue: verified score 3
+goldens: book-2-preset-1-120-rich ok
+fugue: verified score 3
+goldens: book-2-preset-1-120-plain ok
+fugue: verified score 3
+goldens: book-2-preset-1-80-rich ok
+fugue: verified score 3
+goldens: book-2-preset-1-80-plain ok
+fugue: verified score 3
+goldens: book-2-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-2-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-2-preset-3-80-rich ok
+fugue: verified score 3
+goldens: book-2-preset-3-80-plain ok
+goldens: book-2-seed-120-rich ok
+goldens: book-2-seed-120-plain ok
+goldens: book-2-seed-80-rich ok
+goldens: book-2-seed-80-plain ok
+fugue: verified score 3
+goldens: book-3-preset-1-120-rich ok
+fugue: verified score 3
+goldens: book-3-preset-1-120-plain ok
+fugue: verified score 3
+goldens: book-3-preset-1-80-rich ok
+fugue: verified score 3
+goldens: book-3-preset-1-80-plain ok
+fugue: verified score 3
+goldens: book-3-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-3-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-3-preset-3-80-rich ok
+fugue: verified score 3
+goldens: book-3-preset-3-80-plain ok
+goldens: book-3-seed-120-rich ok
+goldens: book-3-seed-120-plain ok
+goldens: book-3-seed-80-rich ok
+goldens: book-3-seed-80-plain ok
+fugue: verified score 3
+goldens: book-4-preset-1-120-rich ok
+fugue: verified score 3
+goldens: book-4-preset-1-120-plain ok
+fugue: verified score 3
+goldens: book-4-preset-1-80-rich ok
+fugue: verified score 3
+goldens: book-4-preset-1-80-plain ok
+fugue: verified score 3
+goldens: book-4-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-4-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-4-preset-3-80-rich ok
+fugue: verified score 3
+goldens: book-4-preset-3-80-plain ok
+goldens: book-4-seed-120-rich ok
+goldens: book-4-seed-120-plain ok
+goldens: book-4-seed-80-rich ok
+goldens: book-4-seed-80-plain ok
+goldens: book-5-eighths-120-rich ok
+goldens: book-5-eighths-120-plain ok
+goldens: book-5-eighths-80-rich ok
+goldens: book-5-eighths-80-plain ok
+fugue: verified score 3
+goldens: book-5-preset-1-120-rich ok
+fugue: verified score 3
+goldens: book-5-preset-1-120-plain ok
+fugue: verified score 3
+goldens: book-5-preset-1-80-rich ok
+fugue: verified score 3
+goldens: book-5-preset-1-80-plain ok
+fugue: verified score 3
+goldens: book-5-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-5-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-5-preset-3-80-rich ok
+fugue: verified score 3
+goldens: book-5-preset-3-80-plain ok
+goldens: book-5-seed-120-rich ok
+goldens: book-5-seed-120-plain ok
+goldens: book-5-seed-80-rich ok
+goldens: book-5-seed-80-plain ok
+goldens: critic-120-rich ok
+goldens: critic-120-plain ok
+goldens: critic-80-rich ok
+goldens: critic-80-plain ok
+goldens: cursor-1-120-rich ok
+goldens: cursor-1-120-plain ok
+goldens: cursor-1-80-rich ok
+goldens: cursor-1-80-plain ok
+goldens: cursor-3-120-rich ok
+goldens: cursor-3-120-plain ok
+goldens: cursor-3-80-rich ok
+goldens: cursor-3-80-plain ok
+goldens: hear-120-rich ok
+goldens: hear-120-plain ok
+goldens: hear-80-rich ok
+goldens: hear-80-plain ok
+goldens: ledger-120-rich ok
+goldens: ledger-120-plain ok
+goldens: ledger-80-rich ok
+goldens: ledger-80-plain ok
+goldens: partial-120-rich ok
+goldens: partial-120-plain ok
+goldens: partial-80-rich ok
+goldens: partial-80-plain ok
+fugue: verified score 3
+goldens: preset-1-120-rich ok
+fugue: verified score 3
+goldens: preset-1-120-plain ok
+fugue: verified score 3
+goldens: preset-1-80-rich ok
+fugue: verified score 3
+goldens: preset-1-80-plain ok
+fugue: verified score 3
+goldens: preset-2-120-rich ok
+fugue: verified score 3
+goldens: preset-2-120-plain ok
+fugue: verified score 3
+goldens: preset-2-80-rich ok
+fugue: verified score 3
+goldens: preset-2-80-plain ok
+fugue: verified score 3
+goldens: preset-3-120-rich ok
+fugue: verified score 3
+goldens: preset-3-120-plain ok
+fugue: verified score 3
+goldens: preset-3-80-rich ok
+fugue: verified score 3
+goldens: preset-3-80-plain ok
+goldens: rhythm-edit-120-rich ok
+goldens: rhythm-edit-120-plain ok
+goldens: rhythm-edit-80-rich ok
+goldens: rhythm-edit-80-plain ok
+goldens: staff-120-rich ok
+goldens: staff-120-plain ok
+goldens: staff-80-rich ok
+goldens: staff-80-plain ok
+goldens: title-120-rich ok
+goldens: title-120-plain ok
+goldens: title-80-rich ok
+goldens: title-80-plain ok
+goldens: walk-120-rich ok
+goldens: walk-120-plain ok
+goldens: walk-80-rich ok
+goldens: walk-80-plain ok
+goldens: art ok
+legal: stars 3
+consonance: stars 0 | bar 2 consonance | bar 1 leap-count
+opening: stars 0 | bar 1 opening | bar 1 sequence
+closing: stars 0 | bar 10 hidden-perfect | bar 10 closing | bar 9 two-voice-cadence | bar 7 sequence
+two-voice-cadence: stars 0 | bar 9 consonance | bar 9 two-voice-cadence | bar 9 repeat
+parallel-perfect: stars 0 | bar 2 parallel-perfect | bar 1 sequence
+hidden-perfect: stars 0 | bar 3 hidden-perfect | bar 1 sequence | bar 2 sequence | bar 3 leap-quality | bar 3 sequence
+crossing: stars 0 | bar 2 consonance | bar 2 crossing | bar 3 overlap | bar 3 recovery | bar 4 recovery | bar 1 leap-count
+overlap: stars 0 | bar 5 crossing | bar 6 overlap | bar 6 leap-quality | bar 6 recovery | bar 6 one-climax
+interior-unison: stars 0 | bar 2 interior-unison | bar 3 overlap | bar 2 sequence | bar 3 recovery | bar 4 recovery | bar 1 leap-count
+game-census Ionian valid 50/50 length10 50
+game-census Dorian valid 50/50 length10 50
+game-census Phrygian valid 50/50 length10 50
+game-census Lydian valid 50/50 length10 50
+game-census Mixolydian valid 50/50 length10 50
+game-census Aeolian valid 50/50 length10 50
+game-census valid 300/300 leaps2 9 leaps3 167 leaps4 124
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: invalid option or small size (minimum 80x24)
+fugue: invalid option or small size (minimum 80x24)
+fugue: verified score 3
+gameplay: census, three references, score-tampering and minimum refusals green
+legal: stars 3
+consonance: stars 0 | bar 2 consonance | bar 1 leap-count
+opening: stars 0 | bar 1 opening | bar 1 sequence
+closing: stars 0 | bar 10 hidden-perfect | bar 10 closing | bar 9 two-voice-cadence | bar 7 sequence
+two-voice-cadence: stars 0 | bar 9 consonance | bar 9 two-voice-cadence | bar 9 repeat
+parallel-perfect: stars 0 | bar 2 parallel-perfect | bar 1 sequence
+hidden-perfect: stars 0 | bar 3 hidden-perfect | bar 1 sequence | bar 2 sequence | bar 3 leap-quality | bar 3 sequence
+crossing: stars 0 | bar 2 consonance | bar 2 crossing | bar 3 overlap | bar 3 recovery | bar 4 recovery | bar 1 leap-count
+overlap: stars 0 | bar 5 crossing | bar 6 overlap | bar 6 leap-quality | bar 6 recovery | bar 6 one-climax
+interior-unison: stars 0 | bar 2 interior-unison | bar 3 overlap | bar 2 sequence | bar 3 recovery | bar 4 recovery | bar 1 leap-count
+game-census Ionian valid 50/50 length10 50
+game-census Dorian valid 50/50 length10 50
+game-census Phrygian valid 50/50 length10 50
+game-census Lydian valid 50/50 length10 50
+game-census Mixolydian valid 50/50 length10 50
+game-census Aeolian valid 50/50 length10 50
+game-census valid 300/300 leaps2 9 leaps3 167 leaps4 124
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: invalid option or small size (minimum 80x24)
+fugue: invalid option or small size (minimum 80x24)
+fugue: verified score 3
+gameplay: census, three references, score-tampering and minimum refusals green
+glyphs: 9 non-ASCII code points, both-way inventory green; plain is ASCII
+staff-check: 80x24 rich: forty walk frames, eleven listening frames green
+staff-check: 80x24 plain: forty walk frames, eleven listening frames green
+staff-check: 120x40 rich: forty walk frames, eleven listening frames green
+staff-check: 120x40 plain: forty walk frames, eleven listening frames green
+staff-check: palette 52 on 230 contrast 13.815:1
+staff-check: palette 52 on 223 contrast 10.488:1
+staff-check: palette 52 on 222 contrast 10.307:1
+staff-check: palette 24 on 230 contrast 6.876:1
+staff-check: palette 24 on 223 contrast 5.220:1
+staff-check: palette 24 on 222 contrast 5.130:1
+staff-check: audio bar 1 RMS L/R 179.1/189.9
+staff-check: audio bar 2 RMS L/R 179.9/194.5
+staff-check: audio bar 3 RMS L/R 180.5/192.7
+staff-check: audio bar 4 RMS L/R 180.7/193.9
+staff-check: audio bar 5 RMS L/R 176.6/187.0
+staff-check: audio bar 6 RMS L/R 177.1/189.6
+staff-check: audio bar 7 RMS L/R 182.9/199.1
+staff-check: audio bar 8 RMS L/R 180.8/194.1
+staff-check: audio bar 9 RMS L/R 180.5/192.5
+staff-check: audio bar 10 RMS L/R 180.8/194.0
+staff-check: exact ten-second PCM golden green
+staff-check: 80x24 rich: forty walk frames, eleven listening frames green
+staff-check: 80x24 plain: forty walk frames, eleven listening frames green
+staff-check: 120x40 rich: forty walk frames, eleven listening frames green
+staff-check: 120x40 plain: forty walk frames, eleven listening frames green
+staff-check: palette 52 on 230 contrast 13.815:1
+staff-check: palette 52 on 223 contrast 10.488:1
+staff-check: palette 52 on 222 contrast 10.307:1
+staff-check: palette 24 on 230 contrast 6.876:1
+staff-check: palette 24 on 223 contrast 5.220:1
+staff-check: palette 24 on 222 contrast 5.130:1
+staff-check: audio bar 1 RMS L/R 179.1/189.9
+staff-check: audio bar 2 RMS L/R 179.9/194.5
+staff-check: audio bar 3 RMS L/R 180.5/192.7
+staff-check: audio bar 4 RMS L/R 180.7/193.9
+staff-check: audio bar 5 RMS L/R 176.6/187.0
+staff-check: audio bar 6 RMS L/R 177.1/189.6
+staff-check: audio bar 7 RMS L/R 182.9/199.1
+staff-check: audio bar 8 RMS L/R 180.8/194.1
+staff-check: audio bar 9 RMS L/R 180.5/192.5
+staff-check: audio bar 10 RMS L/R 180.8/194.0
+staff-check: exact ten-second PCM golden green
+book 2 legal: stars 3
+book 2 voice-length: stars 0 | bar 1 voice-length
+book 2 opening: stars 0 | bar 1 opening | bar 2 recovery
+book 2 closing: stars 0 | bar 10 hidden-perfect | bar 10 accented-parallel | bar 10 closing | bar 9 two-voice-cadence
+book 2 two-voice-cadence: stars 0 | bar 9 passing-dissonance | bar 9 two-voice-cadence | bar 10 repeat
+book 2 crossing: stars 0 | bar 1 crossing | bar 1 opening | bar 1 downbeat-consonance | bar 1 overlap | bar 1 leap-quality | bar 2 recovery | bar 1 range
+book 2 overlap: stars 0 | bar 2 crossing | bar 2 overlap | bar 2 overlap | bar 2 leap-quality | bar 2 leap-quality | bar 2 recovery | bar 1 range
+book 2 downbeat-unison: stars 0 | bar 2 downbeat-unison | bar 2 recovery
+book 2 parallel-perfect: stars 0 | bar 2 parallel-perfect | bar 2 recovery | bar 3 recovery
+book 2 hidden-perfect: stars 0 | bar 2 hidden-perfect | bar 2 accented-parallel | bar 2 repeat | bar 2 recovery
+book 2 accented-parallel: stars 0 | bar 2 hidden-perfect | bar 2 accented-parallel | bar 2 recovery | bar 3 recovery
+book 2 diatonic: stars 0 | bar 1 opening | bar 1 downbeat-consonance | bar 1 diatonic | bar 1 leap-quality
+book 2 repeat: stars 0 | bar 1 repeat
+book 2 leap-quality: stars 0 | bar 1 passing-dissonance | bar 1 leap-quality | bar 2 leap-quality | bar 2 recovery | bar 2 recovery | bar 1 climax-position
+book 2 recovery: stars 0 | bar 1 opening | bar 1 passing-dissonance | bar 2 downbeat-consonance | bar 2 recovery
+book 2 successive-leaps: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 2 successive-leaps
+book 2 outlined-tritone: stars 0 | bar 1 opening | bar 1 passing-dissonance | bar 2 diatonic | bar 2 outlined-tritone | bar 2 successive-leaps
+book 2 sequence: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 1 sequence | bar 1 sequence | bar 1 balance
+book 2 one-climax: stars 0 | bar 1 opening | bar 1 downbeat-consonance | bar 1 passing-dissonance | bar 1 repeat | bar 2 leap-quality | bar 2 recovery | bar 1 one-climax | bar 1 climax-position | bar 1 climax-leading | bar 1 range
+book 2 climax-position: stars 0 | bar 10 closing | bar 9 two-voice-cadence | bar 10 leap-quality | bar 10 climax-position | bar 1 range
+book 2 climax-leading: stars 0 | bar 5 passing-dissonance | bar 5 leap-quality | bar 6 leap-quality | bar 6 recovery | bar 6 recovery | bar 5 climax-leading | bar 1 range
+book 2 leap-count: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 4 downbeat-consonance | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 2 octave-count: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 accented-parallel | bar 1 sequence | bar 2 leap-quality | bar 2 recovery | bar 2 recovery | bar 3 recovery | bar 3 recovery | bar 3 successive-leaps | bar 1 octave-count
+book 2 range: stars 0 | bar 5 passing-dissonance | bar 5 leap-quality | bar 6 leap-quality | bar 6 recovery | bar 6 recovery | bar 1 range
+book 2 direction-changes: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 4 downbeat-consonance | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 2 balance: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 4 downbeat-consonance | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 2 strong-dissonance: stars 0 | bar 2 downbeat-consonance | bar 2 recovery
+book 2 weak-dissonance: stars 0 | bar 1 passing-dissonance | bar 2 recovery
+book 2 opening-rest: stars 0 | bar 1 opening-rest
+book 2 forbidden-tie: stars 0 | bar 2 second-tie | bar 2 tie-pitch | bar 2 repeat
+book 2 wrong-subdivision: stars 0 | bar 1 second-rhythm | bar 1 second-rhythm | bar 1 second-rhythm | bar 1 second-rhythm | bar 2 second-rhythm | bar 2 parallel-perfect | bar 2 accented-parallel | bar 2 second-rhythm | bar 2 second-rhythm | bar 2 second-rhythm | bar 3 second-rhythm | bar 3 parallel-perfect | bar 3 accented-parallel | bar 3 second-rhythm | bar 3 second-rhythm | bar 3 second-rhythm | bar 4 second-rhythm | bar 4 parallel-perfect | bar 4 accented-parallel | bar 4 second-rhythm | bar 4 second-rhythm | bar 4 second-rhythm | bar 5 second-rhythm | bar 5 parallel-perfect | bar 5 accented-parallel | bar 5 second-rhythm | bar 5 second-rhythm | bar 5 second-rhythm | bar 6 second-rhythm | bar 6 parallel-perfect | bar 6 accented-parallel | bar 6 second-rhythm | bar 6 second-rhythm | bar 6 second-rhythm | bar 7 second-rhythm | bar 7 parallel-perfect | bar 7 accented-parallel | bar 7 second-rhythm | bar 7 second-rhythm | bar 7 second-rhythm | bar 8 second-rhythm | bar 8 parallel-perfect | bar 8 accented-parallel | bar 8 second-rhythm | bar 8 second-rhythm | bar 8 second-rhythm | bar 9 second-rhythm | bar 9 parallel-perfect | bar 9 accented-parallel | bar 9 second-rhythm | bar 9 second-rhythm | bar 9 second-rhythm | bar 10 parallel-perfect | bar 10 accented-parallel | bar 10 closing | bar 9 two-voice-cadence | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 1 repeat | bar 2 sequence | bar 2 repeat | bar 2 sequence | bar 2 repeat | bar 2 sequence | bar 2 repeat | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 repeat | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 repeat | bar 5 sequence | bar 5 repeat | bar 5 recovery | bar 5 sequence | bar 5 repeat | bar 5 sequence | bar 5 repeat | bar 6 sequence | bar 6 repeat | bar 6 sequence | bar 6 repeat | bar 6 sequence | bar 6 repeat | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 repeat | bar 8 sequence | bar 8 repeat | bar 8 recovery | bar 8 sequence | bar 8 repeat | bar 8 sequence | bar 8 repeat | bar 9 sequence | bar 9 repeat | bar 9 repeat | bar 9 repeat | bar 7 one-climax
+book 3 legal: stars 3
+book 3 voice-length: stars 0 | bar 1 voice-length
+book 3 opening: stars 0 | bar 1 opening | bar 1 third-dissonance | bar 1 leap-quality | bar 1 recovery | bar 1 range
+book 3 closing: stars 0 | bar 10 hidden-perfect | bar 10 closing | bar 9 two-voice-cadence | bar 1 range
+book 3 two-voice-cadence: stars 0 | bar 9 third-dissonance | bar 9 two-voice-cadence | bar 9 recovery | bar 10 repeat
+book 3 crossing: stars 0 | bar 1 crossing | bar 1 opening | bar 1 downbeat-consonance | bar 1 third-dissonance | bar 1 overlap | bar 1 leap-quality | bar 1 recovery | bar 1 range
+book 3 overlap: stars 0 | bar 2 crossing | bar 2 overlap | bar 2 overlap | bar 2 leap-quality | bar 2 leap-quality | bar 2 recovery | bar 2 recovery | bar 1 range | bar 1 balance
+book 3 downbeat-unison: stars 0 | bar 2 downbeat-unison | bar 3 accented-parallel | bar 2 leap-quality | bar 2 recovery | bar 2 recovery | bar 1 octave-count | bar 1 range | bar 1 balance
+book 3 parallel-perfect: stars 0 | bar 2 parallel-perfect | bar 2 accented-parallel | bar 3 accented-parallel | bar 1 sequence | bar 1 sequence | bar 2 repeat
+book 3 hidden-perfect: stars 0 | bar 2 hidden-perfect | bar 2 recovery | bar 2 recovery | bar 2 successive-leaps | bar 2 recovery | bar 1 octave-count | bar 1 range | bar 1 balance
+book 3 accented-parallel: stars 0 | bar 2 accented-parallel | bar 3 accented-parallel | bar 2 repeat | bar 2 recovery
+book 3 diatonic: stars 0 | bar 1 opening | bar 1 downbeat-consonance | bar 1 diatonic | bar 1 leap-quality
+book 3 repeat: stars 0 | bar 2 same-beat-parallel | bar 1 repeat | bar 1 successive-leaps
+book 3 leap-quality: stars 0 | bar 1 third-dissonance | bar 1 leap-quality | bar 1 recovery | bar 1 recovery | bar 2 outlined-tritone
+book 3 recovery: stars 0 | bar 1 opening | bar 1 third-dissonance | bar 1 recovery | bar 1 octave-count | bar 1 range
+book 3 successive-leaps: stars 0 | bar 1 opening | bar 1 successive-leaps | bar 1 successive-leaps | bar 1 octave-count | bar 1 range
+book 3 outlined-tritone: stars 0 | bar 1 opening | bar 1 third-dissonance | bar 1 third-dissonance | bar 1 diatonic | bar 1 outlined-tritone | bar 1 leap-quality | bar 1 successive-leaps | bar 1 range
+book 3 sequence: stars 0 | bar 1 opening | bar 1 third-dissonance | bar 1 sequence | bar 2 recovery | bar 1 octave-count | bar 1 range | bar 1 balance
+book 3 one-climax: stars 0 | bar 1 opening | bar 1 downbeat-consonance | bar 1 third-dissonance | bar 1 repeat | bar 1 leap-quality | bar 1 recovery | bar 1 one-climax | bar 1 climax-position | bar 1 climax-leading | bar 1 range
+book 3 climax-position: stars 0 | bar 10 closing | bar 9 two-voice-cadence | bar 10 leap-quality | bar 10 climax-position | bar 1 range
+book 3 climax-leading: stars 0 | bar 5 third-dissonance | bar 5 leap-quality | bar 5 leap-quality | bar 5 recovery | bar 6 recovery | bar 5 climax-leading | bar 1 range
+book 3 leap-count: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 3 downbeat-consonance | bar 4 hidden-perfect | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 outlined-tritone | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 9 sequence | bar 9 sequence | bar 9 outlined-tritone | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 3 octave-count: stars 0 | bar 1 opening | bar 1 third-dissonance | bar 1 third-dissonance | bar 2 same-beat-parallel | bar 1 sequence | bar 1 leap-quality | bar 1 recovery | bar 1 recovery | bar 2 recovery | bar 2 successive-leaps | bar 1 octave-count | bar 1 range
+book 3 range: stars 0 | bar 5 third-dissonance | bar 5 leap-quality | bar 5 leap-quality | bar 5 recovery | bar 6 recovery | bar 1 range
+book 3 direction-changes: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 3 downbeat-consonance | bar 4 hidden-perfect | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 outlined-tritone | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 9 sequence | bar 9 sequence | bar 9 outlined-tritone | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 3 balance: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 3 downbeat-consonance | bar 4 hidden-perfect | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 outlined-tritone | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 9 sequence | bar 9 sequence | bar 9 outlined-tritone | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 3 strong-dissonance: stars 0 | bar 2 downbeat-consonance | bar 2 leap-quality | bar 2 leap-quality | bar 2 recovery | bar 2 recovery | bar 1 range | bar 1 balance
+book 3 weak-dissonance: stars 0 | bar 1 third-dissonance | bar 1 leap-quality | bar 1 leap-quality | bar 1 recovery | bar 1 recovery | bar 1 successive-leaps | bar 1 range
+book 3 opening-rest: stars 0 | bar 1 opening-rest | bar 1 successive-leaps
+book 3 forbidden-tie: stars 0 | bar 2 third-tie | bar 2 tie-pitch
+book 3 wrong-subdivision: stars 0 | bar 1 third-rhythm | bar 1 third-rhythm | bar 2 third-rhythm | bar 2 parallel-perfect | bar 2 accented-parallel | bar 2 third-rhythm | bar 2 same-beat-parallel | bar 3 third-rhythm | bar 3 parallel-perfect | bar 3 accented-parallel | bar 3 third-rhythm | bar 3 same-beat-parallel | bar 4 third-rhythm | bar 4 parallel-perfect | bar 4 accented-parallel | bar 4 third-rhythm | bar 4 same-beat-parallel | bar 5 third-rhythm | bar 5 parallel-perfect | bar 5 accented-parallel | bar 5 third-rhythm | bar 5 same-beat-parallel | bar 6 third-rhythm | bar 6 parallel-perfect | bar 6 accented-parallel | bar 6 third-rhythm | bar 6 same-beat-parallel | bar 7 third-rhythm | bar 7 parallel-perfect | bar 7 accented-parallel | bar 7 third-rhythm | bar 7 same-beat-parallel | bar 8 third-rhythm | bar 8 overlap | bar 8 parallel-perfect | bar 8 accented-parallel | bar 8 third-rhythm | bar 8 same-beat-parallel | bar 9 third-rhythm | bar 9 parallel-perfect | bar 9 accented-parallel | bar 9 third-rhythm | bar 9 same-beat-parallel | bar 10 parallel-perfect | bar 10 accented-parallel | bar 10 closing | bar 9 two-voice-cadence | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 2 sequence | bar 2 repeat | bar 3 sequence | bar 3 repeat | bar 4 sequence | bar 4 repeat | bar 4 recovery | bar 5 sequence | bar 5 repeat | bar 6 sequence | bar 6 repeat | bar 7 sequence | bar 7 repeat | bar 8 sequence | bar 8 repeat | bar 8 recovery | bar 9 repeat | bar 7 one-climax
+book 3 same-beat-parallel: stars 0 | bar 2 same-beat-parallel | bar 3 same-beat-parallel | bar 1 sequence | bar 2 repeat
+book 4 legal: stars 3
+book 4 voice-length: stars 0 | bar 1 voice-length
+book 4 opening: stars 0 | bar 1 opening
+book 4 closing: stars 0 | bar 10 hidden-perfect | bar 10 closing | bar 9 two-voice-cadence | bar 6 sequence
+book 4 two-voice-cadence: stars 0 | bar 9 suspension | bar 9 weak-consonance | bar 9 two-voice-cadence | bar 9 suspension-cadence | bar 9 repeat | bar 9 recovery | bar 10 repeat
+book 4 crossing: stars 0 | bar 1 crossing | bar 1 opening | bar 1 weak-consonance | bar 2 overlap
+book 4 overlap: stars 0 | bar 2 crossing | bar 2 overlap | bar 2 overlap | bar 2 leap-quality | bar 2 recovery
+book 4 downbeat-unison: stars 0 | bar 2 downbeat-unison | bar 2 recovery
+book 4 parallel-perfect: stars 0 | bar 2 parallel-perfect | bar 3 recovery | bar 2 one-climax | bar 2 climax-position
+book 4 hidden-perfect: stars 0 | bar 1 opening | bar 2 hidden-perfect | bar 2 repeat | bar 2 recovery
+book 4 accented-parallel: stars 0 | bar 2 hidden-perfect | bar 2 accented-parallel | bar 1 sequence | bar 2 recovery | bar 2 recovery | bar 3 recovery | bar 2 one-climax | bar 2 climax-position
+book 4 diatonic: stars 0 | bar 1 opening | bar 1 weak-consonance | bar 1 diatonic | bar 2 leap-quality
+book 4 repeat: stars 0 | bar 2 suspension | bar 2 repeat | bar 2 sequence
+book 4 leap-quality: stars 0 | bar 2 leap-quality | bar 2 recovery | bar 3 recovery | bar 2 climax-position
+book 4 recovery: stars 0 | bar 1 opening | bar 2 overlap | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 2 sequence | bar 2 recovery | bar 3 repeat
+book 4 successive-leaps: stars 0 | bar 1 opening | bar 2 suspension | bar 2 overlap | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 2 successive-leaps | bar 3 repeat
+book 4 outlined-tritone: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 overlap | bar 2 parallel-perfect | bar 3 tie-pitch | bar 3 suspension | bar 1 sequence | bar 2 diatonic | bar 2 outlined-tritone
+book 4 sequence: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 overlap | bar 2 parallel-perfect | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 3 weak-consonance | bar 4 tie-pitch | bar 1 sequence | bar 5 successive-leaps
+book 4 one-climax: stars 0 | bar 1 opening | bar 1 weak-consonance | bar 2 repeat | bar 2 leap-quality | bar 3 recovery | bar 1 one-climax | bar 1 climax-position | bar 1 climax-leading | bar 1 range
+book 4 climax-position: stars 0 | bar 10 closing | bar 9 two-voice-cadence | bar 10 leap-quality | bar 10 climax-position | bar 1 range
+book 4 climax-leading: stars 0 | bar 6 suspension | bar 1 leap-count | bar 6 leap-quality | bar 6 recovery | bar 6 successive-leaps | bar 7 leap-quality | bar 7 recovery | bar 7 recovery | bar 7 successive-leaps | bar 6 climax-leading | bar 1 range
+book 4 leap-count: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 overlap | bar 2 parallel-perfect | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 3 weak-consonance | bar 4 tie-pitch | bar 5 tie-pitch | bar 6 tie-pitch | bar 6 suspension | bar 7 suspension | bar 8 tie-pitch | bar 8 parallel-perfect | bar 9 tie-pitch | bar 9 suspension | bar 10 closing | bar 9 two-voice-cadence | bar 9 suspension-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 4 octave-count: stars 0 | bar 1 opening | bar 2 suspension | bar 2 overlap | bar 3 tie-pitch | bar 3 suspension | bar 3 overlap | bar 3 weak-consonance | bar 4 tie-pitch | bar 4 hidden-perfect | bar 1 leap-count | bar 1 sequence | bar 2 leap-quality | bar 2 recovery | bar 3 recovery | bar 4 recovery | bar 5 recovery | bar 3 one-climax | bar 1 octave-count
+book 4 range: stars 0 | bar 6 suspension | bar 1 leap-count | bar 6 leap-quality | bar 6 recovery | bar 6 successive-leaps | bar 7 leap-quality | bar 7 recovery | bar 7 recovery | bar 7 successive-leaps | bar 1 range
+book 4 direction-changes: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 overlap | bar 2 parallel-perfect | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 3 weak-consonance | bar 4 tie-pitch | bar 5 tie-pitch | bar 6 tie-pitch | bar 6 suspension | bar 7 suspension | bar 8 tie-pitch | bar 8 parallel-perfect | bar 9 tie-pitch | bar 9 suspension | bar 10 closing | bar 9 two-voice-cadence | bar 9 suspension-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 4 balance: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 overlap | bar 2 parallel-perfect | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 3 weak-consonance | bar 4 tie-pitch | bar 5 tie-pitch | bar 6 tie-pitch | bar 6 suspension | bar 7 suspension | bar 8 tie-pitch | bar 8 parallel-perfect | bar 9 tie-pitch | bar 9 suspension | bar 10 closing | bar 9 two-voice-cadence | bar 9 suspension-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 4 strong-dissonance: stars 0 | bar 2 suspension | bar 2 sequence
+book 4 weak-dissonance: stars 0 | bar 1 opening | bar 1 weak-consonance
+book 4 opening-rest: stars 0 | bar 1 opening-rest | bar 2 opening
+book 4 wrong-subdivision: stars 0 | bar 1 fourth-rhythm | bar 1 fourth-rhythm | bar 1 fourth-rhythm | bar 1 fourth-rhythm | bar 2 fourth-rhythm | bar 2 parallel-perfect | bar 2 accented-parallel | bar 2 fourth-rhythm | bar 2 fourth-rhythm | bar 2 fourth-rhythm | bar 3 fourth-rhythm | bar 3 parallel-perfect | bar 3 accented-parallel | bar 3 fourth-rhythm | bar 3 fourth-rhythm | bar 3 fourth-rhythm | bar 4 fourth-rhythm | bar 4 parallel-perfect | bar 4 accented-parallel | bar 4 fourth-rhythm | bar 4 fourth-rhythm | bar 4 fourth-rhythm | bar 5 fourth-rhythm | bar 5 parallel-perfect | bar 5 accented-parallel | bar 5 fourth-rhythm | bar 5 fourth-rhythm | bar 5 fourth-rhythm | bar 6 fourth-rhythm | bar 6 parallel-perfect | bar 6 accented-parallel | bar 6 fourth-rhythm | bar 6 fourth-rhythm | bar 6 fourth-rhythm | bar 7 fourth-rhythm | bar 7 parallel-perfect | bar 7 accented-parallel | bar 7 fourth-rhythm | bar 7 fourth-rhythm | bar 7 fourth-rhythm | bar 8 fourth-rhythm | bar 8 parallel-perfect | bar 8 accented-parallel | bar 8 fourth-rhythm | bar 8 fourth-rhythm | bar 8 fourth-rhythm | bar 9 fourth-rhythm | bar 9 parallel-perfect | bar 9 accented-parallel | bar 9 fourth-rhythm | bar 9 fourth-rhythm | bar 9 fourth-rhythm | bar 10 parallel-perfect | bar 10 accented-parallel | bar 10 closing | bar 9 two-voice-cadence | bar 9 suspension-cadence | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 1 repeat | bar 2 sequence | bar 2 repeat | bar 2 sequence | bar 2 repeat | bar 2 sequence | bar 2 repeat | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 repeat | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 repeat | bar 5 sequence | bar 5 repeat | bar 5 recovery | bar 5 sequence | bar 5 repeat | bar 5 sequence | bar 5 repeat | bar 6 sequence | bar 6 repeat | bar 6 sequence | bar 6 repeat | bar 6 sequence | bar 6 repeat | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 repeat | bar 8 sequence | bar 8 repeat | bar 8 recovery | bar 8 sequence | bar 8 repeat | bar 8 sequence | bar 8 repeat | bar 9 sequence | bar 9 repeat | bar 9 repeat | bar 9 repeat | bar 7 one-climax
+book 4 tie-pitch: stars 0 | bar 2 tie-pitch | bar 2 parallel-perfect | bar 1 sequence
+book 4 suspension-cadence: stars 0 | bar 9 suspension-cadence | bar 9 repeat
+book 5 legal: stars 3
+book 5 voice-length: stars 0 | bar 1 voice-length
+book 5 opening: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 3 recovery | bar 1 range | bar 1 balance
+book 5 closing: stars 0 | bar 10 hidden-perfect | bar 10 closing | bar 9 two-voice-cadence | bar 10 recovery | bar 10 successive-leaps | bar 1 range
+book 5 two-voice-cadence: stars 0 | bar 9 passing-dissonance | bar 9 two-voice-cadence | bar 9 leap-quality | bar 10 repeat | bar 10 recovery
+book 5 crossing: stars 0 | bar 1 crossing | bar 1 opening | bar 1 passing-dissonance | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 3 recovery | bar 1 octave-count | bar 1 range | bar 1 balance
+book 5 overlap: stars 0 | bar 2 tie-pitch | bar 2 crossing | bar 2 overlap | bar 2 overlap
+book 5 downbeat-unison: stars 0 | bar 2 tie-pitch | bar 2 downbeat-unison
+book 5 parallel-perfect: stars 0 | bar 2 tie-pitch | bar 2 parallel-perfect
+book 5 hidden-perfect: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 hidden-perfect | bar 3 recovery | bar 1 range | bar 1 balance
+book 5 accented-parallel: stars 0 | bar 2 tie-pitch | bar 2 parallel-perfect | bar 2 accented-parallel | bar 1 repeat
+book 5 diatonic: stars 0 | bar 1 opening | bar 1 passing-dissonance | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 1 diatonic | bar 2 repeat | bar 2 leap-quality
+book 5 repeat: stars 0 | bar 2 downbeat-consonance | bar 2 passing-dissonance | bar 2 repeat | bar 3 repeat
+book 5 leap-quality: stars 0 | bar 2 downbeat-consonance | bar 2 leap-quality | bar 3 leap-quality | bar 3 recovery
+book 5 recovery: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 3 passing-dissonance | bar 3 recovery | bar 1 range | bar 1 balance
+book 5 successive-leaps: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 passing-dissonance | bar 3 passing-dissonance | bar 3 successive-leaps | bar 3 successive-leaps | bar 1 range | bar 1 balance
+book 5 outlined-tritone: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 same-beat-parallel | bar 3 downbeat-consonance | bar 3 overlap | bar 3 passing-dissonance | bar 3 diatonic | bar 3 outlined-tritone | bar 3 successive-leaps | bar 3 outlined-tritone | bar 1 range | bar 1 balance
+book 5 sequence: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 same-beat-parallel | bar 3 downbeat-unison | bar 3 overlap | bar 3 parallel-perfect | bar 3 passing-dissonance | bar 1 sequence | bar 3 outlined-tritone | bar 1 range | bar 1 balance
+book 5 one-climax: stars 0 | bar 1 opening | bar 1 passing-dissonance | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 repeat | bar 3 leap-quality | bar 1 one-climax | bar 1 climax-position | bar 1 climax-leading | bar 1 range
+book 5 climax-position: stars 0 | bar 10 closing | bar 9 two-voice-cadence | bar 10 leap-quality | bar 10 recovery | bar 10 climax-position | bar 1 range
+book 5 climax-leading: stars 0 | bar 6 leap-quality | bar 6 successive-leaps | bar 7 leap-quality | bar 7 recovery | bar 7 recovery | bar 6 climax-leading | bar 1 range
+book 5 leap-count: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 same-beat-parallel | bar 3 downbeat-unison | bar 3 overlap | bar 3 parallel-perfect | bar 4 downbeat-consonance | bar 5 hidden-perfect | bar 6 tie-pitch | bar 7 downbeat-consonance | bar 9 parallel-perfect | bar 9 accented-parallel | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 5 octave-count: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 passing-dissonance | bar 3 crossing | bar 3 downbeat-consonance | bar 3 passing-dissonance | bar 3 overlap | bar 1 sequence | bar 3 leap-quality | bar 3 recovery | bar 3 recovery | bar 1 octave-count | bar 1 range
+book 5 range: stars 0 | bar 6 leap-quality | bar 6 successive-leaps | bar 7 leap-quality | bar 7 recovery | bar 7 recovery | bar 1 range
+book 5 direction-changes: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 same-beat-parallel | bar 3 downbeat-unison | bar 3 overlap | bar 3 parallel-perfect | bar 4 downbeat-consonance | bar 5 hidden-perfect | bar 6 tie-pitch | bar 7 downbeat-consonance | bar 9 parallel-perfect | bar 9 accented-parallel | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 5 balance: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 same-beat-parallel | bar 3 downbeat-unison | bar 3 overlap | bar 3 parallel-perfect | bar 4 downbeat-consonance | bar 5 hidden-perfect | bar 6 tie-pitch | bar 7 downbeat-consonance | bar 9 parallel-perfect | bar 9 accented-parallel | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 5 strong-dissonance: stars 0 | bar 2 tie-pitch | bar 2 downbeat-consonance
+book 5 weak-dissonance: stars 0 | bar 1 opening | bar 1 passing-dissonance | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 3 recovery | bar 1 range | bar 1 balance
+book 5 opening-rest: stars 0 | bar 1 opening-rest | bar 2 tie-pitch | bar 2 opening | bar 2 downbeat-consonance | bar 2 balance
+book 5 same-beat-parallel: stars 0 | bar 2 downbeat-consonance | bar 2 same-beat-parallel | bar 1 sequence | bar 2 sequence | bar 2 sequence
+book 5 paired-eighths: stars 0 | bar 2 downbeat-consonance | bar 2 passing-dissonance | bar 4 paired-eighths | bar 4 paired-eighths | bar 7 downbeat-consonance | bar 7 passing-dissonance | bar 7 passing-dissonance | bar 7 passing-dissonance | bar 8 paired-eighths | bar 8 paired-eighths | bar 9 downbeat-consonance | bar 9 passing-dissonance | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 1 sequence | bar 2 repeat | bar 2 sequence | bar 2 sequence | bar 2 repeat | bar 2 sequence | bar 2 sequence | bar 3 repeat | bar 3 sequence | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 sequence | bar 4 repeat | bar 4 sequence | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 sequence | bar 5 repeat | bar 5 sequence | bar 5 sequence | bar 5 repeat | bar 5 sequence | bar 5 sequence | bar 6 repeat | bar 6 sequence | bar 6 sequence | bar 6 repeat | bar 6 sequence | bar 6 sequence | bar 7 repeat | bar 7 sequence | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 sequence | bar 8 repeat | bar 8 sequence | bar 8 sequence | bar 8 repeat | bar 8 sequence | bar 8 sequence | bar 8 repeat | bar 8 sequence | bar 8 repeat | bar 8 sequence | bar 9 repeat | bar 9 repeat | bar 10 repeat | bar 1 one-climax | bar 1 climax-position | bar 1 direction-changes
+book 5 tie-pitch: stars 0 | bar 2 tie-pitch | bar 2 parallel-perfect
+rhythm-audio book 2 ticks 300 bytes 1920000 differs-cantus 1337080 differs-voice 1294318 nonzero 1496579
+rhythm-audio book 3 ticks 300 bytes 1920000 differs-cantus 1300153 differs-voice 1274717 nonzero 1483931
+rhythm-audio book 4 ticks 300 bytes 1920000 differs-cantus 1269707 differs-voice 1337850 nonzero 1487931
+rhythm-audio book 5 ticks 300 bytes 1920000 differs-cantus 1266349 differs-voice 1292180 nonzero 1494531
+species-census book 2 seed 0 mode 0 below false stars 3 candidate 0
+species-census book 2 seed 1 mode 1 below false stars 3 candidate 1
+species-census book 2 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 2 seed 3 mode 3 below false stars 2 candidate 4
+species-census book 2 seed 4 mode 4 below false stars 3 candidate 4
+species-census book 2 seed 5 mode 5 below false stars 2 candidate 5
+species-census book 2 seed 6 mode 0 below true stars 3 candidate 6
+species-census book 2 seed 7 mode 1 below true stars 2 candidate 7
+species-census book 2 seed 8 mode 2 below true stars 2 candidate 8
+species-census book 2 seed 9 mode 3 below true stars 2 candidate 9
+species-census book 2 seed 10 mode 4 below true stars 2 candidate 10
+species-census book 2 seed 11 mode 5 below true stars 3 candidate 11
+species-census book 2 legal 12/12 three-star-found 5/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+species-census book 3 seed 0 mode 0 below false stars 2 candidate 0
+species-census book 3 seed 1 mode 1 below false stars 3 candidate 1
+species-census book 3 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 3 seed 3 mode 3 below false stars 3 candidate 3
+species-census book 3 seed 4 mode 4 below false stars 3 candidate 4
+species-census book 3 seed 5 mode 5 below false stars 3 candidate 5
+species-census book 3 seed 6 mode 0 below true stars 3 candidate 6
+species-census book 3 seed 7 mode 1 below true stars 3 candidate 7
+species-census book 3 seed 8 mode 2 below true stars 3 candidate 8
+species-census book 3 seed 9 mode 3 below true stars 3 candidate 9
+species-census book 3 seed 10 mode 4 below true stars 3 candidate 10
+species-census book 3 seed 11 mode 5 below true stars 3 candidate 11
+species-census book 3 legal 12/12 three-star-found 10/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+species-census book 4 seed 0 mode 0 below false stars 2 candidate 0
+species-census book 4 seed 1 mode 1 below false stars 3 candidate 1
+species-census book 4 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 4 seed 3 mode 3 below false stars 2 candidate 4
+species-census book 4 seed 4 mode 4 below false stars 2 candidate 4
+species-census book 4 seed 5 mode 5 below false stars 2 candidate 5
+species-census book 4 seed 6 mode 0 below true stars 2 candidate 28
+species-census book 4 seed 7 mode 1 below true stars 2 candidate 9
+species-census book 4 seed 8 mode 2 below true stars 3 candidate 12
+species-census book 4 seed 9 mode 3 below true stars 2 candidate 12
+species-census book 4 seed 10 mode 4 below true stars 2 candidate 11
+species-census book 4 seed 11 mode 5 below true stars 2 candidate 13
+species-census book 4 legal 12/12 three-star-found 2/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+species-census book 5 seed 0 mode 0 below false stars 2 candidate 1
+species-census book 5 seed 1 mode 1 below false stars 2 candidate 1
+species-census book 5 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 5 seed 3 mode 3 below false stars 2 candidate 3
+species-census book 5 seed 4 mode 4 below false stars 2 candidate 4
+species-census book 5 seed 5 mode 5 below false stars 2 candidate 19
+species-census book 5 seed 6 mode 0 below true stars 2 candidate 6
+species-census book 5 seed 7 mode 1 below true stars 2 candidate 7
+species-census book 5 seed 8 mode 2 below true stars 2 candidate 8
+species-census book 5 seed 9 mode 3 below true stars 2 candidate 9
+species-census book 5 seed 10 mode 4 below true stars 2 candidate 10
+species-census book 5 seed 11 mode 5 below true stars 2 candidate 11
+species-census book 5 legal 12/12 three-star-found 0/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+fugue: invalid option or small size (minimum 80x24)
+fugue: invalid option or small size (minimum 80x24)
+species-gameplay: 48 certified seeds, 12 three-star references, four score refusals and four actual recordings green
+book 2 legal: stars 3
+book 2 voice-length: stars 0 | bar 1 voice-length
+book 2 opening: stars 0 | bar 1 opening | bar 2 recovery
+book 2 closing: stars 0 | bar 10 hidden-perfect | bar 10 accented-parallel | bar 10 closing | bar 9 two-voice-cadence
+book 2 two-voice-cadence: stars 0 | bar 9 passing-dissonance | bar 9 two-voice-cadence | bar 10 repeat
+book 2 crossing: stars 0 | bar 1 crossing | bar 1 opening | bar 1 downbeat-consonance | bar 1 overlap | bar 1 leap-quality | bar 2 recovery | bar 1 range
+book 2 overlap: stars 0 | bar 2 crossing | bar 2 overlap | bar 2 overlap | bar 2 leap-quality | bar 2 leap-quality | bar 2 recovery | bar 1 range
+book 2 downbeat-unison: stars 0 | bar 2 downbeat-unison | bar 2 recovery
+book 2 parallel-perfect: stars 0 | bar 2 parallel-perfect | bar 2 recovery | bar 3 recovery
+book 2 hidden-perfect: stars 0 | bar 2 hidden-perfect | bar 2 accented-parallel | bar 2 repeat | bar 2 recovery
+book 2 accented-parallel: stars 0 | bar 2 hidden-perfect | bar 2 accented-parallel | bar 2 recovery | bar 3 recovery
+book 2 diatonic: stars 0 | bar 1 opening | bar 1 downbeat-consonance | bar 1 diatonic | bar 1 leap-quality
+book 2 repeat: stars 0 | bar 1 repeat
+book 2 leap-quality: stars 0 | bar 1 passing-dissonance | bar 1 leap-quality | bar 2 leap-quality | bar 2 recovery | bar 2 recovery | bar 1 climax-position
+book 2 recovery: stars 0 | bar 1 opening | bar 1 passing-dissonance | bar 2 downbeat-consonance | bar 2 recovery
+book 2 successive-leaps: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 2 successive-leaps
+book 2 outlined-tritone: stars 0 | bar 1 opening | bar 1 passing-dissonance | bar 2 diatonic | bar 2 outlined-tritone | bar 2 successive-leaps
+book 2 sequence: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 1 sequence | bar 1 sequence | bar 1 balance
+book 2 one-climax: stars 0 | bar 1 opening | bar 1 downbeat-consonance | bar 1 passing-dissonance | bar 1 repeat | bar 2 leap-quality | bar 2 recovery | bar 1 one-climax | bar 1 climax-position | bar 1 climax-leading | bar 1 range
+book 2 climax-position: stars 0 | bar 10 closing | bar 9 two-voice-cadence | bar 10 leap-quality | bar 10 climax-position | bar 1 range
+book 2 climax-leading: stars 0 | bar 5 passing-dissonance | bar 5 leap-quality | bar 6 leap-quality | bar 6 recovery | bar 6 recovery | bar 5 climax-leading | bar 1 range
+book 2 leap-count: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 4 downbeat-consonance | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 2 octave-count: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 accented-parallel | bar 1 sequence | bar 2 leap-quality | bar 2 recovery | bar 2 recovery | bar 3 recovery | bar 3 recovery | bar 3 successive-leaps | bar 1 octave-count
+book 2 range: stars 0 | bar 5 passing-dissonance | bar 5 leap-quality | bar 6 leap-quality | bar 6 recovery | bar 6 recovery | bar 1 range
+book 2 direction-changes: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 4 downbeat-consonance | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 2 balance: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 4 downbeat-consonance | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 2 strong-dissonance: stars 0 | bar 2 downbeat-consonance | bar 2 recovery
+book 2 weak-dissonance: stars 0 | bar 1 passing-dissonance | bar 2 recovery
+book 2 opening-rest: stars 0 | bar 1 opening-rest
+book 2 forbidden-tie: stars 0 | bar 2 second-tie | bar 2 tie-pitch | bar 2 repeat
+book 2 wrong-subdivision: stars 0 | bar 1 second-rhythm | bar 1 second-rhythm | bar 1 second-rhythm | bar 1 second-rhythm | bar 2 second-rhythm | bar 2 parallel-perfect | bar 2 accented-parallel | bar 2 second-rhythm | bar 2 second-rhythm | bar 2 second-rhythm | bar 3 second-rhythm | bar 3 parallel-perfect | bar 3 accented-parallel | bar 3 second-rhythm | bar 3 second-rhythm | bar 3 second-rhythm | bar 4 second-rhythm | bar 4 parallel-perfect | bar 4 accented-parallel | bar 4 second-rhythm | bar 4 second-rhythm | bar 4 second-rhythm | bar 5 second-rhythm | bar 5 parallel-perfect | bar 5 accented-parallel | bar 5 second-rhythm | bar 5 second-rhythm | bar 5 second-rhythm | bar 6 second-rhythm | bar 6 parallel-perfect | bar 6 accented-parallel | bar 6 second-rhythm | bar 6 second-rhythm | bar 6 second-rhythm | bar 7 second-rhythm | bar 7 parallel-perfect | bar 7 accented-parallel | bar 7 second-rhythm | bar 7 second-rhythm | bar 7 second-rhythm | bar 8 second-rhythm | bar 8 parallel-perfect | bar 8 accented-parallel | bar 8 second-rhythm | bar 8 second-rhythm | bar 8 second-rhythm | bar 9 second-rhythm | bar 9 parallel-perfect | bar 9 accented-parallel | bar 9 second-rhythm | bar 9 second-rhythm | bar 9 second-rhythm | bar 10 parallel-perfect | bar 10 accented-parallel | bar 10 closing | bar 9 two-voice-cadence | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 1 repeat | bar 2 sequence | bar 2 repeat | bar 2 sequence | bar 2 repeat | bar 2 sequence | bar 2 repeat | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 repeat | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 repeat | bar 5 sequence | bar 5 repeat | bar 5 recovery | bar 5 sequence | bar 5 repeat | bar 5 sequence | bar 5 repeat | bar 6 sequence | bar 6 repeat | bar 6 sequence | bar 6 repeat | bar 6 sequence | bar 6 repeat | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 repeat | bar 8 sequence | bar 8 repeat | bar 8 recovery | bar 8 sequence | bar 8 repeat | bar 8 sequence | bar 8 repeat | bar 9 sequence | bar 9 repeat | bar 9 repeat | bar 9 repeat | bar 7 one-climax
+book 3 legal: stars 3
+book 3 voice-length: stars 0 | bar 1 voice-length
+book 3 opening: stars 0 | bar 1 opening | bar 1 third-dissonance | bar 1 leap-quality | bar 1 recovery | bar 1 range
+book 3 closing: stars 0 | bar 10 hidden-perfect | bar 10 closing | bar 9 two-voice-cadence | bar 1 range
+book 3 two-voice-cadence: stars 0 | bar 9 third-dissonance | bar 9 two-voice-cadence | bar 9 recovery | bar 10 repeat
+book 3 crossing: stars 0 | bar 1 crossing | bar 1 opening | bar 1 downbeat-consonance | bar 1 third-dissonance | bar 1 overlap | bar 1 leap-quality | bar 1 recovery | bar 1 range
+book 3 overlap: stars 0 | bar 2 crossing | bar 2 overlap | bar 2 overlap | bar 2 leap-quality | bar 2 leap-quality | bar 2 recovery | bar 2 recovery | bar 1 range | bar 1 balance
+book 3 downbeat-unison: stars 0 | bar 2 downbeat-unison | bar 3 accented-parallel | bar 2 leap-quality | bar 2 recovery | bar 2 recovery | bar 1 octave-count | bar 1 range | bar 1 balance
+book 3 parallel-perfect: stars 0 | bar 2 parallel-perfect | bar 2 accented-parallel | bar 3 accented-parallel | bar 1 sequence | bar 1 sequence | bar 2 repeat
+book 3 hidden-perfect: stars 0 | bar 2 hidden-perfect | bar 2 recovery | bar 2 recovery | bar 2 successive-leaps | bar 2 recovery | bar 1 octave-count | bar 1 range | bar 1 balance
+book 3 accented-parallel: stars 0 | bar 2 accented-parallel | bar 3 accented-parallel | bar 2 repeat | bar 2 recovery
+book 3 diatonic: stars 0 | bar 1 opening | bar 1 downbeat-consonance | bar 1 diatonic | bar 1 leap-quality
+book 3 repeat: stars 0 | bar 2 same-beat-parallel | bar 1 repeat | bar 1 successive-leaps
+book 3 leap-quality: stars 0 | bar 1 third-dissonance | bar 1 leap-quality | bar 1 recovery | bar 1 recovery | bar 2 outlined-tritone
+book 3 recovery: stars 0 | bar 1 opening | bar 1 third-dissonance | bar 1 recovery | bar 1 octave-count | bar 1 range
+book 3 successive-leaps: stars 0 | bar 1 opening | bar 1 successive-leaps | bar 1 successive-leaps | bar 1 octave-count | bar 1 range
+book 3 outlined-tritone: stars 0 | bar 1 opening | bar 1 third-dissonance | bar 1 third-dissonance | bar 1 diatonic | bar 1 outlined-tritone | bar 1 leap-quality | bar 1 successive-leaps | bar 1 range
+book 3 sequence: stars 0 | bar 1 opening | bar 1 third-dissonance | bar 1 sequence | bar 2 recovery | bar 1 octave-count | bar 1 range | bar 1 balance
+book 3 one-climax: stars 0 | bar 1 opening | bar 1 downbeat-consonance | bar 1 third-dissonance | bar 1 repeat | bar 1 leap-quality | bar 1 recovery | bar 1 one-climax | bar 1 climax-position | bar 1 climax-leading | bar 1 range
+book 3 climax-position: stars 0 | bar 10 closing | bar 9 two-voice-cadence | bar 10 leap-quality | bar 10 climax-position | bar 1 range
+book 3 climax-leading: stars 0 | bar 5 third-dissonance | bar 5 leap-quality | bar 5 leap-quality | bar 5 recovery | bar 6 recovery | bar 5 climax-leading | bar 1 range
+book 3 leap-count: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 3 downbeat-consonance | bar 4 hidden-perfect | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 outlined-tritone | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 9 sequence | bar 9 sequence | bar 9 outlined-tritone | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 3 octave-count: stars 0 | bar 1 opening | bar 1 third-dissonance | bar 1 third-dissonance | bar 2 same-beat-parallel | bar 1 sequence | bar 1 leap-quality | bar 1 recovery | bar 1 recovery | bar 2 recovery | bar 2 successive-leaps | bar 1 octave-count | bar 1 range
+book 3 range: stars 0 | bar 5 third-dissonance | bar 5 leap-quality | bar 5 leap-quality | bar 5 recovery | bar 6 recovery | bar 1 range
+book 3 direction-changes: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 3 downbeat-consonance | bar 4 hidden-perfect | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 outlined-tritone | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 9 sequence | bar 9 sequence | bar 9 outlined-tritone | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 3 balance: stars 0 | bar 1 opening | bar 2 downbeat-consonance | bar 3 downbeat-consonance | bar 4 hidden-perfect | bar 6 downbeat-consonance | bar 7 downbeat-consonance | bar 9 downbeat-consonance | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 outlined-tritone | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 7 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 8 sequence | bar 9 sequence | bar 9 sequence | bar 9 outlined-tritone | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 3 strong-dissonance: stars 0 | bar 2 downbeat-consonance | bar 2 leap-quality | bar 2 leap-quality | bar 2 recovery | bar 2 recovery | bar 1 range | bar 1 balance
+book 3 weak-dissonance: stars 0 | bar 1 third-dissonance | bar 1 leap-quality | bar 1 leap-quality | bar 1 recovery | bar 1 recovery | bar 1 successive-leaps | bar 1 range
+book 3 opening-rest: stars 0 | bar 1 opening-rest | bar 1 successive-leaps
+book 3 forbidden-tie: stars 0 | bar 2 third-tie | bar 2 tie-pitch
+book 3 wrong-subdivision: stars 0 | bar 1 third-rhythm | bar 1 third-rhythm | bar 2 third-rhythm | bar 2 parallel-perfect | bar 2 accented-parallel | bar 2 third-rhythm | bar 2 same-beat-parallel | bar 3 third-rhythm | bar 3 parallel-perfect | bar 3 accented-parallel | bar 3 third-rhythm | bar 3 same-beat-parallel | bar 4 third-rhythm | bar 4 parallel-perfect | bar 4 accented-parallel | bar 4 third-rhythm | bar 4 same-beat-parallel | bar 5 third-rhythm | bar 5 parallel-perfect | bar 5 accented-parallel | bar 5 third-rhythm | bar 5 same-beat-parallel | bar 6 third-rhythm | bar 6 parallel-perfect | bar 6 accented-parallel | bar 6 third-rhythm | bar 6 same-beat-parallel | bar 7 third-rhythm | bar 7 parallel-perfect | bar 7 accented-parallel | bar 7 third-rhythm | bar 7 same-beat-parallel | bar 8 third-rhythm | bar 8 overlap | bar 8 parallel-perfect | bar 8 accented-parallel | bar 8 third-rhythm | bar 8 same-beat-parallel | bar 9 third-rhythm | bar 9 parallel-perfect | bar 9 accented-parallel | bar 9 third-rhythm | bar 9 same-beat-parallel | bar 10 parallel-perfect | bar 10 accented-parallel | bar 10 closing | bar 9 two-voice-cadence | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 2 sequence | bar 2 repeat | bar 3 sequence | bar 3 repeat | bar 4 sequence | bar 4 repeat | bar 4 recovery | bar 5 sequence | bar 5 repeat | bar 6 sequence | bar 6 repeat | bar 7 sequence | bar 7 repeat | bar 8 sequence | bar 8 repeat | bar 8 recovery | bar 9 repeat | bar 7 one-climax
+book 3 same-beat-parallel: stars 0 | bar 2 same-beat-parallel | bar 3 same-beat-parallel | bar 1 sequence | bar 2 repeat
+book 4 legal: stars 3
+book 4 voice-length: stars 0 | bar 1 voice-length
+book 4 opening: stars 0 | bar 1 opening
+book 4 closing: stars 0 | bar 10 hidden-perfect | bar 10 closing | bar 9 two-voice-cadence | bar 6 sequence
+book 4 two-voice-cadence: stars 0 | bar 9 suspension | bar 9 weak-consonance | bar 9 two-voice-cadence | bar 9 suspension-cadence | bar 9 repeat | bar 9 recovery | bar 10 repeat
+book 4 crossing: stars 0 | bar 1 crossing | bar 1 opening | bar 1 weak-consonance | bar 2 overlap
+book 4 overlap: stars 0 | bar 2 crossing | bar 2 overlap | bar 2 overlap | bar 2 leap-quality | bar 2 recovery
+book 4 downbeat-unison: stars 0 | bar 2 downbeat-unison | bar 2 recovery
+book 4 parallel-perfect: stars 0 | bar 2 parallel-perfect | bar 3 recovery | bar 2 one-climax | bar 2 climax-position
+book 4 hidden-perfect: stars 0 | bar 1 opening | bar 2 hidden-perfect | bar 2 repeat | bar 2 recovery
+book 4 accented-parallel: stars 0 | bar 2 hidden-perfect | bar 2 accented-parallel | bar 1 sequence | bar 2 recovery | bar 2 recovery | bar 3 recovery | bar 2 one-climax | bar 2 climax-position
+book 4 diatonic: stars 0 | bar 1 opening | bar 1 weak-consonance | bar 1 diatonic | bar 2 leap-quality
+book 4 repeat: stars 0 | bar 2 suspension | bar 2 repeat | bar 2 sequence
+book 4 leap-quality: stars 0 | bar 2 leap-quality | bar 2 recovery | bar 3 recovery | bar 2 climax-position
+book 4 recovery: stars 0 | bar 1 opening | bar 2 overlap | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 2 sequence | bar 2 recovery | bar 3 repeat
+book 4 successive-leaps: stars 0 | bar 1 opening | bar 2 suspension | bar 2 overlap | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 2 successive-leaps | bar 3 repeat
+book 4 outlined-tritone: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 overlap | bar 2 parallel-perfect | bar 3 tie-pitch | bar 3 suspension | bar 1 sequence | bar 2 diatonic | bar 2 outlined-tritone
+book 4 sequence: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 overlap | bar 2 parallel-perfect | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 3 weak-consonance | bar 4 tie-pitch | bar 1 sequence | bar 5 successive-leaps
+book 4 one-climax: stars 0 | bar 1 opening | bar 1 weak-consonance | bar 2 repeat | bar 2 leap-quality | bar 3 recovery | bar 1 one-climax | bar 1 climax-position | bar 1 climax-leading | bar 1 range
+book 4 climax-position: stars 0 | bar 10 closing | bar 9 two-voice-cadence | bar 10 leap-quality | bar 10 climax-position | bar 1 range
+book 4 climax-leading: stars 0 | bar 6 suspension | bar 1 leap-count | bar 6 leap-quality | bar 6 recovery | bar 6 successive-leaps | bar 7 leap-quality | bar 7 recovery | bar 7 recovery | bar 7 successive-leaps | bar 6 climax-leading | bar 1 range
+book 4 leap-count: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 overlap | bar 2 parallel-perfect | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 3 weak-consonance | bar 4 tie-pitch | bar 5 tie-pitch | bar 6 tie-pitch | bar 6 suspension | bar 7 suspension | bar 8 tie-pitch | bar 8 parallel-perfect | bar 9 tie-pitch | bar 9 suspension | bar 10 closing | bar 9 two-voice-cadence | bar 9 suspension-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 4 octave-count: stars 0 | bar 1 opening | bar 2 suspension | bar 2 overlap | bar 3 tie-pitch | bar 3 suspension | bar 3 overlap | bar 3 weak-consonance | bar 4 tie-pitch | bar 4 hidden-perfect | bar 1 leap-count | bar 1 sequence | bar 2 leap-quality | bar 2 recovery | bar 3 recovery | bar 4 recovery | bar 5 recovery | bar 3 one-climax | bar 1 octave-count
+book 4 range: stars 0 | bar 6 suspension | bar 1 leap-count | bar 6 leap-quality | bar 6 recovery | bar 6 successive-leaps | bar 7 leap-quality | bar 7 recovery | bar 7 recovery | bar 7 successive-leaps | bar 1 range
+book 4 direction-changes: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 overlap | bar 2 parallel-perfect | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 3 weak-consonance | bar 4 tie-pitch | bar 5 tie-pitch | bar 6 tie-pitch | bar 6 suspension | bar 7 suspension | bar 8 tie-pitch | bar 8 parallel-perfect | bar 9 tie-pitch | bar 9 suspension | bar 10 closing | bar 9 two-voice-cadence | bar 9 suspension-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 4 balance: stars 0 | bar 1 opening | bar 2 downbeat-unison | bar 2 overlap | bar 2 parallel-perfect | bar 2 weak-consonance | bar 3 tie-pitch | bar 3 suspension | bar 3 weak-consonance | bar 4 tie-pitch | bar 5 tie-pitch | bar 6 tie-pitch | bar 6 suspension | bar 7 suspension | bar 8 tie-pitch | bar 8 parallel-perfect | bar 9 tie-pitch | bar 9 suspension | bar 10 closing | bar 9 two-voice-cadence | bar 9 suspension-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 6 outlined-tritone | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 4 strong-dissonance: stars 0 | bar 2 suspension | bar 2 sequence
+book 4 weak-dissonance: stars 0 | bar 1 opening | bar 1 weak-consonance
+book 4 opening-rest: stars 0 | bar 1 opening-rest | bar 2 opening
+book 4 wrong-subdivision: stars 0 | bar 1 fourth-rhythm | bar 1 fourth-rhythm | bar 1 fourth-rhythm | bar 1 fourth-rhythm | bar 2 fourth-rhythm | bar 2 parallel-perfect | bar 2 accented-parallel | bar 2 fourth-rhythm | bar 2 fourth-rhythm | bar 2 fourth-rhythm | bar 3 fourth-rhythm | bar 3 parallel-perfect | bar 3 accented-parallel | bar 3 fourth-rhythm | bar 3 fourth-rhythm | bar 3 fourth-rhythm | bar 4 fourth-rhythm | bar 4 parallel-perfect | bar 4 accented-parallel | bar 4 fourth-rhythm | bar 4 fourth-rhythm | bar 4 fourth-rhythm | bar 5 fourth-rhythm | bar 5 parallel-perfect | bar 5 accented-parallel | bar 5 fourth-rhythm | bar 5 fourth-rhythm | bar 5 fourth-rhythm | bar 6 fourth-rhythm | bar 6 parallel-perfect | bar 6 accented-parallel | bar 6 fourth-rhythm | bar 6 fourth-rhythm | bar 6 fourth-rhythm | bar 7 fourth-rhythm | bar 7 parallel-perfect | bar 7 accented-parallel | bar 7 fourth-rhythm | bar 7 fourth-rhythm | bar 7 fourth-rhythm | bar 8 fourth-rhythm | bar 8 parallel-perfect | bar 8 accented-parallel | bar 8 fourth-rhythm | bar 8 fourth-rhythm | bar 8 fourth-rhythm | bar 9 fourth-rhythm | bar 9 parallel-perfect | bar 9 accented-parallel | bar 9 fourth-rhythm | bar 9 fourth-rhythm | bar 9 fourth-rhythm | bar 10 parallel-perfect | bar 10 accented-parallel | bar 10 closing | bar 9 two-voice-cadence | bar 9 suspension-cadence | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 1 repeat | bar 2 sequence | bar 2 repeat | bar 2 sequence | bar 2 repeat | bar 2 sequence | bar 2 repeat | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 repeat | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 repeat | bar 5 sequence | bar 5 repeat | bar 5 recovery | bar 5 sequence | bar 5 repeat | bar 5 sequence | bar 5 repeat | bar 6 sequence | bar 6 repeat | bar 6 sequence | bar 6 repeat | bar 6 sequence | bar 6 repeat | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 repeat | bar 8 sequence | bar 8 repeat | bar 8 recovery | bar 8 sequence | bar 8 repeat | bar 8 sequence | bar 8 repeat | bar 9 sequence | bar 9 repeat | bar 9 repeat | bar 9 repeat | bar 7 one-climax
+book 4 tie-pitch: stars 0 | bar 2 tie-pitch | bar 2 parallel-perfect | bar 1 sequence
+book 4 suspension-cadence: stars 0 | bar 9 suspension-cadence | bar 9 repeat
+book 5 legal: stars 3
+book 5 voice-length: stars 0 | bar 1 voice-length
+book 5 opening: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 3 recovery | bar 1 range | bar 1 balance
+book 5 closing: stars 0 | bar 10 hidden-perfect | bar 10 closing | bar 9 two-voice-cadence | bar 10 recovery | bar 10 successive-leaps | bar 1 range
+book 5 two-voice-cadence: stars 0 | bar 9 passing-dissonance | bar 9 two-voice-cadence | bar 9 leap-quality | bar 10 repeat | bar 10 recovery
+book 5 crossing: stars 0 | bar 1 crossing | bar 1 opening | bar 1 passing-dissonance | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 3 recovery | bar 1 octave-count | bar 1 range | bar 1 balance
+book 5 overlap: stars 0 | bar 2 tie-pitch | bar 2 crossing | bar 2 overlap | bar 2 overlap
+book 5 downbeat-unison: stars 0 | bar 2 tie-pitch | bar 2 downbeat-unison
+book 5 parallel-perfect: stars 0 | bar 2 tie-pitch | bar 2 parallel-perfect
+book 5 hidden-perfect: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 hidden-perfect | bar 3 recovery | bar 1 range | bar 1 balance
+book 5 accented-parallel: stars 0 | bar 2 tie-pitch | bar 2 parallel-perfect | bar 2 accented-parallel | bar 1 repeat
+book 5 diatonic: stars 0 | bar 1 opening | bar 1 passing-dissonance | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 1 diatonic | bar 2 repeat | bar 2 leap-quality
+book 5 repeat: stars 0 | bar 2 downbeat-consonance | bar 2 passing-dissonance | bar 2 repeat | bar 3 repeat
+book 5 leap-quality: stars 0 | bar 2 downbeat-consonance | bar 2 leap-quality | bar 3 leap-quality | bar 3 recovery
+book 5 recovery: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 3 passing-dissonance | bar 3 recovery | bar 1 range | bar 1 balance
+book 5 successive-leaps: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 passing-dissonance | bar 3 passing-dissonance | bar 3 successive-leaps | bar 3 successive-leaps | bar 1 range | bar 1 balance
+book 5 outlined-tritone: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 same-beat-parallel | bar 3 downbeat-consonance | bar 3 overlap | bar 3 passing-dissonance | bar 3 diatonic | bar 3 outlined-tritone | bar 3 successive-leaps | bar 3 outlined-tritone | bar 1 range | bar 1 balance
+book 5 sequence: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 same-beat-parallel | bar 3 downbeat-unison | bar 3 overlap | bar 3 parallel-perfect | bar 3 passing-dissonance | bar 1 sequence | bar 3 outlined-tritone | bar 1 range | bar 1 balance
+book 5 one-climax: stars 0 | bar 1 opening | bar 1 passing-dissonance | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 repeat | bar 3 leap-quality | bar 1 one-climax | bar 1 climax-position | bar 1 climax-leading | bar 1 range
+book 5 climax-position: stars 0 | bar 10 closing | bar 9 two-voice-cadence | bar 10 leap-quality | bar 10 recovery | bar 10 climax-position | bar 1 range
+book 5 climax-leading: stars 0 | bar 6 leap-quality | bar 6 successive-leaps | bar 7 leap-quality | bar 7 recovery | bar 7 recovery | bar 6 climax-leading | bar 1 range
+book 5 leap-count: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 same-beat-parallel | bar 3 downbeat-unison | bar 3 overlap | bar 3 parallel-perfect | bar 4 downbeat-consonance | bar 5 hidden-perfect | bar 6 tie-pitch | bar 7 downbeat-consonance | bar 9 parallel-perfect | bar 9 accented-parallel | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 5 octave-count: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 passing-dissonance | bar 3 crossing | bar 3 downbeat-consonance | bar 3 passing-dissonance | bar 3 overlap | bar 1 sequence | bar 3 leap-quality | bar 3 recovery | bar 3 recovery | bar 1 octave-count | bar 1 range
+book 5 range: stars 0 | bar 6 leap-quality | bar 6 successive-leaps | bar 7 leap-quality | bar 7 recovery | bar 7 recovery | bar 1 range
+book 5 direction-changes: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 same-beat-parallel | bar 3 downbeat-unison | bar 3 overlap | bar 3 parallel-perfect | bar 4 downbeat-consonance | bar 5 hidden-perfect | bar 6 tie-pitch | bar 7 downbeat-consonance | bar 9 parallel-perfect | bar 9 accented-parallel | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 5 balance: stars 0 | bar 1 opening | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 2 overlap | bar 2 same-beat-parallel | bar 3 downbeat-unison | bar 3 overlap | bar 3 parallel-perfect | bar 4 downbeat-consonance | bar 5 hidden-perfect | bar 6 tie-pitch | bar 7 downbeat-consonance | bar 9 parallel-perfect | bar 9 accented-parallel | bar 10 downbeat-consonance | bar 10 closing | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 2 sequence | bar 2 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 3 sequence | bar 4 outlined-tritone | bar 4 sequence | bar 4 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 5 sequence | bar 6 sequence | bar 6 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 sequence | bar 7 outlined-tritone | bar 7 sequence | bar 8 sequence | bar 10 climax-position | bar 1 range | bar 1 direction-changes | bar 1 balance
+book 5 strong-dissonance: stars 0 | bar 2 tie-pitch | bar 2 downbeat-consonance
+book 5 weak-dissonance: stars 0 | bar 1 opening | bar 1 passing-dissonance | bar 2 tie-pitch | bar 2 downbeat-consonance | bar 3 recovery | bar 1 range | bar 1 balance
+book 5 opening-rest: stars 0 | bar 1 opening-rest | bar 2 tie-pitch | bar 2 opening | bar 2 downbeat-consonance | bar 2 balance
+book 5 same-beat-parallel: stars 0 | bar 2 downbeat-consonance | bar 2 same-beat-parallel | bar 1 sequence | bar 2 sequence | bar 2 sequence
+book 5 paired-eighths: stars 0 | bar 2 downbeat-consonance | bar 2 passing-dissonance | bar 4 paired-eighths | bar 4 paired-eighths | bar 7 downbeat-consonance | bar 7 passing-dissonance | bar 7 passing-dissonance | bar 7 passing-dissonance | bar 8 paired-eighths | bar 8 paired-eighths | bar 9 downbeat-consonance | bar 9 passing-dissonance | bar 9 two-voice-cadence | bar 1 leap-count | bar 1 sequence | bar 1 sequence | bar 1 repeat | bar 1 sequence | bar 1 sequence | bar 2 repeat | bar 2 sequence | bar 2 sequence | bar 2 repeat | bar 2 sequence | bar 2 sequence | bar 3 repeat | bar 3 sequence | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 sequence | bar 3 repeat | bar 3 sequence | bar 3 sequence | bar 4 repeat | bar 4 sequence | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 sequence | bar 4 repeat | bar 4 sequence | bar 4 sequence | bar 5 repeat | bar 5 sequence | bar 5 sequence | bar 5 repeat | bar 5 sequence | bar 5 sequence | bar 6 repeat | bar 6 sequence | bar 6 sequence | bar 6 repeat | bar 6 sequence | bar 6 sequence | bar 7 repeat | bar 7 sequence | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 sequence | bar 7 repeat | bar 7 sequence | bar 7 sequence | bar 8 repeat | bar 8 sequence | bar 8 sequence | bar 8 repeat | bar 8 sequence | bar 8 sequence | bar 8 repeat | bar 8 sequence | bar 8 repeat | bar 8 sequence | bar 9 repeat | bar 9 repeat | bar 10 repeat | bar 1 one-climax | bar 1 climax-position | bar 1 direction-changes
+book 5 tie-pitch: stars 0 | bar 2 tie-pitch | bar 2 parallel-perfect
+rhythm-audio book 2 ticks 300 bytes 1920000 differs-cantus 1337080 differs-voice 1294318 nonzero 1496579
+rhythm-audio book 3 ticks 300 bytes 1920000 differs-cantus 1300153 differs-voice 1274717 nonzero 1483931
+rhythm-audio book 4 ticks 300 bytes 1920000 differs-cantus 1269707 differs-voice 1337850 nonzero 1487931
+rhythm-audio book 5 ticks 300 bytes 1920000 differs-cantus 1266349 differs-voice 1292180 nonzero 1494531
+species-census book 2 seed 0 mode 0 below false stars 3 candidate 0
+species-census book 2 seed 1 mode 1 below false stars 3 candidate 1
+species-census book 2 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 2 seed 3 mode 3 below false stars 2 candidate 4
+species-census book 2 seed 4 mode 4 below false stars 3 candidate 4
+species-census book 2 seed 5 mode 5 below false stars 2 candidate 5
+species-census book 2 seed 6 mode 0 below true stars 3 candidate 6
+species-census book 2 seed 7 mode 1 below true stars 2 candidate 7
+species-census book 2 seed 8 mode 2 below true stars 2 candidate 8
+species-census book 2 seed 9 mode 3 below true stars 2 candidate 9
+species-census book 2 seed 10 mode 4 below true stars 2 candidate 10
+species-census book 2 seed 11 mode 5 below true stars 3 candidate 11
+species-census book 2 legal 12/12 three-star-found 5/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+species-census book 3 seed 0 mode 0 below false stars 2 candidate 0
+species-census book 3 seed 1 mode 1 below false stars 3 candidate 1
+species-census book 3 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 3 seed 3 mode 3 below false stars 3 candidate 3
+species-census book 3 seed 4 mode 4 below false stars 3 candidate 4
+species-census book 3 seed 5 mode 5 below false stars 3 candidate 5
+species-census book 3 seed 6 mode 0 below true stars 3 candidate 6
+species-census book 3 seed 7 mode 1 below true stars 3 candidate 7
+species-census book 3 seed 8 mode 2 below true stars 3 candidate 8
+species-census book 3 seed 9 mode 3 below true stars 3 candidate 9
+species-census book 3 seed 10 mode 4 below true stars 3 candidate 10
+species-census book 3 seed 11 mode 5 below true stars 3 candidate 11
+species-census book 3 legal 12/12 three-star-found 10/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+species-census book 4 seed 0 mode 0 below false stars 2 candidate 0
+species-census book 4 seed 1 mode 1 below false stars 3 candidate 1
+species-census book 4 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 4 seed 3 mode 3 below false stars 2 candidate 4
+species-census book 4 seed 4 mode 4 below false stars 2 candidate 4
+species-census book 4 seed 5 mode 5 below false stars 2 candidate 5
+species-census book 4 seed 6 mode 0 below true stars 2 candidate 28
+species-census book 4 seed 7 mode 1 below true stars 2 candidate 9
+species-census book 4 seed 8 mode 2 below true stars 3 candidate 12
+species-census book 4 seed 9 mode 3 below true stars 2 candidate 12
+species-census book 4 seed 10 mode 4 below true stars 2 candidate 11
+species-census book 4 seed 11 mode 5 below true stars 2 candidate 13
+species-census book 4 legal 12/12 three-star-found 2/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+species-census book 5 seed 0 mode 0 below false stars 2 candidate 1
+species-census book 5 seed 1 mode 1 below false stars 2 candidate 1
+species-census book 5 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 5 seed 3 mode 3 below false stars 2 candidate 3
+species-census book 5 seed 4 mode 4 below false stars 2 candidate 4
+species-census book 5 seed 5 mode 5 below false stars 2 candidate 19
+species-census book 5 seed 6 mode 0 below true stars 2 candidate 6
+species-census book 5 seed 7 mode 1 below true stars 2 candidate 7
+species-census book 5 seed 8 mode 2 below true stars 2 candidate 8
+species-census book 5 seed 9 mode 3 below true stars 2 candidate 9
+species-census book 5 seed 10 mode 4 below true stars 2 candidate 10
+species-census book 5 seed 11 mode 5 below true stars 2 candidate 11
+species-census book 5 legal 12/12 three-star-found 0/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+fugue: invalid option or small size (minimum 80x24)
+fugue: invalid option or small size (minimum 80x24)
+species-gameplay: 48 certified seeds, 12 three-star references, four score refusals and four actual recordings green
+pitch-check: A3 expected=220.000 fundamental=220.400 error=0.18173%
+pitch-check: A4 expected=440.000 fundamental=439.845 error=0.03516%
+pitch-check: A5 expected=880.000 fundamental=880.304 error=0.03452%
+pitch-check: B3 expected=246.942 fundamental=247.373 error=0.17478%
+pitch-check: B4 expected=493.883 fundamental=492.886 error=0.20195%
+pitch-check: B5 expected=987.767 fundamental=989.027 error=0.12761%
+pitch-check: C#5 expected=554.365 fundamental=552.471 error=0.34168%
+pitch-check: C4 expected=261.626 fundamental=262.066 error=0.16834%
+pitch-check: C5 expected=523.251 fundamental=521.762 error=0.28459%
+pitch-check: C6 expected=1046.502 fundamental=1048.119 error=0.15446%
+pitch-check: D3 expected=146.832 fundamental=147.118 error=0.19433%
+pitch-check: D4 expected=293.665 fundamental=294.098 error=0.14765%
+pitch-check: D5 expected=587.330 fundamental=585.206 error=0.36147%
+pitch-check: D6 expected=1174.659 fundamental=1176.688 error=0.17275%
+pitch-check: E3 expected=164.814 fundamental=165.135 error=0.19518%
+pitch-check: E4 expected=329.628 fundamental=330.048 error=0.12755%
+pitch-check: E5 expected=659.255 fundamental=657.199 error=0.31185%
+pitch-check: F#5 expected=739.989 fundamental=738.559 error=0.19329%
+pitch-check: F3 expected=174.614 fundamental=174.952 error=0.19356%
+pitch-check: F4 expected=349.228 fundamental=349.618 error=0.11149%
+pitch-check: F5 expected=698.456 fundamental=696.649 error=0.25876%
+pitch-check: G3 expected=195.998 fundamental=196.366 error=0.18799%
+pitch-check: G4 expected=391.995 fundamental=392.241 error=0.06273%
+pitch-check: G5 expected=783.991 fundamental=783.094 error=0.11444%
+pitch-check: 1254 note rows, 24 distinct PCM fundamentals, 30 pages
+clef-census: book=1 page=0 clef=30 ledgers-below=1 above=0
+clef-census: book=1 page=1 clef=30 ledgers-below=0 above=0
+clef-census: book=1 page=2 clef=30 ledgers-below=0 above=1
+clef-census: book=1 page=3 clef=30 ledgers-below=1 above=0
+clef-census: book=1 page=4 clef=18 ledgers-below=0 above=4
+clef-census: book=1 page=5 clef=30 ledgers-below=2 above=0
+clef-census: book=2 page=0 clef=30 ledgers-below=1 above=0
+clef-census: book=2 page=1 clef=30 ledgers-below=0 above=0
+clef-census: book=2 page=2 clef=30 ledgers-below=0 above=1
+clef-census: book=2 page=3 clef=30 ledgers-below=1 above=0
+clef-census: book=2 page=4 clef=18 ledgers-below=0 above=3
+clef-census: book=2 page=5 clef=30 ledgers-below=2 above=0
+clef-census: book=3 page=0 clef=30 ledgers-below=1 above=0
+clef-census: book=3 page=1 clef=30 ledgers-below=0 above=0
+clef-census: book=3 page=2 clef=30 ledgers-below=0 above=2
+clef-census: book=3 page=3 clef=30 ledgers-below=1 above=0
+clef-census: book=3 page=4 clef=18 ledgers-below=0 above=3
+clef-census: book=3 page=5 clef=30 ledgers-below=2 above=0
+clef-census: book=4 page=0 clef=30 ledgers-below=1 above=0
+clef-census: book=4 page=1 clef=30 ledgers-below=0 above=0
+clef-census: book=4 page=2 clef=30 ledgers-below=0 above=0
+clef-census: book=4 page=3 clef=30 ledgers-below=1 above=0
+clef-census: book=4 page=4 clef=18 ledgers-below=0 above=3
+clef-census: book=4 page=5 clef=30 ledgers-below=2 above=0
+clef-census: book=5 page=0 clef=30 ledgers-below=1 above=0
+clef-census: book=5 page=1 clef=30 ledgers-below=0 above=1
+clef-census: book=5 page=2 clef=30 ledgers-below=0 above=2
+clef-census: book=5 page=3 clef=30 ledgers-below=1 above=0
+clef-census: book=5 page=4 clef=18 ledgers-below=0 above=3
+clef-census: book=5 page=5 clef=30 ledgers-below=2 above=0
+pitch-check: A3 expected=220.000 fundamental=220.400 error=0.18173%
+pitch-check: A4 expected=440.000 fundamental=439.845 error=0.03516%
+pitch-check: A5 expected=880.000 fundamental=880.304 error=0.03452%
+pitch-check: B3 expected=246.942 fundamental=247.373 error=0.17478%
+pitch-check: B4 expected=493.883 fundamental=492.886 error=0.20195%
+pitch-check: B5 expected=987.767 fundamental=989.027 error=0.12761%
+pitch-check: C#5 expected=554.365 fundamental=552.471 error=0.34168%
+pitch-check: C4 expected=261.626 fundamental=262.066 error=0.16834%
+pitch-check: C5 expected=523.251 fundamental=521.762 error=0.28459%
+pitch-check: C6 expected=1046.502 fundamental=1048.119 error=0.15446%
+pitch-check: D3 expected=146.832 fundamental=147.118 error=0.19433%
+pitch-check: D4 expected=293.665 fundamental=294.098 error=0.14765%
+pitch-check: D5 expected=587.330 fundamental=585.206 error=0.36147%
+pitch-check: D6 expected=1174.659 fundamental=1176.688 error=0.17275%
+pitch-check: E3 expected=164.814 fundamental=165.135 error=0.19518%
+pitch-check: E4 expected=329.628 fundamental=330.048 error=0.12755%
+pitch-check: E5 expected=659.255 fundamental=657.199 error=0.31185%
+pitch-check: F#5 expected=739.989 fundamental=738.559 error=0.19329%
+pitch-check: F3 expected=174.614 fundamental=174.952 error=0.19356%
+pitch-check: F4 expected=349.228 fundamental=349.618 error=0.11149%
+pitch-check: F5 expected=698.456 fundamental=696.649 error=0.25876%
+pitch-check: G3 expected=195.998 fundamental=196.366 error=0.18799%
+pitch-check: G4 expected=391.995 fundamental=392.241 error=0.06273%
+pitch-check: G5 expected=783.991 fundamental=783.094 error=0.11444%
+pitch-check: 1254 note rows, 24 distinct PCM fundamentals, 30 pages
+clef-census: book=1 page=0 clef=30 ledgers-below=1 above=0
+clef-census: book=1 page=1 clef=30 ledgers-below=0 above=0
+clef-census: book=1 page=2 clef=30 ledgers-below=0 above=1
+clef-census: book=1 page=3 clef=30 ledgers-below=1 above=0
+clef-census: book=1 page=4 clef=18 ledgers-below=0 above=4
+clef-census: book=1 page=5 clef=30 ledgers-below=2 above=0
+clef-census: book=2 page=0 clef=30 ledgers-below=1 above=0
+clef-census: book=2 page=1 clef=30 ledgers-below=0 above=0
+clef-census: book=2 page=2 clef=30 ledgers-below=0 above=1
+clef-census: book=2 page=3 clef=30 ledgers-below=1 above=0
+clef-census: book=2 page=4 clef=18 ledgers-below=0 above=3
+clef-census: book=2 page=5 clef=30 ledgers-below=2 above=0
+clef-census: book=3 page=0 clef=30 ledgers-below=1 above=0
+clef-census: book=3 page=1 clef=30 ledgers-below=0 above=0
+clef-census: book=3 page=2 clef=30 ledgers-below=0 above=2
+clef-census: book=3 page=3 clef=30 ledgers-below=1 above=0
+clef-census: book=3 page=4 clef=18 ledgers-below=0 above=3
+clef-census: book=3 page=5 clef=30 ledgers-below=2 above=0
+clef-census: book=4 page=0 clef=30 ledgers-below=1 above=0
+clef-census: book=4 page=1 clef=30 ledgers-below=0 above=0
+clef-census: book=4 page=2 clef=30 ledgers-below=0 above=0
+clef-census: book=4 page=3 clef=30 ledgers-below=1 above=0
+clef-census: book=4 page=4 clef=18 ledgers-below=0 above=3
+clef-census: book=4 page=5 clef=30 ledgers-below=2 above=0
+clef-census: book=5 page=0 clef=30 ledgers-below=1 above=0
+clef-census: book=5 page=1 clef=30 ledgers-below=0 above=1
+clef-census: book=5 page=2 clef=30 ledgers-below=0 above=2
+clef-census: book=5 page=3 clef=30 ledgers-below=1 above=0
+clef-census: book=5 page=4 clef=18 ledgers-below=0 above=3
+clef-census: book=5 page=5 clef=30 ledgers-below=2 above=0
+build: target/release/fugue
+perf: host Linux x86_64, slack x1, bench args: --mute
+bench 80x24 rich avg_us 50 max_us 113
+perf: 80x24 rich avg 50 us < 1000 us ok
+bench 80x24 plain avg_us 45 max_us 97
+perf: 80x24 plain avg 45 us < 1000 us ok
+bench 200x60 rich avg_us 177 max_us 333
+perf: 200x60 rich avg 177 us < 4000 us ok
+bench 200x60 plain avg_us 145 max_us 283
+perf: 200x60 plain avg 145 us < 4000 us ok
+perf-idle: idle 300 voluntary context switches in 10 s at a standstill (bar 240..360) ok
+perf-idle: latency samples ms (key write to the carrying frame's trace line): 3 32 32 32 32 32 32 32 32 32 32 32 31 32 33 32 31 32 31 32
+perf-idle: latency inner ms (the key's read to the frame's write): 3.1 32.1 32.1 32.2 32.2 32.1 32.2 32.2 32.2 32.1 32.2 32.2 31.2 32.2 33.2 32.2 31.2 32.2 31.2 32.2
+perf-idle: latency run's closing line: fugue: ended by the quit key
+perf-idle: latency median 32.2 ms p90 32.3 ms max 33.2 ms over 20 keys (bars median 40, p90 70 ms) ok
+perf-idle: idle 300 voluntary context switches in 10 s at a standstill (bar 240..360) ok
+perf-idle: latency samples ms (key write to the carrying frame's trace line): 1 32 31 32 32 31 32 31 32 32 31 32 32 32 32 32 32 32 32 32
+perf-idle: latency inner ms (the key's read to the frame's write): 1.1 32.2 31.2 32.1 32.1 31.1 32.1 31.1 32.1 32.1 31.1 32.2 32.2 32.1 32.1 32.2 32.1 32.1 32.1 32.1
+perf-idle: latency run's closing line: fugue: ended by the quit key
+perf-idle: latency median 32.2 ms p90 32.3 ms max 32.3 ms over 20 keys (bars median 40, p90 70 ms) ok
+bench 120x40 rich avg_us 88 max_us 178
+bench 120x40 plain avg_us 74 max_us 165
+fugue: verified score 3
+bench 120x40 rich avg_us 251 max_us 450
+fugue: verified score 3
+bench 120x40 plain avg_us 242 max_us 420
+fugue: verified score 3
+bench 120x40 rich avg_us 420 max_us 830
+fugue: verified score 3
+bench 120x40 plain avg_us 408 max_us 709
+fugue: verified score 3
+bench 120x40 rich avg_us 256 max_us 438
+fugue: verified score 3
+bench 120x40 plain avg_us 245 max_us 417
+fugue: verified score 3
+bench 120x40 rich avg_us 273 max_us 491
+fugue: verified score 3
+bench 120x40 plain avg_us 262 max_us 444

@@ -1,0 +1,33 @@
+[fg01a-plant-clef 2fc00aa] Plant wrong clef behavior
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+remote: 
+remote: Create a pull request for 'fg01a-plant-clef' on GitHub by visiting:        
+remote:      https://github.com/wolffe-lang/fugue/pull/new/fg01a-plant-clef        
+remote: 
+To https://github.com/wolffe-lang/fugue
+ * [new branch]      fg01a-plant-clef -> fg01a-plant-clef
+https://github.com/wolffe-lang/fugue/pull/16
+clef 2fc00aa717010492061e267ff3df9f31b1b248a0
+[]
+[fg01a-plant-interval 2bf498f] Plant wrong interval behavior
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+remote: 
+remote: Create a pull request for 'fg01a-plant-interval' on GitHub by visiting:        
+remote:      https://github.com/wolffe-lang/fugue/pull/new/fg01a-plant-interval        
+remote: 
+To https://github.com/wolffe-lang/fugue
+ * [new branch]      fg01a-plant-interval -> fg01a-plant-interval
+https://github.com/wolffe-lang/fugue/pull/17
+interval 2bf498fc90ab5aee073284d7f50f2bd4b9a5bc7b
+[]
+[fg01a-plant-split d98ad33] Plant wrong split behavior
+ 1 file changed, 1 insertion(+)
+remote: 
+remote: Create a pull request for 'fg01a-plant-split' on GitHub by visiting:        
+remote:      https://github.com/wolffe-lang/fugue/pull/new/fg01a-plant-split        
+remote: 
+To https://github.com/wolffe-lang/fugue
+ * [new branch]      fg01a-plant-split -> fg01a-plant-split
+https://github.com/wolffe-lang/fugue/pull/18
+split d98ad33f842bb81fa1a14c50519bca767685d31e
+[]
