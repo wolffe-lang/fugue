@@ -31,7 +31,8 @@ pub fn cambiata(
 ) -> bool {
     if i == 0 || i + 3 >= cp.len || i + 3 >= beats.len { return false }
     let start = rhythm.onset(beats, i - 1)
-    if start % 8 != 0 { return false }
+    if start % 8 != 0 || start / 8 >= cf.len { return false }
+    if theory.interval(cf[start / 8], cp[i]).consonance != 2 { return false }
     let dir = if below then 1 else -1
     if delta(cp[i - 1], cp[i]) != dir ||
         delta(cp[i], cp[i + 1]) != dir * 2 ||
@@ -192,7 +193,7 @@ pub fn classify(
         if double_passing(cf, cp, beats, i) { return "double-passing" }
         if neighbour(cp, beats, i) { return "neighbour" }
     }
-    if book >= 2 && passing(cp, beats, i) { return "passing" }
+    if book >= 2 && book != 4 && passing(cp, beats, i) { return "passing" }
     "unlicensed"
 }
 
@@ -519,13 +520,14 @@ pub fn check(
         seen |= 1 << (iv.number - 1) % 7 + 1
         if i > 0 {
             if theory.magnitude(delta(line[i - 1], line[i])) == 1 { steps += 1 }
-            let old_bar = times[i - 1] / 8
-            if old_bar != bar {
-                changes += 1
-                if theory.motion(cf[old_bar], line[i - 1], cf[bar], line[i]) == "contrary" {
-                    contrary += 1
-                }
-            }
+        }
+    }
+    for i in 1..cp.len {
+        if beats[i].rest || beats[i - 1].rest || beats[i].tied { continue }
+        let old_bar = rhythm.onset(beats, i - 1) / 8, bar = rhythm.onset(beats, i) / 8
+        if old_bar != bar && theory.chromatic(cp[i - 1]) != theory.chromatic(cp[i]) {
+            changes += 1
+            if theory.motion(cf[old_bar], cp[i - 1], cf[bar], cp[i]) == "contrary" { contrary += 1 }
         }
     }
     for bar in 1..cf.len {
@@ -574,11 +576,11 @@ pub struct Solution {
     reasons: str,
 }
 
-fn prefix_melody(cp: List[theory.Pitch], beats: List[rhythm.Beat]) -> bool {
+fn prefix_melody(cp: List[theory.Pitch], beats: List[rhythm.Beat], limit: int) -> bool {
     var line = List[theory.Pitch]()
     for i in 0..cp.len { if !beats[i].rest && !beats[i].tied { (mut line).push(copy cp[i]) } }
     if line.len < 2 { return true }
-    if !theory.prefix_with_leaps(line, leap_limit(beats.len)) { return false }
+    if !theory.prefix_with_leaps(line, limit) { return false }
     var lo = 100, hi = 0
     for p in line {
         let n = theory.position(p)
@@ -596,9 +598,13 @@ fn search(
     below: bool,
     book: int,
     budget: int,
+    limit: int,
+    goal: int,
+    peak_index: int,
+    peak_pitch: int,
     mut result: Solution,
 ) {
-    if result.nodes >= budget || result.stars == 3 { return }
+    if result.nodes >= budget || result.stars >= goal { return }
     result.nodes += 1
     let i = cp.len
     if i == beats.len {
@@ -636,10 +642,20 @@ fn search(
     }
     for variant in 0..choices {
         if choices == 2 { beats[i].tied = variant == 0 }
-        for rank in 0..15 {
+        for rank in 0..30 {
             var pos = base + rank
+            if limit > 4 && i > 0 {
+                let distance = rank / 2 + 1
+                pos = theory.position(cp[i - 1]) + (if rank % 2 == 0 then -distance else distance)
+            }
             if beats[i].rest { if rank > 0 { break }; pos = final }
             if beats[i].tied { if rank > 0 { break }; pos = theory.position(cp[i - 1]) }
+            if pos < base || pos > base + 14 { continue }
+            if peak_index >= 0 && !beats[i].rest && !beats[i].tied {
+                if i == peak_index && pos != peak_pitch || i != peak_index && pos >= peak_pitch {
+                    continue
+                }
+            }
             if bar == cf.len - 1 && pos != final && (!below || pos != final - 7) { continue }
             var p = theory.pitch(pos)
             if i == beats.len - 3 && mode == 5 && (pos == final - 2 || below && pos == final - 9) {
@@ -654,20 +670,48 @@ fn search(
             (mut cp).push(p)
             var good = false
             region prune {
-                good = prefix_melody(cp, beats) &&
+                good = prefix_melody(cp, beats, limit) &&
                     vertical(cf, cp, beats, below, book, false).len == 0
             }
-            if good { search(cf, mut cp, mut beats, mode, below, book, budget, mut result) }
+            if good {
+                search(
+                    cf,
+                    mut cp,
+                    mut beats,
+                    mode,
+                    below,
+                    book,
+                    budget,
+                    limit,
+                    goal,
+                    peak_index,
+                    peak_pitch,
+                    mut result,
+                )
+            }
             let _ = (mut cp).pop() else theory.pitch(final)
-            if result.nodes >= budget || result.stars == 3 { break }
+            if result.nodes >= budget || result.stars >= goal { break }
         }
-        if result.nodes >= budget || result.stars == 3 { break }
+        if result.nodes >= budget || result.stars >= goal { break }
     }
     beats[i].tied = was_tied
 }
 
 /// Bounded independent search; every returned answer passes the public checker.
 pub fn solve(cf: List[theory.Pitch], mode: int, below: bool, book: int, budget: int) -> Solution {
+    solve_with_limit(cf, mode, below, book, budget, leap_limit(rhythm.pattern(book, cf.len).len), 3)
+}
+
+/// Sparse shapes are searched first; admission can stop at its explicit star goal.
+pub fn solve_with_limit(
+    cf: List[theory.Pitch],
+    mode: int,
+    below: bool,
+    book: int,
+    budget: int,
+    limit: int,
+    goal: int,
+) -> Solution {
     var result = Solution {
         notes: List[theory.Pitch](),
         beats: List[rhythm.Beat](),
@@ -677,11 +721,36 @@ pub fn solve(cf: List[theory.Pitch], mode: int, below: bool, book: int, budget: 
         nearest: 1000,
         reasons: "",
     }
-    var cp = List[theory.Pitch](), beats = rhythm.pattern(book, cf.len)
-    search(cf, mut cp, mut beats, mode, below, book, budget, mut result)
-    if (book == 2 || book == 5) && result.stars < 3 {
+    var cp = List[theory.Pitch](),
+        beats = if book == 5 then rhythm.florid_simple(cf.len) else rhythm.pattern(book, cf.len)
+    if limit > 4 {
+        let final = 28 + mode + (if below then 0 else 7)
+        let heights = if below then [-5, -4, 1, 2] else [1, 2, 3, 4]
+        for height in heights {
+            for at in [beats.len / 2, beats.len * 2 / 3] {
+                let stop = if result.nodes + 10000 < budget then result.nodes + 10000 else budget
+                search(
+                    cf,
+                    mut cp,
+                    mut beats,
+                    mode,
+                    below,
+                    book,
+                    stop,
+                    limit,
+                    goal,
+                    at,
+                    final + height,
+                    mut result,
+                )
+                if result.stars >= goal { return result }
+            }
+        }
+    }
+    search(cf, mut cp, mut beats, mode, below, book, budget, limit, goal, -1, 0, mut result)
+    if (book == 2 || book == 5) && result.stars < goal {
         beats[0].rest = true
-        search(cf, mut cp, mut beats, mode, below, book, budget, mut result)
+        search(cf, mut cp, mut beats, mode, below, book, budget, limit, goal, -1, 0, mut result)
     }
     result
 }
@@ -701,11 +770,19 @@ pub fn exercise_goal(seed: int, mode: int, below: bool, book: int, goal: int) ->
     let pool = theory.candidates(mode)
     if pool.len == 0 { return empty }
     let start = (seed % pool.len + pool.len) % pool.len
-    for offset in 0..pool.len {
-        let index = (start + offset) % pool.len
-        let proof = solve(pool[index].notes, mode, below, book, 200000)
-        if proof.stars >= goal {
-            return Exercise { cantus: copy pool[index].notes, proof: proof, candidate: index }
+    for pass in 0..2 {
+        if goal == 1 && pass == 0 { continue }
+        for offset in 0..pool.len {
+            let index = (start + offset) % pool.len
+            let limit = if pass == 0 {
+                4
+            } else {
+                leap_limit(rhythm.pattern(book, pool[index].notes.len).len)
+            }
+            let proof = solve_with_limit(pool[index].notes, mode, below, book, 200000, limit, goal)
+            if proof.stars >= goal {
+                return Exercise { cantus: copy pool[index].notes, proof: proof, candidate: index }
+            }
         }
     }
     empty

@@ -196,3 +196,22 @@ fn test_lower_phrygian_tenth_contracts_to_octave() {
     bad[1].accidental = 1
     assert(broken(species.check(cf, bad, beats, 2, true, 2).breaks, "two-voice-cadence"))
 }
+
+fn test_aeolian_fifth_sixth_cadence_has_no_altered_step() {
+    let cf = pitches([34, 33]), beats = rhythm.pattern(2, 2)
+    var cp = pitches([38, 39, 40])
+    cp[0].accidental = 1
+    cp[1].accidental = 1
+    let good = species.check(cf, cp, beats, 5, false, 2)
+    assert(!broken(good.breaks, "diatonic"))
+    assert(!broken(good.breaks, "leap-quality"))
+    assert(!broken(good.breaks, "two-voice-cadence"))
+    cp[0].accidental = 0
+    assert(broken(species.check(cf, cp, beats, 5, false, 2).breaks, "leap-quality"))
+}
+
+fn test_fourth_classifier_never_licenses_a_weak_passing_dissonance() {
+    let cf = pitches([28, 28, 28])
+    let cp = pitches([33, 34, 35, 37, 35])
+    assert(species.classify(cf, cp, rhythm.pattern(2, 3), 1, 4, false) == "unlicensed")
+}

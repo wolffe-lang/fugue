@@ -66,3 +66,14 @@ pub fn name(book: int) -> str {
         _ => "I. Note against note",
     }
 }
+
+/// A florid starting grid without obligatory eighths; the editor may subdivide it.
+pub fn florid_simple(bars: int) -> List[Beat] {
+    var out = List[Beat]()
+    for bar in 0..bars {
+        var values = if bar % 4 == 2 then [2, 2, 2, 2] else if bar % 4 == 3 then [8] else [4, 4]
+        if bar == bars - 1 { values = [8] }
+        for value in values { (mut out).push(Beat { length: value, rest: false, tied: false }) }
+    }
+    out
+}
