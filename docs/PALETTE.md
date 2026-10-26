@@ -4,7 +4,7 @@
 |---|---:|---:|
 | Parchment | 230, sparse 223 grain variation | 7 |
 | Grain / dim staff | 180 | 3 grain, 8 staff |
-| Cantus | 130 (saturated burnt orange) | 1 (red) |
+| Cantus | 52 (deep red), bold | 9 (bright red), bold |
 | Pitch names / critic labels | 94 | 3 |
 | Counterpoint and headings | 24 | 4 |
 | Perfect consonance | 22 | 2 |
@@ -20,11 +20,11 @@ style goldens hold the actual rendered indices. The two tiers have identical
 geometry. Terminal theme choices can alter the sixteen-colour palette, so the
 plain tier does not claim an exact RGB parchment colour.
 
-`tools/staff-check.py` computes relative-luminance contrast for inks 130 and 24
-against ground indices 230, 223 and 222, requiring at least 3:1 for these glyphs.
+`tools/staff-check.py` computes relative-luminance contrast for inks 52 and 24
+against ground indices 230, 223 and 222, requiring at least 7:1 for the cantus and 3:1 for the player.
 The cantus and player retain hollow and filled heads respectively; no halo is used.
 
-Measured rich contrasts (relative luminance): burnt orange 130 is 4.605:1 on
-230, 3.496:1 on 223, and 3.436:1 on 222. Dark blue 24 is respectively 6.876:1,
+Measured rich contrasts (relative luminance): deep red 52 is 13.815:1 on
+230, 10.488:1 on 223, and 10.307:1 on 222. Dark blue 24 is respectively 6.876:1,
 5.220:1 and 5.130:1. These are the checked cube values, not photographs of a
 particular terminal theme or a claim that colour alone conveys voice identity.

@@ -62,3 +62,11 @@ are original cell drawings, not borrowed notation assets.
 Every golden has a companion `.sty` file: colour and attributes are part of the
 image, not a promise inferred from an uncoloured text capture.
 
+
+
+Book VI uses the common selected-event column: bar and beat at the top,
+interval, pitch and figure beneath, then the active bar's named findings.
+Its voice-entry names stay in the header rather than over these diagnostics.
+The sparse ground-223 cells are deliberate parchment grain, recorded in the
+style goldens even where the text capture contains a space. Whole-cell pty
+comparisons check both glyphs and styles after page changes and playback.

@@ -193,3 +193,14 @@ sixth count. The sixth count is earned only after all three tutorials pass.
 The current three tutorial scores live in the session; a completed sixth-book
 light persists, but an interrupted tutorial sequence restarts at its first
 page. Replay keys 26 (book-6) and 27 (voice-switch) append to the old vocabulary.
+
+
+Book VI supplies `staff.PanelData` through `exposition.status`. The selected
+bar and beat use the edited voice's onset plus its within-event offset, not
+its event index or the listening cursor. Interval and figure use the other
+voice sounding at that time; both diagnostic lists are restricted to the
+active bar. Enter still opens the complete verdict. Entry names occupy the
+reserved header and cannot overwrite the shared status or findings rows.
+The merged timeline also carries the within-event offset to its caret, using
+the same slot reservation as the earlier books. Joining a counterpoint note
+does not hide an answer attack or freeze the caret inside the held note.

@@ -79,3 +79,9 @@ natural anywhere in either written line; it is not restricted to a cadence.
 The Answer desk keeps the subject's values fixed. The Countersubject desk
 uses Book V's `[`, `]`, `.`, `t` and `r` rhythm controls. Every change is judged
 against the moving answer in both octave dispositions.
+
+The caret moves with each selectable beat, even while its notehead remains
+selected through a held value. Book VI keeps Editing bar and bar/beat at the
+top of the same status column as the other books; named findings below belong
+only to that bar. Both writing desks number their local bars from one. During
+listening, the exposition's second entry follows the subject's six bars.
