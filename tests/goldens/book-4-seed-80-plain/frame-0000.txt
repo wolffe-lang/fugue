@@ -14,10 +14,10 @@
  G3    |   .      |          |          | .     | .   | |        .              
  F3    |----------|--|----|--|----------|-------|-----| |                       
  E3    |     . |  |  |  . |  |  |    |  |  |   *      | |  .  .                 
- D3    |-r-----|--|-*----*---|--|----|--|--|----------| | Breaks: whole page    
- C3    |      *   |          | *    *   | *    .      | | bar 2 - parallel-perf 
- B2    |----------|----------|----------|-------------| | bar 3 - parallel-perf 
-        r    wP8   SP8  wP8   SP8  wP8. .SM10 wP8       | bar 3 - accented-para 
+ D3    |-r-----|--|-*----*---|--|----|--|--|----------| | Breaks: bar 1         
+ C3    |      *   |          | *    *   | *    .      | | No break in this bar  
+ B2    |----------|----------|----------|-------------| |  .                    
+        r    wP8   SP8  wP8   SP8  wP8. .SM10 wP8       |          . .   .      
      .  /2   /2    /2   /2    /2   /2 .  /2 . /2        |                       
          ^                           .                  |                       
   Arrows write  h hear  Enter check  u undo  n next  b books  q quit     .      

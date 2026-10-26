@@ -2,7 +2,7 @@
    fugue / IV. The suspended voice              .                 .  .          
    Mixolydian  seed 2  cantus below                      .                      
                           .                             |                       
- Treble 7          8          9   .      10             | Editing bar 10        
+ Treble 7          8          9   .     10              | Editing bar 10        
  D6                 .                        . . .      | Bar 10, beat 1:8      
  C6.      |                                         .   |                ..     
  B5       |    |          |     |                       | P8 perfect            
@@ -14,8 +14,8 @@
  C5 .  |o         |          |          |             | |                       
  B4    |----------|----------|----------|-------------| |    .                  
  A4    |          |          |o         |       .     | |             .         
- G4  . |----------|o---------|----------|o------------| | Breaks: whole page    
- F4    |          |       .  |         .|          .  | |     .                 
+ G4  . |----------|o---------|----------|o------------| | Breaks: bar 10 .      
+ F4    |          |       .  |         .|          .  | | No break in this bar  
  E4    |----------|----------|----------|-------------| |                       
       . SM6  wP5   SM6  wP8   Sm7  wM6   SP8 .          |.      .               
   .     /2   /2    /2   /2    /2   /2    /1         .   |                       

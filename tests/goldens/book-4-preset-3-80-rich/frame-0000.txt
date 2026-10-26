@@ -14,10 +14,10 @@
  C5 ·  │      \___│/         │      \___│/            │ |                       
  B4    │─r────────│──────────│──────────│○────────────│ |    ·                  
  A4    │          │○         │          │       ·     │ |             ·         
- G4  · │○─────────│──────────│○─────────│─────────────│ | Breaks: whole page    
- F4    │          │       ·  │         ·│          ·  │ | bar 2 - suspension    
- E4    │──────────│──────────│──────────│─────────────│ | bar 3 - parallel-perf 
-      · r    wP5   SP4  wP5   SP5  wP5   Sm3 ·wd5       |·bar 4 - weak-consonan 
+ G4  · │○─────────│──────────│○─────────│─────────────│ | Breaks: bar 1  ·      
+ F4    │          │       ·  │         ·│          ·  │ | No break in this bar  
+ E4    │──────────│──────────│──────────│─────────────│ |                       
+      · r    wP5   SP4  wP5   SP5  wP5   Sm3 ·wd5       |·      ·               
   ·     /2   /2    /2   /2    /2   /2    /2   /2    ·   |                       
       ·  ^                         ·                    |                       
   Arrows write  h hear  Enter check  u undo  n next  b books  q quit            

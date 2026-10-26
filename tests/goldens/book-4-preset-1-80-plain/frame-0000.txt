@@ -14,10 +14,10 @@
  F4    |          |      \___|/         |             | |      .                
  E4    |----------|----------|o---------|-------------| |               .      .
  D4                o          SP4  wP5       .          |       .    .          
- C4    -o-.        SP5  wP5   /2   /2   -o-             | Breaks: whole page  . 
- B3     r    wP5   /2   /2               SM7 .wP5       |.bar 2 - parallel-perf 
- A3 .   /2   /2   .                      /2   /2        | bar 3 - suspension    
-        .^        .                                     | bar 4 - suspension    
+ C4    -o-.        SP5  wP5   /2   /2   -o-             | Breaks: bar 1       . 
+ B3     r    wP5   /2   /2               SM7 .wP5       |.bar 1 - sequence   .  
+ A3 .   /2   /2   .                      /2   /2        |  .                    
+        .^        .                                     |            .          
                                                       . |   .                   
                                                         |          .          . 
   Arrows write  h hear  Enter check  u undo  n next  b books  q quit            

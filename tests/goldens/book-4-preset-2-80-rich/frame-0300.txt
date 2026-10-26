@@ -2,7 +2,7 @@
    fugue / IV. The suspended voice                                 · ·          
    Dorian  seed 1  cantus below·                    ·                           
       ·                                                 |                       
- Treble 7  ·       8          9     ·    10      ·      | Editing bar 10        
+ Treble 7  ·       8          9     ·   10       ·      | Editing bar 10        
  A5          ·                                ·         | Bar 10, beat 1:8      
  G5       |·                                            |       ·               
  F5    │──|────|──│───────|──│──|───────│─────────────│ | P8 perfect            
@@ -14,8 +14,8 @@
  G4    │──────────│──────────│──────────│─────────────│ |                       
  F4    │          │ ·        │          │     ·       │ | ·                     
  E4    │──────────│──────────│○─────────│─────────────│ |         ·             
- D4     SP4· wm3   ○          Sm7  wM6 · ○              | Breaks: whole page    
- C4     /2  ·/2·   SM6  wP8  ·/2   /2    SP8        ·   |                       
+ D4     SP4· wm3   ○          Sm7  wM6 · ○              | Breaks: bar 10        
+ C4     /2  ·/2·   SM6  wP8  ·/2   /2    SP8        ·   | No break in this bar  
  B3             ·  /2   /2               /1         ·  ·|                       
                                       · · ^             |                    ·  
   ·                 ·             ·                     |  ·              ·     
