@@ -8,8 +8,11 @@
 | U+25CB | ○ | Hollow cantus note |
 | U+25CF | ● | Filled counterpoint note |
 | U+2588 | █ | The illuminated initial |
+| U+266D | ♭ | Flat |
+| U+266E | ♮ | Explicit natural on a selected note |
+| U+266F | ♯ | Sharp |
 
-Every other mark is ASCII. The plain tier uses dashes, bars, o, * and # at the
+Every other mark is ASCII. The plain tier uses dashes, bars, o, *, b, n and # at the
 same coordinates, plus P/i/x for consonance classes. `tools/glyphs.py` compares
 this inventory against every rendered golden in both directions; it also
 requires plain goldens to be ASCII. Fonts with ambiguous-width circle marks

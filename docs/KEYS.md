@@ -38,10 +38,26 @@ Left and Right advance by the book's smallest unit: a half in II and IV, a
 quarter in III, an eighth in V. The cursor can stand inside a held note; Up and
 Down change that complete note. A tie carries pitch edits through the tied chain.
 
-- t adds or removes an incoming tie at a barline in IV or V.
-- 0 adds or removes the opening half rest in II, IV or V.
-- ] splits a note in half in V; [ joins equal adjacent values in the same bar.
-- u undoes pitch, rest, tie and value edits, including the previous cursor place.
-- The final whole is fixed. Rhythm edits that would cross a barline are refused.
-- In Aeolian's final three attacks, # can raise the sixth before the raised
-  seventh; the critic accepts that sixth only in the complete ascending cadence.
+Books II–IV keep their species rhythm. In IV, t toggles an incoming barline
+tie; in II and IV, 0 toggles the opening half rest.
+
+Book V's bottom hint names its editable rhythm:
+
+- `[` splits an event into equal halves, copying its pitch and rest state.
+- `]` joins the next event in the same bar if their sum is one written value.
+- `.` dots a quarter or half, borrowing its added time from the next event in
+  that bar. It refuses by name if no valid value can remain. The bar stays full.
+- `t` toggles a tie **to the next event**, copying pitch through its tie chain.
+- `r` toggles the selected event between rest and note without changing its length.
+- `u` undoes the complete edit, including durations, pitches, ties and cursor time.
+
+The final whole's value remains fixed. An editable rest or tie may be illegal:
+the ordinary species judge reports it immediately rather than hiding the key.
+Joins, splits and dots that cannot preserve a bar are refused by name.
+
+The page owns its pitch range and whether rhythm is editable. Book VI's
+integration uses the same keys for an editable countersubject, not its fixed
+answer. Its `#` cycles natural → sharp → flat → natural anywhere; Books I–V
+retain their cadence-only guard. The cursor uses eighths for an editable
+rhythm and the shortest written value for a fixed one. `v` is reserved for
+Book VI's voice switch.

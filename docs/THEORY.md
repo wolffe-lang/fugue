@@ -76,21 +76,21 @@ fit. No Fux line or counterpoint appears in a playable level.
 
 ## Reading the shared staff
 
-The named staff is a diatonic pitch-space viewport, not a fixed treble or bass
-clef. Position 28 is C4; each row upward is the next letter, and an accidental
-shares that letter's row. All six modes use this white-key step series; a
-mode changes its final, not the meaning of a pitch name. The lower line is two
-steps above the bottom pitch of the current viewport. Lines are two steps
-apart, with one intervening space each. Every viewport row is named, including
-spaces and ledger positions; C4 is bold.
+The treble's lines are E4 G4 B4 D5 F5; its spaces F4 A4 C5 E5. The bass's
+lines are G2 B2 D3 F3 A3; its spaces A2 C3 E3 G3. Position 28 is C4.
+Accidentals share their letter's row, but retain spelling for intervals and
+sound. The viewport can scroll without changing a line's pitch.
 
-For bottom C4, the lines are exactly the conventional treble E4 G4 B4 D5 F5,
-and the spaces are F4 A4 C5 E5. In a lower register the named lines move with
-the viewport so all five remain visible; they do not silently retain treble
-names. The optional spiral art study is not a treble clef. This shared space
-makes the interval between both voices readable without a second staff.
-`test_pitch_row_margin_round_trip_whole_viewport` holds names, C4, line/space
-steps, ledger continuation and both mapping directions to the same convention.
+A page with a lowest initial pitch at or above G3 chooses treble, otherwise
+bass. More than three ledgers on either side chooses a treble-over-bass system;
+each voice uses the clef selected by its initial range. A ledger between the
+staves stops at middle C's shared ledger. Clefs stay fixed while editing.
+
+The drawn head, margin name, interval and synthesized note all use the same
+stored spelled pitch. Screen rows never feed the harmonic calculation. The
+editor permits C1–B6 in Books I–V; the judge, not a modal register clamp,
+reports range and crossing errors. Pages can supply a different sounding range.
+
 ## Second species: two against one
 
 The given voice still holds whole notes. Write two halves in each bar, then a
@@ -176,3 +176,12 @@ the sixth may be raised only immediately before the raised seventh in the
 final stepwise ascent (F-sharp, G-sharp, A). This supplies the fifth–sixth–octave
 cadence without allowing an augmented second or excusing accented parallels.
 No other chromatic alteration is admitted by that exception.
+
+## Editing florid time
+
+Book V's starting rhythm is a suggestion, not a locked answer. Split, join,
+dot, outgoing tie and rest edits are reversible. Values are integer eighths:
+1, 2, 3, 4, 6 or 8; 3 and 6 denote dotted quarters and halves. A dot borrows
+from the following event, so every bar still totals eight. The same figure
+classifier and melodic checker judge the edited line. An interior rest, an
+unprepared tie or an unpaired eighth remains a named error, not an editor ban.

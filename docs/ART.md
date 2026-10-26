@@ -10,53 +10,50 @@ and space takes one cell row. Five continuous runs of `─` (plain `-`) span the
 staff; `│` (plain `|`) crosses them at bar boundaries. The four intervening
 spaces retain only the parchment grain. Three-cell ledgers extend beyond the
 five lines only where a note needs them. There are no underscore staff marks.
-The pitch viewport moves as necessary, and its five lines move with it rather
-than disappearing above the screen. Pitch names identify every row, not just
-line rows; C4 is bold when visible.
+The pitch viewport scrolls over fixed clefs: treble E4 G4 B4 D5 F5 or
+bass G2 B2 D3 F3 A3. The page chooses treble when its initial lowest pitch
+is G3 or higher, bass otherwise. Editing never changes those line names.
+Pitch names label every visible line and space; C4 is bold.
 
-The cantus keeps its hollow circle (`○`, plain `o`) and the player keeps the
-filled head (`●`, plain `*`). Colour alone distinguishes the given line more
-strongly: saturated burnt-orange 130 against dark-blue 24, on parchment 230
-with sparse 223 grain. Plain uses red 1 versus blue 4 on 7. No halo changes the
-geometry or clears a bar boundary. The colour-contrast gate measures both rich
-inks against 230, 223 and sounding yellow 222; all exceed 3:1. Console colours
-are theme-dependent, so plain makes no exact RGB contrast claim.
+A page needing more than three ledgers uses a grand staff: treble above bass,
+labelled Tr and Ba at the margin. Each voice retains its page-selected staff;
+the two staves share one continuous pitch map and middle C's ledger. At 80x24
+this spends the title/header space on 21 pitch rows; intervals occupy row 22
+and the hint row 23. At 120x40 the system has breathing room. A very wide edit
+scrolls the map and marks notes outside it with ^/v; it never relabels a line.
 
-The current bar is shaded (223 / plain 15); while hearing, that shade and the
-caret move through all bars and both sounding heads light (222 / plain 11).
-The legend names both inks below the staff. The first line of the right panel
-is the bold blue **Editing bar N**. The separate **First break / at bar N**
-section is the critic's finding, not a stale selection. The selected pitch and
-listening position have their own lines. The hint starts with **h hear**.
+The cantus keeps its hollow circle (`○`, plain `o`) and is bold deep red:
+xterm 52 (#5f0000), against the player's blue 24. Its measured contrast is
+13.815:1 on parchment 230, 10.488:1 on grain 223 and 10.307:1 on sounding
+222. Plain uses bright red 9 versus blue 4 on 7; console colours are
+theme-dependent, so no RGB contrast claim is made for a user's plain palette.
+Symbols do not change with colour. Sharps/flats are spelled beside the head;
+a selected natural has an explicit natural sign. Adjacent heads and barlines
+are never overwritten by an accidental.
 
-At 80x24 the page is compact; 120x40 adds breathing room without stretching
-pitch spacing. Notes outside a deliberately edited wide register are marked
-with ^/v at the viewport edge instead of silently disappearing. Both tiers use
-the same coordinates. Up/Down walk goldens assert every boundary in every frame.
+The panel follows the selected event: **Bar N, beat B:8**, the interval and its
+class, the figure allowed at that beat, and named findings in that bar. The
+separately titled **Breaks: whole page** list is not the selected-note status.
+The harmonic class and figure are separate: a passing dissonance remains
+labelled dissonant even when its figure is allowed.
 
-## Names or a drawn clef
+## Content-sized measures
 
-Pitch names are the default. The alternative cell-drawn spiral is a decorative art study,
-not a treble-clef promise or a second input convention. Compare `tests/goldens/art/names-80-plain.txt`
-and `clef-80-plain.txt`; the rich versions and both 120-column versions are
-beside them. Names make the absolute pitch immediately readable on plain,
-where the drawn clef is only a small spiral. C4 is distinguished with bold ink
-when it is in the viewport. The names are therefore the recommended treatment.
+A measure costs one barline column plus the sum of its event widths. An event
+uses the maximum of its value minimum, its pitch-name width plus one, and its
+strong/weak interval-label width plus one. Tuned minima are whole 6, half 5,
+quarter 4 and eighth 4; the eighth's flag, three-cell ledger and label need
+four cells. Dotted halves use 5, dotted quarters 4. The extra label cell keeps
+neighbouring labels separate. Drawing stops only at a complete event boundary;
+a partially shown bar keeps its number, and `>>` marks the cut. Moving right
+scrolls whole bars until the complete selected event fits.
+
+Interval labels sit one row below the lowest note, ledger, staff line or tie
+in their column. Value labels and the caret follow when there is room; on the
+compact grand staff the interval and permanent hint take priority. Layout is
+recomputed on every pitch, rhythm and cursor change. Stems and shallow tie arcs
+are original cell drawings, not borrowed notation assets.
 
 Every golden has a companion `.sty` file: colour and attributes are part of the
 image, not a promise inferred from an uncoloured text capture.
 
-## Rhythm on the manuscript
-
-Later books widen each bar to four cells per smallest unit and scroll by whole
-bars. During listening the page follows the sounding event, not the last edited
-note. Both voices share the supplied diatonic viewport; if their visible range
-fits, neither is clipped simply to centre the player's pitch.
-
-The shared bright cantus and blue player heads remain unchanged. Halves and
-quarters gain stems, eighths a small flag, and the value row states /1, /2, /4
-or /8 explicitly. Incoming ties form a shallow `\_/` arc below their heads,
-continuing on both sides of a barline without erasing it. These marks use the
-same ASCII geometry on both tiers. A rest is r. The interval row includes S or
-w for strong/weak, its quality and its number; colour still describes harmonic
-consonance, not whether a passing dissonance is legal in context.
