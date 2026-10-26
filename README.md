@@ -68,7 +68,7 @@ tools/check                         # local host, memory-gated on macOS
 .lair/tools/in-container tools/check-perf
 ```
 
-The gate includes 157 checked rule and interaction tests, native and release builds,
+The gate includes 178 checked rule and interaction tests, native and release builds,
 and rich/plain goldens at 80x24 and 120x40. It checks eighteen three-star tutorial
 references, actual solved recordings for all six books, score-tampering refusals,
 terminal restoration, rhythmic two-voice PCM, and the glyph inventory. Fixed-clef
@@ -88,7 +88,9 @@ each, covering every mode and both voice positions. The later-species verdict
 study pins 127 legal/illegal rows, and the classifier has seventeen explicit
 figure rows. Book VI adds a 300-subject census, exact real/tonal checks,
 independent inversion admission, a twelve-second played-exposition PCM,
-three tutorial references and the end card. The terminal harness has 24 rows. PR CI runs Linux; the full tier adds macOS and performance.
+three tutorial references and the end card. Book VI uses the same active-bar
+status column and time-aware caret, with every-cell repaint checks after
+page changes, voice switches, refusals and playback. The terminal harness has 36 rows. PR CI runs Linux; the full tier adds macOS and performance.
 Six cited Fux cantus firmi are historical test oracles only, never playable
 levels or source material for game music.
 
