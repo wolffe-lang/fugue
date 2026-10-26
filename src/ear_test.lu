@@ -1,0 +1,25 @@
+use ear
+use session
+use theory
+
+fn test_hear_score_contains_two_timbres_and_every_bar() {
+    let s = session.tutorial(1, false)
+    let score = ear.whole_part(s)
+    assert(score.contains("part cantus organ p pan -25\n"))
+    assert(score.contains("part voice choir mp pan 25\n"))
+    for i in 0..s.voice.len {
+        assert(score.contains("bar {i + 1}\ncantus {theory.name(s.cantus[i])}/1\nvoice {theory.name(s.voice[i])}/1\n"))
+    }
+    assert(score.count("bar ") == s.voice.len)
+}
+
+fn test_hear_key_and_complete_cursor_pass() {
+    assert(session.key(1104) == 9)
+    var s = session.tutorial(1, false)
+    session.step(mut s, 9)
+    for bar in 0..s.voice.len {
+        assert(s.hearing == bar * 30)
+        for frame in 0..30 { session.tick(mut s) }
+    }
+    assert(s.hearing == -1)
+}

@@ -11,6 +11,7 @@ def editor(bin, ctx):
     root.mkdir(parents=True, exist_ok=True)
     env = ctx.env_for()
     env['FUGUE_WAV_DIR'] = str(root)
+    env['FUGUE_AUDIO_TRACE'] = '1'
     s = ctx.Session([bin, '--seed', '7', '--no-title'], 24, 80, env)
     deadline = time.monotonic() + 15
     while b'note-bank render_us' not in s.err and time.monotonic() < deadline:
@@ -81,3 +82,71 @@ def solved_record(bin, ctx):
     if p.returncode or 'verified score 3' not in p.stderr:problems.append('actual recording did not verify: '+p.stderr)
     return s,problems
 ROWS['solved-record']=solved_record
+
+
+def panel_right_twice(bin, ctx):
+    s = ctx.Session([bin, '--seed', '7', '--no-title', '--mute'], 24, 80, ctx.env_for())
+    s.type(b'\x1b[C', .2); s.type(b'\x1b[C', .2)
+    screen = ctx.screen_text(bin, s.out).splitlines()
+    problems = []
+    if 'Editing bar 3' not in screen[4][58:]:
+        problems.append('selected-bar panel did not become Editing bar 3')
+    if 'First break' not in screen[16][58:]:
+        problems.append('first break is not distinguished from the editing cursor')
+    s.type(b'q'); s.finish(); ctx.common_checks(s, 0, problems)
+    return s, problems
+
+
+def hear_whole_is_played(bin, ctx):
+    import hashlib
+    import re
+    root = Path(ctx.ROOT) / 'target/pty/hear-whole'
+    root.mkdir(parents=True, exist_ok=True)
+    path = root / 'whole-1.wav'
+    if path.exists(): path.unlink()
+    env = ctx.env_for(); env['FUGUE_WAV_DIR'] = str(root); env['FUGUE_AUDIO_TRACE'] = '1'
+    s = ctx.Session([bin, '--seed', '7', '--no-title'], 24, 80, env)
+    problems = []
+    deadline = time.monotonic() + 15
+    while b'note-bank render_us' not in s.err and time.monotonic() < deadline: s.pump(.1)
+    s.type(b'h', .3)
+    deadline = time.monotonic() + 15
+    while not path.exists() and time.monotonic() < deadline: s.pump(.1)
+    s.pump(.2)
+    if not path.exists(): problems.append('h did not render the whole WAV')
+    else:
+        data = path.read_bytes(); pcm = data[44:]
+        duration = len(pcm) / 192000
+        if abs(duration - 10) > 1/30: problems.append(f'whole duration {duration} is not ten bars')
+        digest = hashlib.sha256(pcm).hexdigest()
+        expected = (Path(ctx.ROOT)/'tests/goldens/audio/whole-seed7.sha256').read_text().strip()
+        if digest != expected: problems.append(f'whole PCM differs: {digest}')
+        if not any(pcm): problems.append('whole PCM is silent')
+        print(f'whole WAV {path} duration {duration:.6f}s PCM sha256 {digest}')
+    mac = Path('/usr/bin/afplay').exists()
+    if mac:
+        matches = re.findall(rb'player-start pid (\d+) slot (\d+) ([^\r\n]+whole-1.wav)', s.err)
+        if not matches: problems.append('h rendered but never started afplay')
+        else:
+            pid, slot, _ = matches[-1]; pid = int(pid)
+            live = subprocess.run(['ps','-p',str(pid),'-o','ppid=,comm=,args='], capture_output=True, text=True).stdout
+            print(f'afplay appearing pid {pid}: {live.strip()}')
+            if '/usr/bin/afplay' not in live or str(path) not in live or int(live.split()[0]) != s.job:
+                problems.append('whole player is not the owned afplay child')
+            deadline = time.monotonic() + 14
+            end = b'player-end slot '+slot+b' status 0'
+            while end not in s.err and time.monotonic() < deadline: s.pump(.1)
+            gone = subprocess.run(['ps','-p',str(pid),'-o','pid='], capture_output=True, text=True)
+            print(f'afplay ended pid {pid}: ps exit {gone.returncode}, owner reaped {end in s.err}')
+            if end not in s.err or gone.returncode == 0: problems.append('whole afplay child did not end and reap')
+    else:
+        whole_sink = any(b'wav-sink' in line and b'whole-1.wav' in line for line in s.err.splitlines())
+        if not whole_sink: problems.append('h rendered but never handed whole WAV to output')
+        sinks = list(root.glob('audition-*.wav'))
+        if not sinks or sinks[-1].read_bytes() != path.read_bytes(): problems.append('whole WAV did not reach the Linux sink intact')
+    s.type(b'q'); s.finish(timeout=20); ctx.common_checks(s, 0, problems)
+    print(s.err.decode(errors='replace'))
+    return s, problems
+
+ROWS['panel-right-twice'] = panel_right_twice
+ROWS['hear-whole-is-played'] = hear_whole_is_played

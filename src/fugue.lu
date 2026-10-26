@@ -32,6 +32,7 @@ struct Options {
     dump: str,
     record: str,
     apply: str,
+    sound: str,
     headless: bool,
     art: bool,
     bench: bool,
@@ -53,6 +54,7 @@ fn options() -> Options ! {parse} {
         dump: "",
         record: "",
         apply: "",
+        sound: "",
         headless: false,
         art: false,
         bench: false,
@@ -103,6 +105,8 @@ fn options() -> Options ! {parse} {
                 o.dump = v
             } else if a == "--record" {
                 o.record = v
+            } else if a == "--sound-replay" {
+                o.sound = v
             } else if a == "--apply" {
                 o.apply = v
             } else {
@@ -465,6 +469,13 @@ fn main() -> int {
     }
     if o.dump != "" { fs.create_dir_all(o.dump) else |_| { return 2 } }
     let r = load(o) else |_| { eprint("fugue: invalid replay"); return 2 }
+    if o.sound != "" {
+        var s = session.from_replay(r, false)
+        for tick in 0..(if o.frames > 0 then o.frames else 60) { apply_events(mut s, r, tick) }
+        let pcm = ear.whole_pcm(s) else |_| { eprint("sound: replay render failed"); return 2 }
+        fs.write_bytes(o.sound, pcm) else |_| { return 2 }
+        return verify_score(o, s)
+    }
     if o.art {
         let s = session.new(7, false)
         for t in 0..2 {

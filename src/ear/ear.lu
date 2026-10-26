@@ -59,6 +59,16 @@ pub fn whole_part(s: session.State) -> str {
     text
 }
 
+/// Render exactly the written phrase length, at 48 kHz stereo signed PCM.
+pub fn whole_pcm(s: session.State) -> List[byte] ! {io} {
+    let prepared = sound.prepare("fugue", whole_part(s), s.voice.len) else |_| { return io }
+    copy prepared.pcm
+}
+
+fn trace(message: str) {
+    if (env.get("FUGUE_AUDIO_TRACE") else "0") == "1" { eprint(message) }
+}
+
 fn render(path: str, text: str, seconds: int) -> () ! {io} {
     let prepared = sound.prepare("fugue", text, seconds) else |_| { return io }
     let bytes = sound.wav(prepared.pcm) else |_| { return io }
@@ -93,7 +103,10 @@ pub fn poll(mut e: Ear) {
         let change = process.poll() else |_| { return }
         if !change.changed { break }
         for i in 0..e.children.len {
-            if e.children[i].slot == change.child.slot { e.children[i].slot = -1 }
+            if e.children[i].slot == change.child.slot && !process.is_stopped(change.status) {
+                trace("sound: player-end slot {change.child.slot} status {change.status.value}")
+                e.children[i].slot = -1
+            }
         }
     }
 }
@@ -106,7 +119,7 @@ fn start(mut e: Ear, path: str) -> () ! {io} {
             "{e.dir}/audition-{if e.owned then e.serial % 64 else e.serial}.wav",
             bytes,
         ) else |_| { return io }
-        eprint("sound: wav-sink {e.serial} {path}")
+        trace("sound: wav-sink {e.serial} {path}")
         return
     }
     poll(mut e)
@@ -116,6 +129,8 @@ fn start(mut e: Ear, path: str) -> () ! {io} {
     var cmd = process.command("/usr/bin/afplay")
     process.push_arg(mut cmd, path)
     let child = process.start(cmd) else |_| { return io }
+    let pid = process.pid(child) else -1
+    trace("sound: player-start pid {pid} slot {child.slot} {path}")
     for i in 0..e.children.len {
         if e.children[i].slot < 0 { e.children[i] = child; return }
     }
@@ -133,7 +148,12 @@ pub fn hear(mut e: Ear, s: session.State) -> () ! {io} {
     if !e.enabled { return }
     e.whole_serial += 1
     let path = "{e.dir}/whole-{if e.owned then e.whole_serial % 3 else e.whole_serial}.wav"
-    region preparation { render(path, whole_part(s), s.voice.len + 1)? }
+    region preparation {
+        let pcm = whole_pcm(s)?
+        let bytes = sound.wav(pcm) else |_| { return io }
+        fs.write_bytes(path, bytes) else |_| { return io }
+    }
+    trace("sound: whole-render {path} seconds {s.voice.len}")
     start(mut e, path)?
 }
 

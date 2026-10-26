@@ -6,3 +6,5 @@ cd "$(dirname "$0")/.."
 python3 -I tools/gameplay.py --bin target/native/fugue
 python3 -I tools/gameplay.py --bin target/release/fugue
 python3 -I tools/glyphs.py
+python3 -I tools/staff-check.py --bin target/native/fugue
+python3 -I tools/staff-check.py --bin target/release/fugue
