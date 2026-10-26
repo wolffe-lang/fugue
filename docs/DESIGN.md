@@ -62,8 +62,9 @@ terminal writes or sound preparation. Rhythm drawing can use them without
 reimplementing geometry:
 
 - `viewport(top, bottom, base, left, right) -> Viewport`: base is the diatonic
-  position at the bottom; at least ten row steps are required. The lower line
-  is `base + 2`. Supply in-grid rows and columns with space for margin names.
+  position at the bottom; at least ten row steps are required. It defaults to
+  treble, whose lower line stays E4 (30), independent of base. Supply in-grid
+  rows and columns with space for margin names.
 - `row_of(view, pitch) -> int` and `pitch_of(view, row) -> Pitch` are inverses
   for natural pitches; accidentals retain the letter's row. Rows outside the
   viewport remain mathematical rows, not clamped positions.
@@ -97,7 +98,7 @@ Neither adapter changes the player owner.
 classifies figures, judges the sounding beats, and performs bounded solution
 search separately from the player's answer. `presets` holds twelve fixed,
 original tutorial pages and their test references; a reference is never copied
-into the editor. `manuscript` maps musical time to widened columns and emits
+into the editor. `manuscript` maps written events to content-sized columns and emits
 rhythmic part text. `notation` composes the later pages on `staff`'s shared
 viewport, pitch/row, ledger and head API. It does not draw a second kind of staff.
 
@@ -119,3 +120,34 @@ the staff and score text, while the output owner remains in `ear`.
 counts. It cannot supply music or bypass the judge. Recordings snapshot those
 cosmetic title counts in an optional comment; the event stream still determines
 all notes, rhythm, verdicts and final stars.
+
+## Page-owned notation and editing
+
+`staff.with_clef(view, line)` selects fixed E4 (30) or G2 (18).
+`staff.system(state, view)` configures the page's single or grand staff while
+preserving `viewport`, `row_of`, `pitch_of`, `draw_staff`, `ledger` and `head`
+signatures. `head` still returns its actual row; its existing cantus boolean
+selects that voice's staff inside the system. Both staves share one pitch map.
+`staff.label_row(view, highest_pitch)` supplies a row above a voice's stem for
+entry labels. `staff.interval_row` supplies the first free row below a column's
+lowest drawn element. `staff.accidental(tier, value)` supplies flat/natural/sharp
+cells. No engine drawing or output-owner change is needed.
+
+Session fields `clef`, `grand`, `cantus_clef` and `voice_clef` are chosen once
+when the page opens. `range_low`/`range_high` are inclusive diatonic positions,
+shared by the editor and prepared audition bank. A Book VI page can set C3–C7
+(21–49) before preparation. `rhythm_editable` gates the florid keys: fixed
+answer versus editable countersubject. `editor_unit(state)` uses eighths for
+editable rhythm, otherwise the shortest written value. This is not a numeric
+book switch. Book VI's accidentals cycle freely; earlier books keep the guard.
+
+Replay IDs 1–25 are unchanged, 26/27 reserved as `book-6`/`voice-switch` for
+Book VI, and `dot` is appended at 28. The terminal brackets now match their
+hint: `[` split and `]` join. The `retry` replay event is r; at an editable
+staff it toggles a rest, while on the critic card it returns to editing.
+
+The selected-event panel derives its bar and eighth-beat from cursor time,
+its vertical interval from the two score pitches, and its figure from the
+existing classifier. Current judges report breaks by bar, not by event;
+therefore the panel lists the selected **bar's** findings without claiming
+finer error locations. The separate page-wide list keeps its own heading.

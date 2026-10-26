@@ -618,7 +618,8 @@ fn main() -> int {
         return verify_score(o, s)
     }
     if o.art {
-        let s = session.new(7, false)
+        var s = session.new(7, false)
+        s.voice[3].accidental = -1
         for t in 0..2 {
             for size in 0..2 {
                 let cols = if size == 0 then 80 else 120

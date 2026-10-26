@@ -172,8 +172,8 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     }
     let margin = cols - 24
     let start = manuscript.first_bar(s, cols)
-    var top = 5
-    var bottom = rows - 6
+    var top = 5 + (rows - 24) / 2
+    var bottom = top + (if rows >= 25 then 14 else 13)
     let focus = if s.hearing >= 0 then session.event_at(s, s.hearing) else s.cursor
     var low = 100, high = 0
     for bar in start..s.cantus.len {
@@ -236,7 +236,15 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
             let beat = copy s.beats[i]
             let y = staff.row_of(v, s.voice[i])
             if beat.rest {
-                text(mut g, top + 6, nx, "r", blue, bg, i == s.cursor)
+                text(
+                    mut g,
+                    staff.row_of(v, theory.pitch(v.voice_line + 4)),
+                    nx,
+                    "r",
+                    blue,
+                    bg,
+                    i == s.cursor,
+                )
             } else {
                 let row = staff.head(
                     mut g,

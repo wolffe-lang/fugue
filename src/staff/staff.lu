@@ -27,7 +27,9 @@ pub fn harmony_ink(cls: int, t: int) -> int {
 }
 
 /// All non-ASCII marks this renderer may draw.
-pub fn glyphs() -> List[int] { [0x00b7, 0x2500, 0x2502, 0x25cb, 0x25cf, 0x2588, 0x266d, 0x266f] }
+pub fn glyphs() -> List[int] {
+    [0x00b7, 0x2500, 0x2502, 0x25cb, 0x25cf, 0x2588, 0x266d, 0x266f, 0x266e]
+}
 
 /// The minimum readable manuscript width.
 pub fn minimum_columns() -> int { 80 }
@@ -123,7 +125,10 @@ pub fn system(s: session.State, take v: Viewport) -> Viewport {
         out.voice_line = s.voice_clef
         out.line = 18
         // Twenty-one pitch rows fit both staves; compact pages spend the header.
-        if out.bottom - out.top < 20 { out.top = 1; out.bottom = 21 }
+        if out.bottom - out.top < 20 {
+            out.top = if out.bottom > 24 then 5 else 1
+            out.bottom = out.top + 20
+        }
         out.base = 18
         let focus = if s.hearing >= 0 then session.event_at(s, s.hearing) else s.cursor
         let selected = theory.position(s.voice[focus])
@@ -280,7 +285,7 @@ pub fn head(
             if cantus || selected || lit then 1 else 0,
         ),
     )
-    if p.accidental != 0 {
+    if p.accidental != 0 || selected {
         let old = copy g.cells[y * g.cols + x - 1]
         // A preceding cantus head or a boundary is never replaced by the accidental.
         let ax = if old.cp == 0x25cb || old.cp == 111 || old.cp == 0x2502 || old.cp == 124 {
@@ -293,11 +298,7 @@ pub fn head(
             y,
             ax,
             grid.cell(
-                if p.accidental == -1 {
-                    (if t == 1 then 0x266d else 98)
-                } else {
-                    (if t == 1 then 0x266f else 35)
-                },
+                accidental(t, p.accidental),
                 if cantus then cantus_ink(t) else player_ink(t),
                 cell.bg,
                 0,
@@ -428,8 +429,8 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
         bg,
         false,
     )
-    var top = 5
-    var bottom = rows - 6
+    var top = 5 + (rows - 24) / 2
+    var bottom = top + (if rows >= 25 then 14 else 13)
     let height = bottom - top
     var base = 28
     if s.below { base -= 7 }
@@ -640,5 +641,16 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
             bg,
             true,
         )
+    }
+}
+
+/// A spelled accidental cell, including an explicit natural when a note is selected.
+pub fn accidental(t: int, value: int) -> int {
+    if value == -1 {
+        (if t == 1 then 0x266d else 98)
+    } else if value == 1 {
+        (if t == 1 then 0x266f else 35)
+    } else {
+        (if t == 1 then 0x266e else 110)
     }
 }
