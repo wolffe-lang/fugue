@@ -64,7 +64,7 @@ tools/check                         # local host, memory-gated on macOS
 .lair/tools/in-container tools/check-perf
 ```
 
-The gate includes 131 checked rule and interaction tests, native and release builds,
+The gate includes 132 checked rule and interaction tests, native and release builds,
 and rich/plain goldens at 80x24 and 120x40. It checks fifteen three-star tutorial
 references, actual solved recordings for all five books, score-tampering refusals,
 terminal restoration, rhythmic two-voice PCM, and the glyph inventory. Fixed-clef
@@ -73,7 +73,10 @@ partial measures and rhythm edits are exercised in both tiers. The caret moves
 with every editable time step inside held notes; the live diagnostics list only
 the active bar, while Enter keeps the global verdict and counts. A real-pty
 `cursor-same-frame` row checks single arrows and ten-key 30 Hz bursts, with and
-without sound, in rich/plain at both sizes, retaining per-press frame evidence. A 30-page
+without sound, in rich/plain at both sizes, retaining per-press frame evidence.
+A 632-press whole-page traversal also checks periodic stalls, p99 and worst-press
+latency through long held notes and scrolling. Audio rows join stderr to the
+terminal for page changes and verify that arrow auditions reuse the note bank. A 30-page
 census checks 1,254 initial/reference note rows and 24 synthesized fundamentals within 1%; exact
 Book I PCM remains gated. The first
 book retains its 300-line generator census; later books exercise twelve seeds
