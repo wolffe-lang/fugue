@@ -13,15 +13,11 @@ import select
 import time
 
 
-def check(binary, ctx):
-    root = Path(ctx.ROOT) / 'target/pty/cursor-same-frame'
-    root.mkdir(parents=True, exist_ok=True)
-    problems, measurements = [], []
-    last = None
-
+def frame_session(ctx):
     class Frames(ctx.Session):
         def __init__(self, *args):
             self.frames, self.trace_count = [], 0
+            self.frame_times = {}
             super().__init__(*args)
 
         def pump(self, seconds):
@@ -47,7 +43,19 @@ def check(binary, ctx):
                         self.out += chunk
                     for tick in traces[self.trace_count:]:
                         self.frames.append((int(tick), self.out))
+                        self.frame_times[int(tick)] = time.monotonic()
                     self.trace_count = len(traces)
+
+    return Frames
+
+
+def check(binary, ctx):
+    root = Path(ctx.ROOT) / 'target/pty/cursor-same-frame'
+    root.mkdir(parents=True, exist_ok=True)
+    problems, measurements = [], []
+    last = None
+
+    Frames = frame_session(ctx)
 
     for cols, rows in [(80, 24), (120, 40)]:
         for tier in ['rich', 'plain']:
