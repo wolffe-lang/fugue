@@ -303,10 +303,32 @@ pub fn melody(s: subject.Line, answer_below: bool) -> List[theory.Break] {
         (mut times).push(rhythm.onset(s.beats, i))
     }
     var out = List[theory.Break]()
+    if notes.len > 0 {
+        let shift = notes[notes.len - 1].octave - 4
+        for i in 0..notes.len { notes[i].octave -= shift }
+        let closes = theory.position(notes[notes.len - 1]) == 28 + s.mode &&
+            notes[notes.len - 1].accidental == 0
+        for i in 0..notes.len {
+            let seventh = closes &&
+                theory.raises(s.mode) &&
+                i == notes.len - 2 &&
+                theory.position(notes[i]) == 27 + s.mode &&
+                notes[i].accidental == 1
+            let sixth = closes && species.cadential_sixth(notes, s.mode, i)
+            theory.require(
+                mut out,
+                notes[i].accidental == 0 || seventh || sixth,
+                times[i] / 8 + 1,
+                "diatonic",
+                "Stay in the answer's key; raise a cadence tone only in its complete tonic ascent.",
+            )
+        }
+    }
     for b in theory.validate(notes, s.mode) {
         if b.rule == "length" ||
             b.rule == "final" ||
             b.rule == "cadence" ||
+            b.rule == "diatonic" ||
             b.rule == "leap-count" {
             continue
         }

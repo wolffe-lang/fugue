@@ -113,3 +113,21 @@ fn test_moving_voice_classifier_retains_all_florid_figures() {
     assert(figure([28, 28], [35, 32, 33, 34, 35], eighths, 2, false) == "eighth-pair")
     assert(figure([28, 28], [35, 31, 33, 34, 35], eighths, 2, false) == "unlicensed-eighth")
 }
+
+fn test_open_counterphrase_does_not_borrow_a_false_cadence_accidental() {
+    var cs = counter.reference(0)
+    cs.mode = 1
+    cs.notes[8] = theory.pitch(32)
+    cs.notes[8].accidental = 1
+    cs.notes[9] = theory.pitch(34)
+    assert(named(counter.melody(cs, false), "diatonic"))
+    cs.notes[9] = theory.pitch(33)
+    assert(!named(counter.melody(cs, false), "diatonic"))
+    cs.mode = 5
+    cs.notes[7] = theory.pitch(35)
+    cs.notes[7].accidental = 1
+    cs.notes[8] = theory.pitch(36)
+    cs.notes[8].accidental = 1
+    cs.notes[9] = theory.pitch(37)
+    assert(!named(counter.melody(cs, false), "diatonic"))
+}
