@@ -172,8 +172,8 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     }
     let margin = cols - 24
     let start = manuscript.first_bar(s, cols)
-    let top = 5
-    let bottom = rows - 6
+    var top = 5
+    var bottom = rows - 6
     let focus = if s.hearing >= 0 then session.event_at(s, s.hearing) else s.cursor
     var low = 100, high = 0
     for bar in start..s.cantus.len {
@@ -196,23 +196,28 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     if selected > base + bottom - top { base = selected - (bottom - top) }
     if selected < base { base = selected }
     let v = staff.system(s, take staff.viewport(top, bottom, base, 7, margin - 2))
+    top = v.top
+    bottom = v.bottom
+    if top == 1 { for y in 0..4 { text(mut g, y, 0, " ".repeat(margin), ink, bg, false) } }
     var bars = List[int]()
     for bar in start..s.cantus.len {
         let x = manuscript.event_column(s, start, rhythm.at(s.beats, bar * 8)) - 2
-        if x > margin - 3 { break }
+        if x + 2 >= margin - 3 { break }
         (mut bars).push(x)
     }
     (mut bars).push(margin - 2)
     staff.draw_staff(mut g, v, t, bars)
-    text(
-        mut g,
-        2,
-        3,
-        "{theory.mode_name(s.mode)}  seed {s.seed}  {if s.below then "cantus above" else "cantus below"}",
-        ink,
-        bg,
-        false,
-    )
+    if top > 1 {
+        text(
+            mut g,
+            2,
+            3,
+            "{theory.mode_name(s.mode)}  seed {s.seed}  {if s.below then "cantus above" else "cantus below"}",
+            ink,
+            bg,
+            false,
+        )
+    }
     let sounding = session.event_at(s, s.hearing)
     for bar in start..s.cantus.len {
         if manuscript.event_column(s, start, rhythm.at(s.beats, bar * 8)) >= margin - 3 { break }
@@ -284,9 +289,10 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
                 }
             }
             let iv = staff.interval_at(s, i)
+            let iy = staff.interval_row(v, s.cantus[bar], s.voice[i], beat.tied)
             text(
                 mut g,
-                bottom + 1,
+                iy,
                 nx - 1,
                 if beat.rest {
                     "r"
@@ -297,39 +303,23 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
                 bg,
                 false,
             )
-            text(mut g, bottom + 2, nx - 1, "/{8 / beat.length}", blue, bg, false)
+            if iy + 1 < rows - 2 {
+                text(mut g, iy + 1, nx - 1, "/{rhythm.value_name(beat.length)}", blue, bg, false)
+            }
+            if i == focus && iy + 2 < rows - 2 { text(mut g, iy + 2, nx, "^", blue, bg, true) }
         }
     }
-    let time = if s.hearing >= 0 {
-        s.hearing * 8 / session.ticks_per_whole()
-    } else {
-        rhythm.onset(s.beats, s.cursor) + s.within
-    }
-    text(mut g, bottom + 3, manuscript.event_column(s, start, focus), "^", blue, bg, true)
-    for y in 4..rows - 3 { text(mut g, y, margin, "|", ink, bg, false) }
-    text(mut g, 5, margin + 2, "Bar {time / 8 + 1} / {time % 8 + 1}:8", blue, bg, true)
-    text(mut g, 7, margin + 2, theory.name(s.voice[focus]), blue, bg, false)
-    text(mut g, 9, margin + 2, "h hear both voices", blue, bg, true)
-    text(mut g, 11, margin + 2, "S strong / w weak", ink, bg, false)
-    text(mut g, 13, margin + 2, "\\_/ tie, r rest", ink, bg, false)
-    text(mut g, 14, margin + 2, "t tie  0 first rest", ink, bg, false)
-    if s.book == 5 { text(mut g, 15, margin + 2, "] split  [ join", ink, bg, false) }
-    if verdict.breaks.len > 0 {
-        text(
-            mut g,
-            18,
-            margin + 2,
-            draw.fit(verdict.breaks[0].rule, 21, false),
-            staff.harmony_ink(2, t),
-            bg,
-            false,
-        )
-    }
+    staff.panel(mut g, s, margin, t)
+    let hint = if s.grand && rows == 24 then rows - 1 else rows - 2
     text(
         mut g,
-        rows - 2,
-        3,
-        "Arrows write  h hear  Enter check  u undo  n next  b books  q quit",
+        hint,
+        2,
+        if s.rhythm_editable {
+            "[ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check"
+        } else {
+            "Arrows write  h hear  Enter check  u undo  n next  b books  q quit"
+        },
         blue,
         bg,
         false,

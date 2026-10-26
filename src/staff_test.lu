@@ -1,4 +1,5 @@
 use grid
+use rhythm
 use session
 use staff
 use theory
@@ -185,4 +186,54 @@ fn test_editor_reaches_three_ledgers_below_without_changing_clef() {
         while theory.position(s.voice[0]) < original { session.step(mut s, 1) }
         assert(theory.position(s.voice[0]) == original && s.clef == clef)
     }
+}
+
+fn test_interval_label_uses_pitch_not_row() {
+    for book in 1..6 {
+        var s = session.with_book(take session.tutorial(0, false), book)
+        for i in 0..s.voice.len {
+            let expected = theory.interval(s.cantus[rhythm.onset(s.beats, i) / 8], s.voice[i])
+            let actual = staff.interval_at(s, i)
+            assert(actual.number == expected.number && actual.quality == expected.quality)
+        }
+        s.voice[0] = theory.pitch(24)
+        let v = staff.system(s, take staff.viewport(5, 18, 24, 7, 54))
+        assert(staff.interval_row(v, s.cantus[0], s.voice[0], false) > staff.row_of(v, s.voice[0]))
+    }
+}
+
+fn test_grand_system_retains_both_fixed_clefs() {
+    var s = session.tutorial(1, false)
+    s.cantus[6] = theory.pitch(34)
+    for i in 0..s.voice.len { s.voice[i] = theory.pitch(theory.position(s.cantus[i]) - 7) }
+    s.clef = session.choose_clef(s.cantus, s.voice)
+    s.grand = session.needs_system(s.cantus, s.voice)
+    s.cantus_clef = session.choose_clef(s.cantus, s.cantus)
+    s.voice_clef = session.choose_clef(s.voice, s.voice)
+    assert(s.grand && s.cantus_clef == 30 && s.voice_clef == 18)
+    let v = staff.system(s, take staff.viewport(5, 18, 21, 7, 54))
+    var g = grid.new(24, 80)
+    staff.draw_staff(mut g, v, 0, [7, 54])
+    for p in [18, 20, 22, 24, 26, 30, 32, 34, 36, 38] {
+        let row = staff.row_of(v, theory.pitch(p))
+        assert(g.cells[row * 80 + 10].cp == 45)
+    }
+    assert(staff.interval_row(v, s.cantus[0], s.voice[0], false) == 22)
+}
+
+fn test_book_six_accidentals_and_page_range_are_spelled() {
+    var s = session.tutorial(0, false)
+    s.book = 6
+    s.range_low = 21
+    s.range_high = 49
+    session.step(mut s, 7)
+    assert(s.voice[0].accidental == 1)
+    session.step(mut s, 7)
+    assert(s.voice[0].accidental == -1)
+    session.step(mut s, 7)
+    assert(s.voice[0].accidental == 0)
+    for i in 0..30 { session.step(mut s, 1) }
+    assert(theory.position(s.voice[0]) == 49)
+    for i in 0..40 { session.step(mut s, 2) }
+    assert(theory.position(s.voice[0]) == 21)
 }
