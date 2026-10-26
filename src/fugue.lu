@@ -443,6 +443,12 @@ fn run_selftest() -> int {
 
 fn main() -> int {
     let args = env.args()
+    for i in 0..args.len {
+        if args[i] == "--pitch-proof" && i + 1 < args.len {
+            studies.pitches(args[i + 1]) else |_| { return 2 }
+            return 0
+        }
+    }
     if has(args, "--help") || has(args, "-h") {
         print(
             "fugue / Books I-V\n--book 1..5   --seed N | --daily   --size WxH (minimum 80x24)   --plain   --mute\n--record FILE   --replay FILE   --ticks N\nArrows write, Shift-Up/Down octave, # cadence, Space sound, h hear, Enter check, u undo, n next, q quit.",

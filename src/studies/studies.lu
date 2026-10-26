@@ -1,5 +1,11 @@
 //! Executable legal/illegal verdict rows; every mutation must trip its named rule.
 
+use ear
+use grid
+use session
+use sound
+use staff
+use std.fs
 use presets
 use rhythm
 use species
@@ -220,4 +226,88 @@ pub fn verdicts() -> str {
         }
     }
     text
+}
+
+/// Export independent pitch/PCM witnesses for every preset and three seeds per book.
+pub fn pitches(dir: str) -> () ! {io} {
+    fs.create_dir_all(dir) else |_| { return io }
+    var manifest = "book page voice event position accidental name clef base row interval low high\n"
+    var seen = List[str]()
+    for book in 1..6 {
+        for page in 0..6 {
+            region page_proof {
+                let s = session.with_book(
+                    take (
+                        if page < 3 {
+                            session.tutorial(page, false)
+                        } else {
+                            session.new([0, 7, 11][page - 3], false)
+                        }
+                    ),
+                    book,
+                )
+                assert(s.failure == "")
+                var low = 100, high = 0
+                for p in s.cantus {
+                    if theory.position(p) < low { low = theory.position(p) }
+                    if theory.position(p) > high { high = theory.position(p) }
+                }
+                for p in s.voice {
+                    if theory.position(p) < low { low = theory.position(p) }
+                    if theory.position(p) > high { high = theory.position(p) }
+                }
+                for which in 0..2 {
+                    let notes = if which == 0 then copy s.cantus else copy s.voice
+                    for i in 0..notes.len {
+                        let p = copy notes[i]
+                        let v = staff.with_clef(take staff.viewport(5, 34, low - 1, 7, 90), s.clef)
+                        var g = grid.new(40, 120)
+                        staff.draw_staff(mut g, v, 1, [7, 90])
+                        let y = staff.head(mut g, v, p, 12, 1, which == 0, false, false)
+                        assert(y == 34 - (theory.position(p) - (low - 1)))
+                        assert(
+                            theory.name(staff.pitch_of(v, y)) ==
+                                theory.name(theory.pitch(theory.position(p))),
+                        )
+                        assert(g.cells[y * 120 + 12].cp == (if which == 0 then 0x25cb else 0x25cf))
+                        let expected_name = theory.name(theory.pitch(theory.position(p)))
+                        for n in 0..expected_name.len {
+                            assert(g.cells[y * 120 + 1 + n].cp == expected_name.bytes()[n] as int)
+                        }
+                        var label = "-"
+                        if which == 1 {
+                            let iv = staff.interval_at(s, i)
+                            let expected = theory.interval(
+                                s.cantus[rhythm.onset(s.beats, i) / 8],
+                                p,
+                            )
+                            assert(iv.number == expected.number && iv.quality == expected.quality)
+                            label = "{iv.quality}{iv.number}"
+                        }
+                        let name = theory.name(p)
+                        manifest = copy (
+                            manifest +
+                                "{book} {page} {which} {i} {theory.position(p)} {p.accidental} {name} {s.clef} {v.base} {y} {label} {low} {high}\n"
+                        )
+                        var exists = false
+                        for old in seen { if old == name { exists = true } }
+                        if !exists {
+                            region pcm {
+                                let prepared = sound.prepare(
+                                    "pitch-proof",
+                                    ear.note_part(p),
+                                    1,
+                                ) else |_| { return io }
+                                fs.write_bytes("{dir}/{name}.pcm", prepared.pcm) else |_| {
+                                    return io
+                                }
+                            }
+                            (mut seen).push(copy name)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    fs.write_text("{dir}/pitches.txt", manifest) else |_| { return io }
 }

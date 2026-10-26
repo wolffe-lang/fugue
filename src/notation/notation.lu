@@ -276,7 +276,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
                     }
                 }
             }
-            let iv = theory.interval(s.cantus[bar], s.voice[i])
+            let iv = staff.interval_at(s, i)
             text(
                 mut g,
                 bottom + 1,

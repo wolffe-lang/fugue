@@ -4,6 +4,7 @@ use draw
 use first
 use grid
 use session
+use rhythm
 use theory
 use tier
 use world
@@ -404,7 +405,7 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
                 s.hearing >= 0 && session.event_at(s, s.hearing) == i,
             )
         }
-        let iv = theory.interval(s.cantus[i], s.voice[i])
+        let iv = interval_at(s, i)
         let label = if t == 0 then (
                 match iv.consonance {
                     0 => "P",
@@ -470,4 +471,10 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
 /// Normal play uses named pitches; a drawn clef is available only in art studies.
 pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     study(s, cols, rows, t, false)
+}
+
+/// Harmonic labels always use the score pitches, never a screen coordinate.
+pub fn interval_at(s: session.State, event: int) -> theory.Interval {
+    let bar = rhythm.onset(s.beats, event) / 8
+    theory.interval(s.cantus[bar], s.voice[event])
 }
