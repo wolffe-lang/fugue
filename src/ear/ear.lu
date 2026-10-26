@@ -1,6 +1,7 @@
 //! Prepare outside rendering; the live adapter owns only its afplay children.
 
 use clock
+use manuscript
 use session
 use sound
 use std.env
@@ -62,7 +63,10 @@ pub fn part(cantus: List[theory.Pitch], voice: List[theory.Pitch]) -> str {
 }
 
 /// Both voices in a single score, on the session's playback clock.
-pub fn whole_part(s: session.State) -> str { part(s.cantus, s.voice) }
+pub fn whole_part(s: session.State) -> str {
+    if s.book == 1 { return part(s.cantus, s.voice) }
+    manuscript.part(s, 30 * 60 * 4 / session.ticks_per_whole())
+}
 
 /// Render exactly the written phrase length, at 48 kHz stereo signed PCM.
 pub fn whole_pcm(s: session.State) -> List[byte] ! {io} {
@@ -87,7 +91,7 @@ fn render(path: str, text: str, seconds: int) -> () ! {io} {
 /// Render the two-octave diatonic bank and the raised cadence note before playing.
 pub fn prepare(mut e: Ear, s: session.State) -> () ! {io} {
     if !e.enabled { return }
-    e.base = 28 + s.mode + (if s.below then -7 else 0)
+    e.base = 28 + s.mode + (if s.below then (if s.book == 1 then -7 else -8) else 0)
     let begin = clock.now_ns()
     for i in 0..15 {
         region note {
@@ -95,7 +99,18 @@ pub fn prepare(mut e: Ear, s: session.State) -> () ! {io} {
             render("{e.dir}/note-{e.base + i}-0.wav", note_part(p), 1)?
         }
     }
-    if theory.raises(s.mode) {
+    if s.book > 1 {
+        for i in 0..15 {
+            let degree = (e.base + i - 28 - s.mode + 70) % 7
+            if degree == 6 && theory.raises(s.mode) || degree == 5 && s.mode == 5 {
+                region note {
+                    var p = theory.pitch(e.base + i)
+                    p.accidental = 1
+                    render("{e.dir}/note-{e.base + i}-1.wav", note_part(p), 1)?
+                }
+            }
+        }
+    } else if theory.raises(s.mode) {
         region note {
             var p = theory.pitch(e.base + 6)
             p.accidental = 1

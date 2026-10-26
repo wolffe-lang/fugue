@@ -122,7 +122,7 @@ pub fn key(n: int) -> int {
 /// One playback clock constant, shared by the cursor and part tempo.
 pub fn ticks_per_whole() -> int { 30 }
 
-/// Duration of the written event list in 30 Hz ticks (Book I: all wholes).
+/// Written phrase duration in 30 Hz ticks, independent of attack count.
 pub fn piece_ticks(s: State) -> int { s.cantus.len * ticks_per_whole() }
 
 /// Event lookup seam for rhythm: elapsed ticks map to the sounding event.
@@ -379,16 +379,4 @@ fn edit_rhythm(mut s: State, k: int) {
 /// Encode the same old start selector inside a book-specific namespace.
 pub fn replay_start(book: int, start: int) -> int {
     if book == 1 then start else 10000 + book * 2000 + start
-}
-
-/// One shared playback clock for the score, animation and rendered PCM.
-pub fn ticks_per_whole() -> int { 30 }
-
-/// Written duration, independent of the number of rhythmic attacks.
-pub fn piece_ticks(s: State) -> int { s.cantus.len * ticks_per_whole() }
-
-/// Locate the event sounding at this playback tick, or -1 outside the phrase.
-pub fn event_at(s: State, elapsed: int) -> int {
-    if elapsed < 0 || elapsed >= piece_ticks(s) { return -1 }
-    rhythm.at(s.beats, elapsed * 8 / ticks_per_whole())
 }
