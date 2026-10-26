@@ -189,7 +189,7 @@ pub fn classify(
         return "unprepared"
     }
     if book >= 3 && book != 4 {
-        if cambiata(cf, cp, beats, i, below) { return "cambiata" }
+        if cambiata(cf, cp, beats, i, below) { return "passing" }
         if double_passing(cf, cp, beats, i) { return "double-passing" }
         if neighbour(cp, beats, i) { return "neighbour" }
     }
