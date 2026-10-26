@@ -1,0 +1,15 @@
+fg01b prediction, before implementation
+
+The Book V editor advances s.within at each eighth press inside a held event;
+the panel reads onset + within but notation.frame places its caret at the event
+head and tests only s.cursor. A whole can therefore hide seven valid movements.
+Neither sound nor input timing is expected to explain the panel/caret mismatch.
+Measure single and ten-key repeat rows at both sizes, tiers and sound modes
+before editing; retain per-press panel/caret frames and recorded key counts.
+
+Give every editable time unit a distinct visible caret column using the same
+content-sized event layout, preserving selected-head semantics and playback.
+Filter the live Breaks list to the active bar, keeping named bar numbers and the
+Enter card's global verdict and counts. Recommend R-fg01b-1 A (no other-bar line).
+Tests must first catch the old held-event caret and whole-page findings; plant
+pre-move caret and unfiltered list separately, retaining named local reds.
