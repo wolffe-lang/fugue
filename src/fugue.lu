@@ -8,11 +8,15 @@ use first
 use grid
 use headless
 use input
+use notation
+use presets
 use progress
 use replay
 use session
+use sound
 use species
 use staff
+use studies
 use term
 use theory
 use tier
@@ -189,7 +193,7 @@ fn offline(o: Options, r: replay.Replay) -> int {
         session.tick(mut s)
         region frame {
             let begin = clock.now_ns()
-            let g = staff.frame(s, r.cols, r.rows, r.tier)
+            let g = notation.frame(s, r.cols, r.rows, r.tier)
             var bytes = List[byte]()
             grid.diff(prev, g, tick == 0, mut pen, mut bytes, tier.dialect(r.tier, false))
             let cost = (clock.now_ns() - begin) / 1000
@@ -320,7 +324,7 @@ fn live(o: Options, r: replay.Replay) -> int {
             d += 1
         }
         region frame {
-            let g = staff.frame(s, r.cols, r.rows, r.tier)
+            let g = notation.frame(s, r.cols, r.rows, r.tier)
             var bytes = List[byte]()
             grid.diff(prev, g, tick <= 1, mut pen, mut bytes, tier.dialect(r.tier, false))
             term.write(bytes) else |_| { return 2 }
@@ -445,6 +449,7 @@ fn main() -> int {
         )
         return 0
     }
+    if has(args, "--species-verdicts") { print_raw(studies.verdicts()); return 0 }
     if has(args, "--verdicts") { print_raw(first.verdict_study()); return 0 }
     if has(args, "--version") { print("fugue 0.2.0 / Books I-V"); return 0 }
     if has(args, "--selftest") { return run_selftest() }
@@ -485,6 +490,63 @@ fn main() -> int {
                 print("solutions mode {mode} below {which} solved {solved}/16")
             }
         }
+        return 0
+    }
+    if has(args, "--rhythm-audio-study") {
+        for book in 2..6 {
+            region audio_study {
+                var s = session.with_book(take session.tutorial(0, false), book)
+                let page = presets.page(book, 0)
+                s.voice = page.answer
+                let text = ear.whole_part(s)
+                var cantus_only = "", voice_only = ""
+                for line in text.lines() {
+                    if !line.starts_with("voice ") { cantus_only += line + "\n" }
+                    if !line.starts_with("cantus ") { voice_only += line + "\n" }
+                }
+                let seconds = (session.piece_ticks(s) + 29) / 30
+                let both = ear.whole_pcm(s) else { return 2 }
+                let a = sound.prepare("cantus-only", cantus_only, seconds) else { return 2 }
+                let b = sound.prepare("voice-only", voice_only, seconds) else { return 2 }
+                if both.len != seconds * 192000 || a.pcm.len != both.len || b.pcm.len != both.len {
+                    return 1
+                }
+                var different_a = 0, different_b = 0, audible = 0
+                for i in 0..both.len {
+                    if both[i] != a.pcm[i] { different_a += 1 }
+                    if both[i] != b.pcm[i] { different_b += 1 }
+                    if both[i] != 0 as byte { audible += 1 }
+                }
+                if different_a == 0 || different_b == 0 || audible == 0 { return 1 }
+                print(
+                    "rhythm-audio book {book} ticks {session.piece_ticks(s)} bytes {both.len} differs-cantus {different_a} differs-voice {different_b} nonzero {audible}",
+                )
+            }
+        }
+        return 0
+    }
+    if has(args, "--species-census") {
+        var book = 2
+        for i in 0..args.len - 1 { if args[i] == "--book" { book = args[i + 1].to_int() else 0 } }
+        if book < 2 || book > 5 { return 2 }
+        var legal = 0, three = 0
+        for seed in 0..12 {
+            region trial {
+                let mode = seed % 6, below = seed / 6 == 1
+                let e = species.exercise(seed, mode, below, book) else {
+                    eprint("species-census FAILED book {book} seed {seed}")
+                    return 1
+                }
+                let v = species.check(e.cantus, e.proof.notes, e.proof.beats, mode, below, book)
+                if v.stars == 0 || theory.validate(e.cantus, mode).len != 0 { return 1 }
+                legal += 1
+                if v.stars == 3 { three += 1 }
+                print(
+                    "species-census book {book} seed {seed} mode {mode} below {below} stars {v.stars} candidate {e.candidate}",
+                )
+            }
+        }
+        print("species-census book {book} legal {legal}/12 three-star-found {three}/12")
         return 0
     }
     if has(args, "--species-report") {

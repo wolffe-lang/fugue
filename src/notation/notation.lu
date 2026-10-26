@@ -1,0 +1,331 @@
+//! Rhythmic pages build on staff's pitch-space and head API, not a second staff.
+
+use draw
+use grid
+use manuscript
+use rhythm
+use session
+use species
+use staff
+use theory
+use world
+
+fn text(mut g: grid.Grid, y: int, x: int, words: str, ink: int, bg: int, bold: bool) {
+    draw.put_text(mut g, y, x, words, grid.cell(32, ink, bg, if bold then 1 else 0))
+}
+
+fn ground(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
+    var g = grid.new(rows, cols)
+    for y in 0..rows {
+        let grain = world.noise(s.seed, 19, y * 7)
+        for x in 0..cols {
+            let mark = world.hash(s.seed, y, x, 53) < 2
+            let bg = if t == 1 {
+                (if world.hash(s.seed, y, x, 256) < grain / 12 then 223 else 230)
+            } else {
+                7
+            }
+            grid.put(
+                mut g,
+                y,
+                x,
+                grid.cell(
+                    if mark then (if t == 1 then 0x00b7 else 46) else 32,
+                    if t == 1 then 180 else 3,
+                    bg,
+                    0,
+                ),
+            )
+        }
+    }
+    g
+}
+
+/// The title keeps the shared illuminated initial; number keys open the five books.
+pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
+    let bg = if t == 1 then 230 else 7
+    let ink = if t == 1 then 94 else 3
+    let blue = staff.player_ink(t)
+    if s.phase == 0 {
+        var g = staff.frame(s, cols, rows, t)
+        for row in rows / 2 + 1..rows - 3 {
+            let left = if row == rows / 2 + 1 then cols / 2 - 7 else 4
+            text(mut g, row, left, " ".repeat(cols - left - 3), ink, bg, false)
+        }
+        for book in 1..6 {
+            text(
+                mut g,
+                rows / 2 + book,
+                cols / 2 - 7,
+                "{book}  {rhythm.name(book)}  [{s.progress[book - 1]}*]",
+                blue,
+                bg,
+                book == s.book,
+            )
+        }
+        text(
+            mut g,
+            rows - 3,
+            4,
+            "1-5 choose a book   Enter resumes   q leaves the desk",
+            ink,
+            bg,
+            false,
+        )
+        return g
+    }
+    if s.book == 1 { return staff.frame(s, cols, rows, t) }
+    var g = ground(s, cols, rows, t)
+    let verdict = session.verdict(s)
+    text(mut g, 1, 3, "fugue / {rhythm.name(s.book)}", blue, bg, true)
+    if s.failure != "" {
+        text(mut g, 6, 4, s.failure, staff.harmony_ink(2, t), bg, true)
+        text(
+            mut g,
+            8,
+            4,
+            "n tries another seed   b returns to the books   q quits",
+            blue,
+            bg,
+            false,
+        )
+        return g
+    }
+    if s.phase == 2 {
+        let status = if verdict.breaks.len == 0 then "Legal" else "Not yet"
+        text(mut g, 4, 4, "{status}    {verdict.stars} / 3 stars", blue, bg, true)
+        text(
+            mut g,
+            6,
+            4,
+            "Contrary {verdict.contrary}% / 50%    Steps {verdict.steps}% / 60%",
+            ink,
+            bg,
+            false,
+        )
+        text(
+            mut g,
+            7,
+            4,
+            "Climaxes apart: {verdict.separate_climax}    Short parallel runs: {verdict.parallel_limit}",
+            ink,
+            bg,
+            false,
+        )
+        text(
+            mut g,
+            8,
+            4,
+            "Intervals {verdict.variety} / 3    Hard breaks {verdict.breaks.len}",
+            ink,
+            bg,
+            false,
+        )
+        if s.book == 5 {
+            let (values, share) = species.rhythm_style(s.beats)
+            text(
+                mut g,
+                9,
+                4,
+                "Note values {values} / 3    Tied time {share}% / 10%",
+                ink,
+                bg,
+                false,
+            )
+        }
+        for row in 0..rows - 14 {
+            let i = s.cursor + row
+            if i < verdict.breaks.len {
+                let b = copy verdict.breaks[i]
+                text(
+                    mut g,
+                    11 + row,
+                    4,
+                    draw.fit("Bar {b.bar}: {b.rule} / {b.reason}", cols - 8, false),
+                    staff.harmony_ink(2, t),
+                    bg,
+                    false,
+                )
+            }
+        }
+        if verdict.breaks.len == 0 {
+            text(
+                mut g,
+                12,
+                4,
+                "The voices belong together. Try another shape, or turn the page.",
+                ink,
+                bg,
+                false,
+            )
+        }
+        text(
+            mut g,
+            rows - 2,
+            3,
+            "r edit   n next   b books   Up/Down scroll   q quit",
+            blue,
+            bg,
+            false,
+        )
+        return g
+    }
+    let margin = cols - 24
+    let width = manuscript.bar_width(s.book)
+    let count = (margin - 8) / width
+    let start = manuscript.first_bar(s, cols)
+    let top = 5 + (rows - 24) / 2
+    let bottom = top + (if rows >= 25 then 14 else 13)
+    let focus = if s.hearing >= 0 then session.event_at(s, s.hearing) else s.cursor
+    var low = 100, high = 0
+    for bar in start..start + count {
+        if bar >= s.cantus.len { break }
+        let pos = theory.position(s.cantus[bar])
+        if pos < low { low = pos }
+        if pos > high { high = pos }
+    }
+    for i in 0..s.voice.len {
+        let bar = rhythm.onset(s.beats, i) / 8
+        if bar >= start && bar < start + count && !s.beats[i].rest {
+            let pos = theory.position(s.voice[i])
+            if pos < low { low = pos }
+            if pos > high { high = pos }
+        }
+    }
+    let span = high - low
+    var base = if span <= 8 then low - 2 else if span <= bottom - top - 2 then low - 1 else low
+    let selected = theory.position(s.voice[focus])
+    if selected > base + bottom - top { base = selected - (bottom - top) }
+    if selected < base { base = selected }
+    let v = staff.viewport(top, bottom, base, 7, margin - 2)
+    var bars = List[int]()
+    for bar in 0..count + 1 { (mut bars).push(8 + bar * width - 1) }
+    staff.draw_staff(mut g, v, t, bars)
+    text(
+        mut g,
+        2,
+        3,
+        "{theory.mode_name(s.mode)}  seed {s.seed}  {if s.below then "cantus above" else "cantus below"}",
+        ink,
+        bg,
+        false,
+    )
+    let sounding = session.event_at(s, s.hearing)
+    for bar in start..start + count {
+        if bar >= s.cantus.len { break }
+        let x = manuscript.column(s.book, start, bar * 8)
+        text(mut g, top - 1, x - 1, "{bar + 1}", ink, bg, true)
+        let lit = s.hearing >= 0 && s.hearing / session.ticks_per_whole() == bar
+        let _ = staff.head(mut g, v, s.cantus[bar], x - 1, t, true, false, lit)
+        for i in 0..s.voice.len {
+            let time = rhythm.onset(s.beats, i)
+            if time / 8 != bar { continue }
+            let nx = manuscript.column(s.book, start, time)
+            let beat = copy s.beats[i]
+            let y = staff.row_of(v, s.voice[i])
+            if beat.rest {
+                text(mut g, top + 6, nx, "r", blue, bg, i == s.cursor)
+            } else {
+                let row = staff.head(
+                    mut g,
+                    v,
+                    s.voice[i],
+                    nx,
+                    t,
+                    false,
+                    i == s.cursor,
+                    s.hearing >= 0 && sounding == i,
+                )
+                if row >= top && row <= bottom && beat.length < 8 {
+                    // Half and quarter stems differ in height; value labels remove ambiguity.
+                    let stem = if beat.length == 4 then 2 else 3
+                    let direction = if row - top < stem then 1 else -1
+                    for h in 1..stem + 1 {
+                        let sy = row + direction * h
+                        if sy >= top && sy <= bottom {
+                            text(mut g, sy, nx + 1, "|", blue, bg, false)
+                        }
+                    }
+                    let fy = row + direction * stem
+                    if beat.length == 1 && fy >= top && fy <= bottom {
+                        text(mut g, fy, nx + 2, "'", blue, bg, false)
+                    }
+                }
+                if beat.tied && y >= top && y < bottom {
+                    let previous = if i > 0 {
+                        manuscript.column(s.book, start, rhythm.onset(s.beats, i - 1))
+                    } else {
+                        nx - 2
+                    }
+                    let left = if previous < 7 then 7 else previous
+                    let ty = if (v.bottom - y - 1 - 2) % 2 == 0 then y + 2 else y + 1
+                    if ty <= bottom {
+                        for tx in left..nx {
+                            let cell = copy g.cells[ty * cols + tx]
+                            if cell.cp != 124 && cell.cp != 0x2502 {
+                                let arc = if tx == left {
+                                    "\\"
+                                } else if tx == nx - 1 {
+                                    "/"
+                                } else {
+                                    "_"
+                                }
+                                text(mut g, ty, tx, arc, blue, bg, false)
+                            }
+                        }
+                    }
+                }
+            }
+            let iv = theory.interval(s.cantus[bar], s.voice[i])
+            text(
+                mut g,
+                bottom + 1,
+                nx - 1,
+                if beat.rest {
+                    "r"
+                } else {
+                    "{if time % 8 == 0 then "S" else "w"}{iv.quality}{iv.number}"
+                },
+                staff.harmony_ink(iv.consonance, t),
+                bg,
+                false,
+            )
+            text(mut g, bottom + 2, nx - 1, "/{8 / beat.length}", blue, bg, false)
+        }
+    }
+    let time = if s.hearing >= 0 {
+        s.hearing * 8 / session.ticks_per_whole()
+    } else {
+        rhythm.onset(s.beats, s.cursor) + s.within
+    }
+    text(mut g, bottom + 3, manuscript.column(s.book, start, time), "^", blue, bg, true)
+    for y in 4..rows - 3 { text(mut g, y, margin, "|", ink, bg, false) }
+    text(mut g, 5, margin + 2, "Bar {time / 8 + 1} / {time % 8 + 1}:8", blue, bg, true)
+    text(mut g, 7, margin + 2, theory.name(s.voice[focus]), blue, bg, false)
+    text(mut g, 9, margin + 2, "h hear both voices", blue, bg, true)
+    text(mut g, 11, margin + 2, "S strong / w weak", ink, bg, false)
+    text(mut g, 13, margin + 2, "\\_/ tie, r rest", ink, bg, false)
+    text(mut g, 14, margin + 2, "t tie  0 first rest", ink, bg, false)
+    if s.book == 5 { text(mut g, 15, margin + 2, "] split  [ join", ink, bg, false) }
+    if verdict.breaks.len > 0 {
+        text(
+            mut g,
+            18,
+            margin + 2,
+            draw.fit(verdict.breaks[0].rule, 21, false),
+            staff.harmony_ink(2, t),
+            bg,
+            false,
+        )
+    }
+    text(
+        mut g,
+        rows - 2,
+        3,
+        "Arrows write  h hear  Enter check  u undo  n next  b books  q quit",
+        blue,
+        bg,
+        false,
+    )
+    g
+}

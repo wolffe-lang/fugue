@@ -1,0 +1,57 @@
+use grid
+use manuscript
+use notation
+use rhythm
+use session
+
+fn check_frames(book: int, cols: int) {
+    var s = session.with_book(take session.tutorial(0, false), book)
+    for cursor in [0, s.voice.len / 2, s.voice.len - 1] {
+        s.cursor = cursor
+        let plain = notation.frame(s, cols, if cols == 80 then 24 else 40, 0)
+        assert(grid.plain_ok(plain))
+        let rich = notation.frame(s, cols, if cols == 80 then 24 else 40, 1)
+        assert(rich.cells.len == plain.cells.len)
+    }
+}
+
+fn test_book_2_frames_80() { check_frames(2, 80) }
+
+fn test_book_2_frames_120() { check_frames(2, 120) }
+
+fn test_book_3_frames_80() { check_frames(3, 80) }
+
+fn test_book_3_frames_120() { check_frames(3, 120) }
+
+fn test_book_4_frames_80() { check_frames(4, 80) }
+
+fn test_book_4_frames_120() { check_frames(4, 120) }
+
+fn test_book_5_frames_80() { check_frames(5, 80) }
+
+fn test_book_5_frames_120() { check_frames(5, 120) }
+
+fn test_playback_cursor_tracks_rhythmic_events_and_scrolls() {
+    var s = session.with_book(take session.tutorial(0, false), 3)
+    s.cursor = s.voice.len - 1
+    s.hearing = 0
+    assert(manuscript.first_bar(s, 80) == 0)
+    assert(session.event_at(s, 0) == 0)
+    assert(session.event_at(s, 7) == 0)
+    assert(session.event_at(s, 8) == 1)
+    assert(session.event_at(s, 15) == 2)
+    assert(session.event_at(s, 30) == 4)
+    assert(session.event_at(s, 300) == -1)
+    s.hearing = 90
+    assert(manuscript.first_bar(s, 80) == 2)
+    assert(session.piece_ticks(s) == 300)
+    for i in 0..210 { session.tick(mut s) }
+    assert(s.hearing == -1)
+}
+
+fn test_eighths_share_the_same_integer_playback_clock() {
+    var s = session.with_book(take session.tutorial(0, false), 5)
+    s.beats = rhythm.pattern(5, 10)
+    assert(session.event_at(s, 30 * 3 + 22) == rhythm.at(s.beats, 29))
+    assert(session.event_at(s, -1) == -1)
+}
