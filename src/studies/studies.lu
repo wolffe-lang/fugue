@@ -236,7 +236,7 @@ pub fn pitches(dir: str) -> () ! {io} {
     for book in 1..6 {
         for page in 0..6 {
             region page_proof {
-                let s = session.with_book(
+                var s = session.with_book(
                     take (
                         if page < 3 {
                             session.tutorial(page, false)
@@ -256,7 +256,19 @@ pub fn pitches(dir: str) -> () ! {io} {
                     if theory.position(p) < low { low = theory.position(p) }
                     if theory.position(p) > high { high = theory.position(p) }
                 }
-                for which in 0..2 {
+                for which in 0..(if page < 3 then 3 else 2) {
+                    if which == 2 {
+                        if book > 1 {
+                            s.voice = presets.page(book, page).answer
+                        } else {
+                            s.voice = List[theory.Pitch]()
+                            for d in [4, 3, 4, 5, 8, 7, 6, 4, 6, 7] {
+                                (mut s.voice).push(theory.pitch(28 + s.mode + d))
+                            }
+                            if theory.raises(s.mode) { s.voice[8].accidental = 1 }
+                        }
+                        assert(session.verdict(s).stars == 3)
+                    }
                     let notes = if which == 0 then copy s.cantus else copy s.voice
                     for i in 0..notes.len {
                         let p = copy notes[i]
@@ -275,7 +287,7 @@ pub fn pitches(dir: str) -> () ! {io} {
                             assert(g.cells[y * 120 + 1 + n].cp == expected_name.bytes()[n] as int)
                         }
                         var label = "-"
-                        if which == 1 {
+                        if which > 0 {
                             let iv = staff.interval_at(s, i)
                             let expected = theory.interval(
                                 s.cantus[rhythm.onset(s.beats, i) / 8],

@@ -5,8 +5,9 @@ voice uses choir at mp, slightly right. Both are synthesized, with no sampled
 music or sound fonts. These are provisional listening choices, not a claim of
 physical speaker or headphone evaluation by the automated tests.
 
-At page setup, `sound.prepare` renders fifteen diatonic pitches over two octaves,
-plus the raised cadence seventh where needed. Each audition has a quarter-second
+At page setup, `sound.prepare` renders the page's complete sounding register
+(C1–B6 in Books I–V), plus every permitted cadence accidental in that register.
+Book VI pages can supply C3–C7 and both sharp/flat spellings. Each audition has a quarter-second
 note and its release inside a one-second 48 kHz stereo S16_LE WAV. Arrow edits and
 Space select a prepared file; they do not synthesize on a frame tick. h prepares
 both voices in one part-format score and plays that WAV, one whole note per second.
@@ -63,3 +64,12 @@ The rhythmic audio gate compares the complete PCM with each isolated voice,
 checks its exact duration and nonzero samples on both compiled backends, and
 a live Book V terminal row verifies that h reaches the existing output owner.
 These checks do not claim a physical loudspeaker or headphone listening test.
+
+
+`--pitch-proof DIR` exports the initial cantus/editor notes on every preset and
+three seeds per book, plus every preset reference answer, and one PCM file per
+distinct spelling. `tools/pitch-check.py` independently checks the names and
+fixed-clef row coordinates and estimates each PCM fundamental by FFT. The peak
+search is not centred on the expected frequency; it groups window/vibrato
+sidebands and finds the lowest significant spectral peak. Every measured
+fundamental must lie within one percent of equal temperament.
