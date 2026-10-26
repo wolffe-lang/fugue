@@ -2,7 +2,7 @@
    fugue / III. Four against one                                                
    Ionian  seed 0  cantus below              ·              ·           ·       
          ·                                              |                       
- Treble 8          ·        9 ·                10       | Editing bar 10     ·  
+ Treble 8          ·        9 ·               10        | Editing bar 10     ·  
  B5                    ^    ·●    ·                     | Bar 10, beat 1:8      
  A5       |        |        ──|  ─●─              ·     |  ··                   
  G5       |·   |   |          |    |     ·    ·    ·    | P8 perfect            
@@ -14,8 +14,8 @@
  A4    │                  ·│           ●      │       │ |      ·                
  G4    │───────────────────│──────────────────│───────│ |               ·      ·
  F4    │                   │                 ·│       │ |       ·    ·          
- E4    │───────────────────│──────────────────│───────│ | Breaks: whole page  · 
- D4          ·              ○                ·          |·                   ·  
+ E4    │───────────────────│──────────────────│───────│ | Breaks: bar 10      · 
+ D4          ·              ○                ·          |·No break in this bar  
  C4 ·  ─○─        ·         SM13 wP12 wP5 wM6 ─○─       |  ·                    
         SM10 wM9 wM10 wP15  /4   /4   /4  /4   SP8      |            ·          
         /4   /4  /4   /4                       /1     · |   ·                   

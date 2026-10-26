@@ -2,7 +2,7 @@
    fugue / III. Four against one                .                 .  .          
    Mixolydian  seed 2  cantus below                      .                      
                           .                             |                       
- Treble 8                 9       .        10           | Editing bar 10        
+ Treble 8                 9       .       10            | Editing bar 10        
  E6       |         .                        . . .      | Bar 10, beat 1:8      
  D6.      |                     |                   .   |                ..     
  C6       |            |        |   |                   | P8 perfect            
@@ -14,8 +14,8 @@
  D5 .  |------*----------|----------------|-----------| |                       
  C5    |                 |      . .       |           | |    .                  
  B4    |-----------------|----------------|-----------| |             .         
- A4  . |                 |o      .  .     |           | | Breaks: whole page    
- G4    |o----------------|----------------|o----------| |     .                 
+ A4  . |                 |o      .  .     |           | | Breaks: bar 10 .      
+ G4    |o----------------|----------------|o----------| | No break in this bar  
  F4    |.                | .              |           | |                       
       . SM10 wP5 wM6 wP8  SP5 wP8 wm7 wM6  SP8          |.      .               
   .     /4   /4  /4  /4   /4  /4  /4  /4   /1       .   |                       

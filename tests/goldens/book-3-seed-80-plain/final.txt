@@ -14,10 +14,10 @@
  F3    |--|---|---|---|-|--|---|---|---|-|--|---|-----| |        .              
  E3    |  |   |   |  .| |  |   |   |   | |  |   |     | |                       
  D3    |--|---|---|---|-|-*---*---*---*--|--|---|-----| |  .  .                 
- C3    | *  n*   *   *  |       .  .     | *   *      | | Breaks: whole page    
- B2    |----------------|----------------|------------| | bar 2 - parallel-perf 
- A2    |                |                |            | | bar 2 - accented-para 
-        SP8 wP8 wP8 wP8  SP8 wP8 wP8 wP8. SP8 wP8       | bar 2 - same-beat-par 
+ C3    | *  n*   *   *  |       .  .     | *   *      | | Breaks: bar 1         
+ B2    |----------------|----------------|------------| | bar 1 - sequence      
+ A2    |                |                |            | | bar 1 - repeat        
+        SP8 wP8 wP8 wP8  SP8 wP8 wP8 wP8. SP8 wP8       | bar 1 - sequence      
      .  /4  /4  /4  /4   /4  /4  /4  /4   /4. /4        |                       
          .   ^                       .                  |                       
   Arrows write  h hear  Enter check  u undo  n next  b books  q quit     .      

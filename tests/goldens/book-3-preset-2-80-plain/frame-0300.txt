@@ -2,7 +2,7 @@
    fugue / III. Four against one                                   . .          
    Dorian  seed 1  cantus below.                    .                           
       .                                                 |                       
- Treble 8  .             9          .     10     .      | Editing bar 10        
+ Treble 8  .             9          .    10      .      | Editing bar 10        
  A5          .                 |              .         | Bar 10, beat 1:8      
  G5        .                   |   |                    |       .               
  F5    |--|-------------|--|---|---|---|-|------------| | P8 perfect            
@@ -14,8 +14,8 @@
  G4    |----------------|----------------|------------| |                       
  F4    |o           .   |                |    .       | | .                     
  E4    |----------------|o---------------|------------| |         .             
- D4     SP5.wA4 wM3 wA4  Sm6 wP8 wm7 wM6  o             | Breaks: whole page    
- C4     /4  /4 ./4  /4   /4  /4  /4  /4   SP8       .   |                       
+ D4     SP5.wA4 wM3 wA4  Sm6 wP8 wm7 wM6  o             | Breaks: bar 10        
+ C4     /4  /4 ./4  /4   /4  /4  /4  /4   SP8       .   | No break in this bar  
  B3             .                         /1        .  .|                       
                                       . .  ^            |                    .  
   .                 .             .                     |  .              .     
