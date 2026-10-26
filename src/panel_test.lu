@@ -70,3 +70,37 @@ fn test_diagnostics_only_show_the_active_bar_book_3() { active_bar(3) }
 fn test_diagnostics_only_show_the_active_bar_book_4() { active_bar(4) }
 
 fn test_diagnostics_only_show_the_active_bar_book_5() { active_bar(5) }
+
+fn test_supplied_panel_data_uses_the_same_active_bar_filter() {
+    var g = grid.new(40, 120)
+    let mixed = [
+        staff.PanelFinding { bar: 1, rule: "other voice finding" },
+        staff.PanelFinding { bar: 2, rule: "active finding" },
+    ]
+    staff.panel_data(
+        mut g,
+        staff.PanelData {
+            bar: 2,
+            beat: 3,
+            interval: "M6 imperfect",
+            consonance: 1,
+            pitch: "moving G4",
+            figure: "passing",
+            strong: false,
+            allowed: true,
+            local: copy mixed,
+            findings: mixed,
+            notice: "editable voice",
+        },
+        96,
+        0,
+    )
+    assert(text_is(g, 5, 98, "Bar 2, beat 3:8"))
+    assert(text_is(g, 7, 98, "M6 imperfect"))
+    assert(text_is(g, 8, 98, "moving G4"))
+    assert(text_is(g, 9, 98, "passing"))
+    assert(text_is(g, 12, 98, "bar 2 - active findin"))
+    assert(text_is(g, 17, 98, "bar 2 - active findin"))
+    assert(g.cells[13 * 120 + 98].cp == 32)
+    assert(g.cells[18 * 120 + 98].cp == 32)
+}

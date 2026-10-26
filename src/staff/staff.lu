@@ -552,14 +552,29 @@ pub fn interval_row(v: Viewport, a: theory.Pitch, b: theory.Pitch, tied: bool) -
     lowest + 1
 }
 
-/// Cursor-local status and findings from the active bar only.
+/// A judge-independent finding; bar numbers are one-based.
+pub struct PanelFinding { bar: int, rule: str }
+
+/// Supplied status for one moving voice; bar and eighth-beat are one-based.
+/// Both finding lists are filtered here, not trusted to be pre-filtered by callers.
+pub struct PanelData {
+    bar: int,
+    beat: int,
+    interval: str,
+    consonance: int,
+    pitch: str,
+    figure: str,
+    strong: bool,
+    allowed: bool,
+    local: List[PanelFinding],
+    findings: List[PanelFinding],
+    notice: str,
+}
+
+/// Books I–V retain the state adapter; other pages may supply their own data.
 pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
-    let bg = if t == 1 then 230 else 7
-    let ink = if t == 1 then 94 else 3
-    let blue = player_ink(t)
     let i = s.cursor
     let time = rhythm.onset(s.beats, i) + s.within
-    let bar = time / 8
     let iv = interval_at(s, i)
     let cls = if iv.consonance == 0 {
         "perfect"
@@ -568,20 +583,6 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
     } else {
         "dissonant"
     }
-    for y in 3..g.rows - 2 { text(mut g, y, margin, "|", ink, bg, false) }
-    let width = g.cols - margin - 3
-    text(mut g, 4, margin + 2, "Editing bar {bar + 1}", blue, bg, true)
-    text(mut g, 5, margin + 2, "Bar {bar + 1}, beat {time % 8 + 1}:8", blue, bg, true)
-    text(
-        mut g,
-        7,
-        margin + 2,
-        if s.beats[i].rest then "rest" else "{iv.quality}{iv.number} {cls}",
-        harmony_ink(iv.consonance, t),
-        bg,
-        true,
-    )
-    text(mut g, 8, margin + 2, theory.name(s.voice[i]), blue, bg, false)
     let figure = if s.book == 1 {
         if iv.consonance == 2 then "unlicensed" else "consonance"
     } else if s.book <= 5 {
@@ -589,35 +590,62 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
     } else {
         "exposition"
     }
-    text(mut g, 9, margin + 2, draw.fit(figure, width, false), ink, bg, true)
-    text(
-        mut g,
-        10,
-        margin + 2,
-        if time % 8 == 0 then "strong beat" else "weak beat",
-        ink,
-        bg,
-        false,
-    )
-    let allowed = figure != "unlicensed" && figure != "unprepared" && figure != "unlicensed-eighth"
-    text(
-        mut g,
-        11,
-        margin + 2,
-        if allowed then "Figure allowed" else "Figure not allowed",
-        harmony_ink(if allowed then 0 else 2, t),
-        bg,
-        false,
-    )
     let verdict = session.verdict(s)
-    let local = if s.book >= 2 && s.book <= 5 {
+    let event = if s.book >= 2 && s.book <= 5 {
         species.event_breaks(s.cantus, s.voice, s.beats, s.below, s.book, i)
     } else {
         copy verdict.breaks
     }
+    var local = List[PanelFinding](), findings = List[PanelFinding]()
+    for b in event { (mut local).push(PanelFinding { bar: b.bar, rule: b.rule }) }
+    for b in verdict.breaks { (mut findings).push(PanelFinding { bar: b.bar, rule: b.rule }) }
+    panel_data(
+        mut g,
+        PanelData {
+            bar: time / 8 + 1,
+            beat: time % 8 + 1,
+            interval: if s.beats[i].rest then "rest" else "{iv.quality}{iv.number} {cls}",
+            consonance: iv.consonance,
+            pitch: theory.name(s.voice[i]),
+            figure: figure,
+            strong: time % 8 == 0,
+            allowed: figure != "unlicensed" &&
+                figure != "unprepared" &&
+                figure != "unlicensed-eighth",
+            local: local,
+            findings: findings,
+            notice: s.notice,
+        },
+        margin,
+        t,
+    )
+}
+
+/// One common column, independent of session, voice count and judge implementation.
+pub fn panel_data(mut g: grid.Grid, data: PanelData, margin: int, t: int) {
+    let bg = if t == 1 then 230 else 7
+    let ink = if t == 1 then 94 else 3
+    let blue = player_ink(t)
+    for y in 3..g.rows - 2 { text(mut g, y, margin, "|", ink, bg, false) }
+    let width = g.cols - margin - 3
+    text(mut g, 4, margin + 2, "Editing bar {data.bar}", blue, bg, true)
+    text(mut g, 5, margin + 2, "Bar {data.bar}, beat {data.beat}:8", blue, bg, true)
+    text(mut g, 7, margin + 2, data.interval, harmony_ink(data.consonance, t), bg, true)
+    text(mut g, 8, margin + 2, data.pitch, blue, bg, false)
+    text(mut g, 9, margin + 2, draw.fit(data.figure, width, false), ink, bg, true)
+    text(mut g, 10, margin + 2, if data.strong then "strong beat" else "weak beat", ink, bg, false)
+    text(
+        mut g,
+        11,
+        margin + 2,
+        if data.allowed then "Figure allowed" else "Figure not allowed",
+        harmony_ink(if data.allowed then 0 else 2, t),
+        bg,
+        false,
+    )
     var row = 12
-    for b in local {
-        if b.bar == bar + 1 && row < 15 {
+    for b in data.local {
+        if b.bar == data.bar && row < 15 {
             text(
                 mut g,
                 row,
@@ -631,10 +659,10 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
         }
     }
     if row == 12 { text(mut g, row, margin + 2, "No local break", blue, bg, false) }
-    text(mut g, 16, margin + 2, "Breaks: bar {bar + 1}", ink, bg, true)
+    text(mut g, 16, margin + 2, "Breaks: bar {data.bar}", ink, bg, true)
     row = 17
-    for b in verdict.breaks {
-        if b.bar != bar + 1 { continue }
+    for b in data.findings {
+        if b.bar != data.bar { continue }
         if row >= g.rows - 4 { break }
         text(
             mut g,
@@ -648,12 +676,12 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
         row += 1
     }
     if row == 17 { text(mut g, row, margin + 2, "No break in this bar", blue, bg, false) }
-    if s.notice != "" {
+    if data.notice != "" {
         text(
             mut g,
             g.rows - 3,
             margin + 2,
-            draw.fit(s.notice, width, false),
+            draw.fit(data.notice, width, false),
             harmony_ink(2, t),
             bg,
             true,
