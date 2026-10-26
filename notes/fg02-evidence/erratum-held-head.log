@@ -1,0 +1,25 @@
+fugue junk 120x40 rich first: 4800 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 266
+fugue junk 120x40 rich page-2: 4800 cells, glyph differences 406, styles equal False
+fugue deliberate grain cells: 247
+fugue junk 120x40 rich page-3: 4800 cells, glyph differences 665, styles equal False
+fugue deliberate grain cells: 269
+fugue junk 120x40 rich voice: 4800 cells, glyph differences 646, styles equal False
+fugue deliberate grain cells: 268
+fugue junk 120x40 rich refusal: 4800 cells, glyph differences 612, styles equal False
+fugue deliberate grain cells: 266
+fugue junk 120x40 rich after-hear: 4800 cells, glyph differences 599, styles equal False
+fugue deliberate grain cells: 266
+pty: fugue-junk-120-rich FAILED (linux x86_64):
+  - page-2: terminal differs from complete headless frame (406 glyph bytes, styles False)
+  - page-3: terminal differs from complete headless frame (665 glyph bytes, styles False)
+  - voice: terminal differs from complete headless frame (646 glyph bytes, styles False)
+  - refusal: terminal differs from complete headless frame (612 glyph bytes, styles False)
+  - after-hear: terminal differs from complete headless frame (599 glyph bytes, styles False)
+right: frame 17, read-to-frame 9291 us, 1 frame budgets
+right: frame 33, read-to-frame 28363 us, 1 frame budgets
+left: frame 48, read-to-frame 16316 us, 1 frame budgets
+up: frame 64, read-to-frame 29564 us, 1 frame budgets
+down: frame 79, read-to-frame 16439 us, 1 frame budgets
+hear: frame 95, read-to-frame 50017 us, 2 frame budgets
+pty: fugue-press-budget ok (linux x86_64, exit 0, 12055 bytes captured)

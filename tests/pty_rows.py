@@ -448,3 +448,113 @@ def fugue_end(bin,ctx):
 ROWS['fugue-exposition-record']=fugue_record
 ROWS['fugue-two-desks-record']=lambda bin,ctx:fugue_record(bin,ctx,3)
 ROWS['fugue-end-card']=fugue_end
+
+
+def fugue_junk_screen(bin, ctx, width=120, tier='rich'):
+    """The terminal owns stderr too; compare every glyph and style after repaint."""
+    import sys
+    root=Path(ctx.ROOT)/f'target/pty/fugue-junk-{width}-{tier}'
+    root.mkdir(parents=True,exist_ok=True)
+    height=24 if width==80 else 40
+    wrapper=root/'launch.py'
+    wrapper.write_text('''import os,sys
+w,h=int(sys.argv[1]),int(sys.argv[2])
+os.write(1,b"\\x1b[?1049h\\x1b[41;97m")
+for row in range(h):
+    os.write(1,f"\\x1b[{row+1};1H".encode()+b"J"*w)
+os.write(1,b"\\x1b[0m\\x1b[H")
+os.dup2(1,2)
+os.execve(sys.argv[3],sys.argv[3:],os.environ)
+''')
+    env=ctx.env_for();env['FUGUE_STATE']=str(root/'state');env['FUGUE_WAV_DIR']=str(root/'audio')
+    s=ctx.Session([sys.executable,'-I',str(wrapper),str(width),str(height),bin,'--book','6','--no-title','--size',f'{width}x{height}','--tier',tier],height,width,env)
+    s.pump(.5)
+    events=[];problems=[]
+    def compare(name,frames=2):
+        cap=root/f'{name}.bin';cap.write_bytes(s.out)
+        script=root/f'{name}.pk'
+        script.write_text(f'pk 1\nseed 0\ntier {tier}\nsize {width}x{height}\nstart 22001\n'+''.join(f't 1 {key}\n' for key in events))
+        got=subprocess.run([bin,'--apply',str(cap),'--size',f'{width}x{height}'],capture_output=True,text=True,timeout=30)
+        expected=subprocess.run([bin,'--headless','--script',str(script),'--frames',str(frames),'--every',str(frames),'--dump',str(root/name),'--mute'],capture_output=True,text=True,timeout=30)
+        if got.returncode or expected.returncode:
+            problems.append(name+' terminal/headless command failed');return
+        text,styles,_=got.stdout.split('--\n')
+        want=(root/name/'final.txt').read_text();want_styles=(root/name/'final.sty').read_text()
+        glyphs=sum(a!=b for a,b in zip(text,want))+abs(len(text)-len(want))
+        good=glyphs==0 and styles==want_styles
+        print(f'fugue junk {width}x{height} {tier} {name}: {width*height} cells, glyph differences {glyphs}, styles equal {styles==want_styles}')
+        if not good:problems.append(f'{name}: terminal differs from complete headless frame ({glyphs} glyph cells, styles {styles==want_styles})')
+        if tier=='rich':
+            grain=sum(int(token.rsplit('*',1)[1]) for line in want_styles.splitlines() for token in line.split() if token.split(',')[1]=='223')
+            print(f'fugue deliberate grain cells: {grain}')
+    compare('first')
+    for name,raw,keys in [('page-2',b'n',['new']),('page-3',b'n',['new']),('voice',b'v',['voice-switch']),('refusal',b'[[.',['split','split','dot'])]:
+        s.type(raw,.65);events.extend(keys);compare(name)
+    s.type(b'h',.4);s.pump(13.5);events.append('hear');compare('after-hear',400)
+    s.type(b'q');s.finish(timeout=20);ctx.common_checks(s,0,problems)
+    return s,problems
+
+
+def fugue_press_budget(bin, ctx, book=6):
+    """Record read-to-carrying-frame latency, including Book VI h preparation."""
+    import re,math
+    root=Path(ctx.ROOT)/f'target/pty/fugue-press-budget-{book}';root.mkdir(parents=True,exist_ok=True)
+    env=ctx.env_for();env['FUGUE_STATE']=str(root/'state');env['FUGUE_WAV_DIR']=str(root/'audio')
+    s=ctx.Session([bin,'--book',str(book),'--no-title','--trace'],24,80,env)
+    s.pump(.4);problems=[];rows=[]
+    for name,raw in [('right',b'\x1b[C'),('right',b'\x1b[C'),('left',b'\x1b[D'),('up',b'\x1b[A'),('down',b'\x1b[B'),('hear',b'h')]:
+        before=len(s.err);s.type(raw,.5)
+        deadline=time.monotonic()+5
+        while b'carries_key' not in s.err[before:] and time.monotonic()<deadline:s.pump(.05)
+        found=re.findall(rb'trace frame (\d+) carries_key inner_us (\d+)',s.err[before:])
+        if not found:problems.append('no carrying frame for '+name);continue
+        tick,micros=map(int,found[-1]);frames=math.ceil(micros/(1000000/30))
+        row=f'{name}: frame {tick}, read-to-frame {micros} us, {frames} frame budgets';rows.append(row);print(row)
+    (root/'measurements.txt').write_text('\n'.join(rows)+'\n')
+    s.type(b'q');s.finish(timeout=20);ctx.common_checks(s,0,problems)
+    return s,problems
+
+for _width in (80,120):
+    for _tier in ('plain','rich'):
+        ROWS[f'fugue-junk-{_width}-{_tier}']=lambda bin,ctx,width=_width,tier=_tier:fugue_junk_screen(bin,ctx,width,tier)
+ROWS['fugue-press-budget']=fugue_press_budget
+
+
+def fugue_cursor_panel(bin, ctx, width=120):
+    root=Path(ctx.ROOT)/f'target/pty/fugue-cursor-{width}';root.mkdir(parents=True,exist_ok=True)
+    height=24 if width==80 else 40
+    env=ctx.env_for();env['FUGUE_STATE']=str(root/'state')
+    s=ctx.Session([bin,'--book','6','--no-title','--mute','--size',f'{width}x{height}'],height,width,env)
+    s.type(b'nn',.3)
+    keys={'up':b'\x1b[A','down':b'\x1b[B','right':b'\x1b[C','sharp':b'#','voice-switch':b'v'}
+    source=(Path(ctx.ROOT)/f'tests/cases/book-6-preset-3-{width}.pk').read_text()
+    s.type(b''.join(keys[x.split()[-1]] for x in source.splitlines() if x.startswith('t 1 ')),.5)
+    s.type(b'v',.2)
+    # Break the answer in bar 3, then inspect a different bar before returning.
+    s.type(b'\x1b[C'*10+b'#'+b'\x1b[D'*10,.4)
+    problems=[]
+    def expect(label,bar,beat,pitch,figure=None):
+        path=root/(label+'.bin');path.write_bytes(s.out)
+        result=subprocess.run([bin,'--apply',str(path),'--size',f'{width}x{height}'],capture_output=True,text=True,timeout=30)
+        if result.returncode:problems.append(label+' apply failed');return
+        screen=result.stdout.split('--\n')[0].splitlines(); margin=width-22
+        panel=[line[margin:] for line in screen]
+        if f'Editing bar {bar}' not in panel[4] or f'Bar {bar}, beat {beat}:8' not in panel[5]:problems.append(label+' stale bar/beat: '+repr(panel[4:6]))
+        if pitch not in panel[8]:problems.append(label+' stale selected pitch: '+panel[8])
+        if figure and figure not in panel[9]:problems.append(label+' stale figure: '+panel[9])
+        if f'Breaks: bar {bar}' not in panel[16]:problems.append(label+' wrong diagnostic heading')
+        for row in panel[12:]:
+            if 'bar ' in row and ' - ' in row and f'bar {bar} - ' not in row:problems.append(label+' finding from another bar: '+row)
+        if bar==3 and not any('bar 3 -' in row for row in panel[12:]):problems.append(label+' missing active-bar findings')
+        print(f'fugue cursor {width} {label}: bar {bar}, beat {beat}, {pitch}')
+    expect('answer-first',1,1,'F5','tonal-mutation')
+    s.type(b'\x1b[C'*4,.25);expect('answer-second',2,1,'D5','exact-answer')
+    s.type(b'\x1b[C'*6,.25);expect('answer-third',3,5,'Fb5','answer-transposition')
+    s.type(b'v',.25);expect('counter-first',1,1,'A4','consonance')
+    s.type(b'\x1b[C'*8,.25);expect('counter-second',2,1,'B4','consonance')
+    s.type(b'\x1b[C'*12,.25);expect('counter-third',3,5,'D5')
+    s.type(b'q');s.finish();ctx.common_checks(s,0,problems)
+    return s,problems
+
+ROWS['fugue-cursor-panel-80']=lambda bin,ctx:fugue_cursor_panel(bin,ctx,80)
+ROWS['fugue-cursor-panel-120']=lambda bin,ctx:fugue_cursor_panel(bin,ctx,120)

@@ -51,4 +51,8 @@ for width in (80,120):
         if i < 2: events.append((3+i*3,'new'))
     write('book-6-end',width,22001,events,10,1,3)
     write('book-6-complete',width,22001,events+[(9,'desk')],11,10,3)
-print('fugue fixtures: sixteen authored cases, not recordings')
+    status=[(1,k) for k in solve(2)]+[(2,'voice-switch')]
+    status += [(3,k) for k in ['right']*10+['sharp']+['left']*10]
+    status += [(4,'right')]*4+[(5,'right')]*6+[(6,'voice-switch')]+[(7,'right')]*8+[(8,'right')]*12
+    write('book-6-status',width,22003,status,9,1,0)
+print('fugue fixtures: eighteen authored cases, not recordings')

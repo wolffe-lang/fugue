@@ -1,0 +1,21 @@
+right: frame 20, read-to-frame 29333 us, 1 frame budgets
+right: frame 35, read-to-frame 16271 us, 1 frame budgets
+left: frame 51, read-to-frame 29326 us, 1 frame budgets
+up: frame 66, read-to-frame 15418 us, 1 frame budgets
+down: frame 82, read-to-frame 29454 us, 1 frame budgets
+hear: frame 97, read-to-frame 34841 us, 2 frame budgets
+pty: fg02-compare-book-1 ok (linux x86_64, exit 0, 14814 bytes captured)
+right: frame 20, read-to-frame 28440 us, 1 frame budgets
+right: frame 35, read-to-frame 16339 us, 1 frame budgets
+left: frame 51, read-to-frame 30445 us, 1 frame budgets
+up: frame 66, read-to-frame 16588 us, 1 frame budgets
+down: frame 81, read-to-frame 16521 us, 1 frame budgets
+hear: frame 97, read-to-frame 49259 us, 2 frame budgets
+pty: fg02-compare-book-5 ok (linux x86_64, exit 0, 9157 bytes captured)
+right: frame 17, read-to-frame 8225 us, 1 frame budgets
+right: frame 33, read-to-frame 29358 us, 1 frame budgets
+left: frame 48, read-to-frame 16341 us, 1 frame budgets
+up: frame 63, read-to-frame 15540 us, 1 frame budgets
+down: frame 79, read-to-frame 29544 us, 1 frame budgets
+hear: frame 94, read-to-frame 34525 us, 2 frame budgets
+pty: fugue-press-budget ok (linux x86_64, exit 0, 12055 bytes captured)

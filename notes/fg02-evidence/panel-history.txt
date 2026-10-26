@@ -1,0 +1,66 @@
+===== 996754b: src/staff/staff.lu =====
+149-                    10 + row,
+150-                    4,
+151:                    draw.fit("Bar {b.bar}: {b.rule} / {b.reason}", cols - 8, false),
+152-                    harmony_ink(2, t),
+153-                    bg,
+154-                    false,
+155-                )
+--
+300-        grid.put(mut g, y, margin, grid.cell(if t == 1 then 0x2502 else 124, ink, bg, 0))
+301-    }
+302:    text(mut g, 4, margin + 2, "The margin", ink, bg, true)
+303-    text(mut g, 6, margin + 2, "Bar {s.cursor + 1}", blue, bg, true)
+304-    if s.voice.len > 0 {
+305-        text(mut g, 8, margin + 2, theory.name(s.voice[s.cursor]), blue, bg, false)
+306-    }
+--
+312-    if verdict.breaks.len > 0 {
+313-        let b = copy verdict.breaks[0]
+314:        text(mut g, 17, margin + 2, "Bar {b.bar}", harmony_ink(2, t), bg, true)
+315-        text(
+316-            mut g,
+317-            18,
+318-            margin + 2,
+===== 6061b528: src/staff/staff.lu =====
+285-                    10 + row,
+286-                    4,
+287:                    draw.fit("Bar {b.bar}: {b.rule} / {b.reason}", cols - 8, false),
+288-                    harmony_ink(2, t),
+289-                    bg,
+290-                    false,
+291-                )
+--
+394-        grid.put(mut g, y, margin, grid.cell(if t == 1 then 0x2502 else 124, ink, bg, 0))
+395-    }
+396:    text(mut g, 4, margin + 2, "Editing bar {s.cursor + 1}", blue, bg, true)
+397-    text(mut g, 6, margin + 2, "Selected note", blue, bg, false)
+398-    if s.voice.len > 0 {
+399-        text(mut g, 8, margin + 2, theory.name(s.voice[s.cursor]), blue, bg, false)
+400-    }
+--
+414-    if verdict.breaks.len > 0 {
+415-        let b = copy verdict.breaks[0]
+416:        text(mut g, 16, margin + 2, "First break", ink, bg, false)
+417:        text(mut g, 17, margin + 2, "at bar {b.bar}", harmony_ink(2, t), bg, true)
+418-        text(
+419-            mut g,
+420-            18,
+421-            margin + 2,
+===== 3ff811e8: src/staff/staff.lu =====
+390-                    10 + row,
+391-                    4,
+392:                    draw.fit("Bar {b.bar}: {b.rule} / {b.reason}", cols - 8, false),
+393-                    harmony_ink(2, t),
+394-                    bg,
+395-                    false,
+396-                )
+--
+571-    for y in 3..g.rows - 2 { text(mut g, y, margin, "|", ink, bg, false) }
+572-    let width = g.cols - margin - 3
+573:    text(mut g, 4, margin + 2, "Editing bar {bar + 1}", blue, bg, true)
+574:    text(mut g, 5, margin + 2, "Bar {bar + 1}, beat {time % 8 + 1}:8", blue, bg, true)
+575-    text(
+576-        mut g,
+577-        7,
+578-        margin + 2,

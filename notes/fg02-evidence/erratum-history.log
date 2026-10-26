@@ -1,0 +1,7 @@
+Held head 9bcf2b0: Book VI frame cost versus undo history; muted, no preparation
+edit pairs 0
+bench 120x40 plain avg_us 166 max_us 290
+edit pairs 500
+bench 120x40 plain avg_us 185 max_us 362
+edit pairs 2000
+bench 120x40 plain avg_us 311 max_us 919
