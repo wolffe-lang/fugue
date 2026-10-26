@@ -1,0 +1,7 @@
+fg02 Prediction — before implementation
+Expect 300/300 generated subjects valid (50 seeds in each mode).
+Expect 40–60% of subjects to admit a distinct tonal head mutation; all admit an exact real answer.
+Expect at least 60% of raw generated expositions to admit an invertible countersubject within a bounded search, before playable admission filtering.
+Expect rich and plain mean render+diff below 500 microseconds at 120x40, with subject/answer/countersubject entry state.
+Implement recommendations R-fg02-1 A, R-fg02-2 A (third entry optional), R-fg02-3 A; these are recommendations, not new rulings.
+The complete five-section note will be in the PR body because this agent wrapper forbids Markdown report files.
