@@ -1,0 +1,18 @@
+fg01b memory gate: 11.79 GiB free+inactive (need 8)
+cursor-long: 80x24-rich-sound: 632 presses, stale/late 572; frame p99/max 1/1; wall p99/max 9.423/9.502 ms; next visible change p99/max 14/15; end 0
+cursor-long: 80x24-rich-mute: 632 presses, stale/late 572; frame p99/max 1/1; wall p99/max 7.475/8.368 ms; next visible change p99/max 14/15; end 0
+cursor-long: 80x24-plain-sound: 632 presses, stale/late 572; frame p99/max 1/1; wall p99/max 19.424/20.027 ms; next visible change p99/max 14/15; end 0
+cursor-long: 80x24-plain-mute: 632 presses, stale/late 572; frame p99/max 1/1; wall p99/max 3.862/4.056 ms; next visible change p99/max 14/15; end 0
+cursor-long: 120x40-rich-sound: 632 presses, stale/late 564; frame p99/max 1/1; wall p99/max 12.726/13.106 ms; next visible change p99/max 14/15; end 0
+cursor-long: 120x40-rich-mute: 632 presses, stale/late 564; frame p99/max 1/1; wall p99/max 7.542/7.708 ms; next visible change p99/max 14/15; end 0
+cursor-long: 120x40-plain-sound: 632 presses, stale/late 564; frame p99/max 1/1; wall p99/max 28.612/28.691 ms; next visible change p99/max 14/15; end 0
+cursor-long: 120x40-plain-mute: 632 presses, stale/late 564; frame p99/max 1/1; wall p99/max 7.299/7.421 ms; next visible change p99/max 14/15; end 0
+pty: cursor-long FAILED (darwin arm64):
+  - 80x24-rich-sound: 632/632 captured; 572 stale/late presses; frame p99/max 1/1
+  - 80x24-rich-mute: 632/632 captured; 572 stale/late presses; frame p99/max 1/1
+  - 80x24-plain-sound: 632/632 captured; 572 stale/late presses; frame p99/max 1/1
+  - 80x24-plain-mute: 632/632 captured; 572 stale/late presses; frame p99/max 1/1
+  - 120x40-rich-sound: 632/632 captured; 564 stale/late presses; frame p99/max 1/1
+  - 120x40-rich-mute: 632/632 captured; 564 stale/late presses; frame p99/max 1/1
+  - 120x40-plain-sound: 632/632 captured; 564 stale/late presses; frame p99/max 1/1
+  - 120x40-plain-mute: 632/632 captured; 564 stale/late presses; frame p99/max 1/1
