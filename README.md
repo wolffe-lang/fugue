@@ -10,10 +10,12 @@ A cantus firmus is given on a manuscript staff. Write the voice against it,
 note by note, hearing each pitch as you place it. The critic names broken rules
 by bar. Legal answers pass; contrary motion, steps, shape and variety earn stars.
 
-**Books I–V are playable:** note against note, two against one, four against one,
-suspensions and florid counterpoint. Each has three original tutorial pages,
-then seeded exercises in six modes with the cantus below or above. The fugue
-chapter is planned. Seeds are reproducible, not unique: two seeds can choose
+**All six books are playable:** note against note, two against one, four against one,
+suspensions, florid counterpoint, and the fugue. Each has three original tutorial
+pages, then seeded exercises in six modes. Book VI gives a subject, asks for
+its real or tonal answer, then checks a countersubject on both sides of the
+octave. Hear the subject alone, then the answering pair; finish the three
+fugue tutorials to light the last book. Seeds are reproducible, not unique: two seeds can choose
 the same melodic candidate. Every offered seed has a checked legal answer;
 three stars are not promised for every seed.
 
@@ -31,20 +33,21 @@ digest. The engine is pinned by commit in `lair.pin`; its modules are staged in
 `.lair/`, never taken from a moving branch. The implementation uses wolf-std and
 that engine only.
 
-At the title, 1–5 chooses a book; Enter opens the current page. Left/Right
+At the title, 1–6 chooses a book; Enter opens the current page. Left/Right
 moves by the book's smallest unit; Up/Down writes a note;
 Shift-Up/Down move an octave. Space auditions, h hears both voices, Enter checks,
 u undoes, n turns the page, and q or Escape quits. The permitted cadence sharp
 is #. In IV, t toggles a barline tie; in II and IV, 0 toggles the opening half rest.
 In V, [ splits, ] joins, . dots, t ties to the next event, and r toggles a
 rest without changing its length. Every edit is undoable. b returns to the books.
+In VI, v changes the Answer/Countersubject writing desk.
 Listening locks edits until the highlighted pass ends; quit still works.
 Best stars are saved in `.fugue-state` (`FUGUE_STATE` selects another file).
 
 ```
 target/fugue --seed 7 --size 120x40
 target/fugue --book 4 --daily --plain
-target/fugue --book 5 --size 120x40
+target/fugue --book 6 --size 120x40
 target/fugue --mute --record my-answer.pk
 target/fugue --replay my-answer.pk --ticks 400
 target/fugue --script my-answer.pk --frames 400 --sound-replay my-answer.pcm
@@ -64,9 +67,9 @@ tools/check                         # local host, memory-gated on macOS
 .lair/tools/in-container tools/check-perf
 ```
 
-The gate includes 132 checked rule and interaction tests, native and release builds,
-and rich/plain goldens at 80x24 and 120x40. It checks fifteen three-star tutorial
-references, actual solved recordings for all five books, score-tampering refusals,
+The gate includes checked rule and interaction tests, native and release builds,
+and rich/plain goldens at 80x24 and 120x40. It checks eighteen three-star tutorial
+references, actual solved recordings for all six books, score-tampering refusals,
 terminal restoration, rhythmic two-voice PCM, and the glyph inventory. Fixed-clef
 line/space mapping, grand staves, three-ledger walks, selected-event status,
 partial measures and rhythm edits are exercised in both tiers. The caret moves
@@ -82,7 +85,9 @@ Book I PCM remains gated. The first
 book retains its 300-line generator census; later books exercise twelve seeds
 each, covering every mode and both voice positions. The later-species verdict
 study pins 127 legal/illegal rows, and the classifier has seventeen explicit
-figure rows. PR CI runs Linux; the full tier adds macOS and performance.
+figure rows. Book VI adds a 300-subject census, exact real/tonal checks,
+independent inversion admission, a twelve-second played-exposition PCM,
+three tutorial references and the end card. PR CI runs Linux; the full tier adds macOS and performance.
 Six cited Fux cantus firmi are historical test oracles only, never playable
 levels or source material for game music.
 
