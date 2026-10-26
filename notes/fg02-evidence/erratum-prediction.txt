@@ -1,0 +1,5 @@
+fg02 held-build erratum prediction, before changes
+The custom Book VI panel omitted the shared selected-event diagnostics; its beat-free Bar label obscures moves within a bar, and its displayed measure numbering may disagree with the local edit bar.
+The stray text in the screenshot is predicted to be game-owned note-bank stderr emitted during an active terminal session, not unwritten grid cells. The coloured grain is predicted to be deliberately rendered background cells; a junk-screen comparison must decide both claims.
+Expect a Book VI hear press to exceed an ordinary arrow's frame budget because the 12-second exposition is prepared synchronously. Measure before changing it; general arrow latency remains fg01b's.
+Use the shared panel path with current-bar findings, preserve pitch/judge/PCM semantics, and add real-pty repaint witnesses with stderr on the terminal. No engine changes; stop if the fault is in lair.
