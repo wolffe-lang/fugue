@@ -14,7 +14,7 @@ fn test_invertible_references_earn_three_stars_both_ways() {
         let s = subject.tutorial(index), cs = counter.reference(index)
         assert(subject.validate(s).len == 0)
         for below in [false, true] {
-            let a = answer.make(s, below, index > 0)
+            let a = answer.make(s, below, index == 2)
             let v = counter.check(a, cs, below, !below)
             if v.stars != 3 { print("reference {index} below {below} {v}") }
             assert(v.stars == 3)
@@ -87,4 +87,29 @@ fn test_parallel_perfects_on_moving_timeline_are_refused() {
     b.beats = rhythm.pattern(1, 2)
     assert(named(counter.pair(a, b, false), "parallel-perfect"))
     assert(named(counter.pair(a, b, false), "accented-parallel"))
+}
+
+fn figure(cf: List[int], cp: List[int], beats: List[rhythm.Beat], i: int, below: bool) -> str {
+    var a = subject.Line { notes: [], beats: rhythm.pattern(1, cf.len), mode: 0 }
+    var b = subject.Line { notes: [], beats: copy beats, mode: 0 }
+    for pos in cf { (mut a.notes).push(theory.pitch(pos)) }
+    for pos in cp { (mut b.notes).push(theory.pitch(pos)) }
+    counter.classify(a, b, i, below)
+}
+
+fn test_moving_voice_classifier_retains_all_florid_figures() {
+    let quarters = rhythm.pattern(3, 2), tied = rhythm.pattern(4, 3)
+    assert(figure([28, 28], [30, 31, 30, 32, 35], quarters, 1, false) == "neighbour")
+    assert(figure([28, 28], [30, 31, 32, 33, 35], quarters, 1, false) == "double-passing")
+    assert(figure([28, 29], [35, 34, 32, 33, 34], quarters, 1, false) == "cambiata")
+    assert(figure([35, 34], [28, 29, 31, 30, 29], quarters, 1, true) == "cambiata")
+    assert(figure([28, 29], [35, 34, 31, 33, 34], quarters, 1, false) == "unlicensed")
+    assert(figure([28, 29, 28], [35, 35, 35, 34, 35], tied, 2, false) == "suspension")
+    assert(figure([30, 29, 28], [28, 28, 28, 27, 28], tied, 2, true) == "suspension")
+    assert(figure([28, 29, 28], [35, 35, 35, 36, 35], tied, 2, false) == "unprepared")
+    assert(figure([28, 29, 28], [35, 34, 35, 34, 35], tied, 2, false) == "unprepared")
+    var eighths = List[rhythm.Beat]()
+    for value in [4, 2, 1, 1, 8] { (mut eighths).push(rhythm.Beat { length: value, rest: false, tied: false }) }
+    assert(figure([28, 28], [35, 32, 33, 34, 35], eighths, 2, false) == "eighth-pair")
+    assert(figure([28, 28], [35, 31, 33, 34, 35], eighths, 2, false) == "unlicensed-eighth")
 }

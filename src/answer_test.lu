@@ -23,7 +23,7 @@ fn test_real_answers_preserve_spelling_and_semitones_both_sides() {
 }
 
 fn test_tonal_answer_is_never_misread_as_real() {
-    for index in [1, 2] {
+    for index in [2] {
         let s = if index == 1 then opening_fifth() else subject.tutorial(index)
         for below in [false, true] {
             let a = answer.make(s, below, true)
@@ -59,7 +59,7 @@ fn answer_census(mode: int) {
         let s = subject.choose(pool, seed) else { assert(false); return }
         let a = answer.make(s, seed % 2 == 0, false)
         assert(answer.check(s, a.notes, a.beats, seed % 2 == 0).kind == "Real answer")
-        if answer.mutation(s) >= 0 {
+        if answer.tonal_allowed(s) {
             let t = answer.make(s, seed % 2 == 0, true)
             assert(answer.check(s, t.notes, t.beats, seed % 2 == 0).kind == "Tonal answer")
             count += 1
@@ -87,4 +87,27 @@ fn opening_fifth() -> subject.Line {
     for d in [0, 4, 3, 4, 5, 4, 3, 0, 1, 0] { (mut s.notes).push(theory.pitch(29 + d)) }
     s.beats = subject.values(1)
     s
+}
+
+fn test_tonal_mutation_must_not_create_an_augmented_fourth() {
+    let pool = subject.candidates(0)
+    let s = subject.choose(pool, 32) else { assert(false); return }
+    assert(answer.mutation(s) == 0 && !answer.tonal_allowed(s))
+    let a = answer.make(s, false, true)
+    let v = answer.check(s, a.notes, a.beats, false)
+    assert(v.kind == "refused")
+    var named = false
+    for b in v.breaks { if b.rule == "answer-leap-quality" && b.bar == 1 { named = true } }
+    assert(named)
+}
+
+fn test_tonal_mutation_must_not_create_a_repeated_note() {
+    let head = opening_fifth()
+    let tonal = answer.make(head, false, true)
+    assert(answer.mutation(head) == 1)
+    let v = answer.check(head, tonal.notes, tonal.beats, false)
+    assert(v.kind == "refused")
+    var named = false
+    for b in v.breaks { if b.rule == "answer-repeat" { named = true } }
+    assert(named)
 }

@@ -220,8 +220,12 @@ step below the corresponding real answer; everything after it remains exact.
 For a C subject beginning C–G, the real answer begins G–D, while the tonal
 answer begins G–C. For a subject beginning G, the real answer begins D and
 the tonal answer begins C. The octave follows the chosen upper or lower entry.
-Other heads have a real answer only. Where this exchange is available, either
-form is allowed: the card names **Real answer** or **Tonal answer**, and names
+Other heads have a real answer only. The head shape is not enough: the mutation
+must also preserve the melodic rules, with the open endpoints allowed here.
+For example, G–B in a C subject gives the real D–F-sharp; mutating it to
+C–F-sharp creates an augmented fourth and is refused by name. C–G–F would
+become G–C–C, so that repeated note makes it real-only too. Where the exchange
+remains melodic, either form is allowed: the card names **Real answer** or **Tonal answer**, and names
 the mutation's attack and bar. A mutation elsewhere is a wrong transposition,
 reported at its bar, not an alternative interpretation.
 
@@ -252,7 +256,7 @@ a final closing cadence are not part of these pages.
 ### The last pages and their stars
 
 The first tutorial asks for the answer, with the first voice's continuation
-already written. The second supplies the subject and tonal answer and asks
+already written. The second supplies the subject and real answer and asks
 for the countersubject. The third asks for both. On that page and seeded pages,
 `v` changes the writing desk without losing either voice. Undo belongs to the
 current desk; switching starts a new undo history. `h` plays the subject alone,

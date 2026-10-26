@@ -40,6 +40,46 @@ pub fn make(s: subject.Line, below: bool, tonal: bool) -> subject.Line {
     out
 }
 
+/// A head gesture is necessary, not sufficient: the mutation must not create
+/// an altered leap, repeated figure or another inherited melodic break.
+pub fn tonal_breaks(s: subject.Line, below: bool) -> List[theory.Break] {
+    var out = List[theory.Break]()
+    let point = mutation(s)
+    if point < 0 {
+        theory.require(
+            mut out,
+            false,
+            1,
+            "answer-tonal-head",
+            "This subject has no tonic/fifth exchange at its head.",
+        )
+        return out
+    }
+    let a = make(s, below, true)
+    var normalized = List[theory.Pitch]()
+    for p in a.notes {
+        var q = theory.pitch(theory.position(p) + (if below then 3 else -4))
+        q.accidental = theory.chromatic(p) + (if below then 5 else -7) - theory.chromatic(q)
+        (mut normalized).push(q)
+    }
+    for b in theory.validate(normalized, s.mode) {
+        if b.rule == "length" ||
+            b.rule == "final" ||
+            b.rule == "cadence" ||
+            b.rule == "diatonic" && b.bar == point + 1 {
+            continue
+        }
+        var f = copy b
+        f.rule = "answer-" + f.rule
+        if f.bar > 0 && f.bar <= s.beats.len { f.bar = rhythm.onset(s.beats, f.bar - 1) / 8 + 1 }
+        (mut out).push(f)
+    }
+    out
+}
+
+/// Both possible entry registers have the same interval structure.
+pub fn tonal_allowed(s: subject.Line) -> bool { tonal_breaks(s, false).len == 0 }
+
 fn same(a: theory.Pitch, b: theory.Pitch) -> bool {
     theory.position(a) == theory.position(b) && a.accidental == b.accidental
 }
@@ -81,6 +121,8 @@ pub fn check(
     }
     if out.breaks.len == 0 && is_real { out.kind = "Real answer"; return out }
     if out.breaks.len == 0 && is_tonal {
+        out.breaks = tonal_breaks(s, below)
+        if out.breaks.len > 0 { return out }
         out.kind = "Tonal answer"
         out.mutation = point
         return out

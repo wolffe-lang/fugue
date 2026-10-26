@@ -36,7 +36,7 @@ pub fn exercise(seed: int, mode: int, below: bool) -> subject.Line ! {empty} {
     for offset in 0..pool.len {
         let s = subject.choose(pool, seed % pool.len + offset) else { continue }
         for tonal in [true, false] {
-            if tonal && answer.mutation(s) < 0 { continue }
+            if tonal && !answer.tonal_allowed(s) { continue }
             let a = answer.make(s, below, tonal)
             let proof = counter.solve(a, below) else { continue }
             if counter.check(a, proof, below, false).stars > 0 { return s }
@@ -49,7 +49,7 @@ pub fn exercise(seed: int, mode: int, below: bool) -> subject.Line ! {empty} {
 pub fn new(index: int, seed: int, mode: int, below: bool) -> Page ! {empty} {
     let s = if index < 3 then subject.tutorial(index) else exercise(seed, mode, below)?
     var a = copy s, cs = copy s
-    if index == 1 { a = answer.make(s, below, true) }
+    if index == 1 { a = answer.make(s, below, false) }
     if index == 0 {
         cs = counter.reference(0)
     } else {

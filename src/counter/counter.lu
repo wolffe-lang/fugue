@@ -28,6 +28,14 @@ fn suspension(a: subject.Line, b: subject.Line, i: int, below: bool) -> bool {
     if b.beats[i - 1].length != 4 || b.beats[i].length != 4 || b.beats[i + 1].length != 4 {
         return false
     }
+    if b.beats[i - 1].rest || b.beats[i].rest || b.beats[i + 1].rest { return false }
+    if theory.position(b.notes[i - 1]) != theory.position(b.notes[i]) ||
+        b.notes[i - 1].accidental != b.notes[i].accidental {
+        return false
+    }
+    if theory.magnitude(theory.chromatic(b.notes[i + 1]) - theory.chromatic(b.notes[i])) > 2 {
+        return false
+    }
     if !consonant(a, b, time - 4) || !consonant(a, b, time + 4) { return false }
     if theory.position(b.notes[i + 1]) - theory.position(b.notes[i]) != -1 { return false }
     let held = theory.interval(sounding(a, time), b.notes[i])
@@ -55,16 +63,55 @@ fn cambiata(a: subject.Line, b: subject.Line, i: int, below: bool) -> bool {
     true
 }
 
+fn double_passing(a: subject.Line, b: subject.Line, i: int) -> bool {
+    for offset in 1..3 {
+        let start = i - offset
+        if start < 0 || start + 3 >= b.notes.len || rhythm.onset(b.beats, start) % 8 != 0 {
+            continue
+        }
+        let dir = theory.position(b.notes[start + 1]) - theory.position(b.notes[start])
+        if theory.magnitude(dir) != 1 { continue }
+        var good = true
+        for j in start..start + 4 {
+            if b.beats[j].rest || b.beats[j].tied || b.beats[j].length != 2 { good = false }
+            if j > start && theory.position(b.notes[j]) - theory.position(b.notes[j - 1]) != dir {
+                good = false
+            }
+        }
+        if good &&
+            consonant(a, b, rhythm.onset(b.beats, start)) &&
+            consonant(a, b, rhythm.onset(b.beats, start + 3)) {
+            return true
+        }
+    }
+    false
+}
+
 /// Classification retains Book V's figures while sampling the moving answer.
 pub fn classify(a: subject.Line, b: subject.Line, i: int, below: bool) -> str {
+    if i < 0 ||
+        i >= b.notes.len ||
+        b.notes.len != b.beats.len ||
+        a.notes.len == 0 ||
+        a.notes.len != a.beats.len {
+        return "invalid"
+    }
     let time = rhythm.onset(b.beats, i)
+    if time >= subject.span(a.beats) { return "invalid" }
     if b.beats[i].rest { return "rest" }
-    if b.beats[i].length == 1 && !species.eighth_pair(b.notes, b.beats, i) {
-        return "unlicensed-eighth"
+    if b.beats[i].length == 1 {
+        if !species.eighth_pair(b.notes, b.beats, i) { return "unlicensed-eighth" }
+        if consonant(a, b, time) ||
+            species.passing(b.notes, b.beats, i) ||
+            species.neighbour(b.notes, b.beats, i) {
+            return "eighth-pair"
+        }
+        return "unlicensed"
     }
     if consonant(a, b, time) { return "consonance" }
     if time % 8 == 0 { return if suspension(a, b, i, below) then "suspension" else "unprepared" }
     if cambiata(a, b, i, below) { return "cambiata" }
+    if double_passing(a, b, i) { return "double-passing" }
     if species.passing(b.notes, b.beats, i) { return "passing" }
     if species.neighbour(b.notes, b.beats, i) { return "neighbour" }
     "unlicensed"
@@ -138,13 +185,17 @@ pub fn pair(a: subject.Line, b: subject.Line, below: bool) -> List[theory.Break]
                 let legal = fig == "passing" ||
                     fig == "neighbour" ||
                     fig == "cambiata" ||
-                    fig == "suspension"
+                    fig == "suspension" ||
+                    fig == "double-passing" ||
+                    fig == "eighth-pair"
                 let other_legal = other_onset &&
                     (
                         other_fig == "passing" ||
                             other_fig == "neighbour" ||
                             other_fig == "cambiata" ||
-                            other_fig == "suspension"
+                            other_fig == "suspension" ||
+                            other_fig == "double-passing" ||
+                            other_fig == "eighth-pair"
                     )
                 theory.require(
                     mut out,
@@ -462,13 +513,13 @@ pub fn reference(index: int) -> subject.Line {
     var s = subject.tutorial(index)
     let positions = match index {
         0 => [30, 29, 30, 31, 33, 29, 30, 29, 28, 32],
-        1 => [30, 31, 32, 34, 33, 34, 35, 34, 32, 33],
+        1 => [34, 33, 32, 33, 37, 36, 35, 36, 34, 36],
         _ => [33, 32, 34, 35, 36, 35, 34, 35, 33, 32],
     }
     s.notes = []
     for i in 0..positions.len {
         var p = theory.pitch(positions[i])
-        if index == 0 && i == 3 || index == 1 && i == 1 { p.accidental = 1 }
+        if index == 0 && i == 3 { p.accidental = 1 }
         (mut s.notes).push(p)
     }
     s

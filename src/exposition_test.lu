@@ -5,7 +5,7 @@ use progress
 use session
 
 fn solve_page(mut s: session.State) {
-    s.fugue.response = answer.make(s.fugue.given, s.fugue.answer_below, s.level > 0)
+    s.fugue.response = answer.make(s.fugue.given, s.fugue.answer_below, s.level == 2)
     s.fugue.continuation = counter.reference(s.level)
     let line = if s.fugue.editing == 0 then copy s.fugue.response else copy s.fugue.continuation
     s.voice = line.notes
