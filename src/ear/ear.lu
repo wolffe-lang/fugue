@@ -115,7 +115,7 @@ pub fn prepare(mut e: Ear, s: session.State) -> () ! {io} {
             }
         }
     }
-    eprint("sound: note-bank render_us {(clock.now_ns() - begin) / 1000} base {e.base}")
+    trace("sound: note-bank render_us {(clock.now_ns() - begin) / 1000} base {e.base}")
 }
 
 /// Nonblocking reap of children this process started; no host-wide wait or signals.

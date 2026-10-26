@@ -294,3 +294,63 @@ def cursor_same_frame(bin, ctx):
 
 
 ROWS['cursor-same-frame'] = cursor_same_frame
+
+
+def quiet_audio_page_change(bin, ctx):
+    env = ctx.env_for()
+    env['FUGUE_SOUND'] = '1'
+    env['FUGUE_AUDIO_TRACE'] = '0'
+    # A real player's stderr shares the terminal. The ordinary runner pipes it
+    # away; this exec keeps the same foreground job while joining both streams.
+    s = ctx.Session(['/bin/sh', '-c', 'exec "$@" 2>&1', 'merged-audio', bin,
+                     '--book', '5', '--no-title'], 24, 80, env)
+    deadline = time.monotonic() + 20
+    while b'\x1b[?1049h' not in s.out and time.monotonic() < deadline: s.pump(.05)
+    s.type(b'n', 1.0)
+    s.type(b'q'); s.finish()
+    problems = []
+    ctx.common_checks(s, 0, problems)
+    after_enter = s.out.split(b'\x1b[?1049h', 1)[-1]
+    if b'note-bank render_us' in after_enter:
+        problems.append('normal page change leaked note-bank diagnostics into the drawn terminal')
+    return s, problems
+
+
+def cached_arrow_auditions(bin, ctx):
+    root = Path(ctx.ROOT)/'target/pty/cached-arrow-auditions'
+    root.mkdir(parents=True, exist_ok=True)
+    env = ctx.env_for()
+    env['FUGUE_SOUND'] = '1'
+    env['FUGUE_AUDIO_TRACE'] = '1'
+    env['FUGUE_WAV_DIR'] = str(root)
+    s = ctx.Session([bin, '--book', '5', '--no-title'], 24, 80, env)
+    deadline = time.monotonic()+20
+    while b'note-bank render_us' not in s.err and time.monotonic() < deadline: s.pump(.02)
+    before = {p.name: p.stat().st_mtime_ns for p in root.glob('note-*.wav')}
+    # Rest aside, edit the next sounding held event using ordinary arrow bytes.
+    s.type(b'\x1b[C'*4, .1)
+    for _ in range(10):
+        s.type(b'\x1b[A', .05)
+        s.type(b'\x1b[B', .05)
+    s.type(b'q'); s.finish()
+    problems = []
+    ctx.common_checks(s, 0, problems)
+    if s.err.count(b'note-bank render_us') != 1 or b'whole-render' in s.err:
+        problems.append('an arrow caused synchronous sound preparation')
+    after = {p.name: p.stat().st_mtime_ns for p in root.glob('note-*.wav')}
+    if not before or before != after: problems.append('arrows rewrote the prepared note bank')
+    starts = s.err.count(b'player-start') + s.err.count(b'wav-sink')
+    if starts != 20: problems.append(f'only {starts}/20 cached auditions reached output')
+    return s, problems
+
+
+ROWS['quiet-audio-page-change'] = quiet_audio_page_change
+ROWS['cached-arrow-auditions'] = cached_arrow_auditions
+
+
+def cursor_long(bin, ctx):
+    import runpy
+    return runpy.run_path(str(Path(ctx.ROOT)/'tools/cursor-long.py'))['check'](bin, ctx)
+
+
+ROWS['cursor-long'] = cursor_long
