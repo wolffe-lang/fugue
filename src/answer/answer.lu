@@ -151,3 +151,28 @@ pub fn check(
     }
     out
 }
+
+/// Name the selected answer attack independently of errors elsewhere in the line.
+pub fn figure(
+    s: subject.Line,
+    notes: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+    below: bool,
+    i: int,
+) -> str {
+    if i < 0 || i >= s.notes.len || notes.len != s.notes.len || beats.len != s.beats.len {
+        return "answer-length"
+    }
+    if beats[i].length != s.beats[i].length ||
+        beats[i].rest != s.beats[i].rest ||
+        beats[i].tied != s.beats[i].tied {
+        return "answer-rhythm"
+    }
+    let real = make(s, below, false)
+    if same(notes[i], real.notes[i]) { return "exact-answer" }
+    if i == mutation(s) && tonal_allowed(s) {
+        let tonal = make(s, below, true)
+        if same(notes[i], tonal.notes[i]) { return "tonal-mutation" }
+    }
+    "answer-transposition"
+}

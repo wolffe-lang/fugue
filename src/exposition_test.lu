@@ -2,7 +2,9 @@ use answer
 use counter
 use exposition
 use progress
+use rhythm
 use session
+use theory
 
 fn solve_page(mut s: session.State) {
     s.fugue.response = answer.make(s.fugue.given, s.fugue.answer_below, s.level == 2)
@@ -99,4 +101,35 @@ fn test_fugue_uses_shared_spelled_pitch_and_page_range_editor() {
     assert(s.beats[0].length == 6 && s.beats[1].length == 2)
     let p = exposition.written(s.fugue, s.voice, s.beats)
     assert(exposition.part(p, 240).contains("counter F4/2."))
+}
+
+fn test_fugue_status_follows_bar_beat_and_both_voice_desks() {
+    var s = session.with_book(take session.tutorial(2, false), 6)
+    solve_page(mut s)
+    for desk in 0..2 {
+        if desk == 1 { session.step(mut s, 27) }
+        for i in 0..s.voice.len {
+            s.cursor = i
+            s.within = 0
+            let p = exposition.written(s.fugue, s.voice, s.beats)
+            let v = exposition.check(p)
+            let status = exposition.status(p, i, 0, v.breaks)
+            let time = rhythm.onset(s.beats, i)
+            assert(status.bar == time / 8 + 1 && status.beat == time % 8 + 1)
+            assert(theory.position(status.pitch) == theory.position(s.voice[i]))
+            for finding in status.findings { assert(finding.bar == status.bar) }
+        }
+    }
+}
+
+fn test_fugue_panel_findings_never_borrow_another_bar() {
+    var s = session.with_book(take session.tutorial(2, false), 6)
+    solve_page(mut s)
+    s.voice[4].accidental += 1
+    let p = exposition.written(s.fugue, s.voice, s.beats), v = exposition.check(p)
+    let first = exposition.status(p, 0, 0, v.breaks)
+    assert(first.figure == "tonal-mutation" && first.allowed && first.findings.len == 0)
+    let bad = exposition.status(p, 4, 0, v.breaks)
+    assert(bad.figure == "answer-transposition" && !bad.allowed && bad.findings.len > 0)
+    for finding in bad.findings { assert(finding.bar == bad.bar) }
 }

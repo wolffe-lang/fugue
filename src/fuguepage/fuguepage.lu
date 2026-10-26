@@ -44,10 +44,36 @@ fn shown(s: session.State, a: subject.Line, b: subject.Line, time: int) -> sessi
     out
 }
 
-fn highest(line: subject.Line) -> theory.Pitch {
-    var p = copy line.notes[0]
-    for note in line.notes { if theory.position(note) > theory.position(p) { p = copy note } }
-    p
+fn panel_model(
+    s: session.State,
+    p: exposition.Page,
+    findings: List[theory.Break],
+) -> staff.PanelData {
+    let current = exposition.status(p, s.cursor, s.within, findings)
+    let iv = current.interval
+    let cls = if iv.consonance == 0 {
+        "perfect"
+    } else if iv.consonance == 1 {
+        "imperfect"
+    } else {
+        "dissonant"
+    }
+    var local = List[staff.PanelFinding](), shown = List[staff.PanelFinding]()
+    for b in current.local { (mut local).push(staff.PanelFinding { bar: b.bar, rule: b.rule }) }
+    for b in current.findings { (mut shown).push(staff.PanelFinding { bar: b.bar, rule: b.rule }) }
+    staff.PanelData {
+        bar: current.bar,
+        beat: current.beat,
+        interval: if s.beats[s.cursor].rest then "rest" else "{iv.quality}{iv.number} {cls}",
+        consonance: iv.consonance,
+        pitch: theory.name(current.pitch),
+        figure: current.figure,
+        strong: current.beat == 1,
+        allowed: current.allowed,
+        local: local,
+        findings: shown,
+        notice: s.notice,
+    }
 }
 
 fn voice(
@@ -296,7 +322,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
             mut g,
             v.top - 1,
             x - 1,
-            "{bar + 1 + (if solo || answer_desk then 0 else bars)}",
+            "{bar + 1 + (if s.hearing >= duration then bars else 0)}",
             ink,
             bg,
             true,
@@ -368,41 +394,39 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
             }
         }
     }
-    let label_a = staff.label_row(v, highest(first)), label_b = staff.label_row(v, highest(second))
-    let name_a = if solo || answer_desk then "Subject" else "Answer"
-    let name_b = if answer_desk then "Answer" else "Countersubject"
-    if !solo && label_a == label_b {
-        text(mut g, label_a, margin + 2, "{name_a}+{name_b}", blue, bg, true)
-    } else {
-        text(mut g, label_a, margin + 2, name_a, staff.cantus_ink(t), bg, true)
-        if !solo { text(mut g, label_b, margin + 2, name_b, blue, bg, true) }
-    }
-    let lines = [
-        "VI. The fugue",
-        if solo {
-            "Subject alone"
+    staff.panel_data(mut g, panel_model(s, p, verdict.breaks), margin, t)
+    text(
+        mut g,
+        1,
+        margin + 2,
+        if s.hearing >= 0 {
+            "VI. The fugue"
         } else if p.editing == 0 {
-            "Writing Answer"
+            "Answer desk"
         } else {
-            "Writing Counter"
+            "Countersubject desk"
         },
-        "Bar {local_time / 8 + 1}",
-        if p.tonal_available then "Real or tonal" else "Real only",
-        av.kind,
-        if av.mutation >= 0 then "Mutation attack {av.mutation + 1}" else "",
-        "Values /{rhythm.value_name(first.beats[rhythm.at(first.beats, local_time)].length)} : /{rhythm.value_name(second.beats[rhythm.at(second.beats, local_time)].length)}",
-        "h exposition",
-        if s.level < 2 then "One voice given" else "v change voice",
-        s.notice,
-    ]
-    var row = 1
-    for words in lines {
-        while row == label_a || !solo && row == label_b { row += 1 }
-        if row < rows - 3 {
-            text(mut g, row, margin + 2, draw.fit(words, 21, false), ink, bg, false)
-        }
-        row += 2
-    }
+        blue,
+        bg,
+        true,
+    )
+    text(
+        mut g,
+        2,
+        margin + 2,
+        if solo {
+            "Subject"
+        } else if s.hearing >= duration {
+            "Answer+Countersubject"
+        } else if p.editing == 0 {
+            "Subject+Answer"
+        } else {
+            "Answer+Countersubject"
+        },
+        blue,
+        bg,
+        true,
+    )
     let hint = if v.grand && rows == 24 then rows - 1 else rows - 2
     text(
         mut g,

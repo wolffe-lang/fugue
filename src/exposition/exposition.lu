@@ -119,3 +119,79 @@ pub fn part(p: Page, tempo: int) -> str {
     }
     text
 }
+
+/// Cursor-derived panel facts. Rendering belongs to the shared staff panel.
+pub struct Status {
+    bar: int,
+    beat: int,
+    interval: theory.Interval,
+    pitch: theory.Pitch,
+    figure: str,
+    allowed: bool,
+    local: List[theory.Break],
+    findings: List[theory.Break],
+}
+
+/// Use written time, never an event index or the playback cursor, as the bar.
+pub fn status(p: Page, cursor: int, within: int, breaks: List[theory.Break]) -> Status {
+    let active = if p.editing == 0 then copy p.response else copy p.continuation
+    let other = if p.editing == 0 then copy p.given else copy p.response
+    let time = rhythm.onset(active.beats, cursor) + within
+    let bar = time / 8 + 1, beat = time % 8 + 1
+    let j = rhythm.at(other.beats, time)
+    let iv = theory.interval(other.notes[j], active.notes[cursor])
+    var figure = "rest", allowed = true, local = List[theory.Break]()
+    if !active.beats[cursor].rest {
+        if p.editing == 0 {
+            figure = answer.figure(
+                p.given,
+                p.response.notes,
+                p.response.beats,
+                p.answer_below,
+                cursor,
+            )
+            allowed = figure == "exact-answer" || figure == "tonal-mutation"
+        } else if iv.consonance != 2 {
+            figure = "consonance"
+        } else {
+            let other_moves = rhythm.onset(other.beats, j) > rhythm.onset(active.beats, cursor)
+            let found = if other_moves {
+                counter.classify(active, other, j, p.answer_below)
+            } else {
+                counter.classify(other, active, cursor, !p.answer_below)
+            }
+            allowed = found != "unlicensed" &&
+                found != "unprepared" &&
+                found != "unlicensed-eighth" &&
+                found != "invalid"
+            figure = if other_moves then "answer " + found else found
+        }
+    }
+    if !allowed {
+        theory.require(mut local, false, bar, figure, "The selected beat needs a licensed figure.")
+    }
+    if p.editing == 1 && !active.beats[cursor].rest && !other.beats[j].rest {
+        var upper = copy active.notes[cursor]
+        if !p.answer_below { upper.octave += 1 }
+        let inverted = theory.interval(other.notes[j], upper)
+        theory.require(
+            mut local,
+            inverted.number != 5 || inverted.quality != "P",
+            bar,
+            "inversion-fifth",
+            "The fifth becomes a fourth against the bass.",
+        )
+    }
+    var findings = List[theory.Break]()
+    for b in breaks { if b.bar == bar { (mut findings).push(copy b) } }
+    Status {
+        bar: bar,
+        beat: beat,
+        interval: iv,
+        pitch: copy active.notes[cursor],
+        figure: figure,
+        allowed: allowed,
+        local: local,
+        findings: findings,
+    }
+}

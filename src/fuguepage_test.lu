@@ -58,3 +58,31 @@ fn test_completed_sixth_book_is_visibly_lit_on_the_title() {
         assert(lit.cells[at].bg == (if t == 1 then 222 else 11))
     }
 }
+
+fn common_panel(desk: int, width: int) {
+    var s = chapterstudy.solved(2)
+    s.voice[4].accidental = 0
+    if desk == 1 { session.step(mut s, 27) }
+    for t in [0, 1] {
+        s.cursor = 0
+        s.within = 2
+        let rows = if width == 80 then 24 else 40
+        let first = fuguepage.frame(s, width, rows, t)
+        assert(text_has(first, "Editing bar 1") && text_has(first, "Bar 1, beat 3:8"))
+        assert(text_has(first, "Breaks: bar 1") && !text_has(first, "bar 3 -"))
+        s.cursor = 4
+        s.within = 0
+        let third = fuguepage.frame(s, width, rows, t)
+        assert(text_has(third, "Editing bar 3") && text_has(third, "Bar 3, beat 5:8"))
+        assert(text_has(third, "Breaks: bar 3") && text_has(third, "bar 3 -"))
+        assert(!text_has(third, "bar 1 -"))
+    }
+}
+
+fn test_fugue_answer_panel_80() { common_panel(0, 80) }
+
+fn test_fugue_answer_panel_120() { common_panel(0, 120) }
+
+fn test_fugue_counter_panel_80() { common_panel(1, 80) }
+
+fn test_fugue_counter_panel_120() { common_panel(1, 120) }
