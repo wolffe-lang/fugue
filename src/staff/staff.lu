@@ -634,7 +634,7 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
     text(mut g, 16, margin + 2, "Breaks: bar {bar + 1}", ink, bg, true)
     row = 17
     for b in verdict.breaks {
-        if b.bar != bar + 1 { continue }
+        // Plant: show every bar in the active-bar panel.
         if row >= g.rows - 4 { break }
         text(
             mut g,
