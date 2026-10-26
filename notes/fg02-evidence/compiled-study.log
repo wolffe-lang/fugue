@@ -1,0 +1,26 @@
+build: target/native/fugue
+fugue-census Ionian subject 50/50 real 50 tonal 18 counter 29/50 three-star 4
+fugue-census Dorian subject 50/50 real 50 tonal 19 counter 25/50 three-star 1
+fugue-census Phrygian subject 50/50 real 50 tonal 32 counter 23/50 three-star 1
+fugue-census Lydian subject 50/50 real 50 tonal 32 counter 20/50 three-star 5
+fugue-census Mixolydian subject 50/50 real 50 tonal 18 counter 28/50 three-star 4
+fugue-census Aeolian subject 50/50 real 50 tonal 21 counter 18/50 three-star 0
+fugue-census subjects 300/300 real 300/300 tonal 140/300 counter 143/300 three-star 15/300 certified-mode-sides 12/12
+tutorial 1: Real answer; mutation 0; stars 3; breaks 0
+tutorial 2: Tonal answer; mutation 1; stars 3; breaks 0
+tutorial 3: Tonal answer; mutation 1; stars 3; breaks 0
+wrong answer bar 3: hidden-perfect
+wrong answer bar 3: inversion-fifth
+wrong answer bar 3: inversion-fifth
+wrong answer bar 3: inversion-fifth
+wrong answer bar 3: inversion-fifth
+wrong answer bar 3: answer-transposition
+bad inversion bar 1: inverted-downbeat-consonance
+bad inversion bar 1: inverted-downbeat-consonance
+bad inversion bar 1: repeat
+bad inversion bar 1: inversion-fifth
+bad inversion bar 1: inversion-fifth
+bad inversion bar 1: inversion-fifth
+bad inversion bar 1: inversion-fifth
+tail leap bar 1: subject-steps
+tail leap bar 6: subject-tail

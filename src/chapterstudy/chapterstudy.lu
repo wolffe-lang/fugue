@@ -1,0 +1,93 @@
+//! Deterministic black-box evidence for the sixth book, on either compiler backend.
+
+use answer
+use counter
+use exposition
+use session
+use subject
+use theory
+
+/// Raw admission is measured before playable filtering; no absence is called invalid.
+pub fn census() -> int {
+    var valid = 0, real = 0, tonal_total = 0, admitted_total = 0, gold_total = 0
+    for mode in 0..6 {
+        let pool = subject.candidates(mode)
+        var tonal_count = 0, admitted = 0, gold = 0
+        for seed in 0..50 {
+            region attempt {
+                let s = subject.choose(pool, seed) else { return 1 }
+                if subject.validate(s).len != 0 { return 1 }
+                valid += 1
+                let real_answer = answer.make(s, seed % 2 != 0, false)
+                if answer.check(s, real_answer.notes, real_answer.beats, seed % 2 != 0).kind !=
+                    "Real answer" {
+                    return 1
+                }
+                real += 1
+                let tonal = answer.mutation(s) >= 0
+                if tonal { tonal_count += 1 }
+                let a = answer.make(s, seed % 2 != 0, tonal)
+                if answer.check(s, a.notes, a.beats, seed % 2 != 0).breaks.len != 0 { return 1 }
+                let cs = counter.solve(a, seed % 2 != 0) else { continue }
+                let v = counter.check(a, cs, seed % 2 != 0, false)
+                if v.stars == 0 { return 1 }
+                admitted += 1
+                if v.stars == 3 { gold += 1 }
+            }
+        }
+        tonal_total += tonal_count
+        admitted_total += admitted
+        gold_total += gold
+        print(
+            "fugue-census {theory.mode_name(mode)} subject 50/50 real 50 tonal {tonal_count} counter {admitted}/50 three-star {gold}",
+        )
+        for below in [false, true] {
+            let s = exposition.exercise(mode, mode, below) else { return 1 }
+            if subject.validate(s).len != 0 { return 1 }
+        }
+    }
+    print(
+        "fugue-census subjects {valid}/300 real {real}/300 tonal {tonal_total}/300 counter {admitted_total}/300 three-star {gold_total}/300 certified-mode-sides 12/12",
+    )
+    0
+}
+
+/// Each original tutorial reference is solved via ordinary state, not a score override.
+pub fn solved(index: int) -> session.State {
+    var s = session.with_book(take session.tutorial(index, false), 6)
+    s.fugue.response = answer.make(s.fugue.given, s.fugue.answer_below, index > 0)
+    s.fugue.continuation = counter.reference(index)
+    let line = if s.fugue.editing == 0 then copy s.fugue.response else copy s.fugue.continuation
+    s.voice = line.notes
+    s.beats = line.beats
+    s
+}
+
+/// Stable named rows; the positive references and each mutation are recomputed.
+pub fn verdicts() -> str {
+    var text = ""
+    for i in 0..3 {
+        let s = solved(i)
+        let a = answer.check(
+            s.fugue.given,
+            s.fugue.response.notes,
+            s.fugue.response.beats,
+            s.fugue.answer_below,
+        )
+        let v = session.verdict(s)
+        text += "tutorial {i + 1}: {a.kind}; mutation {a.mutation + 1}; stars {v.stars}; breaks {v.breaks.len}\n"
+    }
+    var s = solved(2)
+    s.voice[4] = theory.pitch(theory.position(s.voice[4]) + 1)
+    for b in session.verdict(s).breaks { text += "wrong answer bar {b.bar}: {b.rule}\n" }
+    s = solved(0)
+    var cs = counter.octave(s.fugue.continuation, 1)
+    cs.notes[0] = theory.pitch(theory.position(s.fugue.response.notes[0]) + 4)
+    for b in counter.check(s.fugue.response, cs, false, false).breaks {
+        text += "bad inversion bar {b.bar}: {b.rule}\n"
+    }
+    var line = subject.generate(1, 0) else subject.tutorial(0)
+    line.notes[line.notes.len - 1] = theory.pitch(28)
+    for b in subject.validate(line) { text += "tail leap bar {b.bar}: {b.rule}\n" }
+    text
+}

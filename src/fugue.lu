@@ -2,6 +2,7 @@ use std.env
 use std.fs
 use std.signal
 use std.time
+use chapterstudy
 use clock
 use ear
 use first
@@ -455,9 +456,11 @@ fn main() -> int {
         )
         return 0
     }
+    if has(args, "--fugue-census") { return chapterstudy.census() }
+    if has(args, "--fugue-verdicts") { print_raw(chapterstudy.verdicts()); return 0 }
     if has(args, "--species-verdicts") { print_raw(studies.verdicts()); return 0 }
     if has(args, "--verdicts") { print_raw(first.verdict_study()); return 0 }
-    if has(args, "--version") { print("fugue 0.2.0 / Books I-V"); return 0 }
+    if has(args, "--version") { print("fugue 0.3.0 / Books I-VI"); return 0 }
     if has(args, "--selftest") { return run_selftest() }
     if has(args, "--game-census") {
         var valid = 0, leap2 = 0, leap3 = 0, leap4 = 0
