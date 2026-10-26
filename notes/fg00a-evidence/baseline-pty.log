@@ -1,0 +1,34 @@
+RIGHT TWICE SCREEN
+·                                                           ·                   
+   fugue   /   I. Note against note                                             
+   Dorian   seed 7   cantus above                     ·                         
+                                           ·     ·       ·                    · 
+        1   2   3   4   5   6   7   8   9   10          │ The margin            
+ B4    ─────────────────────────○─────────────────────  │  ·                    
+        ·  ·  ·         ○                       ·       │ Bar 3· · ·            
+ G4    ─────────────────────○─────────────────────────  │                 ·     
+                ○                                      ·│ F3                ·   
+ E4    ───────────────────────────────────────────────  │       ·           ·  ·
+      · ○           ○ ·      ·      ○    ·  ○           │ o  given voice        
+ C4·    ──────────────────────────────────────── ·      │ *  your voice         
+                                 ●                      │                    ·  
+ A3     ─────────────────●──────   ·────────────        │ P perfect             
+          ··        ·        ●          ·               │ i imperfect           
+ F3     ─────────●──────   ·        ────────────        │ x dissonant           
+     ·       ●                  · ·      ●       ·  · · │            ·          
+ D3     ─●──        ─●── · ·      · ─●──    ─●──        │ Bar 2                ·
+                                                        │ parallel-perfect      
+                                                   ·    │             ·         
+        P8  P8  P8  P8  P8  P8  P8  P8  P8  P8          │        ·              
+              · ^·      ·                             ·                   ·     
+   Arrows write   Space sounds   h hears   Enter checks   u undo   q quit       
+                                         ·                  ·              ·    
+
+pty: panel-right-twice ok (linux x86_64, exit 0, 8684 bytes captured)
+sound: note-bank render_us 22247 base 22
+sound: wav-sink 1 /work/target/pty/audio/note-23-0.wav
+sound: wav-sink 2 /work/target/pty/audio/note-22-0.wav
+sound: wav-sink 3 /work/target/pty/audio/whole-1.wav
+fugue: ended by the quit key
+
+pty: editor-ear ok (linux x86_64, exit 0, 8963 bytes captured)

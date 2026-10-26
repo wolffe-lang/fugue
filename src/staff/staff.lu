@@ -393,8 +393,8 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
     for y in 4..rows - 3 {
         grid.put(mut g, y, margin, grid.cell(if t == 1 then 0x2502 else 124, ink, bg, 0))
     }
-    text(mut g, 4, margin + 2, "The margin", ink, bg, true)
-    text(mut g, 6, margin + 2, "Editing bar {s.cursor + 1}", blue, bg, true)
+    text(mut g, 4, margin + 2, "Editing bar {s.cursor + 1}", blue, bg, true)
+    text(mut g, 6, margin + 2, "Selected note", blue, bg, false)
     if s.voice.len > 0 {
         text(mut g, 8, margin + 2, theory.name(s.voice[s.cursor]), blue, bg, false)
     }
@@ -424,7 +424,7 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
         mut g,
         rows - 1,
         3,
-        "o cantus: burnt orange   * player: dark blue",
+        "o cantus: burnt orange",
         cantus_ink(t),
         bg,
         false,
