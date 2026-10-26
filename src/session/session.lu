@@ -461,6 +461,7 @@ fn edit_rhythm(mut s: State, k: int) {
         (mut beats).push(copy b)
         (mut notes).push(copy s.voice[j])
         if j == i && split {
+            b.length += 1
             b.tied = false
             (mut beats).push(b)
             (mut notes).push(copy s.voice[j])
