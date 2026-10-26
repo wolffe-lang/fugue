@@ -358,5 +358,7 @@ pub fn choose(pool: List[Candidate], seed: int) -> List[Pitch] ! {empty} {
     if pool.len == 0 { return empty }
     let limit = if pool.len < 16 then pool.len else 16
     let index = (seed % limit + limit) % limit
-    copy pool[index].notes
+    var selected = copy pool[index].notes
+    selected[2] = copy selected[1]
+    selected
 }
