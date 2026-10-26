@@ -93,6 +93,7 @@ pub fn lines(mut g: grid.Grid, v: Viewport, t: int) {
     for line in 0..5 {
         let y = row_of(v, theory.pitch(v.line + line * 2))
         for x in v.left..v.right + 1 {
+            if x == v.left + 2 { continue }
             let bg = g.cells[y * g.cols + x].bg
             grid.put(
                 mut g,
