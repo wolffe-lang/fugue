@@ -1,0 +1,24 @@
+                                                                     ·         ·
+   fugue / V. The florid voice                  ·                 ·  ·          
+   Mixolydian  seed 2  cantus below                      ·                      
+                          ·                                                     
+        4                         ·                     |                       
+ B6                 ·                        · · ·      | Bar 4 / 1:8           
+ A6·      ·                                         ·   |                ··     
+ G6                                                     | G5       ·            
+ F6    │─────────────────────────────────│───────────── |·                      
+ E6    │  ·           ·            ·     │      ·       | h hear both voices    
+·D6    │─────────────────────────────────│─────────────·|         ·             
+ C6    │·          ·                     │              | S strong / w weak     
+ B5    │─────────────────────────────────│───────────── |        ·              
+ A5 ·  │                                 │              | \_/ tie, r rest       
+ G5    │─●───────────────────────────────│───────────── | t tie  0 first rest   
+ F5    │                                 │      ·       | ] split  [ join       
+ E5  · │○────────────────────────────────│───────────── |                ·      
+ D5                       ·            ·           ·    |     ·                 
+ C5     ·                  ·                            |                       
+      · Sm3               ·                  ·          |·      ·               
+  ·     /1                         ·                ·   |                       
+      ·  ^                         ·                                            
+   Arrows write  h hear  Enter check  u undo  n next  b books  q quit           
+··    ·                    ·                      ·  ·                          

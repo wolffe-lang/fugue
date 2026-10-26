@@ -1,0 +1,24 @@
+                                                                     .         .
+   fugue / V. The florid voice                  .                 .  .          
+   Mixolydian  seed 2  cantus below                      .                      
+                          .                                                     
+        10                        .                     |                       
+ D6                 .                        . . .      | Bar 10 / 6:8          
+ C6.      .                                         .   |                ..     
+ B5                                                     | G5       .            
+ A5    |---------------------------------|------------- |.                      
+ G5    | *.           .            .     |      .       | h hear both voices    
+.F5    |---------------------------------|-------------.|         .             
+ E5    |.          .                     |              | S strong / w weak     
+ D5    |---------------------------------|------------- |        .              
+ C5 .  |                                 |              | \_/ tie, r rest       
+ B4    |---------------------------------|------------- | t tie  0 first rest   
+ A4    |                                 |      .       | ] split  [ join       
+ G4  . |o--------------------------------|------------- |                .      
+ F4                       .            .           .    |     .                 
+ E4     .                  .                            |                       
+      . SP8               .                  .          |.      .               
+  .     /1                         .                .   |                       
+      .                      ^     .                                            
+   Arrows write  h hear  Enter check  u undo  n next  b books  q quit           
+..    .                    .                      .  .                          

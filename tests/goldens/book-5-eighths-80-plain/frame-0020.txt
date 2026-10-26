@@ -1,0 +1,24 @@
+                .                          .     .  .  .                        
+   fugue / V. The florid voice                                                  
+   Ionian  seed 0  cantus below              .              .           .       
+         .                                                                      
+        1          .          .                         |          .         .  
+ G5                         .     .                     | Bar 1 / 1:8           
+ F5                                .              .     |  ..                   
+ E5        .              |              .    .    .    | G4                    
+ D5   .|------------------|-------|'-----|------------- |       .               
+ C5    |                  |       |   |' |              | h hear both voices    
+ B4    |-----------------*--------|---|--|-------------.|                       
+ A4   .| r                       *    |  |           .  | S strong / w weak .   
+ G4    |-----------------------------*---|------------- |            .          
+ F4    |                  .              |              | \_/ tie, r rest       
+ E4    |---------------------------------|------------- | t tie  0 first rest  .
+ D4    |                                 |   .          | ] split  [ join       
+ C4    |o--------------------------------|------------- |             .       . 
+ B3          .                               .          |.                   .  
+ A3 .             .                           .         | opening               
+        r         .     wM7     wM6 wP5                 |            .          
+        /2              /4      /8  /8                . |   .                   
+         ^                                                         .          . 
+   Arrows write  h hear  Enter check  u undo  n next  b books  q quit           
+                                                   .               .       .    
