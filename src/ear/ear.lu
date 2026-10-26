@@ -16,6 +16,7 @@ pub struct Ear {
     base: int,
     children: List[process.Child],
     serial: int,
+    whole_serial: int,
     mac: bool,
 }
 
@@ -39,6 +40,7 @@ pub fn open(enabled: bool) -> Ear ! {io} {
         base: 0,
         children: List[process.Child](),
         serial: 0,
+        whole_serial: 0,
         mac: fs.exists("/usr/bin/afplay"),
     }
 }
@@ -100,11 +102,17 @@ fn start(mut e: Ear, path: str) -> () ! {io} {
     e.serial += 1
     if !e.mac {
         let bytes = fs.read_bytes(path) else |_| { return io }
-        fs.write_bytes("{e.dir}/audition-{e.serial}.wav", bytes) else |_| { return io }
+        fs.write_bytes(
+            "{e.dir}/audition-{if e.owned then e.serial % 64 else e.serial}.wav",
+            bytes,
+        ) else |_| { return io }
         eprint("sound: wav-sink {e.serial} {path}")
         return
     }
     poll(mut e)
+    var active = 0
+    for child in e.children { if child.slot >= 0 { active += 1 } }
+    if active >= 32 { eprint("sound: player capacity (32 owned cues)"); return io }
     var cmd = process.command("/usr/bin/afplay")
     process.push_arg(mut cmd, path)
     let child = process.start(cmd) else |_| { return io }
@@ -123,7 +131,8 @@ pub fn audition(mut e: Ear, p: theory.Pitch) -> () ! {io} {
 /// Render and start both voices; callers reset their tick deadline after preparation.
 pub fn hear(mut e: Ear, s: session.State) -> () ! {io} {
     if !e.enabled { return }
-    let path = "{e.dir}/whole-{e.serial + 1}.wav"
+    e.whole_serial += 1
+    let path = "{e.dir}/whole-{if e.owned then e.whole_serial % 3 else e.whole_serial}.wav"
     region preparation { render(path, whole_part(s), s.voice.len + 1)? }
     start(mut e, path)?
 }

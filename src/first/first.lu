@@ -245,3 +245,34 @@ pub fn exercise(seed: int, mode: int, below: bool) -> List[theory.Pitch] ! {empt
     }
     empty
 }
+
+/// Stable legal/illegal rule study for the native and release golden gate.
+pub fn verdict_study() -> str {
+    var cf = List[theory.Pitch](), legal = List[theory.Pitch]()
+    for d in [0, 1, 2, 0, 3, 2, 4, 2, 1, 0] { (mut cf).push(theory.pitch(28 + d)) }
+    for d in [4, 3, 4, 5, 8, 7, 6, 4, 6, 7] { (mut legal).push(theory.pitch(28 + d)) }
+    let names = [
+        "legal",
+        "consonance",
+        "opening",
+        "closing",
+        "two-voice-cadence",
+        "parallel-perfect",
+        "hidden-perfect",
+        "crossing",
+        "overlap",
+        "interior-unison",
+    ]
+    let bars = [0, 1, 0, 9, 8, 1, 2, 1, 4, 1]
+    let pitches = [32, 30, 30, 32, 32, 33, 34, 28, 29, 29]
+    var result = ""
+    for i in 0..names.len {
+        var cp = copy legal
+        if i > 0 { cp[bars[i]] = theory.pitch(pitches[i]) }
+        let v = check(cf, cp, 0, false)
+        result += "{names[i]}: stars {v.stars}"
+        for b in v.breaks { result += " | bar {b.bar} {b.rule}" }
+        result += "\n"
+    }
+    result
+}

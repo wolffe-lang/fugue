@@ -1,0 +1,10 @@
+legal: stars 3
+consonance: stars 0 | bar 2 consonance | bar 1 leap-count
+opening: stars 0 | bar 1 opening | bar 1 sequence
+closing: stars 0 | bar 10 hidden-perfect | bar 10 closing | bar 9 two-voice-cadence | bar 7 sequence
+two-voice-cadence: stars 0 | bar 9 consonance | bar 9 two-voice-cadence | bar 9 repeat
+parallel-perfect: stars 0 | bar 2 parallel-perfect | bar 1 sequence
+hidden-perfect: stars 0 | bar 3 hidden-perfect | bar 1 sequence | bar 2 sequence | bar 3 leap-quality | bar 3 sequence
+crossing: stars 0 | bar 2 consonance | bar 2 crossing | bar 3 overlap | bar 3 recovery | bar 4 recovery | bar 1 leap-count
+overlap: stars 0 | bar 5 crossing | bar 6 overlap | bar 6 leap-quality | bar 6 recovery | bar 6 one-climax
+interior-unison: stars 0 | bar 2 interior-unison | bar 3 overlap | bar 2 sequence | bar 3 recovery | bar 4 recovery | bar 1 leap-count

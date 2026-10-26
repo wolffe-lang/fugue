@@ -34,3 +34,31 @@ fn test_editor_step_undo_and_octave() {
     session.step(mut s, 5)
     assert(theory.position(s.voice[0]) == before + 7)
 }
+
+fn test_hearing_locks_edits_and_card_return_resets_the_cursor() {
+    var s = session.tutorial(0, false)
+    session.step(mut s, 9)
+    let old = theory.position(s.voice[0])
+    session.step(mut s, 1)
+    assert(theory.position(s.voice[0]) == old)
+    for i in 0..300 { session.tick(mut s) }
+    assert(s.hearing == -1)
+    session.step(mut s, 10)
+    for i in 0..100 { session.step(mut s, 2) }
+    session.step(mut s, 13)
+    assert(s.phase == 1 && s.cursor == 0)
+    session.step(mut s, 1)
+    assert(theory.position(s.voice[0]) == old + 1)
+}
+
+fn test_cadence_sharp_only_at_the_leading_note() {
+    var s = session.tutorial(1, false)
+    session.step(mut s, 7)
+    assert(s.voice[0].accidental == 0)
+    s.cursor = 8
+    s.voice[8] = theory.pitch(35)
+    session.step(mut s, 7)
+    assert(s.voice[8].accidental == 1)
+    session.step(mut s, 11)
+    assert(s.voice[8].accidental == 0)
+}

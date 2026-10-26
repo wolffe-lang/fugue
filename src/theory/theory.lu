@@ -76,7 +76,7 @@ pub fn motion(a: Pitch, b: Pitch, next_a: Pitch, next_b: Pitch) -> str {
     if direction(da) != direction(db) { return "contrary" }
     let old = interval(a, b)
     let next = interval(next_a, next_b)
-    if old.number == next.number && old.quality == next.quality { return "parallel" }
+    if old.number == next.number { return "parallel" }
     "similar"
 }
 

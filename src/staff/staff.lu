@@ -193,6 +193,19 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
     let height = bottom - top
     var base = 28
     if s.below { base -= 7 }
+    var low = 100, high = 0
+    for p in s.cantus {
+        let pos = theory.position(p)
+        if pos < low { low = pos }
+        if pos > high { high = pos }
+    }
+    for p in s.voice {
+        let pos = theory.position(p)
+        if pos < low { low = pos }
+        if pos > high { high = pos }
+    }
+    if high > base + height { base = high - height }
+    if low < base { base = low }
     // The window follows the edited pitch without compressing line/space spacing.
     if s.voice.len > 0 {
         let selected = theory.position(s.voice[s.cursor])
@@ -225,6 +238,14 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
             let pos = theory.position(p)
             let y = bottom - (pos - base)
             let nx = x + which
+            if y < top || y > bottom {
+                grid.put(
+                    mut g,
+                    if y < top then top else bottom,
+                    nx,
+                    grid.cell(if y < top then 94 else 118, if which == 0 then ink else blue, bg, 1),
+                )
+            }
             if y >= top && y <= bottom {
                 if pos < 30 || pos > 38 {
                     let edge = if pos < 30 then 30 else 38
@@ -282,6 +303,9 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
     text(mut g, 6, margin + 2, "Bar {s.cursor + 1}", blue, bg, true)
     if s.voice.len > 0 {
         text(mut g, 8, margin + 2, theory.name(s.voice[s.cursor]), blue, bg, false)
+    }
+    if s.hearing >= 0 {
+        text(mut g, 9, margin + 2, "Hearing {s.hearing / 30 + 1}/{s.voice.len}", blue, bg, true)
     }
     text(mut g, 10, margin + 2, "o  given voice", ink, bg, false)
     text(mut g, 11, margin + 2, "*  your voice", blue, bg, false)

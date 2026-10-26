@@ -1,3 +1,4 @@
+use std.fs
 use theory
 
 fn test_spelled_intervals_and_motion() {
@@ -10,6 +11,7 @@ fn test_spelled_intervals_and_motion() {
     assert(theory.motion(c, theory.pitch(32), theory.pitch(29), theory.pitch(33)) == "parallel")
     assert(theory.motion(c, theory.pitch(32), theory.pitch(29), theory.pitch(31)) == "contrary")
     assert(theory.motion(c, theory.pitch(32), c, theory.pitch(33)) == "oblique")
+    assert(theory.motion(c, theory.pitch(30), theory.pitch(29), theory.pitch(31)) == "parallel")
 }
 
 fn census(mode: int) {
@@ -109,6 +111,13 @@ fn test_every_cantus_rule_has_a_positive_and_negative_witness() {
 
 fn oracle(mode: int, positions: List[int], expected: str) {
     let line = notes(positions)
+    let source = fs.read_text("tests/oracles/fux.txt") else ""
+    var transcription = ""
+    for i in 0..line.len {
+        if i > 0 { transcription += " " }
+        transcription += theory.name(line[i])
+    }
+    assert(source.contains("|{transcription}\n"))
     let verdict = theory.validate(line, mode)
     print("Fux {theory.mode_name(mode)} breaks {verdict.len}")
     var actual = ""

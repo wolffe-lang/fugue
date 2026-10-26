@@ -3,3 +3,6 @@ set -eu
 cd "$(dirname "$0")/.."
 .lair/tools/check
 .lair/tools/goldens --bin target/native/fugue
+python3 -I tools/gameplay.py --bin target/native/fugue
+python3 -I tools/gameplay.py --bin target/release/fugue
+python3 -I tools/glyphs.py

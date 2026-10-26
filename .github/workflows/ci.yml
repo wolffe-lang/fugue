@@ -127,8 +127,13 @@ jobs:
           LAIR_MEMORY_GATE: '0'
         run: |
           .lair/tools/goldens --bin target/native/fugue
-          target/native/fugue --selftest
-          target/release/fugue --selftest
+          python3 -I tools/gameplay.py --bin target/native/fugue
+          python3 -I tools/gameplay.py --bin target/release/fugue
+          python3 -I tools/glyphs.py
+      - name: manuscript frame costs
+        run: |
+          target/release/fugue --bench --size 120x40 --tier rich --frames 300 --mute
+          target/release/fugue --bench --size 120x40 --tier plain --frames 300 --mute
       - name: the pty rows
         env:
           LAIR_MEMORY_GATE: '0'

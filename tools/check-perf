@@ -4,3 +4,8 @@ cd "$(dirname "$0")/.."
 .lair/tools/build --release
 .lair/tools/perf
 python3 -I .lair/tools/perf-idle --bin target/release/fugue
+mkdir -p target/perf
+for tier in rich plain; do
+    target/release/fugue --bench --size 120x40 --tier "$tier" --frames 300 --mute >"target/perf/120-$tier.txt"
+    cat "target/perf/120-$tier.txt"
+done

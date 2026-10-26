@@ -11,6 +11,8 @@ def run(args,expected=0):
     print(p.stdout,end='');print(p.stderr,end='')
     if p.returncode!=expected:raise SystemExit(f'gameplay FAILED: {args}, exit {p.returncode}, expected {expected}')
     return p
+p=run(['--verdicts'])
+assert p.stdout == (root/'tests/goldens/verdicts/rules.txt').read_text()
 run(['--game-census'])
 for i in range(1,4):
     p=run(['--headless','--script',f'tests/cases/preset-{i}-80.pk','--frames','361','--every','361','--dump',f'target/gameplay/preset-{i}'])
@@ -22,4 +24,8 @@ p=run(['--headless','--script',str(case),'--frames','361','--every','361','--dum
 assert 'UNVERIFIED score 3, claimed 2' in p.stderr
 run(['--size','79x24'],2)
 run(['--size','80x23'],2)
+record=root/'tests/replays/solved-80.pk'
+ticks=int([x.split()[1] for x in record.read_text().splitlines() if x.endswith(' quit')][-1])+1
+p=run(['--headless','--script',str(record),'--frames',str(ticks),'--dump','target/gameplay/recorded'])
+assert 'verified score 3' in p.stderr
 print('gameplay: census, three references, score-tampering and minimum refusals green')
