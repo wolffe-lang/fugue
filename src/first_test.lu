@@ -77,3 +77,11 @@ fn test_hidden_fifth_is_never_accepted() {
     cp[2] = theory.pitch(34)
     assert(verdict_has(first.check(s.cantus, cp, 0, false), "hidden-perfect"))
 }
+
+fn test_wide_invalid_counterpoint_reports_range_without_trapping() {
+    let s = session.tutorial(0, false)
+    var cp = List[theory.Pitch]()
+    for i in 0..s.cantus.len { (mut cp).push(theory.pitch(28 + i * 8)) }
+    let v = first.check(s.cantus, cp, 0, false)
+    assert(v.stars == 0 && verdict_has(v, "range"))
+}

@@ -139,8 +139,8 @@ pub fn check(cf: List[theory.Pitch], cp: List[theory.Pitch], mode: int, below: b
     var line = List[theory.Pitch]()
     let shift = (cp[n - 1].octave - 4) * 7
     for p in cp {
-        var q = theory.pitch(theory.position(p) - shift)
-        q.accidental = p.accidental
+        var q = copy p
+        q.octave -= shift / 7
         (mut line).push(q)
     }
     for b in theory.validate(line, mode) {
