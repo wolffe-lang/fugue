@@ -1,0 +1,247 @@
+//! First species separates legality from five explicitly measured style goals.
+
+use theory
+
+/// Hard-rule findings and transparent style measurements.
+pub struct Verdict {
+    breaks: List[theory.Break],
+    stars: int,
+    contrary: int,
+    steps: int,
+    separate_climax: bool,
+    parallel_limit: bool,
+    variety: int,
+}
+
+/// Hard vertical and motion rules for a prefix, suitable for pruning and full judging.
+pub fn vertical(cf: List[theory.Pitch], cp: List[theory.Pitch], below: bool) -> List[theory.Break] {
+    var out = List[theory.Break]()
+    for i in 0..cp.len {
+        let iv = theory.interval(cf[i], cp[i])
+        theory.require(
+            mut out,
+            iv.consonance != 2,
+            i + 1,
+            "consonance",
+            "Choose a consonance; this pair rubs against itself.",
+        )
+        let c = theory.chromatic(cf[i]), p = theory.chromatic(cp[i])
+        theory.require(
+            mut out,
+            if below then p <= c else p >= c,
+            i + 1,
+            "crossing",
+            "Keep each voice on its own side of the staff.",
+        )
+        if i == 0 {
+            let start = iv.quality == "P" &&
+                (iv.number == 8 || iv.number == (if below then 1 else 5))
+            theory.require(
+                mut out,
+                start,
+                1,
+                "opening",
+                "Open with the perfect interval allowed for this voice.",
+            )
+        }
+        if i > 0 && i < cf.len - 1 {
+            theory.require(
+                mut out,
+                iv.number != 1,
+                i + 1,
+                "interior-unison",
+                "Save the meeting of the voices for the close.",
+            )
+        }
+        if i > 0 {
+            let old_c = theory.chromatic(cf[i - 1]), old_p = theory.chromatic(cp[i - 1])
+            let overlap = if below then p > old_c || c < old_p else p < old_c || c > old_p
+            theory.require(
+                mut out,
+                !overlap,
+                i + 1,
+                "overlap",
+                "Do not step across the other voice's previous note.",
+            )
+            let same = theory.direction(c - old_c) == theory.direction(p - old_p) &&
+                c != old_c &&
+                p != old_p
+            let previous = theory.interval(cf[i - 1], cp[i - 1])
+            let parallel = same &&
+                iv.consonance == 0 &&
+                previous.consonance == 0 &&
+                (iv.number - 1) % 7 == (previous.number - 1) % 7
+            theory.require(
+                mut out,
+                !parallel,
+                i + 1,
+                "parallel-perfect",
+                "Give perfect intervals independent motion, not parallel tracks.",
+            )
+            let hidden = same && iv.consonance == 0 && !parallel
+            theory.require(
+                mut out,
+                !hidden,
+                i + 1,
+                "hidden-perfect",
+                "Turn a voice before arriving at a perfect interval.",
+            )
+        }
+    }
+    out
+}
+
+/// Full first-species verdict; a length mismatch is named, never indexed through.
+pub fn check(cf: List[theory.Pitch], cp: List[theory.Pitch], mode: int, below: bool) -> Verdict {
+    var v = Verdict {
+        breaks: List[theory.Break](),
+        stars: 0,
+        contrary: 0,
+        steps: 0,
+        separate_climax: false,
+        parallel_limit: true,
+        variety: 0,
+    }
+    if cf.len != cp.len || cf.len < 2 {
+        theory.require(
+            mut v.breaks,
+            false,
+            1,
+            "voice-length",
+            "Place one note against every cantus note.",
+        )
+        return v
+    }
+    v.breaks = vertical(cf, cp, below)
+    let n = cp.len
+    let last = theory.interval(cf[n - 1], cp[n - 1])
+    theory.require(
+        mut v.breaks,
+        last.quality == "P" && (last.number == 1 || last.number == 8),
+        n,
+        "closing",
+        "Close on a unison or an octave.",
+    )
+    let penult = theory.interval(cf[n - 2], cp[n - 2])
+    let approach = theory.magnitude(theory.position(cp[n - 1]) - theory.position(cp[n - 2])) == 1 &&
+        theory.magnitude(theory.position(cf[n - 1]) - theory.position(cf[n - 2])) == 1
+    let shape = last.number == 8 && penult.number == 6 && penult.quality == "M" ||
+        last.number == 1 && penult.number == 3 && penult.quality == "m"
+    theory.require(
+        mut v.breaks,
+        approach && shape,
+        n - 1,
+        "two-voice-cadence",
+        "Step inward from a minor third, or outward from a major sixth.",
+    )
+    // The cantus's endpoint tests are replaced by the two-voice endpoint rules.
+    // Normalize whole octaves only; spelling and every melodic interval survive.
+    var line = List[theory.Pitch]()
+    let shift = (cp[n - 1].octave - 4) * 7
+    for p in cp {
+        var q = theory.pitch(theory.position(p) - shift)
+        q.accidental = p.accidental
+        (mut line).push(q)
+    }
+    for b in theory.validate(line, mode) {
+        if b.rule != "final" && b.rule != "cadence" { (mut v.breaks).push(copy b) }
+    }
+    var contrary = 0, steps = 0, high_cf = 0, high_cp = 0, peak_cf = 0, peak_cp = 0, peaks = 0
+    var seen: int = 0
+    var run = 0, previous_class = 0
+    for i in 0..n {
+        let a = theory.chromatic(cf[i]), b = theory.chromatic(cp[i])
+        if a > high_cf { high_cf = a; peak_cf = i }
+        if b > high_cp {
+            high_cp = b
+            peak_cp = i
+            peaks = 1
+        } else if b == high_cp {
+            peaks += 1
+        }
+        let simple = (theory.interval(cf[i], cp[i]).number - 1) % 7 + 1
+        seen |= 1 << simple
+        if i > 0 {
+            let motion = theory.motion(cf[i - 1], cp[i - 1], cf[i], cp[i])
+            if motion == "contrary" { contrary += 1 }
+            if theory.magnitude(theory.position(cp[i]) - theory.position(cp[i - 1])) == 1 {
+                steps += 1
+            }
+            if motion == "parallel" && (simple == 3 || simple == 6) && previous_class == simple {
+                run += 1
+            } else {
+                run = 1
+            }
+            if run > 3 { v.parallel_limit = false }
+        }
+        previous_class = simple
+    }
+    for bit in 1..8 { if seen & 1 << bit != 0 { v.variety += 1 } }
+    v.contrary = contrary * 100 / (n - 1)
+    v.steps = steps * 100 / (n - 1)
+    v.separate_climax = peaks == 1 && peak_cf != peak_cp
+    var goals = 0
+    if v.contrary >= 50 { goals += 1 }
+    if v.steps >= 60 { goals += 1 }
+    if v.separate_climax { goals += 1 }
+    if v.parallel_limit { goals += 1 }
+    if v.variety >= 3 { goals += 1 }
+    if v.breaks.len == 0 { v.stars = if goals == 5 then 3 else if goals >= 3 then 2 else 1 }
+    v
+}
+
+fn search(
+    cf: List[theory.Pitch],
+    mut cp: List[theory.Pitch],
+    mode: int,
+    below: bool,
+    mut found: List[theory.Pitch],
+    mut nodes: int,
+) {
+    if found.len > 0 || nodes > 2000000 { return }
+    nodes += 1
+    if cp.len == cf.len {
+        if check(cf, cp, mode, below).stars > 0 { found = copy cp }
+        return
+    }
+    let final = 28 + mode
+    let base = final + (if below then -7 else 0)
+    for pos in base..base + 15 {
+        if cp.len == cf.len - 1 && pos != final + (if below then 0 else 7) { continue }
+        var p = theory.pitch(pos)
+        if cp.len == cf.len - 2 && pos == final + (if below then -1 else 6) && theory.raises(mode) {
+            p.accidental = 1
+        }
+        (mut cp).push(p)
+        if theory.prefix_ok(cp) && vertical(cf, cp, below).len == 0 {
+            search(cf, mut cp, mode, below, mut found, mut nodes)
+        }
+        let _ = (mut cp).pop() else theory.pitch(base)
+        if found.len > 0 { break }
+    }
+}
+
+/// An offline bounded test-oracle search; never used as the player's answer or judge.
+pub fn solve(cf: List[theory.Pitch], mode: int, below: bool) -> List[theory.Pitch] {
+    var found = List[theory.Pitch](), cp = List[theory.Pitch]()
+    var nodes = 0
+    search(cf, mut cp, mode, below, mut found, mut nodes)
+    found
+}
+
+/// A seeded exercise must admit a legal answer on its assigned side.
+/// Search the best sixteen melodic candidates cyclically from the seed's choice;
+/// the answer is discarded, not offered to the player or trusted by the checker.
+pub fn exercise(seed: int, mode: int, below: bool) -> List[theory.Pitch] ! {empty} {
+    let pool = theory.candidates(mode)
+    let limit = if pool.len < 16 then pool.len else 16
+    if limit == 0 { return empty }
+    let start = (seed % limit + limit) % limit
+    for offset in 0..limit {
+        let index = (start + offset) % limit
+        var solved = false
+        region proof { solved = solve(pool[index].notes, mode, below).len > 0 }
+        if solved { return copy pool[index].notes }
+    }
+    empty
+}

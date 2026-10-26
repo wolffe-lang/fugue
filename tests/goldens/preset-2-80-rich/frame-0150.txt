@@ -1,0 +1,24 @@
+                           ·        ·                                           
+   fugue   /   I. Note against note                                · ·          
+   Dorian   seed 1   cantus below                   ·                           
+      ·                                                 ·                       
+     ·  1  ·2   3   4   5   6   7   8   9   10   ·      │ The margin            
+             ·                                ·         │                       
+ A5        ·                                            │ Bar 10·               
+                                                     ·· │     ·                 
+ F5    ───────────────────────────────────────────────  │ D5     ·       ·      
+       ·              ·  ●                              │    · ·                
+ D5    ──────────────────────●───────────────●──────── ·│ o  given voice      · 
+               ·                 ●      #●              │ *  your voice         
+ B4·   ──────────────●────────────────────────────────  │                   ·   
+         ●       ●          ·   ○ ·  ●                  │ P perfect             
+ G4    ──────●──────────○─────────────────────────────  │ i imperfect           
+                ○         ··○       ○                   │ x dissonant           
+ E4    ─────○───────────────────────────○─────────────  │                       
+        ○   ·  ·    ○        ·              ○       ·   │                       
+ C4             ·                                   ·  ·│                       
+                                      · ·               │                    ·  
+  ·     P5  m3  M3  M6  M6  M6  m3· M3  M6  P8          │  ·              ·     
+                     ·       ·              ^                                  ·
+   Arrows write   Space sounds   h hears   Enter checks   u undo   q quit       
+                        ·                                            ·     ·    

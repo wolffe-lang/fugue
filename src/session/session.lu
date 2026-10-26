@@ -1,3 +1,4 @@
+use first
 use replay
 use theory
 
@@ -23,22 +24,26 @@ pub struct State {
 /// Start at the title or staff with the supplied seed.
 pub fn new(seed: int, title: bool) -> State {
     let mode = (seed % 6 + 6) % 6
-    let cantus = theory.generate(seed, mode) else List[theory.Pitch]()
+    let below = seed / 6 % 2 != 0
+    let cantus = first.exercise(seed, mode, below) else List[theory.Pitch]()
+    assert(cantus.len > 0)
     var voice = List[theory.Pitch]()
-    for p in cantus { (mut voice).push(theory.pitch(theory.position(p) + 4)) }
+    for p in cantus {
+        (mut voice).push(theory.pitch(theory.position(p) + (if below then -7 else 4)))
+    }
     State {
         seed: seed,
         cursor: 0,
         phase: if title then 0 else 1,
         quit: false,
         mode: mode,
-        level: 0,
+        level: 3,
         cantus: cantus,
         voice: voice,
         history: List[Edit](),
         hearing: -1,
         audition: 0,
-        below: false,
+        below: below,
     }
 }
 
@@ -95,17 +100,22 @@ pub fn step(mut s: State, k: int) {
     if k == 14 || k == 15 { s.quit = true; return }
     if s.phase == 0 && k != 0 { s.phase = 1; return }
     if k == 12 {
-        let next = new(s.seed + 1, false)
+        let next = if s.level < 2 then tutorial(s.level + 1, false) else new(s.seed + 1, false)
         s = next
         return
     }
-    if k == 13 { s.phase = 1 }
+    if k == 13 { s.phase = 1; return }
+    if s.phase == 2 {
+        if k == 1 && s.cursor > 0 { s.cursor -= 1 }
+        if k == 2 { s.cursor += 1 }
+        return
+    }
     if s.phase != 1 { return }
     if k == 3 && s.cursor > 0 { s.cursor -= 1 }
     if k == 4 && s.cursor + 1 < s.voice.len { s.cursor += 1 }
     if k == 9 { s.hearing = 0 }
     if k == 8 { s.audition += 1 }
-    if k == 10 { s.phase = 2 }
+    if k == 10 { s.phase = 2; s.cursor = 0 }
     if k == 11 {
         let edit = (mut s.history).pop() else { return }
         s.voice[edit.bar] = edit.before
@@ -115,7 +125,7 @@ pub fn step(mut s: State, k: int) {
         let before = copy s.voice[s.cursor]
         var next = copy before
         if k == 7 {
-            let final = 28 + s.mode + (if s.below then -7 else 7)
+            let final = 28 + s.mode + (if s.below then 0 else 7)
             if s.cursor != s.voice.len - 2 ||
                 theory.position(before) != final - 1 ||
                 !theory.raises(s.mode) {
@@ -139,4 +149,39 @@ pub fn step(mut s: State, k: int) {
         s.audition += 1
         s.hearing = -1
     }
+}
+
+/// The three original tutorial cantus lines, written explicitly rather than borrowed.
+pub fn tutorial(index: int, title: bool) -> State {
+    let mode = if index == 0 then 0 else if index == 1 then 1 else 4
+    var cf = List[theory.Pitch]()
+    for d in [0, 1, 2, 0, 3, 2, 4, 2, 1, 0] { (mut cf).push(theory.pitch(28 + mode + d)) }
+    var cp = List[theory.Pitch]()
+    for p in cf { (mut cp).push(theory.pitch(theory.position(p) + 4)) }
+    State {
+        seed: index,
+        cursor: 0,
+        phase: if title then 0 else 1,
+        quit: false,
+        mode: mode,
+        level: index,
+        cantus: cf,
+        voice: cp,
+        history: List[Edit](),
+        hearing: -1,
+        audition: 0,
+        below: false,
+    }
+}
+
+/// A score is recomputed from notes, never loaded from a replay comment.
+pub fn score(s: State) -> int { first.check(s.cantus, s.voice, s.mode, s.below).stars }
+
+/// Initialize from the replay's optional tutorial start selector.
+pub fn from_replay(r: replay.Replay, title: bool) -> State {
+    if r.start == 99 { return tutorial(0, true) }
+    if r.start >= 101 && r.start <= 103 { return tutorial(r.start - 101, true) }
+    if r.start == 1000 { return new(r.seed, true) }
+    if r.start >= 1 && r.start <= 3 { return tutorial(r.start - 1, title) }
+    new(r.seed, title)
 }

@@ -1,0 +1,33 @@
+pk 1
+seed 7
+tier rich
+size 80x24
+start 101
+# score 3
+t 9 check
+t 12 right
+t 14 down
+t 15 down
+t 17 right
+t 18 down
+t 20 down
+t 21 right
+t 23 up
+t 24 right
+t 26 up
+t 27 right
+t 29 up
+t 30 right
+t 32 down
+t 33 down
+t 35 right
+t 36 down
+t 38 down
+t 39 right
+t 41 up
+t 42 right
+t 44 up
+t 45 up
+t 47 up
+t 48 check
+t 50 quit

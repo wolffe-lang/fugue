@@ -2,9 +2,12 @@
 from pathlib import Path
 import struct
 import time
+import shutil
+import subprocess
 
 def editor(bin, ctx):
     root = Path(ctx.ROOT) / 'target/pty/audio'
+    if root.exists(): shutil.rmtree(root)
     root.mkdir(parents=True, exist_ok=True)
     env = ctx.env_for()
     env['FUGUE_WAV_DIR'] = str(root)
@@ -56,3 +59,25 @@ def escape(bin, ctx):
     return s,problems
 
 ROWS={'editor-ear':editor,'title-quit':title_quit,'staff-quit':staff_quit,'card-quit':card_quit,'escape':escape}
+
+
+def solved_record(bin, ctx):
+    root=Path(ctx.ROOT)/'target/pty'
+    path=root/'solved.pk'
+    s=ctx.Session([bin,'--mute','--record',str(path)],24,80,ctx.env_for())
+    s.type(b'\r',.08)
+    keys={'up':b'\x1b[A','down':b'\x1b[B','right':b'\x1b[C','check':b'\r'}
+    for line in (Path(ctx.ROOT)/'tests/cases/preset-1-80.pk').read_text().splitlines():
+        words=line.split()
+        if words and words[0]=='t' and words[-1] in keys:s.type(keys[words[-1]],.04)
+    screen=ctx.screen_text(bin,s.out)
+    problems=[]
+    if 'Legal    3 / 3 stars' not in screen:problems.append('reference did not reach the three-star card')
+    s.type(b'q');s.finish();ctx.common_checks(s,0,problems)
+    text=path.read_text()
+    if '# score 3' not in text:problems.append('recorded score is not three')
+    ticks=int([line.split()[1] for line in text.splitlines() if line.endswith(' quit')][-1])+1
+    p=subprocess.run([bin,'--headless','--script',str(path),'--frames',str(ticks),'--dump',str(root/'record-verify')],capture_output=True,text=True)
+    if p.returncode or 'verified score 3' not in p.stderr:problems.append('actual recording did not verify: '+p.stderr)
+    return s,problems
+ROWS['solved-record']=solved_record

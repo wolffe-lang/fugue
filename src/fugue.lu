@@ -1,8 +1,10 @@
 use std.env
 use std.fs
 use std.signal
+use std.time
 use clock
 use ear
+use first
 use grid
 use headless
 use input
@@ -10,6 +12,7 @@ use replay
 use session
 use staff
 use term
+use theory
 use tier
 
 fn has(args: List[str], word: str) -> bool {
@@ -69,6 +72,8 @@ fn options() -> Options ! {parse} {
             o.bench = true
         } else if a == "--no-title" {
             o.title = false
+        } else if a == "--daily" {
+            o.seed = time.unix_ms() / 86400000
         } else if a == "--plain" {
             o.tier_id = 0
         } else if a == "--trace" {
@@ -113,7 +118,11 @@ fn options() -> Options ! {parse} {
 }
 
 fn load(o: Options) -> replay.Replay ! {parse} {
-    if o.script == "" { return replay.new(o.seed, o.tier_id, o.cols, o.rows) }
+    if o.script == "" {
+        var r = replay.new(o.seed, o.tier_id, o.cols, o.rows)
+        if !has(env.args(), "--seed") && !has(env.args(), "--daily") { r.start = 1 }
+        return r
+    }
     let text = fs.read_text(o.script) else |_| { return parse }
     var r = replay.from_text(text, session.vocab())?
     let args = env.args()
@@ -129,8 +138,21 @@ fn apply_events(mut s: session.State, r: replay.Replay, tick: int) {
     for k in keys { session.step(mut s, k) }
 }
 
+fn verify_score(o: Options, s: session.State) -> int {
+    if o.script == "" { return 0 }
+    let source = fs.read_text(o.script) else ""
+    let expected = replay.score_of(source) else -1
+    let actual = session.score(s)
+    if expected >= 0 && expected != actual {
+        eprint("fugue: UNVERIFIED score {actual}, claimed {expected}")
+        return 1
+    }
+    if expected >= 0 { eprint("fugue: verified score {actual}") }
+    0
+}
+
 fn offline(o: Options, r: replay.Replay) -> int {
-    var s = session.new(r.seed, false)
+    var s = session.from_replay(r, false)
     let count = if o.frames > 0 then o.frames else 60
     var prev = grid.new(r.rows, r.cols)
     var pen = grid.pen_new()
@@ -156,6 +178,7 @@ fn offline(o: Options, r: replay.Replay) -> int {
             for j in 0..g.cells.len { prev.cells[j] = g.cells[j] }
         }
     }
+    if verify_score(o, s) != 0 { return 1 }
     if o.bench {
         print("bench {r.cols}x{r.rows} {tier.name(r.tier)} avg_us {total / count} max_us {worst}")
     }
@@ -169,7 +192,7 @@ fn live(o: Options, r: replay.Replay) -> int {
         return 2
     }
     defer ear.close(mut audio)
-    var s = session.new(r.seed, o.title && o.script == "")
+    var s = session.from_replay(r, o.title && o.script == "")
     ear.prepare(mut audio, s) else |_| { eprint("fugue: note preparation failed"); return 2 }
     var t = term.open() else |e| { eprint(term.message("{e}", "fugue")); return 2 }
     if t.cols < r.cols || t.rows < r.rows {
@@ -186,6 +209,10 @@ fn live(o: Options, r: replay.Replay) -> int {
     var reason = "--ticks"
     var tick = 0
     var recorded = replay.new(r.seed, r.tier, r.cols, r.rows)
+    recorded.start = r.start
+    if o.title && o.script == "" {
+        recorded.start = if r.start >= 1 && r.start <= 3 then r.start + 100 else 1000
+    }
     loop {
         let wake = clock.wait_until(mut c, clock.next_due_ns(c), term.signal_set()) else |_| {
             return 2
@@ -248,9 +275,10 @@ fn live(o: Options, r: replay.Replay) -> int {
     }
     if o.record != "" {
         var bytes = List[byte]()
-        replay.format_scored(recorded, session.vocab(), 0, mut bytes)
+        replay.format_scored(recorded, session.vocab(), session.score(s), mut bytes)
         fs.write_bytes(o.record, bytes) else |_| { return 2 }
     }
+    if verify_score(o, s) != 0 { return 1 }
     eprint("fugue: ended by {reason}")
     0
 }
@@ -261,6 +289,56 @@ fn main() -> int {
         let n = headless.diff_property()
         if n == 0 { print("selftest: diff property ok") }
         return if n == 0 then 0 else 1
+    }
+    if has(args, "--game-census") {
+        var valid = 0, leap2 = 0, leap3 = 0, leap4 = 0
+        for mode in 0..6 {
+            for seed in 0..50 {
+                region exercise {
+                    let cf = first.exercise(seed, mode, seed % 2 == 1) else List[theory.Pitch]()
+                    if cf.len == 0 || theory.validate(cf, mode).len != 0 {
+                        eprint("census FAILED mode {mode} seed {seed}")
+                        return 1
+                    }
+                    valid += 1
+                    let count = theory.leaps(cf)
+                    if count == 2 { leap2 += 1 }
+                    if count == 3 { leap3 += 1 }
+                    if count == 4 { leap4 += 1 }
+                }
+            }
+            print("game-census {theory.mode_name(mode)} valid 50/50 length10 50")
+        }
+        print("game-census valid {valid}/300 leaps2 {leap2} leaps3 {leap3} leaps4 {leap4}")
+        return 0
+    }
+    if has(args, "--solution-census") {
+        for mode in 0..6 {
+            let pool = theory.candidates(mode)
+            for which in 0..2 {
+                var solved = 0
+                for seed in 0..16 {
+                    region attempt {
+                        let cf = theory.choose(pool, seed) else List[theory.Pitch]()
+                        let cp = first.solve(cf, mode, which == 1)
+                        if cp.len > 0 { solved += 1 }
+                    }
+                }
+                print("solutions mode {mode} below {which} solved {solved}/16")
+            }
+        }
+        return 0
+    }
+    if has(args, "--solve-presets") {
+        for mode in [0, 1, 4] {
+            var cf = List[theory.Pitch]()
+            for d in [0, 1, 2, 0, 3, 2, 4, 2, 1, 0] { (mut cf).push(theory.pitch(28 + mode + d)) }
+            print("preset mode {mode} cantus-breaks {theory.validate(cf, mode).len}")
+            let cp = first.solve(cf, mode, false)
+            print("solution {cp.len}")
+            for p in cp { print(theory.name(p)) }
+        }
+        return 0
     }
     let o = options() else |_| {
         eprint("fugue: invalid option or small size (minimum 80x24)")

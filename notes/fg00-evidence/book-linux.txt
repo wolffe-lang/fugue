@@ -1,0 +1,70 @@
+build: target/native/fugue
+build: target/release/fugue
+goldens: wrote tests/goldens/critic-120-rich
+goldens: wrote tests/goldens/critic-120-plain
+goldens: wrote tests/goldens/critic-80-rich
+goldens: wrote tests/goldens/critic-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-plain
+goldens: wrote tests/goldens/staff-120-rich
+goldens: wrote tests/goldens/staff-120-plain
+goldens: wrote tests/goldens/staff-80-rich
+goldens: wrote tests/goldens/staff-80-plain
+goldens: wrote tests/goldens/title-120-rich
+goldens: wrote tests/goldens/title-120-plain
+goldens: wrote tests/goldens/title-80-rich
+goldens: wrote tests/goldens/title-80-plain
+goldens: wrote tests/goldens/art
+game-census Ionian valid 50/50 length10 50
+game-census Dorian valid 50/50 length10 50
+game-census Phrygian valid 50/50 length10 50
+game-census Lydian valid 50/50 length10 50
+game-census Mixolydian valid 50/50 length10 50
+game-census Aeolian valid 50/50 length10 50
+game-census valid 300/300 leaps2 9 leaps3 167 leaps4 124
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: invalid option or small size (minimum 80x24)
+fugue: invalid option or small size (minimum 80x24)
+gameplay: census, three references, score-tampering and minimum refusals green
+pty: quit ok (linux x86_64, exit 0, 8330 bytes captured)
+pty: ctrl-c ok (linux x86_64, exit 0, 8330 bytes captured)
+pty: trap ok (linux x86_64, exit 134, 8330 bytes captured)
+pty: agree-rich ok (linux x86_64, exit 0, 8761 bytes captured)
+pty: agree-plain ok (linux x86_64, exit 0, 3125 bytes captured)
+sound: note-bank render_us 22231 base 22
+sound: wav-sink 1 /work/target/pty/audio/note-23-0.wav
+sound: wav-sink 2 /work/target/pty/audio/note-22-0.wav
+sound: wav-sink 3 /work/target/pty/audio/whole-3.wav
+fugue: ended by the quit key
+
+pty: editor-ear ok (linux x86_64, exit 0, 11132 bytes captured)
+pty: title-quit ok (linux x86_64, exit 0, 4935 bytes captured)
+pty: staff-quit ok (linux x86_64, exit 0, 8399 bytes captured)
+pty: card-quit ok (linux x86_64, exit 0, 10558 bytes captured)
+pty: escape ok (linux x86_64, exit 0, 4935 bytes captured)
+pty: solved-record ok (linux x86_64, exit 0, 14921 bytes captured)

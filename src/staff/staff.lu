@@ -1,6 +1,7 @@
 //! One manuscript page, shared geometry on rich and plain terminals.
 
 use draw
+use first
 use grid
 use session
 use theory
@@ -105,6 +106,75 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
             false,
         )
         text(mut g, rows - 3, 4, "q or Escape leaves the desk", ink, bg, false)
+        return g
+    }
+    let verdict = first.check(s.cantus, s.voice, s.mode, s.below)
+    if s.phase == 2 {
+        text(mut g, 2, 4, "Book I / the critic's card", blue, bg, true)
+        let status = if verdict.breaks.len == 0 then "Legal" else "Not yet"
+        text(mut g, 4, 4, "{status}    {verdict.stars} / 3 stars", blue, bg, true)
+        text(
+            mut g,
+            6,
+            4,
+            "Contrary {verdict.contrary}% / 50%     Steps {verdict.steps}% / 60%",
+            ink,
+            bg,
+            false,
+        )
+        text(
+            mut g,
+            7,
+            4,
+            "Climaxes apart: {verdict.separate_climax}    Short parallel runs: {verdict.parallel_limit}",
+            ink,
+            bg,
+            false,
+        )
+        text(
+            mut g,
+            8,
+            4,
+            "Interval variety: {verdict.variety} / 3    Hard breaks: {verdict.breaks.len}",
+            ink,
+            bg,
+            false,
+        )
+        for row in 0..rows - 13 {
+            let i = s.cursor + row
+            if i < verdict.breaks.len {
+                let b = copy verdict.breaks[i]
+                text(
+                    mut g,
+                    10 + row,
+                    4,
+                    draw.fit("Bar {b.bar}: {b.rule} / {b.reason}", cols - 8, false),
+                    harmony_ink(2, t),
+                    bg,
+                    false,
+                )
+            }
+        }
+        if verdict.breaks.len == 0 {
+            text(
+                mut g,
+                12,
+                4,
+                "The voices can stand together. Try another shape, or turn the page.",
+                ink,
+                bg,
+                false,
+            )
+        }
+        text(
+            mut g,
+            rows - 2,
+            4,
+            "r returns to the notes   n next page   Up/Down scroll   q quit",
+            blue,
+            bg,
+            false,
+        )
         return g
     }
     let margin = cols - (if cols >= 100 then 29 else 24)
@@ -215,6 +285,19 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
     }
     text(mut g, 10, margin + 2, "o  given voice", ink, bg, false)
     text(mut g, 11, margin + 2, "*  your voice", blue, bg, false)
+    if verdict.breaks.len > 0 {
+        let b = copy verdict.breaks[0]
+        text(mut g, 17, margin + 2, "Bar {b.bar}", harmony_ink(2, t), bg, true)
+        text(
+            mut g,
+            18,
+            margin + 2,
+            draw.fit(b.rule, cols - margin - 3, false),
+            harmony_ink(2, t),
+            bg,
+            false,
+        )
+    }
     text(mut g, 13, margin + 2, "P perfect", harmony_ink(0, t), bg, false)
     text(mut g, 14, margin + 2, "i imperfect", harmony_ink(1, t), bg, false)
     text(mut g, 15, margin + 2, "x dissonant", harmony_ink(2, t), bg, false)

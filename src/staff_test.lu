@@ -11,7 +11,7 @@ fn test_dissonance_is_never_drawn_green() {
 }
 
 fn test_plain_staff_and_grain() {
-    let s = session.new(7, false)
+    let s = session.tutorial(1, false)
     let g = staff.frame(s, 80, 24, 0)
     assert(grid.plain_ok(g))
     var dots = 0
@@ -24,7 +24,7 @@ fn test_plain_staff_and_grain() {
 }
 
 fn test_editor_step_undo_and_octave() {
-    var s = session.new(7, false)
+    var s = session.tutorial(1, false)
     let before = theory.position(s.voice[0])
     session.step(mut s, 1)
     assert(theory.position(s.voice[0]) == before + 1)

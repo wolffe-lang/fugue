@@ -1,0 +1,34 @@
+pk 1
+seed 0
+tier rich
+size 80x24
+start 1
+# score 3
+# frames 361 every 30
+t 1 right
+t 2 down
+t 3 down
+t 4 right
+t 5 down
+t 6 down
+t 7 right
+t 8 up
+t 9 right
+t 10 up
+t 11 right
+t 12 up
+t 13 right
+t 14 down
+t 15 down
+t 16 right
+t 17 down
+t 18 down
+t 19 right
+t 20 up
+t 21 right
+t 22 up
+t 23 up
+t 24 up
+t 40 hear
+t 350 check
+t 360 quit

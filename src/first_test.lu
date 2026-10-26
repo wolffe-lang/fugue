@@ -1,0 +1,79 @@
+use first
+use session
+use theory
+
+fn reference(mode: int) -> List[theory.Pitch] {
+    var cp = List[theory.Pitch]()
+    for d in [4, 3, 4, 5, 8, 7, 6, 4, 6, 7] { (mut cp).push(theory.pitch(28 + mode + d)) }
+    if theory.raises(mode) { cp[8].accidental = 1 }
+    cp
+}
+
+fn test_three_tutorial_reference_solutions_have_three_stars() {
+    for i in 0..3 {
+        let s = session.tutorial(i, false)
+        assert(theory.validate(s.cantus, s.mode).len == 0)
+        let v = first.check(s.cantus, reference(s.mode), s.mode, false)
+        assert(v.breaks.len == 0)
+        assert(v.stars == 3)
+        print(
+            "preset {i + 1}: three stars, contrary {v.contrary}, steps {v.steps}, variety {v.variety}",
+        )
+    }
+}
+
+fn verdict_has(v: first.Verdict, name: str) -> bool {
+    for b in v.breaks { if b.rule == name { return true } }
+    false
+}
+
+fn test_first_species_hard_rules_have_legal_and_illegal_witnesses() {
+    let s = session.tutorial(0, false)
+    let legal = reference(0)
+    let good = first.check(s.cantus, legal, 0, false)
+    for rule in [
+        "consonance",
+        "opening",
+        "closing",
+        "two-voice-cadence",
+        "parallel-perfect",
+        "hidden-perfect",
+        "crossing",
+        "overlap",
+        "interior-unison",
+    ] { assert(!verdict_has(good, rule)) }
+    var bad = copy legal
+    bad[1] = theory.pitch(30)
+    assert(verdict_has(first.check(s.cantus, bad, 0, false), "consonance"))
+    bad = copy legal
+    bad[0] = theory.pitch(30)
+    assert(verdict_has(first.check(s.cantus, bad, 0, false), "opening"))
+    bad = copy legal
+    bad[9] = theory.pitch(32)
+    assert(verdict_has(first.check(s.cantus, bad, 0, false), "closing"))
+    bad = copy legal
+    bad[8] = theory.pitch(32)
+    assert(verdict_has(first.check(s.cantus, bad, 0, false), "two-voice-cadence"))
+    bad = copy legal
+    bad[1] = theory.pitch(33)
+    assert(verdict_has(first.check(s.cantus, bad, 0, false), "parallel-perfect"))
+    bad = copy legal
+    bad[2] = theory.pitch(34)
+    assert(verdict_has(first.check(s.cantus, bad, 0, false), "hidden-perfect"))
+    bad = copy legal
+    bad[1] = theory.pitch(28)
+    assert(verdict_has(first.check(s.cantus, bad, 0, false), "crossing"))
+    bad = copy legal
+    bad[4] = theory.pitch(29)
+    assert(verdict_has(first.check(s.cantus, bad, 0, false), "overlap"))
+    bad = copy legal
+    bad[1] = theory.pitch(29)
+    assert(verdict_has(first.check(s.cantus, bad, 0, false), "interior-unison"))
+}
+
+fn test_hidden_fifth_is_never_accepted() {
+    let s = session.tutorial(0, false)
+    var cp = reference(0)
+    cp[2] = theory.pitch(34)
+    assert(verdict_has(first.check(s.cantus, cp, 0, false), "hidden-perfect"))
+}
