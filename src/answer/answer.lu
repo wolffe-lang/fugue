@@ -1,0 +1,110 @@
+//! Exact real answers and one precisely located tonal head mutation.
+
+use rhythm
+use subject
+use theory
+
+/// The named kind is never inferred from a merely legal counterpoint.
+pub struct Verdict { kind: str, mutation: int, breaks: List[theory.Break] }
+
+/// Preserve spelling and semitone distance: a perfect fifth up or fourth down.
+pub fn transpose(p: theory.Pitch, below: bool) -> theory.Pitch {
+    var q = theory.pitch(theory.position(p) + (if below then -3 else 4))
+    q.accidental = theory.chromatic(p) + (if below then -5 else 7) - theory.chromatic(q)
+    q
+}
+
+/// First fifth-degree attack in the opening tonic/fifth gesture; -1 means real only.
+pub fn mutation(s: subject.Line) -> int {
+    if s.notes.len < 2 { return -1 }
+    let root = 28 + s.mode
+    let a = (theory.position(s.notes[0]) - root + 70) % 7
+    let b = (theory.position(s.notes[1]) - root + 70) % 7
+    if a == 4 { return 0 }
+    if a == 0 && b == 4 { return 1 }
+    -1
+}
+
+/// Expected answer used by witnesses and the independent answer comparison.
+pub fn make(s: subject.Line, below: bool, tonal: bool) -> subject.Line {
+    var out = copy s
+    let point = if tonal then mutation(s) else -1
+    for i in 0..s.notes.len {
+        var p = transpose(s.notes[i], below)
+        if i == point {
+            // The dominant answers with the tonic, one diatonic step below the real answer.
+            p = theory.pitch(theory.position(p) - 1)
+        }
+        out.notes[i] = p
+    }
+    out
+}
+
+fn same(a: theory.Pitch, b: theory.Pitch) -> bool {
+    theory.position(a) == theory.position(b) && a.accidental == b.accidental
+}
+
+/// Name real or tonal only after every pitch, value and tie has been compared.
+pub fn check(
+    s: subject.Line,
+    notes: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+    below: bool,
+) -> Verdict {
+    var out = Verdict { kind: "refused", mutation: -1, breaks: List[theory.Break]() }
+    if notes.len != s.notes.len || beats.len != s.beats.len {
+        theory.require(
+            mut out.breaks,
+            false,
+            1,
+            "answer-length",
+            "Keep every attack of the subject in its answer.",
+        )
+        return out
+    }
+    let real = make(s, below, false), tonal = make(s, below, true), point = mutation(s)
+    var is_real = true, is_tonal = point >= 0
+    for i in 0..notes.len {
+        let bar = rhythm.onset(s.beats, i) / 8 + 1
+        let rhythm_ok = beats[i].length == s.beats[i].length &&
+            beats[i].rest == s.beats[i].rest &&
+            beats[i].tied == s.beats[i].tied
+        theory.require(
+            mut out.breaks,
+            rhythm_ok,
+            bar,
+            "answer-rhythm",
+            "Echo the subject's values exactly.",
+        )
+        if !same(notes[i], real.notes[i]) { is_real = false }
+        if !same(notes[i], tonal.notes[i]) { is_tonal = false }
+    }
+    if out.breaks.len == 0 && is_real { out.kind = "Real answer"; return out }
+    if out.breaks.len == 0 && is_tonal {
+        out.kind = "Tonal answer"
+        out.mutation = point
+        return out
+    }
+    for i in 0..notes.len {
+        if !same(notes[i], real.notes[i]) && !(i == point && same(notes[i], tonal.notes[i])) {
+            let bar = rhythm.onset(s.beats, i) / 8 + 1
+            theory.require(
+                mut out.breaks,
+                false,
+                bar,
+                "answer-transposition",
+                "Transpose this note exactly; a tonal mutation belongs only to the named head attack.",
+            )
+        }
+    }
+    if out.breaks.len == 0 {
+        theory.require(
+            mut out.breaks,
+            false,
+            1,
+            "answer-mutation",
+            "Keep the tonal exchange at the head, nowhere else.",
+        )
+    }
+    out
+}
