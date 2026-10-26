@@ -271,7 +271,10 @@ pub fn shape(notes: List[Pitch]) -> int {
 }
 
 /// Prune local rules before extending a prefix; the full validator is authoritative.
-pub fn prefix_ok(notes: List[Pitch]) -> bool {
+pub fn prefix_ok(notes: List[Pitch]) -> bool { prefix_with_leaps(notes, 4) }
+
+/// Same local canon with an explicitly supplied phrase leap ceiling.
+pub fn prefix_with_leaps(notes: List[Pitch], maximum: int) -> bool {
     let n = notes.len
     if n < 2 { return true }
     let d = position(notes[n - 1]) - position(notes[n - 2])
@@ -279,7 +282,7 @@ pub fn prefix_ok(notes: List[Pitch]) -> bool {
     if d == 0 || magnitude(d) > 7 || magnitude(d) == 6 || iv.quality == "A" || iv.quality == "d" {
         return false
     }
-    if leaps(notes) > 4 { return false }
+    if leaps(notes) > maximum { return false }
     if n >= 3 {
         let old = position(notes[n - 2]) - position(notes[n - 3])
         if magnitude(old) > 2 && !(magnitude(d) == 1 && direction(d) != direction(old)) {

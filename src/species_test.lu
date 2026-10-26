@@ -169,3 +169,30 @@ fn test_rhythm_style_counts_values_and_tied_time() {
     let (free_values, free_share) = species.rhythm_style(rhythm.pattern(5, 5))
     assert(free_values == 4 && free_share == 0)
 }
+
+fn test_later_species_leap_budget_scales_attack_density() {
+    assert(species.leap_limit(10) == 4)
+    assert(species.leap_limit(19) == 8)
+    assert(species.leap_limit(37) == 15)
+    assert(species.leap_limit(1) == 2)
+}
+
+fn test_aeolian_sixth_is_only_raised_in_the_final_step_pair() {
+    var line = pitches([38, 39, 40])
+    line[0].accidental = 1
+    line[1].accidental = 1
+    assert(species.cadential_sixth(line, 5, 0))
+    assert(!species.cadential_sixth(line, 1, 0))
+    assert(!species.cadential_sixth(line, 5, 1))
+    line[1].accidental = 0
+    assert(!species.cadential_sixth(line, 5, 0))
+}
+
+fn test_lower_phrygian_tenth_contracts_to_octave() {
+    let cf = pitches([31, 30]), beats = rhythm.pattern(2, 2)
+    let legal = species.check(cf, pitches([24, 22, 23]), beats, 2, true, 2)
+    assert(!broken(legal.breaks, "two-voice-cadence"))
+    var bad = pitches([24, 22, 23])
+    bad[1].accidental = 1
+    assert(broken(species.check(cf, bad, beats, 2, true, 2).breaks, "two-voice-cadence"))
+}
