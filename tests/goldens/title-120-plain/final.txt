@@ -19,22 +19,22 @@
     .             .                     |#### . |          .                                                            
         .         .                     |##  .  |    A second voice  .          ..  .                                   
                                         |##     |     .     .                     .                                     
-                                        +-------+    Book I / note against note                   .                     
-                           .     . .             .                                      .                        .      
-                                                   .               .       .                     .                      
-   .        .                           Enter or any key to open the manuscript       .                                 
-                                                  .   .         .              .                                        
-                          .         .                                                                               .   
-                                                                     .     .  .                      .   .              
-                .                                                                            .                          
-                .          .                                                                    .                   .   
-                                      .                                                        .            .           
-             .                         .           .           . .                                                 .    
-                                                         .                                                    .         
-                            .                                    .              .          .                        .   
-                                 .                       .               .     .                                        
-    .                .                         . .                                                  .    .              
-                                    .   .                                                      .              .      .  
-    q or Escape leaves the desk                 .                    .        .                             .           
+                                        +-------+    1  I. Note against note  [0*]                                      
+                                                     2  II. Two against one  [0*]                                       
+                                                     3  III. Four against one  [0*]                                     
+   .                                                 4  IV. The suspended voice  [0*]                                   
+                                                     5  V. The florid voice  [0*]                                       
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                     .  
+    1-5 choose a book   Enter resumes   q leaves the desk            .        .                             .           
                    .            .                               .       .    .     .                .                   
                .                        .              .  .                                                             

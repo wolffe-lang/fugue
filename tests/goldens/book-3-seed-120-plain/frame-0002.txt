@@ -11,7 +11,7 @@
       .        .                 .       .                                .                     |  .                    
    .                            .                                                               | S strong / w weak     
         1    .            2                 3       .     .   4        .           .            |        .   . ..       
- B4        .                              .       .              .                              | _ tied, r rest        
+ B4        .                              .       .              .                              | \_/ tie, r rest       
  A4                  .     .                                                                    | t tie  0 first rest   
  G4          .          .                                  .  .                                 |                .     .
  F4                             .  .                                               .            |                       
