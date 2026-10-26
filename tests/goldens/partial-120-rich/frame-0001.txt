@@ -5,35 +5,35 @@
                    ·          ·                                    ·         ·             ·    | Editing bar 1         
                             ·     ·                            ·                                | Bar 1, beat 1:8       
                                    ·              ·        ··                                   | · ·                   
-  ·        ·                             ·    ·    ·                                            | P5 perfect         ·  
-      ·        ·     ·                                          ·                               | G4·                   
+  ·        ·                             ·    ·    ·                                            | P12 perfect        ·  
+      ·        ·     ·                                          ·                               | G5·                   
                                                            ·                                    | unlicensed-eighth     
         ·   ·                    ·  ·                  ·                            ·           | strong beat     ·     
       ·                                              ·                      ·       ·           | Figure not allowed    
- Treble 1                 2          3            ·   4      5       ·  6          7       >>   | paired-eighths        
- A5                       ·                                    ·                                | paired-eighths        
- G5         ·                     ·              ··  ·                  ·      ·     |   |      | sequence              
- F5    │─────────────────│──────────│────────────────│──────│──────────│──────────│──|───|────│ |           ·           
- E5    │  ·              │·         │  |   |   |   | │      │  |    | ·│  |   · · │  |   |    │ | Breaks: whole page    
- D5    │─────────────────│──────────│──|───|───|───|─│──────│──|────|──│──|────|──│─●───●─────│ | bar 1 - paired-eighth·
- C5 ·  │  |'  |'  |      │       |  │  |   |  ·|   | │     ·│ ●    ●   │ ●     |  │           │ | bar 1 - paired-eighth 
- B4    │──|───|───|───|──│──|────|──│─●───●───●───●──│──────│──────────│──────●───│───────────│ | bar 2 - downbeat-cons 
- A4    │  |   |   |   |  │  |   ●   │                │·     │      \___│/         │           │ | bar 2 - same-beat-par 
- G4    │♮●───●───●───●───│─●────────│────────────────│─●────│──────────│──────────│○──────────│ | bar 3 - parallel-perf 
- F4    │             \___│/·     · ·│            ·   │      │○         │          │     ·     │ | bar 3 - same-beat-par 
- E4    │─────────────────│──────────│○───────────────│──────│──────────│○─────────│───────────│ |·bar 3 - same-beat-par 
- D4·        ·             ○          SP5 wP5 wP5 wP5         SP5  wP5   Sm6  wP5   SP5·wP5      | bar 4 - parallel-perf 
- C4    ─○─                SP4  wP5   /4  /4  /4  /4  ─○─     /2 · /2    /2   /2·   /4  /4       | bar 4 - accented-para 
- B3     SP5 wP5 wP5 wP5   /2   /2   ·                 SP5                                       | bar 5 - parallel-perf 
- A3     /8  /8  /4  /2                                /1             ·     ·  ·                 | bar 5 - accented-para 
-         ^      ·                                                                            ·  | bar 5 - same-beat-par 
-                ·          ·                                                                    | bar 6 - same-beat-par 
-                                      ·                                                        ·| bar 7 - parallel-perf 
-             ·                         ·           ·           · ·                              | bar 7 - same-beat-par 
+ Treble 1                  2          3           ·    4      5      ·   6          7      >>   | paired-eighths        
+ B5                       ·                                    ·                                | opening               
+ A5         ·                     ·              ··  ·                  ·      ·                | paired-eighths        
+ G5     ♮●                                   ·                  ·    ·                |   |     |           ·           
+ F5    │──|───────────────│──────────│────────────────│──────│──────────│──────────│──|───|───│ | Breaks: whole page    
+ E5    │  |  ·            │          │  |   |·  |   | │  ·   │  |    |  │  | ·     │  |   |   │ | bar 1 - paired-eighth·
+ D5 ·  │──|'──────────────│──────────│──|───|───|───|─│──────│──|────|──│──|────|──│─●───●────│ | bar 1 - opening       
+ C5    │·      |' ·|      │       |  │  |   |   |   | │      │ ●    ●·  │ ●     |· │·         │ | bar 1 - paired-eighth 
+ B4    │───────|───|───|──│──|────|──│─●───●───●───●──│──────│──────\___│/─────●───│──────────│ | bar 2 - downbeat-cons 
+ A4    │       |   |   |  │  |   ●   │                │      │     ·    │     ·    │          │ | bar 2 - same-beat-par 
+ G4    │──────●───●───●───│─●────────│────────────────│─●────│──────────│──────────│○─────────│ | bar 3 - parallel-perf 
+ F4    │                  │          │             ·  │      │○    ·    │  ·       │          │ |·bar 3 - same-beat-par 
+ E4·   │──────────────\___│/─────────│○───────────────│──────│──────────│○─────────│──────────│ | bar 3 - same-beat-par 
+ D4                        ○          SP5 wP5 wP5 wP5 ·       SP5  wP5   Sm6  wP5   SP5 wP5     | bar 4 - parallel-perf 
+ C4    ─○─                ·SP4  wP5 · /4  /4  /4  /4  ─○─     /2   /2    /2   /2    /4  /4      | bar 4 - accented-para 
+ B3     SP12 wP5 wP5 wP5   /2   /2                     SP5           ·     ·  ·                 | bar 5 - parallel-perf 
+        /8   /8 ·/4  /2                                /1                                    ·  | bar 5 - accented-para 
+         ^      ·          ·                                                                    | bar 5 - same-beat-par 
+                                      ·                                                        ·| bar 6 - same-beat-par 
+             ·                         ·           ·           · ·                              | bar 7 - parallel-perf 
                                                          ·                                      | bar 7 - same-beat-par 
-                            ·                                    ·              ·          ·    | bar 8 - parallel-perf 
-                                 ·                       ·               ·     ·                | bar 8 - accented-para 
-    ·                ·                         · ·                                              | bar 9 - parallel-perf 
+                            ·                                    ·              ·          ·    | bar 7 - same-beat-par 
+                                 ·                       ·               ·     ·                | bar 8 - parallel-perf 
+    ·                ·                         · ·                                              | bar 8 - accented-para 
                                     ·   ·                                                      ·|             ·      ·  
           ·    ·                                ·                    ·        ·                 |           ·           
   [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check ·     ·                ·                   

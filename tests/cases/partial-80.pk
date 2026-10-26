@@ -7,3 +7,4 @@ start 20001
 t 0 rest
 t 0 split
 t 0 split
+t 0 octave-up

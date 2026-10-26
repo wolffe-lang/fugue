@@ -69,3 +69,24 @@ fn test_partial_measure_space_and_cursor_never_cut() {
     assert(manuscript.measure_width(s, 0) == 11)
     assert(manuscript.measure_width(s, 2) == 17)
 }
+
+fn test_mixed_values_show_numbered_partial_measures() {
+    var s = session.with_book(take session.tutorial(0, false), 5)
+    session.step(mut s, 25)
+    session.step(mut s, 22)
+    session.step(mut s, 22)
+    session.step(mut s, 5)
+    assert(manuscript.measure_width(s, 0) == 19)
+    for cols in [80, 120] {
+        var last_bar = 0, in_last = 0
+        for i in 0..s.voice.len {
+            let x = manuscript.event_column(s, 0, i)
+            if x + manuscript.event_width(s, i) - 2 >= cols - 27 { break }
+            let bar = rhythm.onset(s.beats, i) / 8
+            if bar != last_bar { last_bar = bar; in_last = 0 }
+            in_last += 1
+        }
+        assert(last_bar == (if cols == 80 then 2 else 6))
+        assert(in_last == (if cols == 80 then 3 else 2))
+    }
+}
