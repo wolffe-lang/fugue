@@ -1,0 +1,32 @@
+fugue: verified score 3
+fugue: verified score 3
+goldens both backends: book-3-preset-1-120-rich green
+fugue: verified score 3
+fugue: verified score 3
+goldens both backends: book-3-preset-1-120-plain green
+fugue: verified score 3
+fugue: verified score 3
+goldens both backends: book-3-preset-1-80-rich green
+fugue: verified score 3
+fugue: verified score 3
+goldens both backends: book-3-preset-1-80-plain green
+fugue: verified score 3
+fugue: verified score 3
+goldens both backends: book-3-preset-2-80-rich green
+fugue: verified score 3
+fugue: verified score 3
+goldens both backends: book-3-preset-2-80-plain green
+fugue: verified score 3
+fugue: verified score 3
+goldens both backends: book-3-preset-3-80-rich green
+fugue: verified score 3
+fugue: verified score 3
+goldens both backends: book-3-preset-3-80-plain green
+goldens both backends: book-3-seed-120-rich green
+goldens both backends: book-3-seed-120-plain green
+goldens both backends: book-3-seed-80-rich green
+goldens both backends: book-3-seed-80-plain green
+bench 120x40 rich avg_us 119 max_us 242
+fugue: verified score 3
+bench 120x40 plain avg_us 106 max_us 198
+fugue: verified score 3

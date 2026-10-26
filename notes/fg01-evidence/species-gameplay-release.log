@@ -1,0 +1,79 @@
+rhythm-audio book 2 ticks 300 bytes 1920000 differs-cantus 1337080 differs-voice 1294318 nonzero 1496579
+rhythm-audio book 3 ticks 300 bytes 1920000 differs-cantus 1300153 differs-voice 1274717 nonzero 1483931
+rhythm-audio book 4 ticks 300 bytes 1920000 differs-cantus 1269707 differs-voice 1337850 nonzero 1487931
+rhythm-audio book 5 ticks 300 bytes 1920000 differs-cantus 1266349 differs-voice 1292180 nonzero 1494531
+species-census book 2 seed 0 mode 0 below false stars 3 candidate 0
+species-census book 2 seed 1 mode 1 below false stars 3 candidate 1
+species-census book 2 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 2 seed 3 mode 3 below false stars 2 candidate 4
+species-census book 2 seed 4 mode 4 below false stars 3 candidate 4
+species-census book 2 seed 5 mode 5 below false stars 2 candidate 5
+species-census book 2 seed 6 mode 0 below true stars 3 candidate 6
+species-census book 2 seed 7 mode 1 below true stars 2 candidate 7
+species-census book 2 seed 8 mode 2 below true stars 2 candidate 8
+species-census book 2 seed 9 mode 3 below true stars 2 candidate 9
+species-census book 2 seed 10 mode 4 below true stars 2 candidate 10
+species-census book 2 seed 11 mode 5 below true stars 3 candidate 11
+species-census book 2 legal 12/12 three-star-found 5/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+species-census book 3 seed 0 mode 0 below false stars 2 candidate 0
+species-census book 3 seed 1 mode 1 below false stars 3 candidate 1
+species-census book 3 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 3 seed 3 mode 3 below false stars 3 candidate 3
+species-census book 3 seed 4 mode 4 below false stars 3 candidate 4
+species-census book 3 seed 5 mode 5 below false stars 3 candidate 5
+species-census book 3 seed 6 mode 0 below true stars 3 candidate 6
+species-census book 3 seed 7 mode 1 below true stars 3 candidate 7
+species-census book 3 seed 8 mode 2 below true stars 3 candidate 8
+species-census book 3 seed 9 mode 3 below true stars 3 candidate 9
+species-census book 3 seed 10 mode 4 below true stars 3 candidate 10
+species-census book 3 seed 11 mode 5 below true stars 3 candidate 11
+species-census book 3 legal 12/12 three-star-found 10/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+species-census book 4 seed 0 mode 0 below false stars 2 candidate 0
+species-census book 4 seed 1 mode 1 below false stars 3 candidate 1
+species-census book 4 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 4 seed 3 mode 3 below false stars 2 candidate 4
+species-census book 4 seed 4 mode 4 below false stars 2 candidate 4
+species-census book 4 seed 5 mode 5 below false stars 2 candidate 5
+species-census book 4 seed 6 mode 0 below true stars 2 candidate 28
+species-census book 4 seed 7 mode 1 below true stars 2 candidate 9
+species-census book 4 seed 8 mode 2 below true stars 3 candidate 12
+species-census book 4 seed 9 mode 3 below true stars 2 candidate 12
+species-census book 4 seed 10 mode 4 below true stars 2 candidate 11
+species-census book 4 seed 11 mode 5 below true stars 2 candidate 13
+species-census book 4 legal 12/12 three-star-found 2/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+species-census book 5 seed 0 mode 0 below false stars 2 candidate 1
+species-census book 5 seed 1 mode 1 below false stars 2 candidate 1
+species-census book 5 seed 2 mode 2 below false stars 2 candidate 2
+species-census book 5 seed 3 mode 3 below false stars 2 candidate 3
+species-census book 5 seed 4 mode 4 below false stars 2 candidate 4
+species-census book 5 seed 5 mode 5 below false stars 2 candidate 19
+species-census book 5 seed 6 mode 0 below true stars 2 candidate 6
+species-census book 5 seed 7 mode 1 below true stars 2 candidate 7
+species-census book 5 seed 8 mode 2 below true stars 2 candidate 8
+species-census book 5 seed 9 mode 3 below true stars 2 candidate 9
+species-census book 5 seed 10 mode 4 below true stars 2 candidate 10
+species-census book 5 seed 11 mode 5 below true stars 2 candidate 11
+species-census book 5 legal 12/12 three-star-found 0/12
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+fugue: invalid option or small size (minimum 80x24)
+fugue: invalid option or small size (minimum 80x24)
+species-gameplay: 48 certified seeds, 12 three-star references, four score refusals and four actual recordings green

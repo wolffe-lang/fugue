@@ -1,0 +1,1 @@
+dependency-integration only: fg00a 6061b528cb7e52b5caefb83d65c7bfb4213ae89f staff/ear, plus fg01 rhythmic adapter

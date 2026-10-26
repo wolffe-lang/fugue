@@ -1,0 +1,10 @@
+build: target/native/fugue
+build: target/release/fugue
+rhythm-audio book 2 ticks 300 bytes 1920000 differs-cantus 1337080 differs-voice 1294318 nonzero 1496579
+rhythm-audio book 3 ticks 300 bytes 1920000 differs-cantus 1300153 differs-voice 1274717 nonzero 1483931
+rhythm-audio book 4 ticks 300 bytes 1920000 differs-cantus 1269707 differs-voice 1337850 nonzero 1487931
+rhythm-audio book 5 ticks 300 bytes 1920000 differs-cantus 1266349 differs-voice 1292180 nonzero 1494531
+rhythm-audio book 2 ticks 300 bytes 1920000 differs-cantus 1337080 differs-voice 1294318 nonzero 1496579
+rhythm-audio book 3 ticks 300 bytes 1920000 differs-cantus 1300153 differs-voice 1274717 nonzero 1483931
+rhythm-audio book 4 ticks 300 bytes 1920000 differs-cantus 1269707 differs-voice 1337850 nonzero 1487931
+rhythm-audio book 5 ticks 300 bytes 1920000 differs-cantus 1266349 differs-voice 1292180 nonzero 1494531
