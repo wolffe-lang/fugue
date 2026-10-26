@@ -3,3 +3,6 @@
 target/
 .lu-cache/
 **/.lu-cache/
+
+__pycache__/
+*.pyc

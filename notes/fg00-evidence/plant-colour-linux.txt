@@ -1,0 +1,106 @@
+check-fmt: canonical
+test src/clock/clock_test.lu::test_no_tick_before_its_time ... ok
+test src/clock/clock_test.lu::test_one_tick_on_time ... ok
+test src/clock/clock_test.lu::test_late_frames_drop_renders_not_ticks ... ok
+test src/clock/clock_test.lu::test_ms_until_rounds_up ... ok
+test src/clock/clock_test.lu::test_thirty_ticks_a_second ... ok
+preset 1: three stars, contrary 55, steps 66, variety 4
+preset 2: three stars, contrary 55, steps 66, variety 4
+preset 3: three stars, contrary 55, steps 66, variety 4
+test src/first_test.lu::test_three_tutorial_reference_solutions_have_three_stars ... ok
+test src/first_test.lu::test_first_species_hard_rules_have_legal_and_illegal_witnesses ... ok
+test src/first_test.lu::test_hidden_fifth_is_never_accepted ... ok
+test src/grid/grid_test.lu::test_empty_diff_writes_nothing ... ok
+test src/grid/grid_test.lu::test_one_cell_diff ... ok
+test src/grid/grid_test.lu::test_full_repaint_is_contiguous ... ok
+test src/grid/grid_test.lu::test_style_run_sets_sgr_once ... ok
+test src/grid/grid_test.lu::test_rgb_dialect ... ok
+test src/grid/grid_test.lu::test_sixteen_dialect_bright ... ok
+test src/grid/grid_test.lu::test_utf8_lengths ... ok
+test src/grid/grid_test.lu::test_property_apply_diff_equals_next ... ok
+test src/grid/grid_test.lu::test_property_holds_in_the_rgb_dialect ... ok
+test src/grid/grid_test.lu::test_model_wraps_and_scrolls ... ok
+test src/grid/grid_test.lu::test_model_private_modes ... ok
+test src/grid/grid_test.lu::test_model_malformed_utf8 ... ok
+test src/grid/grid_test.lu::test_dump_text_and_styles ... ok
+test src/grid/grid_test.lu::test_plain_ok ... ok
+test src/grid/grid_test.lu::test_bounds_are_soft ... ok
+test src/input/input_test.lu::test_csi_arrows ... ok
+test src/input/input_test.lu::test_ss3_arrows ... ok
+test src/input/input_test.lu::test_shift_arrows_are_their_own_keys ... ok
+test src/input/input_test.lu::test_other_modifiers_are_the_bare_arrow ... ok
+test src/input/input_test.lu::test_plain_keys ... ok
+test src/input/input_test.lu::test_lone_esc_waits_for_the_timeout ... ok
+test src/input/input_test.lu::test_esc_then_bracket_late_is_still_a_sequence ... ok
+test src/input/input_test.lu::test_esc_then_plain_byte_is_esc_and_the_byte ... ok
+test src/input/input_test.lu::test_ignored_forms ... ok
+test src/input/input_test.lu::test_unknown_bytes_are_dropped_and_counted ... ok
+test src/input/input_test.lu::test_two_sequences_in_one_read ... ok
+test src/input/input_test.lu::test_a_tap_holds_for_the_tap_ticks ... ok
+test src/input/input_test.lu::test_a_repeat_run_releases_one_interval_after_the_last_press ... ok
+test src/replay/replay_test.lu::test_vocabulary ... ok
+test src/replay/replay_test.lu::test_parse_sample ... ok
+test src/replay/replay_test.lu::test_round_trip ... ok
+test src/replay/replay_test.lu::test_refusals ... ok
+test src/replay/replay_test.lu::test_parse_size ... ok
+test src/replay/replay_test.lu::test_start_is_read_written_and_defaults_to_zero ... ok
+test src/replay/replay_test.lu::test_the_score_comment_is_written_read_and_optional ... ok
+test src/staff_test.lu::test_dissonance_is_never_drawn_green ... FAILED (trap(assert))
+test src/staff_test.lu::test_plain_staff_and_grain ... ok
+test src/staff_test.lu::test_editor_step_undo_and_octave ... ok
+test src/staff_test.lu::test_hearing_locks_edits_and_card_return_resets_the_cursor ... ok
+test src/staff_test.lu::test_cadence_sharp_only_at_the_leading_note ... ok
+test src/theory_test.lu::test_spelled_intervals_and_motion ... ok
+census Ionian valid 50/50 length10 50 leaps2 3 leaps3 24 leaps4 23 pool 64
+test src/theory_test.lu::test_census_ionian_50 ... ok
+census Dorian valid 50/50 length10 50 leaps2 3 leaps3 27 leaps4 20 pool 64
+test src/theory_test.lu::test_census_dorian_50 ... ok
+census Phrygian valid 50/50 length10 50 leaps2 3 leaps3 25 leaps4 22 pool 64
+test src/theory_test.lu::test_census_phrygian_50 ... ok
+census Lydian valid 50/50 length10 50 leaps2 0 leaps3 35 leaps4 15 pool 50
+test src/theory_test.lu::test_census_lydian_50 ... ok
+census Mixolydian valid 50/50 length10 50 leaps2 3 leaps3 24 leaps4 23 pool 64
+test src/theory_test.lu::test_census_mixolydian_50 ... ok
+census Aeolian valid 50/50 length10 50 leaps2 3 leaps3 30 leaps4 17 pool 64
+test src/theory_test.lu::test_census_aeolian_50 ... ok
+test src/theory_test.lu::test_generated_repeated_note_is_rejected ... ok
+test src/theory_test.lu::test_every_cantus_rule_has_a_positive_and_negative_witness ... ok
+Fux Dorian breaks 5
+  bar 3: sequence
+  bar 5: sequence
+  bar 7: sequence
+  bar 8: sequence
+  bar 1: balance
+Fux Phrygian breaks 1
+  bar 3: sequence
+Fux Lydian breaks 4
+  bar 5: successive-leaps
+  bar 9: recovery
+  bar 10: successive-leaps
+  bar 1: leap-count
+Fux Mixolydian breaks 6
+  bar 6: recovery
+  bar 6: successive-leaps
+  bar 9: recovery
+  bar 9: sequence
+  bar 10: successive-leaps
+  bar 1: leap-count
+Fux Aeolian breaks 7
+  bar 1: sequence
+  bar 2: sequence
+  bar 3: sequence
+  bar 7: sequence
+  bar 7: sequence
+  bar 8: sequence
+  bar 9: sequence
+Fux Ionian breaks 1
+  bar 9: sequence
+test src/theory_test.lu::test_fux_oracles_from_original_print ... ok
+test src/world/world_test.lu::test_deterministic ... ok
+test src/world/world_test.lu::test_seeds_differ ... ok
+test src/world/world_test.lu::test_noise_bounds_and_continuity ... ok
+test src/world/world_test.lu::test_forest_density_rises ... ok
+test src/world/world_test.lu::test_clearing_reads_and_a_stand_is_the_woods_with_more_trunks ... ok
+test src/world/world_test.lu::test_density_bands_are_ordered ... ok
+test src/world/world_test.lu::test_hash_range ... ok
+wolf test: 64 passed; 1 failed; 0 rejected; 0 unsupported; 0 filtered out
