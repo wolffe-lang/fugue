@@ -1,0 +1,24 @@
+                ·                          ·     ·  ·  ·                        
+   fugue / V. The florid voice                                                  
+   Ionian  seed 0  cantus below              ·              ·           ·       
+         ·                                              |                       
+ Treble 1          ·      2   ·      3                  | Editing bar 1      ·  
+ G5                         ·     ·                     | Bar 1, beat 1:8       
+ F5    │─────────────────│──────────│─────────────────│ |  ··                   
+ E5    │   ·             │          │  | · |  ·|   |  │ | P5 perfect            
+ D5   ·│─────────────────│──────────│──|───|───|───|──│ | G4    ·               
+ C5    │  |'  |'  |      │       |  │  |   |   |   |  │ | unlicensed-eighth     
+ B4    │──|───|───|───|──│──|────|──│─●───●───●───●───│·| strong beat           
+ A4   ·│  |   |   |   |  │  |   ●   │                ·│ | Figure not allowed·   
+ G4    │♮●───●───●───●───│─●────────│─────────────────│ | paired-eighths        
+ F4    │             \___│/         │                 │ | paired-eighths        
+ E4    │─────────────────│──────────│○────────────────│ | sequence      ·      ·
+ D4                       ○          SP5 wP5 wP5 wP5    |       ·    ·          
+ C4    ─○─·               SP4  wP5   /4  /4  /4  /4     | Breaks: whole page  · 
+ B3     SP5 wP5 wP5 wP5   /2   /2            ·          |·bar 1 - paired-eighth 
+ A3 ·   /8  /8  /4· /2                        ·         | bar 1 - paired-eighth 
+        ·^        ·                                     | bar 2 - downbeat-cons 
+                                                      · |   ·                   
+                                                        |          ·          · 
+  [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check    
+                                                   ·               ·       ·    

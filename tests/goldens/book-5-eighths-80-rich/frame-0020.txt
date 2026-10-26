@@ -1,24 +1,24 @@
                 ·                          ·     ·  ·  ·                        
    fugue / V. The florid voice                                                  
    Ionian  seed 0  cantus below              ·              ·           ·       
-         ·                                                                      
-        1          ·          ·                         |          ·         ·  
- G5                         ·     ·                     | Bar 1 / 1:8           
- F5                                ·              ·     |  ··                   
- E5        ·              |              ·    ·    ·    | G4                    
- D5   ·│──────────────────|───────|'─────│───────────── |       ·               
- C5    │                  |       |   |' │              | h hear both voices    
- B4    │─────────────────●────────|───|──│─────────────·|                       
- A4   ·│ r                       ●    |  │           ·  | S strong / w weak ·   
- G4    │─────────────────────────────●───│───────────── |            ·          
- F4    │                  ·              │              | \_/ tie, r rest       
- E4    │─────────────────────────────────│───────────── | t tie  0 first rest  ·
- D4    │                                 │   ·          | ] split  [ join       
- C4    │○────────────────────────────────│───────────── |             ·       · 
- B3          ·                               ·          |·                   ·  
- A3 ·             ·                           ·         | opening               
-        r         ·     wM7     wM6 wP5                 |            ·          
-        /2              /4      /8  /8                · |   ·                   
-         ^                                                         ·          · 
-   Arrows write  h hear  Enter check  u undo  n next  b books  q quit           
+         ·                                              |                       
+ Treble 1          ·      2   ·      3                  | Editing bar 1      ·  
+ G5                         ·     ·                     | Bar 1, beat 8:8       
+ F5    │─────────────────│──────────│─────────────────│ |  ··                   
+ E5    │   ·   |         │          │  | · |  ·|   |  │ | P4 dissonant          
+ D5   ·│───────|───|'────│──────────│──|───|───|───|──│ | F4    ·               
+ C5    │       |   |     │          │  |   |   |   |  │ | unlicensed-eighth     
+ B4    │─r────●────|───|'│──────────│─●───●───●───●───│·| weak beat             
+ A4   ·│          ●    | │  |    |  │                ·│ | Figure not allowed·   
+ G4    │───────────────|─│──|────|──│─────────────────│ | opening    ·          
+ F4    │             ♮●  │·●    ●   │                 │ | passing-dissonance    
+ E4    │─────────────────│──────────│○────────────────│ | paired-eighths·      ·
+ D4                   \___/\___/     SP5 wP5 wP5 wP5    |       ·    ·          
+ C4    ─○─·               Sm3  wm3   /4  /4  /4  /4     | Breaks: whole page  · 
+ B3     r    wM7 wM6 wP4  /2   /2            ·          |·bar 1 - opening    ·  
+ A3 ·   /2   /4  /8  /8                       ·         | bar 1 - passing-disso 
+        ·^        ·                                     | bar 1 - paired-eighth 
+                                                      · |   ·                   
+                                                        |          ·          · 
+  [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check    
                                                    ·               ·       ·    

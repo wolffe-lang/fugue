@@ -1,24 +1,24 @@
                 ·                          ·     ·  ·  ·                        
    fugue / IV. The suspended voice                                              
    Ionian  seed 0  cantus below              ·              ·           ·       
-         ·                                                                      
-        1         2·        3 ·       4                 |          ·         ·  
- G5                         ·     ·                     | Bar 1 / 1:8           
- F5                                ·              ·     |  ··                   
- E5        ·                             ·    ·    ·    | G4                    
- D5   ·│─────────│─────────│──────|──│──|──────│─────── |       ·               
- C5    │         │  |   |  │  |   |  │  |      │        | h hear both voices    
- B4    │──────|──│──|───|──│──|──●───│─●────|──│───────·|                       
- A4   ·│ r    |  │ ●   ●   │ ●   \___│/     |  │     ·  | S strong / w weak ·   
- G4    │─────●───│─────────│─────────│─────●───│─────── |            ·          
- F4    │         │     \___│/        │         │        | \_/ tie, r rest       
- E4    │─────────│─────────│○────────│─────────│─────── | t tie  0 first rest  ·
- D4    │         │○        │         │       · │        |       ·    ·          
- C4    │○────────│─────────│─────────│○────────│─────── |             ·       · 
- B3          ·                               ·          |·                   ·  
- A3 ·             ·                           ·         | parallel-perfect      
-        r   wP5   SP5 wP5   SP4 wP5   SM7 wP5           |            ·          
-        /2  /2    /2  /2    /2  /2    /2  /2          · |   ·                   
-         ^                                                         ·          · 
-   Arrows write  h hear  Enter check  u undo  n next  b books  q quit           
+         ·                                              |                       
+ Treble 1          2          3          4              | Editing bar 1      ·  
+ G5                         ·     ·                     | Bar 1, beat 1:8       
+ F5    │──────────│──────────│──────────│─────────────│ |  ··                   
+ E5    │   ·      │          │          │·    ·    ·  │ | rest                  
+ D5   ·│──────────│──────────│───────|──│──|──────────│ | G4    ·               
+ C5    │          │  |    |  │  |    |  │  |          │ | rest                  
+ B4    │─r─────|──│──|────|──│──|───●───│─●─────|─────│·| strong beat           
+ A4   ·│       |  │ ●    ●   │ ●    \___│/      |    ·│ | Figure allowed    ·   
+ G4    │──────●───│──────────│──────────│──────●──────│ | sequence   ·          
+ F4    │          │      \___│/         │             │ |      ·                
+ E4    │──────────│──────────│○─────────│─────────────│ |               ·      ·
+ D4                ○          SP4  wP5       ·          |       ·    ·          
+ C4    ─○─·        SP5  wP5   /2   /2   ─○─             | Breaks: whole page  · 
+ B3     r    wP5   /2   /2               SM7 ·wP5       |·bar 2 - parallel-perf 
+ A3 ·   /2   /2   ·                      /2   /2        | bar 3 - suspension    
+        ·^        ·                                     | bar 4 - suspension    
+                                                      · |   ·                   
+                                                        |          ·          · 
+  Arrows write  h hear  Enter check  u undo  n next  b books  q quit            
                                                    ·               ·       ·    

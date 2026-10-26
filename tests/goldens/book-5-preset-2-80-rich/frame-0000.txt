@@ -1,24 +1,24 @@
                            ·        ·                                           
    fugue / V. The florid voice                                     · ·          
    Dorian  seed 1  cantus below·                    ·                           
-      ·                                                 ·                       
-     ·  1  ·                        ·            ·      |         ·             
- A5          ·                                ·         | Bar 1 / 1:8           
+      ·                                                 |                       
+ Treble 1  ·       2          3     ·          4 ·      | Editing bar 1         
+ A5          ·                                ·         | Bar 1, beat 1:8       
  G5        ·                                            |       ·               
- F5                                                  ·· | A4  ·                 
- E5    │─────────────────────────────────│───────────── |        ·       ·      
- D5    │              ·                  │              | h hear both voices    
- C5    │──────────────────|──────────────│─────────────·| ·                   · 
- B4    │ r     ·          |              │              | S strong / w weak     
- A4·   │─────────────────●───────────────│───────────── |                   ·   
- G4    │                    ·     ·      │              | \_/ tie, r rest       
- F4    │─────────────────────────────────│───────────── | t tie  0 first rest   
- E4    │                  ··             │              | ] split  [ join       
- D4    │○────────────────────────────────│───────────── |                       
- C4         ·  ·             ·                      ·   |                       
- B3             ·                                   ·  ·| downbeat-consonance   
-        r               wP5           · ·               |                    ·  
-  ·     /2          ·   /2        ·                     |  ·              ·     
-         ^           ·       ·                                                 ·
-   Arrows write  h hear  Enter check  u undo  n next  b books  q quit           
+ F5    │──────────│──────────│────────────────│───────│ | rest·                 
+ E5    │        · │        · │                │       │ | A4     ·       ·      
+ D5    │──────────│───────|──│──|───|───|───|─│───────│ | rest ·                
+ C5    │       |  │  |    |  │  |   |   |   | │ ●     │·| strong beat         · 
+ B4    │─r─────|──│──|───●───│──|───|───|───|─│───────│ | Figure allowed        
+ A4·   │      ●   │ ●  ·     │ ●   ●   ●   ●  │   ·   │ | No breaks in bar  ·   
+ G4    │──────\___│/─────────│────────────────│───────│ |                       
+ F4    │          │ ·        │                │○      │ | ·                     
+ E4    │──────────│○─────────│────────────────│───────│ |         ·             
+ D4     ○  ·       SP4  wP5   ○        ·       SP5      | Breaks: whole page    
+ C4     r   ·wP5   /2   /2   ·SP5 wP5 wP5 wP5  /1   ·   | bar 2 - downbeat-cons 
+ B3     /2   /2 ·             /4  /4  /4  /4        ·  ·| bar 2 - same-beat-par 
+         ^                            · ·               | bar 3 - parallel-perf 
+  ·                 ·             ·                     |  ·              ·     
+                     ·       ·                          |                      ·
+  [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check    
                         ·                                            ·     ·    

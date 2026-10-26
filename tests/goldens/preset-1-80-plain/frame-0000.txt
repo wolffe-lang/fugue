@@ -1,24 +1,24 @@
                 .                          .     .  .  .                        
    fugue   /   I. Note against note                                             
    Ionian   seed 0   cantus below            .              .           .       
-         .                                                                      
-        1   2   3  .4   5   6 . 7   8   9   10          | Editing bar 1      .  
- B5                         .     .                     |      .                
- A5                                .              .     | Selected note         
- G5        .                             .    .    .    |                       
+         .                                              |                       
+ Treble 1   2   3  .4   5   6 . 7   8   9   10          | Editing bar 1      .  
+ B5                         .     .                     | Bar 1, beat 1:8       
+ A5                                .              .     |  ..                   
+ G5        .                             .    .    .    | P5 perfect            
  F5   .|---|---|---|---|---|---|---|---|---|----------| | G4    .               
- E5    |   |   |   |   |   |   |   |   |   |          | |  .                    
- D5    |---|---|---|---|---|---|-*-|---|---|----------|.| o  cantus             
- C5   .|   |   |   |   | * |   |   |   |   |         .| | *  your voice     .   
- B4    |---|---|-*-|---|---|-*-|---|-*-|---|----------| |            .          
- A4    |   | * |   |   |  .|   |   |   | * |          | | P perfect             
- G4    |-*-|---|---|-*-|---|---|o--|---|---|-*--------| | i imperfect   .      .
- F4    |   |   |   |   |o  |   |   |   |   | .        | | x dissonant.          
- E4    |---|---|o--|---|---|o--|---|o--|---|----------| | First break .       . 
- D4         o.                          o    .          |.at bar 2           .  
- C4 .  -o-        .-o-                     -o-.         | parallel-perfect      
-        .         .                                     |            .          
-        P5  P5  P5  P5  P5  P5  P5  P5  P5  P5        . |   .                   
-        ^                                                          .          . 
+ E5    |   |   |   |   |   |   |   |   |   |          | | consonance            
+ D5    |---|---|---|---|---|---|-*-|---|---|----------|.| strong beat           
+ C5   .|   |   |   |   | * |   |   |   |   |         .| | Figure allowed    .   
+ B4    |---|---|-*-|---|---|-*-|---|-*-|---|----------| | No breaks in bar      
+ A4    |   | * |   |   |  .|   |   |   | * |          | |      .                
+ G4    |n*-|---|---|-*-|---|---|o--|---|---|-*--------| |               .      .
+ F4    |   |   |   |   |o  |   |   |   |   | .        | |       .    .          
+ E4    |---|---|o--|---|---|o--|---|o--|---|----------| | Breaks: whole page  . 
+ D4         o.  P5      P5  P5  P5  P5  o    .          |.bar 2 - parallel-perf 
+ C4 .  no-  P5    .-o-                  P5 -o-.         | bar 3 - parallel-perf 
+        P5        . P5                      P5          | bar 4 - parallel-perf 
+        ^                                             . |   .                   
+                                                        |          .          . 
    h hear   Space sound   Enter check   Arrows write   u undo   q quit          
-   o cantus: burnt orange  * player: dark blue     .               .       .    
+   o cantus: deep red      * player: dark blue     .               .       .    

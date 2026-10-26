@@ -1,24 +1,24 @@
                            ·        ·                                           
    fugue / III. Four against one                                   · ·          
    Dorian  seed 1  cantus below·                    ·                           
-      ·                                                 ·                       
-     ·  1  ·              2         ·            ·      |         ·             
- A5          ·                                ·         | Bar 1 / 1:8           
+      ·                                                 |                       
+ Treble 1  ·             2          ·     3      · >>   | Editing bar 1         
+ A5          ·                                ·         | Bar 1, beat 1:8       
  G5        ·                                            |       ·               
- F5                                                  ·· | A4  ·                 
- E5    │─────────────────│──|───|───|───|──│─────────── |        ·       ·      
- D5    │  |   |   |   |  │  |   |   |   |  │            | h hear both voices    
- C5    │──|───|───|───|──│──|───|───|───|──│───────────·| ·                   · 
- B4    │  |   |·  |   |  │ ●   ●   ●   ●   │            | S strong / w weak     
- A4·   │─●───●───●───●───│─────────────────│─────────── |                   ·   
- G4    │                 │  ·     ·        │            | \_/ tie, r rest       
- F4    │─────────────────│─────────────────│─────────── | t tie  0 first rest   
- E4    │                 │○·               │            |         ·             
- D4    │○────────────────│─────────────────│─────────── |                       
- C4         ·  ·             ·                      ·   |                       
- B3             ·                                   ·  ·| parallel-perfect      
-        SP5 wP5 wP5 wP5   SP5 wP5 wP5 wP5               |                    ·  
-  ·     /4  /4  /4  /4    /4  /4  /4  /4                |  ·              ·     
-         ^           ·       ·                                                 ·
-   Arrows write  h hear  Enter check  u undo  n next  b books  q quit           
+ F5    │────────────────│────────────────│──|───|─────│ | P5 perfect            
+ E5    │        ·       │  |   |   |   | │  |   |     │ | A4     ·       ·      
+ D5    │──|───|───|───|─│──|───|───|───|─│──|───|─────│ | consonance            
+ C5    │  |   |   |   | │  |   |   |   | │ ●   ●      │·| strong beat         · 
+ B4    │──|───|───|───|─│─●───●───●───●──│────────────│ | Figure allowed        
+ A4·   │♮●   ●   ●   ● ·│                │        ·   │ | sequence          ·   
+ G4    │────────────────│────────────────│────────────│ | repeat                
+ F4    │            ·   │                │○   ·       │ | sequence              
+ E4    │────────────────│○───────────────│────────────│ |         ·             
+ D4     ○  ·             SP5 wP5 wP5 wP5  SP5 wP5       | Breaks: whole page    
+ C4     SP5 wP5·wP5 wP5  /4  /4  /4  /4   /4  /4    ·   | bar 2 - parallel-perf 
+ B3     /4  /4  /4  /4                              ·  ·| bar 2 - accented-para 
+         ^                            · ·               | bar 2 - same-beat-par 
+  ·                 ·             ·                     |  ·              ·     
+                     ·       ·                          |                      ·
+  Arrows write  h hear  Enter check  u undo  n next  b books  q quit            
                         ·                                            ·     ·    

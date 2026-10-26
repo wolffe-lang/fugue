@@ -1,40 +1,40 @@
                       .   .                .         .                  .  .                                            
    fugue / II. Two against one                      .                          .            .                         . 
    Ionian  seed 6  cantus above           .                 .                                                           
-                                                        .                           .  .                                
-   .                                                 .                                          |                       
-                      .       .               .    .         .                         .        | Bar 1 / 1:8           
+                                                        .                           .  .        |                       
+   .                                                 .                                          | Editing bar 1         
+                      .       .               .    .         .                         .        | Bar 1, beat 1:8       
                                                                                                 |                       
-            .                                                                              .    |.C3                   .
-                              .               .                 ..                              |                       
-   .                          .                         .        .                      .       | h hear both voices    
-      .        .                 .       .                                .                     |  .                    
-   .                            .                                                               | S strong / w weak     
-        1    .    2         3         4         5   .     6         7  .      8    .            |        .   . ..       
- B4        .                              .       .              .                              | \_/ tie, r rest       
- A4                  .     .                                                                    | t tie  0 first rest   
+            .                                                                              .    |.P8 perfect           .
+                              .               .                 ..                              | C3                    
+   .                          .                         .        .                      .       | consonance            
+      .        .                 .       .                                .                     | strong beat           
+   .                            .                                                               | Figure allowed        
+ Bass   1    .     2          3          4          5     .    6       .  7        . 8     >>   | sequence   . ..       
+ B4        .                              .       .              .                              | repeat                
+ A4                  .     .                                                                    |                       
  G4          .          .                                  .  .                                 |                .     .
- F4                             .  .                                o              .            |                       
- E4    |---------|---------|---------|o--------|---------|---------|---------|---------|------- |                       
- D4    |         |o        |         |         |         |o.       |         |   .   . |   .    | parallel-perfect      
- C4    |o--------|---------|o--------|---------|o--------|---------|---------|o--------|-------.|               .       
- B3  . |         |         |         |.     .  |         |         |         |  .      |        |           .       .   
- A3    |---------|---------|---------|---------|---------|---------|--|---|--|---------|------- |                  .    
- G3    |         |         |         |  |   |  |. .    . |         |  |  .|  |         |  .     |       .      .   .    
- F3    |---------|--|---|--|---------|--|---|--|---------|--|---|--|-*---*---|---------|------- |                       
- E3    |  |   |  |  |   |. |  |   |  | *   *   |  |   |  |  |   |  |         |  |   |  |        |  .                    
- D3   .|--|---|--|-*---*---|--|---|--|---------|--|---|--|-*---*---|---------|--|---|--|------- |     .                 
- C3      *   *.              *   *               * . * .                       *   *            |                       
- B2 .                                         .  .       .                .      .       .      |                       
- .      SP8 wP8   SP8 wP8   SP8 wP8   SP8 wP8   SP8 wP8   SP8 wP8   SP8 wP8   SP8 wP8.          |                       
- .      /2 ./2   ./2  /2.   /2  /2    /2  /2    /2  /2.   /2  /2    /2  /2    /2  /2          . | .                     
-         ^                                                              .                       |                       
-                                                    .                  ..                       |                      .
-                                 .   .        .                                          .  .   |                       
-  .                                                                       .                     |   .                   
-        ..               .                                                                      |                       
-                                                                   .             . .            |                       
+ F4                             .  .                                      o        .            | Breaks: whole page    
+ E4                                     -o-    .        .      .         ---     .              | bar 2 - parallel-perf 
+ D4                o                                       .   o                 .   .     .    | bar 2 - accented-para 
+ C4    -o-        ---        -o-      . ---        -o-        ---  . .   ---    .   -o-        .| bar 3 - parallel-perf 
+ B3  .                                .     .                                   .               | bar 3 - accented-para 
+ A3    |----------|----------|----------|----------|----------|----------|--|----|--|---------| | bar 4 - parallel-perf 
+ G3    |          |          |          |  |    | .|   .      |          |  |    |  |     .   | | bar 4 - accented-para 
+ F3    |----------|--|----|--|----------|--|----|--|----------|--|----|--|-*----*---|---------| | bar 5 - parallel-perf 
+ E3    |  |    |  | .|   .|. |  |    |  | *    *   |  |    |  |  |    |  |          |  |      | | bar 5 - accented-para 
+ D3   .|--|----|--|-*----*---|--|----|--|----------|--|----|--|-*----*---|----------|--|------| | bar 6 - parallel-perf 
+ C3    |n*    *   |          | *    *   |          | * .  *   |          |          | *       | | bar 6 - accented-para 
+ B2 .  |----------|----------|----------|----------|----------|----------|----------|---------| | bar 7 - parallel-perf 
+ .      SP8  wP8   SP8  wP8   SP8  wP8   SP8  wP8   SP8  wP8   SP8  wP8   SP8  wP8   SP8        | bar 7 - accented-para 
+ .      /2 . /2  . /2   /2    /2   /2    /2   /2    /2.  /2    /2   /2    /2   /2    /2       . | bar 8 - parallel-perf 
+         ^                                                              .                       | bar 8 - accented-para 
+                                                    .                  ..                       | bar 9 - parallel-perf.
+                                 .   .        .                                          .  .   | bar 9 - accented-para 
+  .                                                                       .                     | bar 10 - parallel-per 
+        ..               .                                                                      | bar 10 - accented-par 
+                                                                   .             . .            | bar 9 - two-voice-cad 
                .                .                                .  .                           |                       
-                                                                                                                        
-   Arrows write  h hear  Enter check  u undo  n next  b books  q quit.    .                             .               
+                                                                                                |                       
+  Arrows write  h hear  Enter check  u undo  n next  b books  q quit .    .                             .               
                                                         .                    . .                  .          .          

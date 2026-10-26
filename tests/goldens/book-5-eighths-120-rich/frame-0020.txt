@@ -1,40 +1,40 @@
                 ·                          ·     ·  ·  ·                             ·                                · 
    fugue / V. The florid voice                                                                                ·       · 
    Ionian  seed 0  cantus below              ·              ·           ·                          ·       ·            
-         ·                                                                                                              
-                   ·          ·                                    ·         ·             ·    |                       
-                            ·     ·                            ·                                | Bar 1 / 1:8           
+         ·                                                                                      |                       
+                   ·          ·                                    ·         ·             ·    | Editing bar 1         
+                            ·     ·                            ·                                | Bar 1, beat 8:8       
                                    ·              ·        ··                                   | · ·                   
-  ·        ·                             ·    ·    ·                                            | G4                 ·  
-      ·        ·     ·                                          ·                               |   ·                   
-                                                           ·                                    | h hear both voices    
-        ·   ·                    ·  ·                  ·                            ·           |                 ·     
-      ·                                              ·                      ·       ·           | S strong / w weak     
-        1                                 2       ·                  ·                          |                       
- A5                       ·                                    ·                                | \_/ tie, r rest       
- G5         ·                     ·              ··  ·                  ·      ·                | t tie  0 first rest   
- F5                                          ·                  ·    ·                          | ] split  [ join       
- E5       ·               |                                           ·       · ·               |                       
- D5    │──────────────────|───────|'─────│─────────────────────────────────│─────────────────── |            ·       · ·
- C5 ·  │          ·       |       |   |' │    ·            ·|              │                    | opening               
- B4    │─r───────────────●────────|───|──│──────────────────|──────────────│─────────────────── |                       
- A4    │                         ●    |  │  |         ·    ●·              │      ·             |                       
- G4    │─────────────────────────────●───│──|──────────────────────────────│─────────────────── | ·                     
- F4    │                   ·     · ·     │ ●     ·                         │            ·       |                ·      
- E4    │─────────────────────────────────│─────────────────────────────────│─────────────────── |·                      
- D4·   │    ·                            │○                              · │          ·         |                       
- C4    │○────────────────────────────────│─────────────────────────────────│─────────────────── |                       
- B3                       ·         ·                                                           |                   ·   
- A3                                                                  ·     ·  ·                 |    ·   ·              
-        r       ·       wM7     wM6 wP5   Sm3             wP5                                ·  |                       
-        /2      ·       /4 ·    /8  /8    /2              /2                                    |                   ·   
-         ^                            ·                                                        ·|           ·           
-             ·                         ·           ·           · ·                              |                  ·    
-                                                         ·                                      |             ·         
-                            ·                                    ·              ·          ·    |                   ·   
-                                 ·                       ·               ·     ·                |                       
-    ·                ·                         · ·                                              |   ·    ·              
+  ·        ·                             ·    ·    ·                                            | P4 dissonant       ·  
+      ·        ·     ·                                          ·                               | F4·                   
+                                                           ·                                    | unlicensed-eighth     
+        ·   ·                    ·  ·                  ·                            ·           | weak beat       ·     
+      ·                                              ·                      ·       ·           | Figure not allowed    
+ Treble 1                 2          3            ·   4      5       ·  6          7       >>   | opening               
+ A5                       ·                                    ·                                | passing-dissonance    
+ G5         ·                     ·              ··  ·                  ·      ·     |   |      | paired-eighths        
+ F5    │─────────────────│──────────│────────────────│──────│──────────│──────────│──|───|────│ |           ·           
+ E5    │  ·    |         │·         │  |   |   |   | │      │  |    | ·│  |   · · │  |   |    │ | Breaks: whole page    
+ D5    │───────|───|'────│──────────│──|───|───|───|─│──────│──|────|──│──|────|──│─●───●─────│ | bar 1 - opening    · ·
+ C5 ·  │       |  ·|     │          │  |   |  ·|   | │     ·│ ●    ●   │ ●     |  │           │ | bar 1 - passing-disso 
+ B4    │─r────●────|───|'│──────────│─●───●───●───●──│──────│──────────│──────●───│───────────│ | bar 1 - paired-eighth 
+ A4    │          ●    | │  |    |  │                │·     │      \___│/         │           │ | bar 1 - paired-eighth 
+ G4    │───────────────|─│──|────|──│────────────────│─●────│──────────│──────────│○──────────│ | bar 1 - passing-disso 
+ F4    │             ♮●  │ ●    ●· ·│            ·   │      │○         │          │     ·     │ | bar 2 - tie-pitch     
+ E4    │─────────────────│──────────│○───────────────│──────│──────────│○─────────│───────────│ |·bar 3 - hidden-perfec 
+ D4·        ·         \___/\___/     SP5 wP5 wP5 wP5         SP5  wP5   Sm6  wP5   SP5·wP5      | bar 4 - parallel-perf 
+ C4    ─○─                Sm3  wm3   /4  /4  /4  /4  ─○─     /2 · /2    /2   /2·   /4  /4       | bar 4 - accented-para 
+ B3     r    wM7 wM6 wP4  /2   /2   ·                 SP5                                       | bar 5 - parallel-perf 
+ A3     /2   /4  /8  /8                               /1             ·     ·  ·                 | bar 5 - accented-para 
+         ^      ·                                                                            ·  | bar 5 - same-beat-par 
+                ·          ·                                                                    | bar 6 - same-beat-par 
+                                      ·                                                        ·| bar 7 - parallel-perf 
+             ·                         ·           ·           · ·                              | bar 7 - same-beat-par 
+                                                         ·                                      | bar 7 - same-beat-par 
+                            ·                                    ·              ·          ·    | bar 8 - parallel-perf 
+                                 ·                       ·               ·     ·                | bar 8 - accented-para 
+    ·                ·                         · ·                                              | bar 9 - parallel-perf 
                                     ·   ·                                                      ·|             ·      ·  
-          ·    ·                                ·                    ·        ·                             ·           
-   Arrows write  h hear  Enter check  u undo  n next  b books  q quit   ·    ·     ·                ·                   
+          ·    ·                                ·                    ·        ·                 |           ·           
+  [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check ·     ·                ·                   
                ·                        ·              ·  ·                                                             

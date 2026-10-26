@@ -1,40 +1,40 @@
                       ·   ·                ·         ·                  ·  ·                                            
    fugue / III. Four against one                    ·                          ·            ·                         · 
    Ionian  seed 6  cantus above           ·                 ·                                                           
-                                                        ·                           ·  ·                                
-   ·                                                 ·                                          |                       
-                      ·       ·               ·    ·         ·                         ·        | Bar 1 / 3:8           
+                                                        ·                           ·  ·        |                       
+   ·                                                 ·                                          | Editing bar 1         
+                      ·       ·               ·    ·         ·                         ·        | Bar 1, beat 3:8       
                                                                                                 |                       
-            ·                                                                              ·    |·C3                   ·
-                              ·               ·                 ··                              |                       
-   ·                          ·                         ·        ·                      ·       | h hear both voices    
-      ·        ·                 ·       ·                                ·                     |  ·                    
-   ·                            ·                                                               | S strong / w weak     
-        1    ·            2                 3       ·     ·   4        ·           ·            |        ·   · ··       
- B4        ·                              ·       ·              ·                              | \_/ tie, r rest       
- A4                  ·     ·                                                                    | t tie  0 first rest   
+            ·                                                                              ·    |·P8 perfect           ·
+                              ·               ·                 ··                              | C3                    
+   ·                          ·                         ·        ·                      ·       | consonance            
+      ·        ·                 ·       ·                                ·                     | weak beat             
+   ·                            ·                                                               | Figure allowed        
+ Bass   1    ·           2                3         ·     ·4           ·    5      ·            | sequence   · ··       
+ B4        ·                              ·       ·              ·                              | repeat                
+ A4                  ·     ·                                                                    | sequence              
  G4          ·          ·                                  ·  ·                                 |                ·     ·
- F4                             ·  ·                                               ·            |                       
- E4    │─────────────────│─────────────────│─────────────────│○────────────────│─────────────── |                       
- D4    │                 │○                │               · │                 │ ·   ·     ·    | parallel-perfect      
- C4    │○────────────────│─────────────────│○────────────────│─────────────────│───────────────·|               ·       
- B3  · │                 │            ·    │·                │                 │·               |           ·       ·   
- A3    │─────────────────│─────────────────│─────────────────│──|───|───|───|──│─────────────── |                  ·    
- G3    │                 │  |   |   |   |  │    · ·    ·     │  |   |   |·  |  │          ·     |       ·      ·   ·    
- F3    │──|───|───|───|──│──|───|───|───|──│──|───|───|───|──│──|───|───|───|──│─────────────── |                       
- E3    │  |   |   | · |  │ ·|   |   |   |  │  |   |   |   |  │ ●   ●   ●   ●   │                |  ·                    
- D3   ·│──|───|───|───|──│─●───●───●───●───│──|───|───|───|──│─────────────────│─────────────── |     ·                 
- C3      ●   ●·  ●   ●                       ●   ● · ● · ●                                      |                       
- B2 ·                                         ·  ·       ·                ·      ·       ·      |                       
- ·      SP8 wP8 wP8 wP8   SP8 wP8 wP8 wP8   SP8 wP8 wP8 wP8   SP8 wP8 wP8 wP8        ·          |                       
- ·      /4 ·/4  /4  /4  · /4  /4  /4  /4    /4  /4  /4· /4    /4  /4  /4  /4                  · | ·                     
-             ^                                                          ·                       |                       
-                                                    ·                  ··                       |                      ·
-                                 ·   ·        ·                                          ·  ·   |                       
-  ·                                                                       ·                     |   ·                   
-        ··               ·                                                                      |                       
-                                                                   ·             · ·            |                       
+ F4                             ·  ·                                               ·            | Breaks: whole page    
+ E4                                            ·        · ─○─  ·                 ·              | bar 2 - parallel-perf 
+ D4                      ○                                 ·                     ·   ·     ·    | bar 2 - accented-para 
+ C4    ─○─              ───           · ·─○─              ───      · ·   · ─○─  ·              ·| bar 2 - same-beat-par 
+ B3  ·                                ·     ·                                   ·               | bar 2 - same-beat-par 
+ A3    │────────────────│────────────────│────────────────│──|───|───|───|─│──────────────────│ | bar 2 - same-beat-par 
+ G3    │                │  |   |   |   | │      · ·    ·  │  |   |   |   | │              ·   │ | bar 3 - parallel-perf 
+ F3    │──|───|───|───|─│──|───|───|───|─│──|───|───|───|─│──|───|───|───|─│──|───|───|───|───│ | bar 3 - accented-para 
+ E3    │  |   |   | · | │· |   |   |   | │  |   |   |   | │ ●   ●   ●   ●  │  |   |   |   |   │ | bar 3 - same-beat-par 
+ D3   ·│──|───|───|───|─│─●───●───●───●──│──|───|───|───|─│────────────────│──|───|───|───|───│ | bar 3 - same-beat-par 
+ C3    │ ●  ♮●·  ●   ●  │                │ ●   ●   ●   ●  │                │ ●   ●   ●   ●    │ | bar 3 - same-beat-par 
+ B2 ·  │────────────────│────────────────│────────────────│────────────────│──────────────────│ | bar 4 - parallel-perf 
+ ·      SP8 wP8 wP8 wP8  SP8 wP8 wP8 wP8  SP8 wP8 wP8 wP8  SP8 wP8 wP8 wP8  SP8 wP8 wP8 wP8     | bar 4 - accented-para 
+ ·      /4 ·/4  /4  /4  ·/4  /4  /4  /4   /4  /4  /4  /4   /4  /4  /4  /4   /4  /4  /4  /4    · | bar 4 - same-beat-par 
+             ^                                                          ·                       | bar 4 - same-beat-par 
+                                                    ·                  ··                       | bar 4 - same-beat-par·
+                                 ·   ·        ·                                          ·  ·   | bar 5 - parallel-perf 
+  ·                                                                       ·                     | bar 5 - accented-para 
+        ··               ·                                                                      | bar 5 - same-beat-par 
+                                                                   ·             · ·            | bar 5 - same-beat-par 
                ·                ·                                ·  ·                           |                       
-                                                                                                                        
-   Arrows write  h hear  Enter check  u undo  n next  b books  q quit·    ·                             ·               
+                                                                                                |                       
+  Arrows write  h hear  Enter check  u undo  n next  b books  q quit ·    ·                             ·               
                                                         ·                    · ·                  ·          ·          

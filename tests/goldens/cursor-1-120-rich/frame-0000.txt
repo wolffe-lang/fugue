@@ -1,0 +1,40 @@
+                ·                          ·     ·  ·  ·                             ·                                · 
+   fugue   /   I. Note against note                                                                           ·       · 
+   Ionian   seed 0   cantus below            ·              ·           ·                          ·       ·            
+         ·                                                                                 |                            
+                   ·          ·                                    ·         ·             | Editing bar 1              
+                            ·     ·                            ·                           | Bar 1, beat 1:8            
+                                   ·              ·        ··                              |      · ·                   
+  ·        ·                             ·    ·    ·                                       | P5 perfect              ·  
+      ·        ·     ·                                          ·                          | G4     ·                   
+                                                           ·                               | consonance                 
+        ·   ·                    ·  ·                  ·                            ·      | strong beat          ·     
+      ·                                              ·                      ·       ·      | Figure allowed   ·         
+ Treble 1       2       3       4       5       6 ·     7       8    ·  9       10         | No breaks in bar           
+ C6                       ·                                    ·                           |                            
+ B5         ·                     ·              ··  ·                  ·      ·           |                            
+ A5                                          ·                  ·    ·                     |                ·           
+ G5       ·               ·                                           ·       · ·          | Breaks: whole page         
+ F5    │───────│───────│───────│───────│───────│───────│───────│───────│───────│─────────│ | bar 2 - parallel-perfect· ·
+ E5 ·  │       │  ·    │       │       │      ·│       │   ·   │       │       │         │ | bar 3 - parallel-perfect   
+ D5    │───────│───────│───────│───────│───────│───────│─●─────│───────│───────│─────────│ | bar 4 - parallel-perfect   
+ C5    │       │       │       │       │ ●     │      ·│    ·  │       │       │  ·      │ | bar 5 - parallel-perfect   
+ B4    │───────│───────│─●─────│───────│───────│─●─────│───────│─●─────│───────│─────────│ | bar 6 - parallel-perfect   
+ A4    │       │ ●     │   ·   │ · ·   │       │ ·     │       │       │ ●     │        ·│ | bar 7 - parallel-perfect   
+ G4    │♮●─────│───────│───────│─●─────│───────│───────│○──────│───────│───────│─●───────│ | bar 8 - parallel-perfect   
+ F4·   │    ·  │       │       │       │○      │       │       │       │ ·     │      ·  │ | bar 9 - parallel-perfect   
+ E4    │───────│───────│○──────│───────│───────│○──────│───────│○──────│───────│─────────│ | bar 10 - parallel-perfect  
+ D4             ○       P5·         ·   P5      P5      P5      P5      ○                  | bar 10 - closing       ·   
+ C4    ♮○─      P5             ─○─                                   ·  P5 ·  ·─○─         | bar 9 - two-voice-cadence  
+        P5      ·               P5                                              P5         | ·                          
+        ^       ·          ·                                                               |    ·                   ·   
+                                      ·                                                    |   ·            ·           
+             ·                         ·           ·           · ·                         |                       ·    
+                                                         ·                                 |                  ·         
+                            ·                                    ·              ·          |                        ·   
+                                 ·                       ·               ·     ·           |                            
+    ·                ·                         · ·                                         |        ·    ·              
+                                    ·   ·                                                  |   ·              ·      ·  
+          ·    ·                                ·                    ·        ·            |                ·           
+   h hear   Space sound   Enter check   Arrows write   u undo   q quit  ·    ·     ·                ·                   
+   o cantus: deep red      * player: dark blue         ·  ·                                                             

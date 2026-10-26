@@ -1,24 +1,24 @@
                                                                      ·         ·
    fugue / V. The florid voice                  ·                 ·  ·          
    Mixolydian  seed 2  cantus below                      ·                      
-                          ·                                                     
-        1                         ·                     |                       
- D6                 ·                        · · ·      | Bar 1 / 1:8           
- C6·      ·                                         ·   |                ··     
- B5                                                     | D5       ·            
- A5    │─────────────────────────────────│───────────── |·                      
- G5    │  ·           ·            ·     │      ·       | h hear both voices    
-·F5    │──────────────────|──────────────│─────────────·|         ·             
- E5    │·r         ·      |              │              | S strong / w weak     
- D5    │─────────────────●───────────────│───────────── |        ·              
- C5 ·  │                                 │              | \_/ tie, r rest       
- B4    │─────────────────────────────────│───────────── | t tie  0 first rest   
- A4    │                                 │      ·       | ] split  [ join       
- G4  · │○────────────────────────────────│───────────── |                ·      
- F4                       ·            ·           ·    |     ·                 
- E4     ·                  ·                            | downbeat-consonance   
-      · r               wP5                  ·          |·      ·               
-  ·     /2              /2         ·                ·   |                       
-      ·  ^                         ·                                            
-   Arrows write  h hear  Enter check  u undo  n next  b books  q quit           
+                          ·                             |                       
+ Treble 1          2          3   ·            4        | Editing bar 1         
+ E6                 ·                        · · ·      | Bar 1, beat 1:8       
+ D6·      ·                                         ·   |                ··     
+ C6                                                     | rest     ·            
+ B5             ·   ·           |   |   |   |·  ●       |·D5                    
+ A5       ·           ·         |  ·|   |   |  ───      | rest                  
+·G5                       |     |  ·|   |   |          ·| strong beat           
+ F5    │───────|──│──|────|──│─●───●───●───●──│───────│ | Figure allowed        
+ E5    │       |  │  |   ●   │       ·        │○      │ | No breaks in bar      
+ D5 ·  │──────●───│─●────────│────────────────│───────│ |                       
+ C5    │          │          │  · ·           │       │ |    ·                  
+ B4    │─r────\___│/─────────│○───────────────│───────│ |             ·         
+ A4  · │          │○         │   ·  ·         │       │ | Breaks: whole page    
+ G4    │○─────────│──────────│────────────────│───────│ | bar 2 - downbeat-cons 
+ F4    │·         │        · │                │       │ | bar 2 - same-beat-par 
+      · r    wP5   SP4  wP5   Sd5 wd5 wd5 wd5· SP5      |·bar 3 - downbeat-cons 
+  ·     /2   /2    /2   /2    /4  /4  /4  /4   /1   ·   |                       
+      ·  ^                         ·                    |                       
+  [ split ] join . dot t tie r rest   Arrows write h hear u undo Enter check    
 ··    ·                    ·                      ·  ·                          

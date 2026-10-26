@@ -1,24 +1,24 @@
                                                                      ·         ·
    fugue / III. Four against one                ·                 ·  ·          
    Mixolydian  seed 2  cantus below                      ·                      
-                          ·                                                     
-        7                 8       ·                     |                       
- E6       |         ·       |                · · ·      | Bar 7 / 3:8           
- D6·      |       |         |                       ·   |                ··     
- C6       |   |   |   |     |           |               | G5       ·            
- B5    │─●────|───|───|──│─●────────────|──│─────────── |·                      
- A5    │  ·   |  ●    |  │         ·|   |  │    ·       | h hear both voices    
-·G5    │○────●───────●───│──────|───|──●───│───────────·|         ·             
- F5    │·          ·     │      |   |      │            | S strong / w weak     
- E5    │─────────────────│──────|──●───────│─────────── |        ·              
- D5 ·  │                 │     ●           │            | \_/ tie, r rest       
- C5    │─────────────────│─────────────────│─────────── | t tie  0 first rest   
- B4    │                 │                 │    ·       |             ·         
- A4  · │─────────────────│─────────────────│─────────── |                ·      
- G4                       ○            ·           ·    |     ·                 
- F4     ·                  ·                            |                       
-      · SM3 wP1 wM2 wP1   SM10wP5 wM6 wP8    ·          |·      ·               
-  ·     /4  /4  /4  /4    /4  /4  /4  /4            ·   |                       
-      ·      ^                     ·                                            
-   Arrows write  h hear  Enter check  u undo  n next  b books  q quit           
+                          ·                             |                       
+ Treble 5                6        ·       7        >>   | Editing bar 10        
+ A6                 ·                        · · ·      | Bar 10, beat 1:8      
+ G6·      ·       |                                 ·   |                ··     
+ F6           |   |   |                                 | P8 perfect            
+ E6       |   | · | · |    |                |·          |·G5                    
+ D6       |   |  ●    |    |       |        |   ·       | consonance            
+·C6       | ─●─ ─── ─●─    |   |   |   |    |   |      ·| strong beat           
+ B5     ·●         ·      ●    |   |   |   ●    |       | Figure allowed        
+ A5     ─── ─── ─── ───  ───   | ─●─ · |  ───   |       | No breaks in bar      
+ G5 ·                         ●       ●   ○    ●        |                       
+ F5    │────────────────│────────────────│────────────│ |    ·                  
+ E5    │                │○               │      ·     │ |             ·         
+ D5  · │○───────────────│────────────────│────────────│ | Breaks: whole page    
+ C5    │                │ ·            · │         ·  │ |     ·                 
+ B4    │────────────────│────────────────│────────────│ |                       
+      · SM6 wm7 wP8 wm7  SP5 wm3 wP4 wm3  SM3·wP1       |·      ·               
+  ·     /4  /4  /4  /4   /4  /4  /4· /4   /4  /4    ·   |                       
+      ·                            ·           ^        |                       
+  Arrows write  h hear  Enter check  u undo  n next  b books  q quit            
 ··    ·                    ·                      ·  ·                          

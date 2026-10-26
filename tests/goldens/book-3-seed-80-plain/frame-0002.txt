@@ -1,24 +1,24 @@
                       .   .                .         .                  .  .    
    fugue / III. Four against one                    .                          .
    Ionian  seed 6  cantus above           .                 .                   
-                                                        .                       
-   .    1                 2                          .  |                       
- G4                   .       .               .    .    | Bar 1 / 3:8           
+                                                        |                       
+ Bass   1                2                3        >>.  | Editing bar 1         
+ G4                   .       .               .    .    | Bar 1, beat 3:8       
  F4                                                     |                       
- E4         .                                           | C3                    
- D4    |-----------------|o----------------|----------- |       ..              
- C4.   |o                |    .            |            | h hear both voices    
- B3   .|-----------------|-----------------|----------- |                 .     
- A3.   |                 |      .          |            | S strong / w weak     
- G3    |-----------------|--|---|---|---|--|----------- | .            .        
- F3    |  |.  |   |   |  |  |   |   |   | .|      .     | \_/ tie, r rest       
- E3    |--|---|---|---|--|--|---|---|---|--|----------- | t tie  0 first rest   
- D3    |  |  .|   |   | .| *   *   *   *   |            |  .  .                 
- C3    |-*---*---*---*---|-----------------|----------- |                       
- B2                                            .        |      .                
- A2                                                     | parallel-perfect      
-        SP8 wP8 wP8 wP8   SP8 wP8 wP8 wP8               |          . .   .      
-     .  /4  /4  /4  /4    /4  /4  /4  /4    .           |                       
-         .   ^                       .                                          
-   Arrows write  h hear  Enter check  u undo  n next  b books  q quit    .      
+ E4         .                                           | P8 perfect            
+ D4                      o    .               .         | C3    ..              
+ C4.   -o-              ---   .          -o-            | consonance            
+ B3   .        .                 .       .              | weak beat       .     
+ A3.   |----------------|----------------|------------| | Figure allowed        
+ G3    |     .          |  |   |   |   | |          . | | sequence     .        
+ F3    |--|---|---|---|-|--|---|---|---|-|--|---|-----| | repeat .              
+ E3    |  |   |   |  .| |  |   |   |   | |  |   |     | | sequence              
+ D3    |--|---|---|---|-|-*---*---*---*--|--|---|-----| |  .  .                 
+ C3    | *  n*   *   *  |       .  .     | *   *      | | Breaks: whole page    
+ B2    |----------------|----------------|------------| | bar 2 - parallel-perf 
+ A2    |                |                |            | | bar 2 - accented-para 
+        SP8 wP8 wP8 wP8  SP8 wP8 wP8 wP8. SP8 wP8       | bar 2 - same-beat-par 
+     .  /4  /4  /4  /4   /4  /4  /4  /4   /4. /4        |                       
+         .   ^                       .                  |                       
+  Arrows write  h hear  Enter check  u undo  n next  b books  q quit     .      
                                                                           .     

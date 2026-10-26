@@ -1,24 +1,24 @@
                       ·   ·                ·         ·                  ·  ·    
    fugue / IV. The suspended voice                  ·                          ·
    Ionian  seed 6  cantus above           ·                 ·                   
-                                                        ·                       
-   ·    1         2         3         4              ·  |                       
- A4                   ·       ·               ·    ·    | Bar 1 / 5:8           
+                                                        |                       
+ Bass   1          2          3          4           ·  | Editing bar 1         
+ A4                   ·       ·               ·    ·    | Bar 1, beat 5:8       
  G4                                                     |                       
- F4         ·                                           | C3                    
- E4    │─────────│─────────│─────────│○────────│─────── |       ··              
- D4·   │         │○        │  ·      │         │        | h hear both voices    
- C4   ·│○────────│─────────│○────────│─────────│─────── |                 ·     
- B3·   │ r       │         │    ·    │         │        | S strong / w weak     
- A3    │─────────│─────────│─────────│─────────│─────── | ·            ·        
- G3    │   ·     │         │         │    · |  │  ·     | \_/ tie, r rest       
- F3    │─────────│──|───|──│─────────│──────|──│─────── | t tie  0 first rest   
- E3    │     ·|  │  |   |  │  |   |  │  |  ●   │        |  ·  ·                 
- D3    │──────|──│─●───●───│──|───|──│──|──────│─────── |                       
- C3          ●               ●   ●     ●       ·        |      ·                
- B2                                                     | parallel-perfect      
-        r   wP8   SP8 wP8   SP8 wP8   SM10wP8           |          · ·   ·      
-     ·  /2  /2    /2  /2    /2  /2    /2  /2·           |                       
-         ·   ^                       ·                                          
-   Arrows write  h hear  Enter check  u undo  n next  b books  q quit    ·      
+ F4         ·                                           | P8 perfect            
+ E4                           ·         ─○─   ·         | C3    ··              
+ D4·               ○          ·                         | consonance            
+ C4   ·─○─     ·  ───        ─○─ ·      ───             | weak beat       ·     
+ B3·                            ·                       | Figure allowed        
+ A3    │──────────│──────────│──────────│─────────────│ | No breaks in bar      
+ G3    │   ·      │          │          │ ·     | ·   │ |        ·              
+ F3    │──────────│──|────|──│──────────│───────|─────│ |                       
+ E3    │     · |  │  |  · |  │  |    |  │  |   ●      │ |  ·  ·                 
+ D3    │─r─────|──│─●────●───│──|────|──│──|──────────│ | Breaks: whole page    
+ C3    │     ♮●   │          │ ●    ●   │ ●    ·      │ | bar 2 - parallel-perf 
+ B2    │──────────│──────────│──────────│─────────────│ | bar 3 - parallel-perf 
+        r    wP8   SP8  wP8   SP8  wP8· ·SM10 wP8       | bar 3 - accented-para 
+     ·  /2   /2    /2   /2    /2   /2 ·  /2 · /2        |                       
+         ·    ^                      ·                  |                       
+  Arrows write  h hear  Enter check  u undo  n next  b books  q quit     ·      
                                                                           ·     

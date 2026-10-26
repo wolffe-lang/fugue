@@ -1,24 +1,24 @@
-.                                                           .                   
-   fugue   /   I. Note against note                                             
-   Dorian   seed 7   cantus above                     .                         
-                                           .     .       .                    . 
-        1   2   3   4   5   6   7   8   9   10          | Editing bar 1         
- C5      *                                              |  .                    
- B4     ---.  .                -o-              .       | Selected note         
- A4          .          o    .                          |                 .     
- G4    |---|---|---|---|---|o--|---|---|---|----------|.| C5                .   
- F4    |   |   |o  |   |   |   |   |   |   |          | |       .           .  .
- E4   .|---|o--|---|---|---|---|---|---|o--|----------| | o  cantus             
- D4.   |o  |   |   |o  |   |  .|   |o  | . |o    .    | | *  your voice         
- C4    |---|---|---|---|---|---|---|---|---|----------| |                    .  
- B3    |   |   |   |   |   |   | * |   |   |          | | P perfect             
- A3    |---|---|---|---|-*-|---|---|---|---|----------| | i imperfect           
- G3    |   |   |   |   |   | * |   |   |   |          | | x dissonant           
- F3  . |---|---|-*-|---|---|---|---|---|---|----------| | First break.          
- E3          *       .   . .      .    . *              | at bar 1             .
- D3                 -*-             -*-     -*-         | consonance            
-                                                   .    |             .         
-        x7  P8  P8  P8  P8  P8  P8  P8  P8  P8          |        .              
-        ^     .  .      .                             .                   .     
-   h hear   Space sound   Enter check   Arrows write   u undo   q quit          
-   o cantus: burnt orange  * player: dark blue              .              .    
+ Grand  1   2   3   4   5   6   7   8   9   10              .                   
+ B5     n*                                                                      
+ A5                                                                             
+ G5                                                     |.                    . 
+ F5 Tr |---|---|---|---|---|---|---|---|---|----------| | Editing bar 1         
+ E5    |   |   |   |   |   |   |   |   |   |          | | Bar 1, beat 1:8       
+ D5    |---|---|---|---|---|---|---|---|---|----------| |     .. . .            
+ C5    |   | . |   |   |   | . |   |   |   |          | | M13 imperfect   .     
+ B4    |---|---|---|---|---|---|o--|---|---|----------|.| B5                .   
+ A4    |   |   |   |   |o  |   |   |   |   |          | | consonance        .  .
+ G4   .|---|---|---|---|---|o--|---|---|---|----------| | strong beat           
+ F4.   |.  |   |o  |.  |   |  .|   |   | . |     .    | | Figure allowed        
+ E4    |---|o--|---|---|---|---|---|---|o--|----------| | crossing           .  
+ D4    |on |   |   |o  |   |   |   |o  |   |o         | | opening               
+ C4    |---|   |   |.  |   |   |   |   |.  |          | | climax-position       
+ B3    |   |   |   |   |   |   | * |   |   |          | |                       
+ A3 Ba |---|---|---|---|-*-|---|---|---|---|----------| | Breaks: whole page    
+ G3    |   |   |   | . | . | * |  .|   |   |          | | bar 1 - crossing     .
+ F3    |---|---|-*-|---|---|---|---|---|---|----------| | bar 1 - opening       
+ E3    |   | * |   |   |   |   |   |   | * |       .  | | bar 2 - overlap       
+ D3    |---|---|---|-*-|---|---|---|-*-|---|-*--------| |        .              
+ C3    |   |  .| . |   |.  |   |   |   |   |          | |                 .     
+        i13 P8  P8  P8  P8  P8  P8 .P8  P8  P8                                  
+   h hear   Space sound   Enter check   Arrows write   u undo   q quit     .    

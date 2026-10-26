@@ -1,24 +1,24 @@
                                                                      .         .
    fugue   /   I. Note against note             .                 .  .          
    Mixolydian   seed 2   cantus below                    .                      
-                          .                                                     
-        1   2   3   4   5   6   7 . 8   9   10          | Editing bar 10        
- B5                 .                        . . .      |                       
- A5.      .             -*-                         .   | Selected note  ..     
- G5                          *               *          |          .            
+                          .                             |                       
+ Treble 1   2   3   4   5   6   7 . 8   9   10          | Editing bar 10        
+ B5                 .                        . . .      | Bar 10, beat 1:8      
+ A5.      .             -*-                         .   |                ..     
+ G5                          *              n*          | P8 perfect            
  F5    |---|---|---|---|---|---|-*-|---|#*-|----------| |.G5                    
- E5    |  .|   |   | *.|   |   |   |   |   |    .     | | Hearing 5/10          
-.D5    |-*-|---|-*-|---|---|---|o--|-*-|---|----------|.| o  cantus             
- C5    |.  | * |   |   |o  |   |   |   |   |          | | *  your voice         
- B4    |---|---|o--|---|---|o--|---|o--|---|----------| |        .              
- A4 .  |   |o  |   |   |   |   |   |   |o  |          | | P perfect             
- G4    |o--|---|---|o--|---|---|---|---|---|o---------| | i imperfect           
- F4    |   |   |   |   |   |   |   |   |   |    .     | | x dissonant .         
- E4  . |---|---|---|---|---|---|---|---|---|----------| |                .      
- D4                       .            .           .    |     .                 
- C4     .                  .                            |                       
+ E5    |  .|   |   | *.|   |   |   |   |   |    .     | | consonance            
+.D5    |-*-|---|-*-|---|---|---|o--|-*-|---|----------|.| strong beat           
+ C5    |.  | * |   |   |o  |   |   |   |   |          | | Figure allowed        
+ B4    |---|---|o--|---|---|o--|---|o--|---|----------| | No breaks in bar      
+ A4 .  |   |o  |   |   |   |   |   |   |o  |          | |                       
+ G4    |o--|---|---|o--|---|---|---|---|---|on--------| |    .                  
+ F4    |   |   |   |   |   |   |   |   |   |    .     | |             .         
+ E4  . |---|---|---|---|---|---|---|---|---|----------| | Breaks: whole page    
+ D4     P5  i3  i3  i6  i6. i6  i3  i3 .i6  P8     .    |     .                 
+ C4     .               ^  .                            |                       
       .                   .                  .          |.      .               
-  .     P5  i3  i3  i6  i6  i6  i3 .i3  i6  P8      .   |                       
-      .                 ^          .                                            
+  .                                .                .   |                       
+      .                            .                    |                       
    h hear   Space sound   Enter check   Arrows write   u undo   q quit          
-.. o cantus: burnt orange  * player: dark blue    .  .                          
+.. o cantus: deep red      * player: dark blue    .  .                          

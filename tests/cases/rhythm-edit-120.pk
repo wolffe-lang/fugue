@@ -1,0 +1,9 @@
+pk 1
+seed 0
+tier rich
+size 120x40
+start 20001
+# frames 2 every 1
+t 0 rest
+t 0 split
+t 0 dot

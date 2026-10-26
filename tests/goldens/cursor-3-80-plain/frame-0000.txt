@@ -1,0 +1,24 @@
+                .                          .     .  .  .                        
+   fugue   /   I. Note against note                                             
+   Ionian   seed 0   cantus below            .              .           .       
+         .                                              |                       
+ Treble 1   2   3  .4   5   6 . 7   8   9   10          | Editing bar 3      .  
+ B5                         .     .                     | Bar 3, beat 1:8       
+ A5                                .              .     |  ..                   
+ G5        .                             .    .    .    | P5 perfect            
+ F5   .|---|---|---|---|---|---|---|---|---|----------| | B4    .               
+ E5    |   |   |   |   |   |   |   |   |   |          | | consonance            
+ D5    |---|---|---|---|---|---|-*-|---|---|----------|.| strong beat           
+ C5   .|   |   |   |   | * |   |   |   |   |         .| | Figure allowed    .   
+ B4    |---|---|n*-|---|---|-*-|---|-*-|---|----------| | parallel-perfect      
+ A4    |   | * |   |   |  .|   |   |   | * |          | |      .                
+ G4    |-*-|---|---|-*-|---|---|o--|---|---|-*--------| |               .      .
+ F4    |   |   |   |   |o  |   |   |   |   | .        | |       .    .          
+ E4    |---|---|on-|---|---|o--|---|o--|---|----------| | Breaks: whole page  . 
+ D4         o.  P5      P5  P5  P5  P5  o    .          |.bar 2 - parallel-perf 
+ C4 .  -o-  P5  ^ .-o-                  P5 -o-.         | bar 3 - parallel-perf 
+        P5        . P5                      P5          | bar 4 - parallel-perf 
+                                                      . |   .                   
+                                                        |          .          . 
+   h hear   Space sound   Enter check   Arrows write   u undo   q quit          
+   o cantus: deep red      * player: dark blue     .               .       .    
