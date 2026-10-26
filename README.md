@@ -35,8 +35,9 @@ At the title, 1–5 chooses a book; Enter opens the current page. Left/Right
 moves by the book's smallest unit; Up/Down writes a note;
 Shift-Up/Down move an octave. Space auditions, h hears both voices, Enter checks,
 u undoes, n turns the page, and q or Escape quits. The permitted cadence sharp
-is #. In IV and V, t toggles a barline tie; 0 toggles the opening half rest.
-In V, ] splits a value and [ joins equal neighbours. b returns to the books.
+is #. In IV, t toggles a barline tie; in II and IV, 0 toggles the opening half rest.
+In V, [ splits, ] joins, . dots, t ties to the next event, and r toggles a
+rest without changing its length. Every edit is undoable. b returns to the books.
 Listening locks edits until the highlighted pass ends; quit still works.
 Best stars are saved in `.fugue-state` (`FUGUE_STATE` selects another file).
 
@@ -63,11 +64,14 @@ tools/check                         # local host, memory-gated on macOS
 .lair/tools/in-container tools/check-perf
 ```
 
-The gate includes checked rule and interaction tests, native and release builds,
+The gate includes 119 checked rule and interaction tests, native and release builds,
 and rich/plain goldens at 80x24 and 120x40. It checks fifteen three-star tutorial
 references, actual solved recordings for all five books, score-tampering refusals,
-terminal restoration, rhythmic two-voice PCM, and the glyph inventory. Staff
-pitch/row round-trips, continuous-line walks and exact Book I PCM remain gated. The first
+terminal restoration, rhythmic two-voice PCM, and the glyph inventory. Fixed-clef
+line/space mapping, grand staves, three-ledger walks, selected-event status,
+partial measures and rhythm edits are exercised in both tiers. A 30-page
+census checks 936 note rows and 21 synthesized fundamentals within 1%; exact
+Book I PCM remains gated. The first
 book retains its 300-line generator census; later books exercise twelve seeds
 each, covering every mode and both voice positions. The later-species verdict
 study pins 127 legal/illegal rows, and the classifier has seventeen explicit
