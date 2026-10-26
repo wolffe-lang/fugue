@@ -2,6 +2,7 @@ use std.env
 use std.fs
 use std.signal
 use clock
+use ear
 use grid
 use headless
 use input
@@ -162,6 +163,14 @@ fn offline(o: Options, r: replay.Replay) -> int {
 }
 
 fn live(o: Options, r: replay.Replay) -> int {
+    let enabled = !has(env.args(), "--mute") && (env.get("FUGUE_SOUND") else "1") != "0"
+    var audio = ear.open(enabled) else |_| {
+        eprint("fugue: cannot prepare sound directory")
+        return 2
+    }
+    defer ear.close(mut audio)
+    var s = session.new(r.seed, o.title && o.script == "")
+    ear.prepare(mut audio, s) else |_| { eprint("fugue: note preparation failed"); return 2 }
     var t = term.open() else |e| { eprint(term.message("{e}", "fugue")); return 2 }
     if t.cols < r.cols || t.rows < r.rows {
         eprint("fugue: small (needs {r.cols}x{r.rows})")
@@ -169,7 +178,6 @@ fn live(o: Options, r: replay.Replay) -> int {
     }
     term.enter(mut t) else |_| { term.leave(mut t); return 2 }
     defer term.leave(mut t)
-    var s = session.new(r.seed, o.title && o.script == "")
     var dec = input.new()
     var pending = List[int]()
     var c = clock.new(clock.now_ns())
@@ -194,13 +202,27 @@ fn live(o: Options, r: replay.Replay) -> int {
         input.flush(mut dec, clock.now_ns() / 1000000, mut pending)
         let due = clock.advance(mut c, clock.now_ns())
         if due == 0 && !s.quit { continue }
+        ear.poll(mut audio)
         var carries = false
         for raw in pending {
             let k = session.key(raw)
             if k != 0 && (o.script == "" || k == 14 || k == 15) {
                 if k == 14 { reason = "the quit key" }
                 if k == 15 { reason = "the interrupt" }
+                let before_audition = s.audition
                 session.step(mut s, k)
+                if k == 12 {
+                    ear.prepare(mut audio, s) else |_| { eprint("sound: preparation failed") }
+                }
+                if s.audition != before_audition {
+                    ear.audition(mut audio, s.voice[s.cursor]) else |_| {
+                        eprint("sound: audition failed")
+                    }
+                }
+                if k == 9 && s.phase == 1 {
+                    ear.hear(mut audio, s) else |_| { eprint("sound: whole failed") }
+                    c = clock.new(clock.now_ns())
+                }
                 replay.push_key(mut recorded, tick, k)
                 carries = true
             }

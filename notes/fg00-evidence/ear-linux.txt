@@ -1,0 +1,16 @@
+pty: quit ok (linux x86_64, exit 0, 8136 bytes captured)
+pty: ctrl-c ok (linux x86_64, exit 0, 8136 bytes captured)
+pty: trap ok (linux x86_64, exit 134, 8011 bytes captured)
+pty: agree-rich ok (linux x86_64, exit 0, 8295 bytes captured)
+pty: agree-plain ok (linux x86_64, exit 0, 3106 bytes captured)
+sound: note-bank render_us 23865 base 29
+sound: wav-sink 1 /work/target/pty/audio/note-34-0.wav
+sound: wav-sink 2 /work/target/pty/audio/note-33-0.wav
+sound: wav-sink 3 /work/target/pty/audio/whole-3.wav
+fugue: ended by the quit key
+
+pty: editor-ear ok (linux x86_64, exit 0, 8327 bytes captured)
+pty: title-quit ok (linux x86_64, exit 0, 5554 bytes captured)
+pty: staff-quit ok (linux x86_64, exit 0, 9003 bytes captured)
+pty: card-quit ok (linux x86_64, exit 0, 9003 bytes captured)
+pty: escape ok (linux x86_64, exit 0, 5554 bytes captured)

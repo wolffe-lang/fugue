@@ -1,0 +1,138 @@
+//! Prepare outside rendering; the live adapter owns only its afplay children.
+
+use clock
+use session
+use sound
+use std.env
+use std.fs
+use std.process
+use theory
+
+/// Cached WAV paths and child ownership, separate from deterministic editor state.
+pub struct Ear {
+    enabled: bool,
+    dir: str,
+    owned: bool,
+    base: int,
+    children: List[process.Child],
+    serial: int,
+    mac: bool,
+}
+
+/// Create an exclusive private WAV directory, or use the explicitly requested sink.
+pub fn open(enabled: bool) -> Ear ! {io} {
+    var dir = env.get("FUGUE_WAV_DIR") else ""
+    let owned = dir == ""
+    if enabled {
+        if owned {
+            let parent = env.get("TMPDIR") else "."
+            dir = "{parent}/fugue-{clock.now_ns()}"
+            fs.create_dir(dir) else |_| { return io }
+        } else {
+            fs.create_dir_all(dir) else |_| { return io }
+        }
+    }
+    Ear {
+        enabled: enabled,
+        dir: dir,
+        owned: owned,
+        base: 0,
+        children: List[process.Child](),
+        serial: 0,
+        mac: fs.exists("/usr/bin/afplay"),
+    }
+}
+
+/// One quiet choir note, a quarter second of attack and sustain, then release.
+pub fn note_part(p: theory.Pitch) -> str {
+    "title Audition\ntempo 240\nmeter 1/4\npart voice choir mp\nbar 1\nvoice {theory.name(p)}/4\n"
+}
+
+/// The two complete voices share a prepared score, one second per whole note.
+pub fn whole_part(s: session.State) -> str {
+    var text = "title Two voices\ntempo 240\nmeter 4/4\npart cantus organ p pan -25\npart voice choir mp pan 25\n"
+    for i in 0..s.voice.len {
+        text += "bar {i + 1}\ncantus {theory.name(s.cantus[i])}/1\nvoice {theory.name(s.voice[i])}/1\n"
+    }
+    text
+}
+
+fn render(path: str, text: str, seconds: int) -> () ! {io} {
+    let prepared = sound.prepare("fugue", text, seconds) else |_| { return io }
+    let bytes = sound.wav(prepared.pcm) else |_| { return io }
+    fs.write_bytes(path, bytes) else |_| { return io }
+}
+
+/// Render the two-octave diatonic bank and the raised cadence note before playing.
+pub fn prepare(mut e: Ear, s: session.State) -> () ! {io} {
+    if !e.enabled { return }
+    e.base = 28 + s.mode + (if s.below then -7 else 0)
+    let begin = clock.now_ns()
+    for i in 0..15 {
+        region note {
+            let p = theory.pitch(e.base + i)
+            render("{e.dir}/note-{e.base + i}-0.wav", note_part(p), 1)?
+        }
+    }
+    if theory.raises(s.mode) {
+        region note {
+            var p = theory.pitch(e.base + 6)
+            p.accidental = 1
+            render("{e.dir}/note-{e.base + 6}-1.wav", note_part(p), 1)?
+        }
+    }
+    eprint("sound: note-bank render_us {(clock.now_ns() - begin) / 1000} base {e.base}")
+}
+
+/// Nonblocking reap of children this process started; no host-wide wait or signals.
+pub fn poll(mut e: Ear) {
+    if !e.mac { return }
+    loop {
+        let change = process.poll() else |_| { return }
+        if !change.changed { break }
+        for i in 0..e.children.len {
+            if e.children[i].slot == change.child.slot { e.children[i].slot = -1 }
+        }
+    }
+}
+
+fn start(mut e: Ear, path: str) -> () ! {io} {
+    e.serial += 1
+    if !e.mac {
+        let bytes = fs.read_bytes(path) else |_| { return io }
+        fs.write_bytes("{e.dir}/audition-{e.serial}.wav", bytes) else |_| { return io }
+        eprint("sound: wav-sink {e.serial} {path}")
+        return
+    }
+    poll(mut e)
+    var cmd = process.command("/usr/bin/afplay")
+    process.push_arg(mut cmd, path)
+    let child = process.start(cmd) else |_| { return io }
+    for i in 0..e.children.len {
+        if e.children[i].slot < 0 { e.children[i] = child; return }
+    }
+    (mut e.children).push(child)
+}
+
+/// Audition a cached pitch; preparation never happens on this path.
+pub fn audition(mut e: Ear, p: theory.Pitch) -> () ! {io} {
+    if !e.enabled { return }
+    start(mut e, "{e.dir}/note-{theory.position(p)}-{p.accidental}.wav")?
+}
+
+/// Render and start both voices; callers reset their tick deadline after preparation.
+pub fn hear(mut e: Ear, s: session.State) -> () ! {io} {
+    if !e.enabled { return }
+    let path = "{e.dir}/whole-{e.serial + 1}.wav"
+    region preparation { render(path, whole_part(s), s.voice.len + 1)? }
+    start(mut e, path)?
+}
+
+/// Reap every owned player only after restoring the terminal; remove private files.
+pub fn close(mut e: Ear) {
+    for child in e.children {
+        if child.slot >= 0 { let c = copy child; let _ = process.wait(take c) else -1 }
+    }
+    if e.owned && e.enabled { fs.remove_dir_all(e.dir) else |_| {} }
+    e.enabled = false
+}
