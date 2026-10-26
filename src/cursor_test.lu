@@ -1,7 +1,6 @@
 use grid
 use manuscript
 use notation
-use rhythm
 use session
 
 fn caret(g: grid.Grid, margin: int) -> int {

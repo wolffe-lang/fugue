@@ -104,13 +104,21 @@ def check(binary, ctx):
                     panel = f'Bar {time_position//8+1}, beat {time_position%8+1}:8' in screen[5][cols-22:]
                     current = caret(screen)
                     moved = bool(current) and current != previous
+                    # The first two bars are four halves, five cells each,
+                    # separated by one bar gutter. Eighth offsets occupy cells.
+                    expected_x = 9 + time_position//8*11 + time_position%8//4*5 + time_position%4
+                    aligned = len(current) == 1 and current[0][1] == expected_x
+                    frame_dir = root / name
+                    frame_dir.mkdir(exist_ok=True)
+                    (frame_dir / f'frame-{tick}.bin').write_bytes(data)
                     for index, key in keys:
                         per_press.append({'press': index+1, 'key': key, 'frame': tick,
                                           'panel_frames': 1 if panel else None,
                                           'cursor_frames': 1 if moved else None,
-                                          'caret': current, 'coalesced': len(keys)})
-                    if not panel or not moved:
-                        problems.append(f'{name}: press {keys[0][0]+1} frame {tick}: panel={panel}, caret moved={moved}, {previous}->{current}')
+                                          'caret': current, 'expected_x': expected_x,
+                                          'aligned': aligned, 'coalesced': len(keys)})
+                    if not panel or not moved or not aligned:
+                        problems.append(f'{name}: press {keys[0][0]+1} frame {tick}: panel={panel}, caret moved={moved}, aligned={aligned}, {previous}->{current}')
                     previous = current
                 if len(per_press) != 22: problems.append(f'{name}: only {len(per_press)}/22 presses have a captured frame')
                 result = {'case': name, 'repeat_hz': 30, 'presses': per_press,
