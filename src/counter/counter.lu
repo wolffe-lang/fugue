@@ -300,6 +300,10 @@ pub fn check(
         return v
     }
     let upper = if cs_below then octave(cs, 1) else copy cs
+    for i in 0..upper.notes.len {
+        let other = rhythm.at(a.beats, rhythm.onset(upper.beats, i))
+        if theory.interval(a.notes[other], upper.notes[i]).number == 5 { v.stars = 3; return v }
+    }
     let lower = octave(upper, -1)
     v.breaks = pair(a, upper, false)
     for b in pair(a, lower, true) {
