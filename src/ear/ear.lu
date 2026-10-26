@@ -163,7 +163,7 @@ pub fn hear(mut e: Ear, s: session.State) -> () ! {io} {
         fs.write_bytes(path, bytes) else |_| { return io }
     }
     trace("sound: whole-render {path} ticks {session.piece_ticks(s)}")
-    start(mut e, path)?
+    // Plant: render the whole WAV but omit the output handoff.
 }
 
 /// Reap every owned player only after restoring the terminal; remove private files.
