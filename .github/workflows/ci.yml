@@ -139,6 +139,8 @@ jobs:
           python3 -I tools/glyphs.py
           python3 -I tools/staff-check.py --bin target/native/fugue
           python3 -I tools/staff-check.py --bin target/release/fugue
+          python3 -I tools/pitch-check.py --bin target/native/fugue
+          python3 -I tools/pitch-check.py --bin target/release/fugue
       - name: manuscript frame costs
         run: |
           target/release/fugue --bench --size 120x40 --tier rich --frames 300 --mute

@@ -43,10 +43,11 @@ assert 'UNVERIFIED score 3, claimed 2' in r.stderr
 r=run(['--headless','--script',str(root/'tests/cases/book-6-end-80.pk'),'--frames','10','--every','10','--dump',str(out/'end'),'--mute'])
 assert 'The sixth book is lit' in (out/'end/final.txt').read_text()
 assert '3 + 3 + 3 = 9 / 9' in (out/'end/final.txt').read_text()
-record=root/'tests/replays/book-6-solved.pk'
-assert record.exists(),'missing actual Book VI terminal recording'
-last=max(int(x.split()[1]) for x in record.read_text().splitlines() if x.startswith('t '))
-r=run(['--headless','--script',str(record),'--frames',str(last+1),'--every',str(last+1),'--dump',str(out/'recorded'),'--mute'])
-assert 'verified score 3' in r.stderr
+for name in ('book-6-solved.pk','book-6-two-desks.pk'):
+    record=root/'tests/replays'/name
+    assert record.exists(),f'missing actual Book VI terminal recording: {name}'
+    last=max(int(x.split()[1]) for x in record.read_text().splitlines() if x.startswith('t '))
+    r=run(['--headless','--script',str(record),'--frames',str(last+1),'--every',str(last+1),'--dump',str(out/name.removesuffix('.pk')),'--mute'])
+    assert 'verified score 3' in r.stderr
 run(['--book','7'],2)
 print('fugue-gameplay: subjects, answers, inversion admission, three references, end card, actual recording and PCM green')
