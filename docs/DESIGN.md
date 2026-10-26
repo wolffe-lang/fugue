@@ -149,5 +149,8 @@ staff it toggles a rest, while on the critic card it returns to editing.
 The selected-event panel derives its bar and eighth-beat from cursor time,
 its vertical interval from the two score pitches, and its figure from the
 existing classifier. `species.event_breaks` runs the same vertical/motion rule pass as the judge
-but retains only findings emitted at the selected event. Whole-line melodic
-findings remain in the separately titled page list, with their bar locations.
+but retains only findings emitted at the selected event. The separately titled bar list filters the global verdict by the active bar,
+including melodic findings at that bar. Each finding row names its bar.
+The critic card after Enter retains the complete verdict and global counts.
+The caret uses the same event column plus the editable within-event offset;
+held values reserve a distinct cell for each selectable time unit.

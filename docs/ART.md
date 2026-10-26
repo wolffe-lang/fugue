@@ -33,7 +33,8 @@ are never overwritten by an accidental.
 
 The panel follows the selected event: **Bar N, beat B:8**, the interval and its
 class, the figure allowed at that beat, and named local findings at that event. The
-separately titled **Breaks: whole page** list is not the selected-note status.
+separately titled **Breaks: bar N** list contains only findings in the active bar.
+Every finding row names its bar; Enter still opens the global critic card.
 The harmonic class and figure are separate: a passing dissonance remains
 labelled dissonant even when its figure is allowed.
 
@@ -43,14 +44,18 @@ A measure costs one barline column plus the sum of its event widths. An event
 uses the maximum of its value minimum, its pitch-name width plus one, and its
 strong/weak interval-label width plus one. Tuned minima are whole 6, half 5,
 quarter 4 and eighth 4; the eighth's flag, three-cell ledger and label need
-four cells. Dotted halves use 5, dotted quarters 4. The extra label cell keeps
+four cells. Dotted halves use 5, dotted quarters 4. Editable held values reserve at least
+one cell per eighth (a whole therefore needs eight cells, a dotted half six).
+The extra label cell keeps
 neighbouring labels separate. Drawing stops only at a complete event boundary;
 a partially shown bar keeps its number, and `>>` marks the cut. Moving right
 scrolls whole bars until the complete selected event fits.
 
 Interval labels sit one row below the lowest note, ledger, staff line or tie
-in their column. Value labels and the caret follow when there is room; on the
-compact grand staff the interval and permanent hint take priority. Layout is
+in their column. Value labels follow when there is room. The caret advances one cell per
+editable unit inside a held event; a selected head still identifies the note
+that Up/Down will change. On the compact grand staff the caret uses the
+bar-number row, leaving the interval and permanent hint intact. Layout is
 recomputed on every pitch, rhythm and cursor change. Stems and shallow tie arcs
 are original cell drawings, not borrowed notation assets.
 

@@ -25,8 +25,9 @@ listening animation. `--plain` selects ASCII and the sixteen console colours.
 Book I's persistent bottom hint begins `h hear   Space sound   Enter check`.
 `h` begins at the first bar, regardless of the editing cursor, and plays both
 voices through the last. The moving bar shade, caret and two lit heads show
-what sounds. **Editing bar N** is the panel's first line; **First break** below
-it names a critic finding, which need not change when the cursor moves.
+what sounds. **Editing bar N** is the panel's first line; **Breaks: bar N** below it
+lists only that bar's findings. A clean bar says **No break in this bar**.
+The critic card after Enter still reports every bar and the global counts.
 ## Books II–V
 
 At the title, 1–5 opens a book; b returns to that desk from a page or card.
@@ -35,8 +36,9 @@ are saved in `.fugue-state`; set `FUGUE_STATE` to use another file. A corrupt or
 unknown-format file is ignored, never interpreted as an answer.
 
 Left and Right advance by the book's smallest unit: a half in II and IV, a
-quarter in III, an eighth in V. The cursor can stand inside a held note; Up and
-Down change that complete note. A tie carries pitch edits through the tied chain.
+quarter in III, an eighth in V. The caret moves on every press, including inside a held note; Up and
+Down change that complete note. The selected head identifies the held event,
+while the caret marks its editable time offset. A tie carries pitch edits through the tied chain.
 
 Books II–IV keep their species rhythm. In IV, t toggles an incoming barline
 tie; in II and IV, 0 toggles the opening half rest.
