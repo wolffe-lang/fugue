@@ -91,3 +91,31 @@ the whole-note span; rhythm can replace that lookup with beat lengths without
 changing the staff or player owner. `ear.part(cantus, voice)` produces score
 text from the event lists (currently pitches, all wholes); `whole_part(state)`
 is only its adapter. Tempo and PCM duration derive from the same session clock.
+## The rhythmic books
+
+`rhythm` stores integer eighth-note lengths, rests and incoming ties. `species`
+classifies figures, judges the sounding beats, and performs bounded solution
+search separately from the player's answer. `presets` holds twelve fixed,
+original tutorial pages and their test references; a reference is never copied
+into the editor. `manuscript` maps musical time to widened columns and emits
+rhythmic part text. `notation` composes the later pages on `staff`'s shared
+viewport, pitch/row, ledger and head API. It does not draw a second kind of staff.
+
+The seed selects a starting index in the same modal cantus pool. Candidates
+are admitted only after the species checker verifies a bounded search result
+on the requested side. Search tries sparse shapes and planned unique climaxes;
+these are search preferences, not extra laws imposed on another answer. Budget
+exhaustion is a named generation failure, never an assertion or a relaxed judge.
+Florid starting grids mix wholes, halves, quarters and ties; eighths remain an
+optional subdivision rather than an obligation imposed on every exercise.
+
+The cursor advances in the book's smallest unit, even inside a held event.
+Pitch changes follow its tie chain. A history entry retains the complete small
+note/value lists, so undo restores duration, rests, ties and cursor offset as
+well as pitch. The final bar remains a whole. Playback uses the same lengths as
+the staff and score text, while the output owner remains in `ear`.
+
+`progress` validates a tiny versioned file containing only five best-star
+counts. It cannot supply music or bypass the judge. Recordings snapshot those
+cosmetic title counts in an optional comment; the event stream still determines
+all notes, rhythm, verdicts and final stars.

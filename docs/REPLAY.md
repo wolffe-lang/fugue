@@ -33,3 +33,18 @@ same prepared-note adapter as live input. `--apply` feeds terminal bytes through
 the engine's model; its agreement rows compare live and headless cells, including
 styles and restored terminal modes. The fixed layout is not changed by a window
 resize, and Fugue does not currently record resize events.
+
+## Later books
+
+Books II–V wrap the old start selector as `10000 + book*2000 + start`.
+Thus 14001 is Book II's first tutorial, 14101 its title-start recording, and
+21000 is a Book V seeded recording beginning at the title. All Book I values
+remain unchanged. The appended vocabulary is `book-1` through `book-5`, `desk`,
+`split`, `join`, `tie`, and `rest`. Rhythmic edits are recorded as keys, never
+as a trusted completed score.
+
+A recording can include `# books fugue 1 a b c d e`, its five initial best-star
+counts. This affects only the title's progress display. The notes, rhythm and
+final score are still recomputed by the judge. Missing or malformed cosmetic
+progress starts at zero. A daily seed is the UTC day count together with the
+selected book; different books retain distinct replay start selectors.

@@ -45,3 +45,18 @@ when it is in the viewport. The names are therefore the recommended treatment.
 
 Every golden has a companion `.sty` file: colour and attributes are part of the
 image, not a promise inferred from an uncoloured text capture.
+
+## Rhythm on the manuscript
+
+Later books widen each bar to four cells per smallest unit and scroll by whole
+bars. During listening the page follows the sounding event, not the last edited
+note. Both voices share the supplied diatonic viewport; if their visible range
+fits, neither is clipped simply to centre the player's pitch.
+
+The shared bright cantus and blue player heads remain unchanged. Halves and
+quarters gain stems, eighths a small flag, and the value row states /1, /2, /4
+or /8 explicitly. Incoming ties form a shallow `\_/` arc below their heads,
+continuing on both sides of a barline without erasing it. These marks use the
+same ASCII geometry on both tiers. A rest is r. The interval row includes S or
+w for strong/weak, its quality and its number; colour still describes harmonic
+consonance, not whether a passing dissonance is legal in context.
