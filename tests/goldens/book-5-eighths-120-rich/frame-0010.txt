@@ -10,9 +10,9 @@
                                                            ·                                    | unlicensed-eighth     
         ·   ·                    ·  ·                  ·                            ·           | weak beat       ·     
       ·                                              ·                      ·       ·           | Figure not allowed    
- Treble 1                 2          3            ·   4      5       ·  6          7       >>   | opening               
+ Treble 1                 2          3            ·   4      5       ·  6          7       >>   | paired-eighths        
  A5                       ·                                    ·                                | passing-dissonance    
- G5         ·                     ·              ··  ·                  ·      ·     |   |      | paired-eighths        
+ G5         ·                     ·              ··  ·                  ·      ·     |   |      |                       
  F5    │─────────────────│──────────│────────────────│──────│──────────│──────────│──|───|────│ |           ·           
  E5    │  ·    |         │·         │  |   |   |   | │      │  |    | ·│  |   · · │  |   |    │ | Breaks: whole page    
  D5    │───────|───|'────│──────────│──|───|───|───|─│──────│──|────|──│──|────|──│─●───●─────│ | bar 1 - opening    · ·

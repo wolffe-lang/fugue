@@ -10,9 +10,9 @@
    ·                          ·                         ·        ·                      ·       | consonance            
       ·        ·                 ·       ·                                ·                     | strong beat           
    ·                            ·                                                               | Figure allowed        
- Bass   1    ·           2                3         ·     ·4           ·    5      ·            | sequence   · ··       
- B4        ·                              ·       ·              ·                              | repeat                
- A4                  ·     ·                                                                    | sequence              
+ Bass   1    ·           2                3         ·     ·4           ·    5      ·            | No local break·       
+ B4        ·                              ·       ·              ·                              |                       
+ A4                  ·     ·                                                                    |                       
  G4          ·          ·                                  ·  ·                                 |                ·     ·
  F4                             ·  ·                                               ·            | Breaks: whole page    
  E4                                            ·        · ─○─  ·                 ·              | bar 2 - parallel-perf 

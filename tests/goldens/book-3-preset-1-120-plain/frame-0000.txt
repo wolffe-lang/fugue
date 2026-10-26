@@ -10,9 +10,9 @@
                                                            .                                    | consonance            
         .   .                    .  .                  .                            .           | strong beat     .     
       .                                              .                      .       .           | Figure allowed        
- Treble 1                2                3       .        4         .      5                   | sequence              
- B5                       .                                    .                                | repeat                
- A5         .                     .              ..  .       |   |   |  .|     .                | sequence              
+ Treble 1                2                3       .        4         .      5                   | No local break        
+ B5                       .                                    .                                |                       
+ A5         .                     .              ..  .       |   |   |  .|     .                |                       
  G5                                          .               |  .|   |   |    |   |   |   |     |           .           
  F5    |----------------|----------------|----------------|--|---|---|---|-|--|---|---|---|---| | Breaks: whole page    
  E5    |     .          |                |  |.  |   |   |.| *   *   *   *  | .|   |   |   |   | | bar 2 - parallel-perf.

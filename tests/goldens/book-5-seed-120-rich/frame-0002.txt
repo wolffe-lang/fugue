@@ -10,8 +10,8 @@
    ·                          ·                         ·        ·                      ·       | consonance            
       ·        ·                 ·       ·                                ·                     | weak beat             
    ·                            ·                                                               | Figure allowed        
- Bass   1    ·     2          3                4    · 5   ·      6     ·    7      ·            | sequence   · ··       
- B4        ·                              ·       ·              ·                              | repeat                
+ Bass   1    ·     2          3                4    · 5   ·      6     ·    7      ·            | No local break·       
+ B4        ·                              ·       ·              ·                              |                       
  A4                  ·     ·                                                                    |                       
  G4          ·          ·                                  ·  ·                                 |                ·     ·
  F4                             ·  ·                                        ○      ·            | Breaks: whole page    

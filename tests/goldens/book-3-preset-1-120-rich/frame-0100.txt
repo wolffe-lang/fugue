@@ -10,7 +10,7 @@
                                                            ·                                    | consonance            
         ·   ·                    ·  ·                  ·                            ·           | strong beat     ·     
       ·                                              ·                      ·       ·           | Figure allowed        
- Treble 1                  2                  3   ·            4     ·          5          >>   | No breaks in bar      
+ Treble 1                  2                  3   ·            4     ·          5          >>   | No local break        
  B5                       ·  |            |                 |  ·             |                  |                       
  A5         ·     |          |    ·   |   |     |··  ·  |   |    |      ·|   | ·  |       |     |                       
  G5           |   |   ●      |    |   |   |  ·  |   |   |   |   ·|   |   |   |    |   |   |     |           ·           
