@@ -1,0 +1,22 @@
+pass 1 2026-10-26T17:47:53Z
+aarch64-apple-darwin wolf=240b84d079b1b9a0d88681ac08fca4816f84778e2d6c94c435ceb2dd6a5f042a lupin=9133bfdbb95f6a18745439bf0b2b5280860a5bfeaf9ae038ea120a72d58f7687 std=2386522eb059cca5a84108562c2c0a0e72345d34
+2386522eb059cca5a84108562c2c0a0e72345d34
+8a88813e434bdbbe4ea2b2b718c9771f982d588597fe3e44af776c9c42029bcb  /Users/mfwolffe/lanes/fg02/fugue/.wolf-bin/wolf
+5f010730c3e6b4cc806a9ff8eddb0582078585cafe13d86d5e438e45e3c3b7a8  /Users/mfwolffe/lanes/fg02/fugue/.wolf-bin/lupin
+62eeafa9d275220e7ca5fff9ab1c34a688adfd0a658983f4d8c2057eb8f73f19  /Users/mfwolffe/lanes/fg02/fugue/.wolf-bin/libwolf_rt.a
+wolf 0.2.35 (wolfgang, pin cf0c13d)
+paired with lupin 0.1.56 (reference interpreter), pin 294d626
+lupin 0.1.56 (wolf-interp, reference interpreter at pin 294d626)
+["wolf-0.2.35-aarch64-apple-darwin.tar.gz","sha256:240b84d079b1b9a0d88681ac08fca4816f84778e2d6c94c435ceb2dd6a5f042a"]
+["lupin-0.1.56-aarch64-apple-darwin.tar.gz","sha256:9133bfdbb95f6a18745439bf0b2b5280860a5bfeaf9ae038ea120a72d58f7687"]
+pass 2 2026-10-26T17:47:54Z
+aarch64-apple-darwin wolf=240b84d079b1b9a0d88681ac08fca4816f84778e2d6c94c435ceb2dd6a5f042a lupin=9133bfdbb95f6a18745439bf0b2b5280860a5bfeaf9ae038ea120a72d58f7687 std=2386522eb059cca5a84108562c2c0a0e72345d34
+2386522eb059cca5a84108562c2c0a0e72345d34
+8a88813e434bdbbe4ea2b2b718c9771f982d588597fe3e44af776c9c42029bcb  /Users/mfwolffe/lanes/fg02/fugue/.wolf-bin/wolf
+5f010730c3e6b4cc806a9ff8eddb0582078585cafe13d86d5e438e45e3c3b7a8  /Users/mfwolffe/lanes/fg02/fugue/.wolf-bin/lupin
+62eeafa9d275220e7ca5fff9ab1c34a688adfd0a658983f4d8c2057eb8f73f19  /Users/mfwolffe/lanes/fg02/fugue/.wolf-bin/libwolf_rt.a
+wolf 0.2.35 (wolfgang, pin cf0c13d)
+paired with lupin 0.1.56 (reference interpreter), pin 294d626
+lupin 0.1.56 (wolf-interp, reference interpreter at pin 294d626)
+["wolf-0.2.35-aarch64-apple-darwin.tar.gz","sha256:240b84d079b1b9a0d88681ac08fca4816f84778e2d6c94c435ceb2dd6a5f042a"]
+["lupin-0.1.56-aarch64-apple-darwin.tar.gz","sha256:9133bfdbb95f6a18745439bf0b2b5280860a5bfeaf9ae038ea120a72d58f7687"]

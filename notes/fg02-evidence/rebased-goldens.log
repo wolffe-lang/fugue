@@ -1,0 +1,339 @@
+fugue fixtures: sixteen authored cases, not recordings
+fugue-audio tutorial 1 ticks 360 bytes 2304000 subject-alone equal answer-contributes true counter-contributes true
+fugue-audio tutorial 2 ticks 360 bytes 2304000 subject-alone equal answer-contributes true counter-contributes true
+fugue-audio tutorial 3 ticks 360 bytes 2304000 subject-alone equal answer-contributes true counter-contributes true
+sound: note-bank render_us 152168 base 21
+sound: wav-sink 1 /work/target/pty/fugue/note-29-0.wav
+sound: wav-sink 2 /work/target/pty/fugue/note-30-0.wav
+sound: wav-sink 3 /work/target/pty/fugue/note-31-0.wav
+sound: wav-sink 4 /work/target/pty/fugue/note-32-0.wav
+sound: wav-sink 5 /work/target/pty/fugue/note-31-0.wav
+sound: wav-sink 6 /work/target/pty/fugue/note-32-0.wav
+sound: wav-sink 7 /work/target/pty/fugue/note-33-0.wav
+sound: wav-sink 8 /work/target/pty/fugue/note-34-0.wav
+sound: wav-sink 9 /work/target/pty/fugue/note-32-0.wav
+sound: wav-sink 10 /work/target/pty/fugue/note-33-0.wav
+sound: wav-sink 11 /work/target/pty/fugue/note-34-0.wav
+sound: wav-sink 12 /work/target/pty/fugue/note-35-0.wav
+sound: wav-sink 13 /work/target/pty/fugue/note-33-0.wav
+sound: wav-sink 14 /work/target/pty/fugue/note-34-0.wav
+sound: wav-sink 15 /work/target/pty/fugue/note-35-0.wav
+sound: wav-sink 16 /work/target/pty/fugue/note-36-0.wav
+sound: wav-sink 17 /work/target/pty/fugue/note-32-0.wav
+sound: wav-sink 18 /work/target/pty/fugue/note-33-0.wav
+sound: wav-sink 19 /work/target/pty/fugue/note-34-0.wav
+sound: wav-sink 20 /work/target/pty/fugue/note-35-0.wav
+sound: wav-sink 21 /work/target/pty/fugue/note-31-0.wav
+sound: wav-sink 22 /work/target/pty/fugue/note-32-0.wav
+sound: wav-sink 23 /work/target/pty/fugue/note-33-0.wav
+sound: wav-sink 24 /work/target/pty/fugue/note-34-0.wav
+sound: wav-sink 25 /work/target/pty/fugue/note-29-0.wav
+sound: wav-sink 26 /work/target/pty/fugue/note-30-0.wav
+sound: wav-sink 27 /work/target/pty/fugue/note-31-0.wav
+sound: wav-sink 28 /work/target/pty/fugue/note-32-0.wav
+sound: wav-sink 29 /work/target/pty/fugue/note-31-0.wav
+sound: wav-sink 30 /work/target/pty/fugue/note-32-0.wav
+sound: wav-sink 31 /work/target/pty/fugue/note-33-0.wav
+sound: wav-sink 32 /work/target/pty/fugue/note-34-0.wav
+sound: wav-sink 33 /work/target/pty/fugue/note-30-0.wav
+sound: wav-sink 34 /work/target/pty/fugue/note-31-0.wav
+sound: wav-sink 35 /work/target/pty/fugue/note-32-0.wav
+sound: wav-sink 36 /work/target/pty/fugue/note-33-0.wav
+sound: wav-sink 37 /work/target/pty/fugue/note-29-0.wav
+sound: wav-sink 38 /work/target/pty/fugue/note-30-0.wav
+sound: wav-sink 39 /work/target/pty/fugue/note-31-0.wav
+sound: wav-sink 40 /work/target/pty/fugue/note-32-0.wav
+sound: whole-render /work/target/pty/fugue/whole-1.wav ticks 360
+sound: wav-sink 41 /work/target/pty/fugue/whole-1.wav
+fugue: ended by the quit key
+
+pty: fugue-exposition-record ok (linux x86_64, exit 0, 45953 bytes captured)
+fugue: ended by the quit key
+
+pty: fugue-two-desks-record ok (linux x86_64, exit 0, 32899 bytes captured)
+pty: fugue-end-card ok (linux x86_64, exit 0, 51311 bytes captured)
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-3-80-plain
+goldens: wrote tests/goldens/book-2-seed-120-rich
+goldens: wrote tests/goldens/book-2-seed-120-plain
+goldens: wrote tests/goldens/book-2-seed-80-rich
+goldens: wrote tests/goldens/book-2-seed-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-3-80-plain
+goldens: wrote tests/goldens/book-3-seed-120-rich
+goldens: wrote tests/goldens/book-3-seed-120-plain
+goldens: wrote tests/goldens/book-3-seed-80-rich
+goldens: wrote tests/goldens/book-3-seed-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-3-80-plain
+goldens: wrote tests/goldens/book-4-seed-120-rich
+goldens: wrote tests/goldens/book-4-seed-120-plain
+goldens: wrote tests/goldens/book-4-seed-80-rich
+goldens: wrote tests/goldens/book-4-seed-80-plain
+goldens: wrote tests/goldens/book-5-eighths-120-rich
+goldens: wrote tests/goldens/book-5-eighths-120-plain
+goldens: wrote tests/goldens/book-5-eighths-80-rich
+goldens: wrote tests/goldens/book-5-eighths-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-3-80-plain
+goldens: wrote tests/goldens/book-5-seed-120-rich
+goldens: wrote tests/goldens/book-5-seed-120-plain
+goldens: wrote tests/goldens/book-5-seed-80-rich
+goldens: wrote tests/goldens/book-5-seed-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-complete-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-complete-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-complete-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-complete-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-end-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-end-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-end-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-end-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-hear-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-hear-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-hear-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-hear-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-2-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-2-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-3-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-3-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-3-80-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-seed-120-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-seed-120-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-seed-80-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-seed-80-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-wrong-120-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-wrong-120-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-wrong-80-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-wrong-80-plain
+goldens: wrote tests/goldens/critic-120-rich
+goldens: wrote tests/goldens/critic-120-plain
+goldens: wrote tests/goldens/critic-80-rich
+goldens: wrote tests/goldens/critic-80-plain
+goldens: wrote tests/goldens/cursor-1-120-rich
+goldens: wrote tests/goldens/cursor-1-120-plain
+goldens: wrote tests/goldens/cursor-1-80-rich
+goldens: wrote tests/goldens/cursor-1-80-plain
+goldens: wrote tests/goldens/cursor-3-120-rich
+goldens: wrote tests/goldens/cursor-3-120-plain
+goldens: wrote tests/goldens/cursor-3-80-rich
+goldens: wrote tests/goldens/cursor-3-80-plain
+goldens: wrote tests/goldens/hear-120-rich
+goldens: wrote tests/goldens/hear-120-plain
+goldens: wrote tests/goldens/hear-80-rich
+goldens: wrote tests/goldens/hear-80-plain
+goldens: wrote tests/goldens/ledger-120-rich
+goldens: wrote tests/goldens/ledger-120-plain
+goldens: wrote tests/goldens/ledger-80-rich
+goldens: wrote tests/goldens/ledger-80-plain
+goldens: wrote tests/goldens/partial-120-rich
+goldens: wrote tests/goldens/partial-120-plain
+goldens: wrote tests/goldens/partial-80-rich
+goldens: wrote tests/goldens/partial-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-plain
+goldens: wrote tests/goldens/rhythm-edit-120-rich
+goldens: wrote tests/goldens/rhythm-edit-120-plain
+goldens: wrote tests/goldens/rhythm-edit-80-rich
+goldens: wrote tests/goldens/rhythm-edit-80-plain
+goldens: wrote tests/goldens/staff-120-rich
+goldens: wrote tests/goldens/staff-120-plain
+goldens: wrote tests/goldens/staff-80-rich
+goldens: wrote tests/goldens/staff-80-plain
+goldens: wrote tests/goldens/title-120-rich
+goldens: wrote tests/goldens/title-120-plain
+goldens: wrote tests/goldens/title-80-rich
+goldens: wrote tests/goldens/title-80-plain
+goldens: wrote tests/goldens/walk-120-rich
+goldens: wrote tests/goldens/walk-120-plain
+goldens: wrote tests/goldens/walk-80-rich
+goldens: wrote tests/goldens/walk-80-plain
+goldens: wrote tests/goldens/art
+fugue-audio tutorial 1 ticks 360 bytes 2304000 subject-alone equal answer-contributes true counter-contributes true
+fugue-audio tutorial 2 ticks 360 bytes 2304000 subject-alone equal answer-contributes true counter-contributes true
+fugue-audio tutorial 3 ticks 360 bytes 2304000 subject-alone equal answer-contributes true counter-contributes true
+fugue-census Ionian subject 50/50 real 50 tonal 0 counter 34/50 three-star 5
+fugue-census Dorian subject 50/50 real 50 tonal 7 counter 29/50 three-star 1
+fugue-census Phrygian subject 50/50 real 50 tonal 17 counter 31/50 three-star 3
+fugue-census Lydian subject 50/50 real 50 tonal 7 counter 30/50 three-star 6
+fugue-census Mixolydian subject 50/50 real 50 tonal 7 counter 28/50 three-star 5
+fugue-census Aeolian subject 50/50 real 50 tonal 14 counter 22/50 three-star 1
+fugue-census subjects 300/300 real 300/300 tonal 52/300 counter 174/300 three-star 21/300 certified-mode-sides 12/12
+tutorial 1: Real answer; mutation 0; stars 3; breaks 0
+tutorial 2: Real answer; mutation 0; stars 3; breaks 0
+tutorial 3: Tonal answer; mutation 1; stars 3; breaks 0
+wrong answer bar 3: hidden-perfect
+wrong answer bar 3: inversion-fifth
+wrong answer bar 3: answer-transposition
+bad inversion bar 1: inverted-downbeat-consonance
+bad inversion bar 1: inverted-downbeat-consonance
+bad inversion bar 1: repeat
+bad inversion bar 1: inversion-fifth
+tail leap bar 1: subject-steps
+tail leap bar 6: subject-tail
+fugue: verified score 3
+fugue: verified score 3
+exposition PCM 1: twelve nonzero unclipped bars sha256 1f884e159c730ea09b8eb2b713323a0b96b47c6f446e208b81160a5612938249
+fugue: verified score 3
+fugue: verified score 3
+exposition PCM 2: twelve nonzero unclipped bars sha256 5d24d4874be9c852b4ddcd13106a15e0b4beda3fc05f1481c958b63ced172d77
+fugue: verified score 3
+fugue: verified score 3
+exposition PCM 3: twelve nonzero unclipped bars sha256 c6e73739265b1647192d66d08eaa4293bfe50d64c2c6e2c7907ca3225065553a
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+fugue: verified score 3
+fugue: invalid option or small size (minimum 80x24)
+fugue-gameplay: subjects, answers, inversion admission, three references, end card, actual recording and PCM green
+fugue-audio tutorial 1 ticks 360 bytes 2304000 subject-alone equal answer-contributes true counter-contributes true
+fugue-audio tutorial 2 ticks 360 bytes 2304000 subject-alone equal answer-contributes true counter-contributes true
+fugue-audio tutorial 3 ticks 360 bytes 2304000 subject-alone equal answer-contributes true counter-contributes true
+fugue-census Ionian subject 50/50 real 50 tonal 0 counter 34/50 three-star 5
+fugue-census Dorian subject 50/50 real 50 tonal 7 counter 29/50 three-star 1
+fugue-census Phrygian subject 50/50 real 50 tonal 17 counter 31/50 three-star 3
+fugue-census Lydian subject 50/50 real 50 tonal 7 counter 30/50 three-star 6
+fugue-census Mixolydian subject 50/50 real 50 tonal 7 counter 28/50 three-star 5
+fugue-census Aeolian subject 50/50 real 50 tonal 14 counter 22/50 three-star 1
+fugue-census subjects 300/300 real 300/300 tonal 52/300 counter 174/300 three-star 21/300 certified-mode-sides 12/12
+tutorial 1: Real answer; mutation 0; stars 3; breaks 0
+tutorial 2: Real answer; mutation 0; stars 3; breaks 0
+tutorial 3: Tonal answer; mutation 1; stars 3; breaks 0
+wrong answer bar 3: hidden-perfect
+wrong answer bar 3: inversion-fifth
+wrong answer bar 3: answer-transposition
+bad inversion bar 1: inverted-downbeat-consonance
+bad inversion bar 1: inverted-downbeat-consonance
+bad inversion bar 1: repeat
+bad inversion bar 1: inversion-fifth
+tail leap bar 1: subject-steps
+tail leap bar 6: subject-tail
+fugue: verified score 3
+fugue: verified score 3
+exposition PCM 1: twelve nonzero unclipped bars sha256 1f884e159c730ea09b8eb2b713323a0b96b47c6f446e208b81160a5612938249
+fugue: verified score 3
+fugue: verified score 3
+exposition PCM 2: twelve nonzero unclipped bars sha256 5d24d4874be9c852b4ddcd13106a15e0b4beda3fc05f1481c958b63ced172d77
+fugue: verified score 3
+fugue: verified score 3
+exposition PCM 3: twelve nonzero unclipped bars sha256 c6e73739265b1647192d66d08eaa4293bfe50d64c2c6e2c7907ca3225065553a
+fugue: UNVERIFIED score 3, claimed 2
+fugue: verified score 3
+fugue: verified score 3
+fugue: invalid option or small size (minimum 80x24)
+fugue-gameplay: subjects, answers, inversion admission, three references, end card, actual recording and PCM green
