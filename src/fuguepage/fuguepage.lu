@@ -1,0 +1,317 @@
+//! The exposition page uses the shared staff and head API without redefining pitch rows.
+
+use answer
+use draw
+use exposition
+use grid
+use rhythm
+use session
+use staff
+use subject
+use theory
+use world
+
+fn text(mut g: grid.Grid, y: int, x: int, words: str, ink: int, bg: int, bold: bool) {
+    draw.put_text(mut g, y, x, words, grid.cell(32, ink, bg, if bold then 1 else 0))
+}
+
+fn voice(
+    mut g: grid.Grid,
+    v: staff.Viewport,
+    line: subject.Line,
+    start: int,
+    count: int,
+    t: int,
+    given: bool,
+    selected: int,
+    lit: int,
+    value_row: int,
+) {
+    let bg = if t == 1 then 230 else 7
+    let ink = if given then staff.cantus_ink(t) else staff.player_ink(t)
+    for i in 0..line.notes.len {
+        let time = rhythm.onset(line.beats, i), bar = time / 8
+        if bar < start || bar >= start + count { continue }
+        let x = 9 + (bar - start) * 26 + time % 8 * 3
+        if line.beats[i].rest {
+            text(mut g, v.top + 5, x, "r", ink, bg, selected == i)
+        } else {
+            let y = staff.head(mut g, v, line.notes[i], x, t, given, selected == i, lit == i)
+            if y >= v.top && y <= v.bottom {
+                if line.beats[i].length < 8 {
+                    let d = if y < v.top + 3 then 1 else -1
+                    for n in 1..3 { text(mut g, y + d * n, x + 1, "|", ink, bg, false) }
+                }
+                if line.beats[i].tied && y < v.bottom {
+                    text(mut g, y + 1, x - 1, "~", ink, bg, false)
+                }
+            }
+        }
+        text(mut g, value_row, x, "/{8 / line.beats[i].length}", ink, bg, selected == i)
+    }
+}
+
+/// Entry labels, the independent verdict and the last-book end card.
+pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
+    var g = grid.new(rows, cols)
+    let bg = if t == 1 then 230 else 7, ink = if t == 1 then 94 else 3, blue = staff.player_ink(t)
+    for y in 0..rows {
+        for x in 0..cols {
+            let grain = world.hash(s.seed, y, x, 256)
+            grid.put(
+                mut g,
+                y,
+                x,
+                grid.cell(
+                    if grain < 2 then (if t == 1 then 0x00b7 else 46) else 32,
+                    if t == 1 then 180 else 3,
+                    if t == 1 && grain < 15 then 223 else bg,
+                    0,
+                ),
+            )
+        }
+    }
+    text(mut g, 1, 3, "fugue / VI. The fugue", blue, bg, true)
+    if s.failure != "" {
+        text(mut g, 6, 4, s.failure, blue, bg, true)
+        text(mut g, 8, 4, "n another seed   b books   q quit", ink, bg, false)
+        return g
+    }
+    let p = exposition.written(s.fugue, s.voice, s.beats)
+    let av = answer.check(p.given, p.response.notes, p.response.beats, p.answer_below)
+    let verdict = exposition.check(p)
+    if s.phase == 4 {
+        text(mut g, 5, 6, "THE FUGUE", blue, bg, true)
+        text(mut g, 8, 6, "A voice learned to answer. Two learned to trade places.", ink, bg, false)
+        text(mut g, 10, 6, "Three tutorial pieces written.", blue, bg, true)
+        text(
+            mut g,
+            12,
+            6,
+            "Stars: {s.completed[0]} + {s.completed[1]} + {s.completed[2]} = {s.completed[0] + s.completed[1] + s.completed[2]} / 9",
+            blue,
+            bg,
+            true,
+        )
+        text(mut g, 15, 6, "The sixth book is lit. The next page is yours.", ink, bg, false)
+        text(
+            mut g,
+            rows - 3,
+            6,
+            "n seeded page   b the six books   q close the cover",
+            blue,
+            bg,
+            false,
+        )
+        return g
+    }
+    if s.phase == 2 {
+        text(
+            mut g,
+            4,
+            4,
+            "{if verdict.stars > 0 then "Legal exposition" else "Not yet"}    {verdict.stars} / 3 stars",
+            blue,
+            bg,
+            true,
+        )
+        text(mut g, 6, 4, av.kind, blue, bg, true)
+        if av.mutation >= 0 {
+            text(
+                mut g,
+                7,
+                4,
+                "Tonal mutation: head attack {av.mutation + 1}, bar {rhythm.onset(p.given.beats, av.mutation) / 8 + 1}",
+                ink,
+                bg,
+                false,
+            )
+        }
+        text(
+            mut g,
+            8,
+            4,
+            "Contrary {verdict.contrary}%  Steps {verdict.steps}%  Intervals {verdict.variety}",
+            ink,
+            bg,
+            false,
+        )
+        text(
+            mut g,
+            9,
+            4,
+            "Climaxes apart {verdict.separate_climax}  Short parallels {verdict.parallel_limit}",
+            ink,
+            bg,
+            false,
+        )
+        for row in 0..rows - 14 {
+            let i = s.cursor + row
+            if i < verdict.breaks.len {
+                let b = copy verdict.breaks[i]
+                text(
+                    mut g,
+                    11 + row,
+                    4,
+                    draw.fit("Bar {b.bar}: {b.rule} / {b.reason}", cols - 8, false),
+                    staff.harmony_ink(2, t),
+                    bg,
+                    false,
+                )
+            }
+        }
+        if verdict.breaks.len == 0 {
+            text(
+                mut g,
+                12,
+                4,
+                "The countersubject holds both above and below the answer.",
+                ink,
+                bg,
+                false,
+            )
+        }
+        text(
+            mut g,
+            rows - 2,
+            4,
+            "r edit   n next   b books   Up/Down findings   q quit",
+            blue,
+            bg,
+            false,
+        )
+        return g
+    }
+    let bars = exposition.bars(p), duration = bars * session.ticks_per_whole()
+    let solo = s.hearing >= 0 && s.hearing < duration
+    let local_time = if s.hearing >= 0 {
+        s.hearing % duration * 8 / session.ticks_per_whole()
+    } else {
+        rhythm.onset(s.beats, s.cursor) + s.within
+    }
+    let count = (cols - 32) / 26, start = local_time / 8 / count * count
+    let margin = cols - 23, top = 7 + (rows - 24) / 2, bottom = rows - 5
+    let answer_desk = s.hearing < 0 && p.editing == 0
+    let first = if solo || answer_desk then copy p.given else copy p.response
+    let second = if answer_desk then copy p.response else copy p.continuation
+    var low = 100, high = 0
+    for line in [copy first, copy second] {
+        for note in line.notes {
+            let pos = theory.position(note)
+            if pos < low { low = pos }
+            if pos > high { high = pos }
+        }
+    }
+    let base = if high - low < bottom - top then low - 1 else low
+    let v = staff.viewport(top, bottom, base, 7, margin - 2)
+    var boundaries = List[int]()
+    for bar in 0..count + 1 { (mut boundaries).push(7 + bar * 26) }
+    staff.draw_staff(mut g, v, t, boundaries)
+    for bar in start..start + count {
+        if bar < bars {
+            text(
+                mut g,
+                top - 1,
+                9 + (bar - start) * 26,
+                "{bar + 1 + (if solo || answer_desk then 0 else bars)}",
+                ink,
+                bg,
+                true,
+            )
+        }
+    }
+    text(
+        mut g,
+        2,
+        3,
+        "{theory.mode_name(s.mode)}  {if s.level < 3 then "Tutorial" else "Seed"} {if s.level < 3 then s.level + 1 else s.seed}",
+        ink,
+        bg,
+        false,
+    )
+    let title = if solo {
+        "Subject"
+    } else if answer_desk {
+        "Subject (given) / Answer (write)"
+    } else {
+        "Answer / Countersubject"
+    }
+    text(mut g, 4, 8, title, blue, bg, true)
+    text(
+        mut g,
+        5,
+        8,
+        if solo {
+            "The first voice enters alone."
+        } else if answer_desk {
+            "Echo the subject at the fifth, or fourth below."
+        } else {
+            "The first voice continues; the second answers."
+        },
+        ink,
+        bg,
+        false,
+    )
+    let lit_a = if s.hearing >= 0 then rhythm.at(first.beats, local_time) else -1
+    let lit_b = if s.hearing >= duration then rhythm.at(second.beats, local_time) else -1
+    voice(
+        mut g,
+        v,
+        first,
+        start,
+        count,
+        t,
+        true,
+        -1,
+        lit_a,
+        bottom + 1,
+    )
+    if !solo {
+        voice(
+            mut g,
+            v,
+            second,
+            start,
+            count,
+            t,
+            false,
+            if s.hearing < 0 then s.cursor else -1,
+            lit_b,
+            bottom + 2,
+        )
+    }
+    text(
+        mut g,
+        top,
+        margin + 1,
+        if solo then "Subject" else if p.editing == 0 then "Writing Answer" else "Writing Counter",
+        blue,
+        bg,
+        true,
+    )
+    text(mut g, top + 2, margin + 1, "Bar {local_time / 8 + 1}", blue, bg, false)
+    text(mut g, top + 4, margin + 1, draw.fit(av.kind, 21, false), ink, bg, false)
+    if av.mutation >= 0 {
+        text(mut g, top + 5, margin + 1, "Mutation: attack {av.mutation + 1}", ink, bg, false)
+    }
+    text(mut g, top + 7, margin + 1, "h exposition", blue, bg, true)
+    text(
+        mut g,
+        top + 9,
+        margin + 1,
+        if s.level < 2 then "One voice given" else "v change voice",
+        ink,
+        bg,
+        false,
+    )
+    text(
+        mut g,
+        rows - 2,
+        3,
+        "Arrows write   v voice   h exposition   Enter check   n next   b books",
+        blue,
+        bg,
+        false,
+    )
+    g
+}

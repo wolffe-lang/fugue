@@ -1,5 +1,6 @@
 //! Prepare outside rendering; the live adapter owns only its afplay children.
 
+use exposition
 use clock
 use manuscript
 use session
@@ -64,6 +65,12 @@ pub fn part(cantus: List[theory.Pitch], voice: List[theory.Pitch]) -> str {
 
 /// Both voices in a single score, on the session's playback clock.
 pub fn whole_part(s: session.State) -> str {
+    if s.book == 6 {
+        return exposition.part(
+            exposition.written(s.fugue, s.voice, s.beats),
+            30 * 60 * 4 / session.ticks_per_whole(),
+        )
+    }
     if s.book == 1 { return part(s.cantus, s.voice) }
     manuscript.part(s, 30 * 60 * 4 / session.ticks_per_whole())
 }
