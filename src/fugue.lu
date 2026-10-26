@@ -221,8 +221,9 @@ fn play_key(mut s: session.State, mut audio: ear.Ear, k: int, mut c: clock.Clock
     let before_hearing = s.hearing
     let before_level = s.level
     let before_seed = s.seed
+    let before_book = s.book
     session.step(mut s, k)
-    if before_level != s.level || before_seed != s.seed {
+    if before_level != s.level || before_seed != s.seed || before_book != s.book {
         ear.prepare(mut audio, s) else |_| { eprint("sound: preparation failed") }
         c = clock.new(clock.now_ns())
     }
@@ -456,6 +457,7 @@ fn main() -> int {
         )
         return 0
     }
+    if has(args, "--fugue-audio-study") { return chapterstudy.audio() }
     if has(args, "--fugue-census") { return chapterstudy.census() }
     if has(args, "--fugue-verdicts") { print_raw(chapterstudy.verdicts()); return 0 }
     if has(args, "--species-verdicts") { print_raw(studies.verdicts()); return 0 }

@@ -1,5 +1,8 @@
 //! Deterministic black-box evidence for the sixth book, on either compiler backend.
 
+use std.fs
+use ear
+use sound
 use answer
 use counter
 use exposition
@@ -24,7 +27,7 @@ pub fn census() -> int {
                     return 1
                 }
                 real += 1
-                let tonal = answer.mutation(s) >= 0
+                let tonal = answer.tonal_allowed(s)
                 if tonal { tonal_count += 1 }
                 let a = answer.make(s, seed % 2 != 0, tonal)
                 if answer.check(s, a.notes, a.beats, seed % 2 != 0).breaks.len != 0 { return 1 }
@@ -55,7 +58,7 @@ pub fn census() -> int {
 /// Each original tutorial reference is solved via ordinary state, not a score override.
 pub fn solved(index: int) -> session.State {
     var s = session.with_book(take session.tutorial(index, false), 6)
-    s.fugue.response = answer.make(s.fugue.given, s.fugue.answer_below, index > 0)
+    s.fugue.response = answer.make(s.fugue.given, s.fugue.answer_below, index == 2)
     s.fugue.continuation = counter.reference(index)
     let line = if s.fugue.editing == 0 then copy s.fugue.response else copy s.fugue.continuation
     s.voice = line.notes
@@ -90,4 +93,50 @@ pub fn verdicts() -> str {
     line.notes[line.notes.len - 1] = theory.pitch(28)
     for b in subject.validate(line) { text += "tail leap bar {b.bar}: {b.rule}\n" }
     text
+}
+
+/// PCM witnesses retain the subject-alone half and prove that each continuing
+/// voice contributes to the second half. Files are outputs, never trusted inputs.
+pub fn audio() -> int {
+    fs.create_dir_all("target/fugue-audio") else |_| { return 1 }
+    for index in 0..3 {
+        region phrase {
+            let s = solved(index)
+            let both = ear.whole_pcm(s) else { return 1 }
+            let page = exposition.written(s.fugue, s.voice, s.beats)
+            var without_answer = copy page, without_counter = copy page
+            for i in 0..page.response.beats.len {
+                without_answer.response.beats[i].rest = true
+                without_answer.response.beats[i].tied = false
+            }
+            for i in 0..page.continuation.beats.len {
+                without_counter.continuation.beats[i].rest = true
+                without_counter.continuation.beats[i].tied = false
+            }
+            let a = sound.prepare("fugue", exposition.part(without_answer, 240), 12) else |_| {
+                return 1
+            }
+            let b = sound.prepare("fugue", exposition.part(without_counter, 240), 12) else |_| {
+                return 1
+            }
+            if both.len != 2304000 || a.pcm.len != both.len || b.pcm.len != both.len { return 1 }
+            var answer_diff = false, counter_diff = false
+            for i in 0..both.len {
+                if i < 1152000 {
+                    if both[i] != a.pcm[i] || both[i] != b.pcm[i] { return 1 }
+                } else {
+                    if both[i] != a.pcm[i] { answer_diff = true }
+                    if both[i] != b.pcm[i] { counter_diff = true }
+                }
+            }
+            if !answer_diff || !counter_diff { return 1 }
+            fs.write_bytes("target/fugue-audio/exposition-{index + 1}.pcm", both) else |_| {
+                return 1
+            }
+            print(
+                "fugue-audio tutorial {index + 1} ticks 360 bytes {both.len} subject-alone equal answer-contributes {answer_diff} counter-contributes {counter_diff}",
+            )
+        }
+    }
+    0
 }
