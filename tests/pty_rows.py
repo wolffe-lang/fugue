@@ -401,7 +401,14 @@ def fugue_record(bin, ctx, index=1):
         if 'Answer' not in screen or 'Countersubject' not in screen:problems.append('answer and continuation entries are not named')
         s.pump(6.2)
         if Path('/usr/bin/afplay').exists():
-            if b'player-start' not in s.err or b'player-end' not in s.err:problems.append('owned exposition player did not start and reap')
+            import re
+            starts=list(re.finditer(rb'player-start pid (\d+) slot (\d+) [^\r\n]*whole-1.wav',s.err))
+            if not starts:problems.append('owned exposition player did not start')
+            else:
+                start=starts[-1]; end=b'player-end slot '+start.group(2)+b' status 0'
+                deadline=time.monotonic()+4
+                while end not in s.err[start.end():] and time.monotonic()<deadline:s.pump(.1)
+                if end not in s.err[start.end():]:problems.append('owned exposition player did not reap after its own start')
         elif not any(b'wav-sink' in line and b'whole-1.wav' in line for line in s.err.splitlines()):
             problems.append('played exposition never reached the Linux sink')
     s.type(b'\r',.3)
