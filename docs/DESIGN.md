@@ -83,3 +83,11 @@ Draw bar backgrounds and names before heads, then attach rhythm marks. Book I
 uses two adjacent head columns, so unisons remain distinct. The editor and the
 playback cursor are separate: playback shades its bar while the right panel's
 first line continues to identify the selected edit location.
+
+Playback rhythm has three named seams: `session.ticks_per_whole()` is the
+single duration constant; `session.piece_ticks(state)` gives the phrase span;
+`session.event_at(state, elapsed_ticks)` finds the lit event. Book I divides by
+the whole-note span; rhythm can replace that lookup with beat lengths without
+changing the staff or player owner. `ear.part(cantus, voice)` produces score
+text from the event lists (currently pitches, all wholes); `whole_part(state)`
+is only its adapter. Tempo and PCM duration derive from the same session clock.

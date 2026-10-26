@@ -63,7 +63,7 @@ fn ornament(mut g: grid.Grid, y: int, x: int, t: int, bg: int) {
 
 /// Draw a diagnostic clef alternative in the same reserved left margin.
 pub fn clef(mut g: grid.Grid, top: int, t: int, bg: int) {
-    let shape = ["  /", " /|", "( |", " \"|", " /|", "( @)", " \\|", "  |", " (_)"]
+    let shape = ["  /", " /|", "( |", " \"|", " /|", "( @)", " \\|", "  |", " ( )"]
     for i in 0..shape.len { text(mut g, top + i, 1, shape[i], if t == 1 then 94 else 3, bg, false) }
 }
 
@@ -353,7 +353,7 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
     var bars = List[int]()
     for i in 0..s.cantus.len { (mut bars).push(7 + i * width) }
     (mut bars).push(margin - 2)
-    let current = if s.hearing >= 0 then s.hearing / 30 else s.cursor
+    let current = if s.hearing >= 0 then session.event_at(s, s.hearing) else s.cursor
     for y in top - 1..bottom + 1 {
         for x in 8 + current * width..7 + (current + 1) * width {
             let old = copy g.cells[y * cols + x]
@@ -376,7 +376,7 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
                 t,
                 which == 0,
                 i == s.cursor,
-                s.hearing >= 0 && s.hearing / 30 == i,
+                s.hearing >= 0 && session.event_at(s, s.hearing) == i,
             )
         }
         let iv = theory.interval(s.cantus[i], s.voice[i])
@@ -399,7 +399,15 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
         text(mut g, 8, margin + 2, theory.name(s.voice[s.cursor]), blue, bg, false)
     }
     if s.hearing >= 0 {
-        text(mut g, 9, margin + 2, "Hearing {s.hearing / 30 + 1}/{s.voice.len}", blue, bg, true)
+        text(
+            mut g,
+            9,
+            margin + 2,
+            "Hearing {session.event_at(s, s.hearing) + 1}/{s.voice.len}",
+            blue,
+            bg,
+            true,
+        )
     }
     text(mut g, 10, margin + 2, "o  cantus", cantus_ink(t), bg, false)
     text(mut g, 11, margin + 2, "*  your voice", blue, bg, false)
@@ -420,15 +428,7 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
     text(mut g, 13, margin + 2, "P perfect", harmony_ink(0, t), bg, false)
     text(mut g, 14, margin + 2, "i imperfect", harmony_ink(1, t), bg, false)
     text(mut g, 15, margin + 2, "x dissonant", harmony_ink(2, t), bg, false)
-    text(
-        mut g,
-        rows - 1,
-        3,
-        "o cantus: burnt orange",
-        cantus_ink(t),
-        bg,
-        false,
-    )
+    text(mut g, rows - 1, 3, "o cantus: burnt orange", cantus_ink(t), bg, false)
     text(mut g, rows - 1, 27, "* player: dark blue", blue, bg, false)
     text(
         mut g,

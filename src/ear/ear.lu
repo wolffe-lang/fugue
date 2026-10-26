@@ -50,18 +50,27 @@ pub fn note_part(p: theory.Pitch) -> str {
     "title Audition\ntempo 240\nmeter 1/4\npart voice choir mp\nbar 1\nvoice {theory.name(p)}/4\n"
 }
 
-/// The two complete voices share a prepared score, one second per whole note.
-pub fn whole_part(s: session.State) -> str {
-    var text = "title Two voices\ntempo 240\nmeter 4/4\npart cantus organ p pan -25\npart voice choir mp pan 25\n"
-    for i in 0..s.voice.len {
-        text += "bar {i + 1}\ncantus {theory.name(s.cantus[i])}/1\nvoice {theory.name(s.voice[i])}/1\n"
+/// The event-list seam: Book I has one whole-note pitch per event in each voice.
+/// Rhythm adds its lengths and ties here without replacing the output owner.
+pub fn part(cantus: List[theory.Pitch], voice: List[theory.Pitch]) -> str {
+    let tempo = 30 * 60 * 4 / session.ticks_per_whole()
+    var text = "title Two voices\ntempo {tempo}\nmeter 4/4\npart cantus organ p pan -25\npart voice choir mp pan 25\n"
+    for i in 0..voice.len {
+        text += "bar {i + 1}\ncantus {theory.name(cantus[i])}/1\nvoice {theory.name(voice[i])}/1\n"
     }
     text
 }
 
+/// Both voices in a single score, on the session's playback clock.
+pub fn whole_part(s: session.State) -> str { part(s.cantus, s.voice) }
+
 /// Render exactly the written phrase length, at 48 kHz stereo signed PCM.
 pub fn whole_pcm(s: session.State) -> List[byte] ! {io} {
-    let prepared = sound.prepare("fugue", whole_part(s), s.voice.len) else |_| { return io }
+    let prepared = sound.prepare(
+        "fugue",
+        whole_part(s),
+        (session.piece_ticks(s) + 29) / 30,
+    ) else |_| { return io }
     copy prepared.pcm
 }
 
@@ -153,7 +162,7 @@ pub fn hear(mut e: Ear, s: session.State) -> () ! {io} {
         let bytes = sound.wav(pcm) else |_| { return io }
         fs.write_bytes(path, bytes) else |_| { return io }
     }
-    trace("sound: whole-render {path} seconds {s.voice.len}")
+    trace("sound: whole-render {path} ticks {session.piece_ticks(s)}")
     start(mut e, path)?
 }
 

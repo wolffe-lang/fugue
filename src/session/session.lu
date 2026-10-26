@@ -90,9 +90,21 @@ pub fn key(n: int) -> int {
     }
 }
 
+/// One playback clock constant, shared by the cursor and part tempo.
+pub fn ticks_per_whole() -> int { 30 }
+
+/// Duration of the written event list in 30 Hz ticks (Book I: all wholes).
+pub fn piece_ticks(s: State) -> int { s.voice.len * ticks_per_whole() }
+
+/// Event lookup seam for rhythm: elapsed ticks map to the sounding event.
+pub fn event_at(s: State, elapsed: int) -> int {
+    if elapsed < 0 || elapsed >= piece_ticks(s) { return -1 }
+    elapsed / ticks_per_whole()
+}
+
 /// Advance one 30 Hz replay tick; one whole note sounds for one second.
 pub fn tick(mut s: State) {
-    if s.hearing >= 0 { s.hearing += 1; if s.hearing >= s.voice.len * 30 { s.hearing = -1 } }
+    if s.hearing >= 0 { s.hearing += 1; if s.hearing >= piece_ticks(s) { s.hearing = -1 } }
 }
 
 /// Apply one replay key without reading any host state.
