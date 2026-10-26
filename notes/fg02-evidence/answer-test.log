@@ -1,0 +1,16 @@
+test src/answer_test.lu::test_real_answers_preserve_spelling_and_semitones_both_sides ... ok
+test src/answer_test.lu::test_tonal_answer_is_never_misread_as_real ... ok
+test src/answer_test.lu::test_wrong_transposition_and_misplaced_mutation_name_the_bar ... ok
+answer census Ionian real 50 tonal 18 real-only 32
+test src/answer_test.lu::test_answer_census_ionian ... ok
+answer census Dorian real 50 tonal 19 real-only 31
+test src/answer_test.lu::test_answer_census_dorian ... ok
+answer census Phrygian real 50 tonal 32 real-only 18
+test src/answer_test.lu::test_answer_census_phrygian ... ok
+answer census Lydian real 50 tonal 32 real-only 18
+test src/answer_test.lu::test_answer_census_lydian ... ok
+answer census Mixolydian real 50 tonal 18 real-only 32
+test src/answer_test.lu::test_answer_census_mixolydian ... ok
+answer census Aeolian real 50 tonal 21 real-only 29
+test src/answer_test.lu::test_answer_census_aeolian ... ok
+wolf test: 9 passed; 0 failed; 0 rejected; 0 unsupported; 0 filtered out
