@@ -1,0 +1,279 @@
+test src/answer_test.lu::test_real_answers_preserve_spelling_and_semitones_both_sides ... ok
+test src/answer_test.lu::test_tonal_answer_is_never_misread_as_real ... ok
+test src/answer_test.lu::test_wrong_transposition_and_misplaced_mutation_name_the_bar ... ok
+answer census Ionian real 50 tonal 0 real-only 50
+test src/answer_test.lu::test_answer_census_ionian ... ok
+answer census Dorian real 50 tonal 7 real-only 43
+test src/answer_test.lu::test_answer_census_dorian ... ok
+answer census Phrygian real 50 tonal 17 real-only 33
+test src/answer_test.lu::test_answer_census_phrygian ... ok
+answer census Lydian real 50 tonal 7 real-only 43
+test src/answer_test.lu::test_answer_census_lydian ... ok
+answer census Mixolydian real 50 tonal 7 real-only 43
+test src/answer_test.lu::test_answer_census_mixolydian ... ok
+answer census Aeolian real 50 tonal 14 real-only 36
+test src/answer_test.lu::test_answer_census_aeolian ... ok
+test src/answer_test.lu::test_tonal_mutation_must_not_create_an_augmented_fourth ... ok
+test src/answer_test.lu::test_tonal_mutation_must_not_create_a_repeated_note ... ok
+classifier book 2 expected passing actual passing
+classifier book 2 expected unlicensed actual unlicensed
+classifier book 3 expected neighbour actual neighbour
+classifier book 3 expected double-passing actual double-passing
+classifier book 3 expected cambiata actual cambiata
+classifier book 3 expected unlicensed actual unlicensed
+classifier book 3 expected cambiata actual cambiata
+classifier book 4 expected suspension actual suspension
+classifier book 4 expected unprepared actual unprepared
+classifier book 4 expected suspension actual suspension
+classifier book 4 expected rest actual rest
+classifier book 4 expected consonance actual consonance
+classifier book 5 expected cambiata actual cambiata
+classifier book 5 expected suspension actual suspension
+classifier book 5 expected eighth-pair actual eighth-pair
+classifier book 5 expected unlicensed-eighth actual unlicensed-eighth
+classifier book 3 expected unlicensed-eighth actual unlicensed-eighth
+test src/classifier_test.lu::test_species_classifier_confusion_matrix ... ok
+test src/clock/clock_test.lu::test_no_tick_before_its_time ... ok
+test src/clock/clock_test.lu::test_one_tick_on_time ... ok
+test src/clock/clock_test.lu::test_late_frames_drop_renders_not_ticks ... ok
+test src/clock/clock_test.lu::test_ms_until_rounds_up ... ok
+test src/clock/clock_test.lu::test_thirty_ticks_a_second ... ok
+test src/counter_test.lu::test_invertible_references_earn_three_stars_both_ways ... ok
+test src/counter_test.lu::test_inversion_fifth_is_never_accepted ... ok
+test src/counter_test.lu::test_counter_rules_reject_named_mutations ... ok
+test src/counter_test.lu::test_counter_search_certifies_its_output ... ok
+test src/counter_test.lu::test_moving_answer_is_checked_between_counter_attacks ... ok
+test src/counter_test.lu::test_parallel_perfects_on_moving_timeline_are_refused ... ok
+test src/counter_test.lu::test_moving_voice_classifier_retains_all_florid_figures ... ok
+test src/counter_test.lu::test_open_counterphrase_does_not_borrow_a_false_cadence_accidental ... ok
+test src/cursor_test.lu::test_cursor_same_frame_held_80_plain ... ok
+test src/cursor_test.lu::test_cursor_same_frame_held_80_rich ... ok
+test src/cursor_test.lu::test_cursor_same_frame_held_120_plain ... ok
+test src/cursor_test.lu::test_cursor_same_frame_held_120_rich ... ok
+test src/cursor_test.lu::test_cursor_has_room_for_every_subdivision ... ok
+test src/cursor_test.lu::test_cursor_retains_a_cell_on_the_compact_grand_system ... ok
+test src/ear_test.lu::test_hear_score_contains_two_timbres_and_every_bar ... ok
+test src/ear_test.lu::test_hear_key_and_complete_cursor_pass ... ok
+test src/exposition_test.lu::test_book_six_selection_keeps_old_replay_numbers ... ok
+test src/exposition_test.lu::test_book_six_three_tutorials_end_and_light_the_title ... ok
+test src/exposition_test.lu::test_voice_switch_preserves_independent_writing ... ok
+test src/exposition_test.lu::test_exposition_clock_entries_and_part_agree ... ok
+test src/exposition_test.lu::test_progress_v1_migrates_without_lighting_sixth_book ... ok
+test src/exposition_test.lu::test_fugue_uses_shared_spelled_pitch_and_page_range_editor ... ok
+test src/exposition_test.lu::test_fugue_status_follows_bar_beat_and_both_voice_desks ... ok
+test src/exposition_test.lu::test_fugue_panel_findings_never_borrow_another_bar ... ok
+preset 1: three stars, contrary 55, steps 66, variety 4
+preset 2: three stars, contrary 55, steps 66, variety 4
+preset 3: three stars, contrary 55, steps 66, variety 4
+test src/first_test.lu::test_three_tutorial_reference_solutions_have_three_stars ... ok
+test src/first_test.lu::test_first_species_hard_rules_have_legal_and_illegal_witnesses ... ok
+test src/first_test.lu::test_hidden_fifth_is_never_accepted ... ok
+test src/first_test.lu::test_wide_invalid_counterpoint_reports_range_without_trapping ... ok
+test src/fuguepage_test.lu::test_fugue_labels_follow_entries_on_both_sizes_and_tiers ... ok
+test src/fuguepage_test.lu::test_fugue_short_subject_uses_six_bar_editor_invariant ... ok
+test src/fuguepage_test.lu::test_completed_sixth_book_is_visibly_lit_on_the_title ... ok
+test src/fuguepage_test.lu::test_fugue_answer_panel_80 ... ok
+test src/fuguepage_test.lu::test_fugue_answer_panel_120 ... ok
+test src/fuguepage_test.lu::test_fugue_counter_panel_80 ... ok
+test src/fuguepage_test.lu::test_fugue_counter_panel_120 ... ok
+test src/fuguepage_test.lu::test_fugue_answer_caret_moves_within_a_whole ... ok
+test src/fuguepage_test.lu::test_fugue_counter_caret_moves_within_a_whole ... ok
+test src/fuguepage_test.lu::test_fugue_caret_uses_merged_event_offset_after_join ... ok
+test src/grid/grid_test.lu::test_empty_diff_writes_nothing ... ok
+test src/grid/grid_test.lu::test_one_cell_diff ... ok
+test src/grid/grid_test.lu::test_full_repaint_is_contiguous ... ok
+test src/grid/grid_test.lu::test_style_run_sets_sgr_once ... ok
+test src/grid/grid_test.lu::test_rgb_dialect ... ok
+test src/grid/grid_test.lu::test_sixteen_dialect_bright ... ok
+test src/grid/grid_test.lu::test_utf8_lengths ... ok
+test src/grid/grid_test.lu::test_property_apply_diff_equals_next ... ok
+test src/grid/grid_test.lu::test_property_holds_in_the_rgb_dialect ... ok
+test src/grid/grid_test.lu::test_model_wraps_and_scrolls ... ok
+test src/grid/grid_test.lu::test_model_private_modes ... ok
+test src/grid/grid_test.lu::test_model_malformed_utf8 ... ok
+test src/grid/grid_test.lu::test_dump_text_and_styles ... ok
+test src/grid/grid_test.lu::test_plain_ok ... ok
+test src/grid/grid_test.lu::test_bounds_are_soft ... ok
+test src/input/input_test.lu::test_csi_arrows ... ok
+test src/input/input_test.lu::test_ss3_arrows ... ok
+test src/input/input_test.lu::test_shift_arrows_are_their_own_keys ... ok
+test src/input/input_test.lu::test_other_modifiers_are_the_bare_arrow ... ok
+test src/input/input_test.lu::test_plain_keys ... ok
+test src/input/input_test.lu::test_lone_esc_waits_for_the_timeout ... ok
+test src/input/input_test.lu::test_esc_then_bracket_late_is_still_a_sequence ... ok
+test src/input/input_test.lu::test_esc_then_plain_byte_is_esc_and_the_byte ... ok
+test src/input/input_test.lu::test_ignored_forms ... ok
+test src/input/input_test.lu::test_unknown_bytes_are_dropped_and_counted ... ok
+test src/input/input_test.lu::test_two_sequences_in_one_read ... ok
+test src/input/input_test.lu::test_a_tap_holds_for_the_tap_ticks ... ok
+test src/input/input_test.lu::test_a_repeat_run_releases_one_interval_after_the_last_press ... ok
+test src/notation_test.lu::test_book_2_frames_80 ... ok
+test src/notation_test.lu::test_book_2_frames_120 ... ok
+test src/notation_test.lu::test_book_3_frames_80 ... ok
+test src/notation_test.lu::test_book_3_frames_120 ... ok
+test src/notation_test.lu::test_book_4_frames_80 ... ok
+test src/notation_test.lu::test_book_4_frames_120 ... ok
+test src/notation_test.lu::test_book_5_frames_80 ... ok
+test src/notation_test.lu::test_book_5_frames_120 ... ok
+test src/notation_test.lu::test_playback_cursor_tracks_rhythmic_events_and_scrolls ... ok
+test src/notation_test.lu::test_eighths_share_the_same_integer_playback_clock ... ok
+test src/notation_test.lu::test_partial_measure_space_and_cursor_never_cut ... ok
+test src/notation_test.lu::test_mixed_values_show_numbered_partial_measures ... ok
+test src/panel_test.lu::test_diagnostics_only_show_the_active_bar_book_1 ... ok
+test src/panel_test.lu::test_diagnostics_only_show_the_active_bar_book_2 ... ok
+test src/panel_test.lu::test_diagnostics_only_show_the_active_bar_book_3 ... ok
+test src/panel_test.lu::test_diagnostics_only_show_the_active_bar_book_4 ... ok
+test src/panel_test.lu::test_diagnostics_only_show_the_active_bar_book_5 ... ok
+test src/panel_test.lu::test_supplied_panel_data_uses_the_same_active_bar_filter ... ok
+book 2 preset 1: stars 3 contrary 88 steps 77
+book 2 preset 2: stars 3 contrary 88 steps 77
+book 2 preset 3: stars 3 contrary 66 steps 76
+book 3 preset 1: stars 3 contrary 77 steps 88
+book 3 preset 2: stars 3 contrary 66 steps 88
+book 3 preset 3: stars 3 contrary 88 steps 61
+book 4 preset 1: stars 3 contrary 66 steps 63
+book 4 preset 2: stars 3 contrary 50 steps 66
+book 4 preset 3: stars 3 contrary 50 steps 66
+book 5 preset 1: stars 3 contrary 71 steps 76
+book 5 preset 2: stars 3 contrary 57 steps 76
+book 5 preset 3: stars 3 contrary 71 steps 76
+test src/presets_test.lu::test_twelve_original_species_references_have_three_stars ... ok
+test src/progress_test.lu::test_book_progress_round_trip_and_refusals ... ok
+test src/replay/replay_test.lu::test_vocabulary ... ok
+test src/replay/replay_test.lu::test_parse_sample ... ok
+test src/replay/replay_test.lu::test_round_trip ... ok
+test src/replay/replay_test.lu::test_refusals ... ok
+test src/replay/replay_test.lu::test_parse_size ... ok
+test src/replay/replay_test.lu::test_start_is_read_written_and_defaults_to_zero ... ok
+test src/replay/replay_test.lu::test_the_score_comment_is_written_read_and_optional ... ok
+test src/rhythm_test.lu::test_rhythm_books_fill_bars_and_close_whole ... ok
+test src/rhythm_test.lu::test_rhythm_rejects_crossed_bar_and_bad_duration ... ok
+test src/rhythm_test.lu::test_rhythm_fourth_has_preparation_and_ties ... ok
+test src/rhythm_test.lu::test_later_book_minimum_unit_and_reversible_rhythm_edit ... ok
+test src/rhythm_test.lu::test_replay_book_namespace_preserves_old_selectors ... ok
+test src/rhythm_test.lu::test_rhythm_columns_round_trip_every_unit ... ok
+test src/rhythm_test.lu::test_rhythmic_part_lengths_and_outgoing_tie ... ok
+test src/rhythm_test.lu::test_rhythm_keys_split_join_dot_tie_rest_are_undoable ... ok
+test src/rhythm_test.lu::test_split_preserves_every_bar_sum ... ok
+test src/rhythm_test.lu::test_join_refuses_crossed_bar_by_name ... ok
+test src/species_test.lu::test_second_passing_has_direction_and_two_steps ... ok
+test src/species_test.lu::test_accented_parallel_is_never_accepted ... ok
+test src/species_test.lu::test_second_strong_dissonance_and_unison ... ok
+test src/species_test.lu::test_second_only_opening_half_can_rest ... ok
+test src/species_test.lu::test_second_weak_neighbour_is_refused ... ok
+test src/species_test.lu::test_cambiata_is_never_misclassified ... ok
+test src/species_test.lu::test_third_neighbour_and_double_passing ... ok
+test src/species_test.lu::test_third_same_beats_do_not_hide_parallels ... ok
+test src/species_test.lu::test_suspension_resolving_up_is_never_accepted ... ok
+test src/species_test.lu::test_suspension_types_and_preparation ... ok
+test src/species_test.lu::test_florid_classifier_eighths_and_species_figures ... ok
+test src/species_test.lu::test_rhythm_style_counts_values_and_tied_time ... ok
+test src/species_test.lu::test_later_species_leap_budget_scales_attack_density ... ok
+test src/species_test.lu::test_aeolian_sixth_is_only_raised_in_the_final_step_pair ... ok
+test src/species_test.lu::test_lower_phrygian_tenth_contracts_to_octave ... ok
+test src/species_test.lu::test_aeolian_fifth_sixth_cadence_has_no_altered_step ... ok
+test src/species_test.lu::test_fourth_classifier_never_licenses_a_weak_passing_dissonance ... ok
+test src/species_test.lu::test_selected_event_does_not_borrow_a_neighbours_break ... ok
+test src/staff_test.lu::test_dissonance_is_never_drawn_green ... ok
+test src/staff_test.lu::test_plain_staff_and_grain ... ok
+test src/staff_test.lu::test_editor_step_undo_and_octave ... ok
+test src/staff_test.lu::test_hearing_locks_edits_and_card_return_resets_the_cursor ... ok
+test src/staff_test.lu::test_cadence_sharp_only_at_the_leading_note ... ok
+test src/staff_test.lu::test_five_staff_lines_are_unbroken_on_both_tiers ... ok
+test src/staff_test.lu::test_pitch_row_margin_round_trip_whole_viewport ... ok
+test src/staff_test.lu::test_bar_lines_survive_every_up_down_frame ... ok
+test src/staff_test.lu::test_cantus_keeps_its_hollow_head_and_contrasting_ink ... ok
+test src/staff_test.lu::test_treble_second_line_is_G4_and_bass_top_is_A3 ... ok
+test src/staff_test.lu::test_editor_reaches_three_ledgers_below_without_changing_clef ... ok
+test src/staff_test.lu::test_interval_label_uses_pitch_not_row ... ok
+test src/staff_test.lu::test_grand_system_retains_both_fixed_clefs ... ok
+test src/staff_test.lu::test_book_six_accidentals_and_page_range_are_spelled ... ok
+subject census Ionian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_ionian_50 ... ok
+subject census Dorian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_dorian_50 ... ok
+subject census Phrygian valid 50/50 pool 60
+test src/subject_test.lu::test_subject_census_phrygian_50 ... ok
+subject census Lydian valid 50/50 pool 44
+test src/subject_test.lu::test_subject_census_lydian_50 ... ok
+subject census Mixolydian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_mixolydian_50 ... ok
+subject census Aeolian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_aeolian_50 ... ok
+test src/subject_test.lu::test_subject_unrecovered_tail_is_never_admitted ... ok
+test src/subject_test.lu::test_three_original_tutorial_subjects ... ok
+test src/subject_test.lu::test_subject_envelope_rules_are_independently_named ... ok
+test src/theory_test.lu::test_spelled_intervals_and_motion ... ok
+census Ionian valid 50/50 length10 50 leaps2 3 leaps3 24 leaps4 23 pool 64
+test src/theory_test.lu::test_census_ionian_50 ... ok
+census Dorian valid 50/50 length10 50 leaps2 3 leaps3 27 leaps4 20 pool 64
+test src/theory_test.lu::test_census_dorian_50 ... ok
+census Phrygian valid 50/50 length10 50 leaps2 3 leaps3 25 leaps4 22 pool 64
+test src/theory_test.lu::test_census_phrygian_50 ... ok
+census Lydian valid 50/50 length10 50 leaps2 0 leaps3 35 leaps4 15 pool 50
+test src/theory_test.lu::test_census_lydian_50 ... ok
+census Mixolydian valid 50/50 length10 50 leaps2 3 leaps3 24 leaps4 23 pool 64
+test src/theory_test.lu::test_census_mixolydian_50 ... ok
+census Aeolian valid 50/50 length10 50 leaps2 3 leaps3 30 leaps4 17 pool 64
+test src/theory_test.lu::test_census_aeolian_50 ... ok
+test src/theory_test.lu::test_generated_repeated_note_is_rejected ... ok
+test src/theory_test.lu::test_every_cantus_rule_has_a_positive_and_negative_witness ... ok
+Fux Dorian breaks 5
+  bar 3: sequence
+  bar 5: sequence
+  bar 7: sequence
+  bar 8: sequence
+  bar 1: balance
+Fux Phrygian breaks 1
+  bar 3: sequence
+Fux Lydian breaks 4
+  bar 5: successive-leaps
+  bar 9: recovery
+  bar 10: successive-leaps
+  bar 1: leap-count
+Fux Mixolydian breaks 6
+  bar 6: recovery
+  bar 6: successive-leaps
+  bar 9: recovery
+  bar 9: sequence
+  bar 10: successive-leaps
+  bar 1: leap-count
+Fux Aeolian breaks 7
+  bar 1: sequence
+  bar 2: sequence
+  bar 3: sequence
+  bar 7: sequence
+  bar 7: sequence
+  bar 8: sequence
+  bar 9: sequence
+Fux Ionian breaks 1
+  bar 9: sequence
+test src/theory_test.lu::test_fux_oracles_from_original_print ... ok
+test src/world/world_test.lu::test_deterministic ... ok
+test src/world/world_test.lu::test_seeds_differ ... ok
+test src/world/world_test.lu::test_noise_bounds_and_continuity ... ok
+test src/world/world_test.lu::test_forest_density_rises ... ok
+test src/world/world_test.lu::test_clearing_reads_and_a_stand_is_the_woods_with_more_trunks ... ok
+test src/world/world_test.lu::test_density_bands_are_ordered ... ok
+test src/world/world_test.lu::test_hash_range ... ok
+wolf test: 178 passed; 0 failed; 0 rejected; 0 unsupported; 0 filtered out
+test: 0 SKIP lines
+build: target/native/fugue
+build: target/release/fugue
+fugue caret 0-80-rich-sound: 22/22 aligned in first carrying frame
+fugue caret 0-80-rich-mute: 22/22 aligned in first carrying frame
+fugue caret 0-80-plain-sound: 22/22 aligned in first carrying frame
+fugue caret 0-80-plain-mute: 22/22 aligned in first carrying frame
+fugue caret 0-120-rich-sound: 22/22 aligned in first carrying frame
+fugue caret 0-120-rich-mute: 22/22 aligned in first carrying frame
+fugue caret 0-120-plain-sound: 22/22 aligned in first carrying frame
+fugue caret 0-120-plain-mute: 22/22 aligned in first carrying frame
+fugue caret 1-80-rich-sound: 22/22 aligned in first carrying frame
+fugue caret 1-80-rich-mute: 22/22 aligned in first carrying frame
+fugue caret 1-80-plain-sound: 22/22 aligned in first carrying frame
+fugue caret 1-80-plain-mute: 22/22 aligned in first carrying frame
+fugue caret 1-120-rich-sound: 22/22 aligned in first carrying frame
+fugue caret 1-120-rich-mute: 22/22 aligned in first carrying frame
+fugue caret 1-120-plain-sound: 22/22 aligned in first carrying frame
+fugue caret 1-120-plain-mute: 22/22 aligned in first carrying frame
+pty: fugue-cursor-same-frame ok (linux x86_64, exit 0, 16903 bytes captured)

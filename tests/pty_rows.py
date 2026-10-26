@@ -558,3 +558,61 @@ def fugue_cursor_panel(bin, ctx, width=120):
 
 ROWS['fugue-cursor-panel-80']=lambda bin,ctx:fugue_cursor_panel(bin,ctx,80)
 ROWS['fugue-cursor-panel-120']=lambda bin,ctx:fugue_cursor_panel(bin,ctx,120)
+
+
+def fugue_cursor_motion(bin, ctx, cases=None):
+    """Actual first-carrying-frame caret alignment, including held-note offsets."""
+    import runpy,os,re,json
+    Frames=runpy.run_path(str(Path(ctx.ROOT)/'tools/cursor-check.py'))['frame_session'](ctx)
+    root=Path(ctx.ROOT)/'target/pty/fugue-cursor-motion';root.mkdir(parents=True,exist_ok=True)
+    if cases is None:cases=[(desk,width,tier,mute) for desk in (0,1) for width in (80,120) for tier in ('rich','plain') for mute in (False,True)]
+    problems=[];journal=[];last=None
+    lengths=[4,4,8,4,4,4,2,2,8,8]
+    for desk,width,tier,mute in cases:
+        height=24 if width==80 else 40
+        name=f'{desk}-{width}-{tier}-'+('mute' if mute else 'sound');path=root/(name+'.pk')
+        env=ctx.env_for();env['FUGUE_STATE']=str(root/(name+'.state'));env['FUGUE_WAV_DIR']=str(root/(name+'-audio'))
+        s=Frames([bin,'--book','6','--no-title','--size',f'{width}x{height}','--tier',tier,'--trace','--record',str(path)]+(['--mute'] if mute else []),height,width,env)
+        last=s;s.pump(.2);s.type(b'nn',.5)
+        if desk:s.type(b'v',.15)
+        initial=s.out
+        for key in (b'\x1b[C',b'\x1b[D'):s.type(key,.2)
+        for key in (b'\x1b[C',b'\x1b[D'):
+            begin=time.monotonic()
+            for press in range(10):
+                os.write(s.master,key);s.pump(max(.001,begin+(press+1)/30-time.monotonic()))
+            s.pump(.2)
+        s.type(b'q');s.finish(timeout=20);ctx.common_checks(s,0,problems)
+        events=[(int(x.split()[1]),x.split()[2]) for x in path.read_text().splitlines() if x.startswith('t ') and x.split()[2] in ('left','right')]
+        if [key for _,key in events]!=['right','left']+['right']*10+['left']*10:problems.append(name+' lost or reordered key')
+        def image(data):
+            cap=root/'frame.bin';cap.write_bytes(data)
+            out=subprocess.run([bin,'--apply',str(cap),'--size',f'{width}x{height}'],capture_output=True,text=True,check=True)
+            return out.stdout.split('--\n')[0].splitlines()
+        def caret(screen):return [(y,x) for y,row in enumerate(screen) for x,ch in enumerate(row[:width-24]) if ch=='^']
+        previous=caret(image(initial));position=0;records=[];unit=1 if desk else 2
+        for tick,data in s.frames:
+            keys=[(i,key) for i,(at,key) in enumerate(events) if at==tick-1]
+            if not keys:continue
+            for _,key in keys:position+=unit if key=='right' else -unit
+            elapsed=0;x=9
+            for length in lengths:
+                if position<elapsed+length:break
+                x+=max(6 if length==8 else 5 if length==4 else 4,(length+unit-1)//unit)
+                elapsed+=length
+                if elapsed%8==0:x+=1
+            expected=x+(position-elapsed)//unit
+            screen=image(data);current=caret(screen)
+            panel=f'Bar {position//8+1}, beat {position%8+1}:8' in screen[5][width-22:]
+            aligned=len(current)==1 and current[0][1]==expected
+            moved=bool(current) and current!=previous
+            for i,key in keys:records.append({'press':i+1,'key':key,'frame':tick,'panel_frames':1 if panel else None,'caret_frames':1 if aligned and moved else None,'caret':current,'expected_x':expected})
+            if not panel or not aligned or not moved:problems.append(f'{name} press {keys[0][0]+1}: panel {panel}, caret {current}, expected x {expected}, moved {moved}')
+            previous=current
+        if len(records)!=22:problems.append(name+f' only {len(records)} accounted presses')
+        journal.append({'case':name,'presses':records})
+        print(f'fugue caret {name}: {sum(r["caret_frames"]==1 for r in records)}/22 aligned in first carrying frame')
+    (root/'journal.json').write_text(json.dumps(journal,indent=2)+'\n')
+    return last,problems
+
+ROWS['fugue-cursor-same-frame']=fugue_cursor_motion

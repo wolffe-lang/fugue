@@ -38,6 +38,7 @@ fn shown(s: session.State, a: subject.Line, b: subject.Line, time: int) -> sessi
         at = next
     }
     out.cursor = rhythm.at(out.beats, time)
+    out.within = time - rhythm.onset(out.beats, out.cursor)
     out.hearing = -1
     out.cantus_clef = session.choose_clef(a.notes, a.notes)
     out.voice_clef = session.choose_clef(b.notes, b.notes)
@@ -321,7 +322,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
         text(
             mut g,
             v.top - 1,
-            x - 1,
+            x - (if bar + 1 + (if s.hearing >= duration then bars else 0) >= 10 then 2 else 1),
             "{bar + 1 + (if s.hearing >= duration then bars else 0)}",
             ink,
             bg,
@@ -393,6 +394,15 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
                 )
             }
         }
+    }
+    let focus = layout.cursor
+    let caret_x = manuscript.event_column(layout, start, focus)
+    if caret_x + manuscript.event_width(layout, focus) - 2 < cols - 27 {
+        let a = rhythm.at(first.beats, local_time), b = rhythm.at(second.beats, local_time)
+        let lower = staff.interval_row(v, first.notes[a], second.notes[b], second.beats[b].tied) + 2
+        let caret_y = if lower < rows - 2 then lower else v.top - 1
+        let offset = if s.hearing >= 0 then 0 else layout.within / session.editor_unit(layout)
+        text(mut g, caret_y, caret_x + offset, "^", blue, bg, true)
     }
     staff.panel_data(mut g, panel_model(s, p, verdict.breaks), margin, t)
     text(

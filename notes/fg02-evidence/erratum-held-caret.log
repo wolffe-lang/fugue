@@ -1,0 +1,24 @@
+fugue caret 1-80-plain-mute: 0/22 aligned in first carrying frame
+pty: fg02-held-caret FAILED (linux x86_64):
+  - 1-80-plain-mute press 1: panel False, caret [], expected x 10, moved False
+  - 1-80-plain-mute press 2: panel False, caret [], expected x 9, moved False
+  - 1-80-plain-mute press 3: panel False, caret [], expected x 10, moved False
+  - 1-80-plain-mute press 4: panel False, caret [], expected x 11, moved False
+  - 1-80-plain-mute press 5: panel False, caret [], expected x 12, moved False
+  - 1-80-plain-mute press 6: panel False, caret [], expected x 14, moved False
+  - 1-80-plain-mute press 7: panel False, caret [], expected x 15, moved False
+  - 1-80-plain-mute press 8: panel False, caret [], expected x 16, moved False
+  - 1-80-plain-mute press 9: panel False, caret [], expected x 17, moved False
+  - 1-80-plain-mute press 10: panel False, caret [], expected x 20, moved False
+  - 1-80-plain-mute press 11: panel False, caret [], expected x 21, moved False
+  - 1-80-plain-mute press 12: panel False, caret [], expected x 22, moved False
+  - 1-80-plain-mute press 13: panel False, caret [], expected x 21, moved False
+  - 1-80-plain-mute press 14: panel False, caret [], expected x 20, moved False
+  - 1-80-plain-mute press 15: panel False, caret [], expected x 17, moved False
+  - 1-80-plain-mute press 16: panel False, caret [], expected x 16, moved False
+  - 1-80-plain-mute press 17: panel False, caret [], expected x 15, moved False
+  - 1-80-plain-mute press 18: panel False, caret [], expected x 14, moved False
+  - 1-80-plain-mute press 19: panel False, caret [], expected x 12, moved False
+  - 1-80-plain-mute press 20: panel False, caret [], expected x 11, moved False
+  - 1-80-plain-mute press 21: panel False, caret [], expected x 10, moved False
+  - 1-80-plain-mute press 22: panel False, caret [], expected x 9, moved False

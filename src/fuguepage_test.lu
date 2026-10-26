@@ -86,3 +86,42 @@ fn test_fugue_answer_panel_120() { common_panel(0, 120) }
 fn test_fugue_counter_panel_80() { common_panel(1, 80) }
 
 fn test_fugue_counter_panel_120() { common_panel(1, 120) }
+
+fn caret_column(g: grid.Grid) -> int {
+    var found = -1
+    for y in 0..g.rows {
+        for x in 0..g.cols - 24 {
+            if g.cells[y * g.cols + x].cp == 94 { assert(found == -1); found = x }
+        }
+    }
+    assert(found >= 0)
+    found
+}
+
+fn held_caret(desk: int) {
+    var s = chapterstudy.solved(2)
+    if desk == 1 { session.step(mut s, 27) }
+    s.cursor = 2
+    s.within = 0
+    var previous = caret_column(fuguepage.frame(s, 80, 24, 0))
+    for _ in 0..3 {
+        session.step(mut s, 4)
+        let next = caret_column(fuguepage.frame(s, 80, 24, 0))
+        assert(next == previous + 1)
+        previous = next
+    }
+}
+
+fn test_fugue_answer_caret_moves_within_a_whole() { held_caret(0) }
+
+fn test_fugue_counter_caret_moves_within_a_whole() { held_caret(1) }
+
+fn test_fugue_caret_uses_merged_event_offset_after_join() {
+    var s = chapterstudy.solved(2)
+    session.step(mut s, 27)
+    session.step(mut s, 23)
+    assert(s.beats[0].length == 8)
+    for _ in 0..4 { session.step(mut s, 4) }
+    assert(s.cursor == 0 && s.within == 4)
+    assert(caret_column(fuguepage.frame(s, 80, 24, 0)) == 14)
+}
