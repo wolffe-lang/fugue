@@ -78,6 +78,46 @@ pub fn double_passing(
     false
 }
 
+/// Prepared dissonance tied over the bar and resolved down one step.
+pub fn suspension(
+    cf: List[theory.Pitch],
+    cp: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+    i: int,
+    below: bool,
+) -> bool {
+    if i == 0 || i + 1 >= cp.len || i + 1 >= beats.len { return false }
+    let time = rhythm.onset(beats, i), bar = time / 8
+    if time % 8 != 0 || bar == 0 || bar >= cf.len { return false }
+    if !beats[i].tied ||
+        beats[i].rest ||
+        beats[i - 1].rest ||
+        beats[i + 1].rest ||
+        beats[i + 1].tied {
+        return false
+    }
+    if beats[i].length != 4 || beats[i - 1].length != 4 || beats[i + 1].length != 4 { return false }
+    if theory.chromatic(cp[i - 1]) != theory.chromatic(cp[i]) || delta(cp[i - 1], cp[i]) != 0 {
+        return false
+    }
+    if theory.interval(cf[bar - 1], cp[i - 1]).consonance == 2 { return false }
+    if delta(cp[i], cp[i + 1]) != -1 ||
+        theory.magnitude(theory.chromatic(cp[i + 1]) - theory.chromatic(cp[i])) > 2 {
+        return false
+    }
+    let held = theory.interval(cf[bar], cp[i]), resolved = theory.interval(cf[bar], cp[i + 1])
+    if held.consonance != 2 ||
+        resolved.consonance == 2 ||
+        held.quality == "A" ||
+        held.quality == "d" {
+        return false
+    }
+    if below { return held.number == 2 && resolved.number == 3 }
+    held.number == 7 && resolved.number == 6 ||
+        held.number == 4 && resolved.number == 3 ||
+        held.number == 9 && resolved.number == 8
+}
+
 /// Parallel perfects include compound equivalents and require motion in both voices.
 pub fn parallel(a: theory.Pitch, b: theory.Pitch, c: theory.Pitch, d: theory.Pitch) -> bool {
     let old = theory.interval(a, b), next = theory.interval(c, d)
@@ -104,7 +144,10 @@ pub fn classify(
     if time / 8 >= cf.len { return "invalid" }
     if beats[i].rest { return "rest" }
     if theory.interval(cf[time / 8], cp[i]).consonance != 2 { return "consonance" }
-    if time % 8 == 0 { return "unprepared" }
+    if time % 8 == 0 {
+        if (book == 4 || book == 5) && suspension(cf, cp, beats, i, below) { return "suspension" }
+        return "unprepared"
+    }
     if book >= 3 && book != 4 {
         if cambiata(cf, cp, beats, i, below) { return "cambiata" }
         if double_passing(cf, cp, beats, i) { return "double-passing" }
@@ -164,7 +207,7 @@ pub fn vertical(
         )
         theory.require(
             mut out,
-            !b.tied,
+            !b.tied || book == 4,
             bar + 1,
             "second-tie",
             "In this book, strike each half anew.",
@@ -178,6 +221,20 @@ pub fn vertical(
                 "Only the opening half may be silent.",
             )
             continue
+        }
+        if b.tied {
+            let valid_tie = i > 0 &&
+                time % 8 == 0 &&
+                !beats[i - 1].rest &&
+                theory.chromatic(cp[i - 1]) == theory.chromatic(cp[i]) &&
+                delta(cp[i - 1], cp[i]) == 0
+            theory.require(
+                mut out,
+                valid_tie,
+                bar + 1,
+                "tie-pitch",
+                "A tie carries the same sounding pitch across the bar.",
+            )
         }
         let iv = theory.interval(cf[bar], cp[i])
         let c = theory.chromatic(cf[bar]), p = theory.chromatic(cp[i])
@@ -201,9 +258,11 @@ pub fn vertical(
         if time % 8 == 0 {
             theory.require(
                 mut out,
-                iv.consonance != 2,
+                iv.consonance != 2 ||
+                    book == 4 &&
+                        (!complete && i + 1 >= cp.len || suspension(cf, cp, beats, i, below)),
                 bar + 1,
-                "downbeat-consonance",
+                if book == 4 then "suspension" else "downbeat-consonance",
                 "Let the strong beat stand on a consonance.",
             )
             theory.require(
@@ -216,13 +275,16 @@ pub fn vertical(
         } else if iv.consonance == 2 && (complete || i + 1 < cp.len) {
             theory.require(
                 mut out,
-                passing(cp, beats, i) ||
-                    book == 3 &&
-                        (
-                            neighbour(cp, beats, i) ||
-                                double_passing(cf, cp, beats, i) ||
-                                cambiata(cf, cp, beats, i, below)
-                        ),
+                book != 4 &&
+                    (
+                        passing(cp, beats, i) ||
+                            book == 3 &&
+                                (
+                                    neighbour(cp, beats, i) ||
+                                        double_passing(cf, cp, beats, i) ||
+                                        cambiata(cf, cp, beats, i, below)
+                                )
+                    ),
                 bar + 1,
                 if book == 3 then "third-dissonance" else "passing-dissonance",
                 "Give the dissonance a complete passing, neighbour or cambiata figure allowed in this book.",
@@ -345,6 +407,17 @@ pub fn check(
         "two-voice-cadence",
         "Let the last weak beat be a major sixth opening out, or a minor third closing in.",
     )
+    if book == 4 {
+        let pen = rhythm.at(beats, (cf.len - 2) * 8)
+        let held = theory.interval(cf[cf.len - 2], cp[pen])
+        theory.require(
+            mut v.breaks,
+            suspension(cf, cp, beats, pen, below) && held.number == (if below then 2 else 7),
+            cf.len - 1,
+            "suspension-cadence",
+            "Let a prepared seventh fall to a sixth above, or a second open to a third below, before the close.",
+        )
+    }
     var normalized = List[theory.Pitch]()
     let shift = (line[line.len - 1].octave - 4) * 7
     for p in line {

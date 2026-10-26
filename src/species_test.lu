@@ -103,3 +103,35 @@ fn test_third_same_beats_do_not_hide_parallels() {
     let good = pitches([35, 32, 33, 30, 31, 34, 34, 35, 35])
     assert(!broken(species.vertical(cf, good, beats, false, 3, true), "same-beat-parallel"))
 }
+
+fn test_suspension_resolving_up_is_never_accepted() {
+    let cf = pitches([28, 29, 28]), beats = rhythm.pattern(4, 3)
+    let good = pitches([35, 35, 35, 34, 35])
+    assert(species.suspension(cf, good, beats, 2, false))
+    assert(species.classify(cf, good, beats, 2, 4, false) == "suspension")
+    let bad = pitches([35, 35, 35, 36, 35])
+    assert(!species.suspension(cf, bad, beats, 2, false))
+    assert(broken(species.vertical(cf, bad, beats, false, 4, true), "suspension"))
+    assert(!broken(species.vertical(cf, good, beats, false, 4, true), "suspension"))
+}
+
+fn test_suspension_types_and_preparation() {
+    var beats = rhythm.pattern(4, 3)
+    assert(
+        species.suspension(pitches([29, 30, 28]), pitches([33, 33, 33, 32, 35]), beats, 2, false),
+    )
+    assert(
+        species.suspension(pitches([28, 29, 28]), pitches([37, 37, 37, 36, 35]), beats, 2, false),
+    )
+    assert(species.suspension(pitches([30, 29, 28]), pitches([28, 28, 28, 27, 28]), beats, 2, true))
+    assert(
+        !species.suspension(pitches([29, 29, 28]), pitches([35, 35, 35, 34, 35]), beats, 2, false),
+    )
+    assert(
+        !species.suspension(pitches([28, 29, 28]), pitches([35, 34, 35, 34, 35]), beats, 2, false),
+    )
+    beats[2].tied = false
+    assert(
+        !species.suspension(pitches([28, 29, 28]), pitches([35, 35, 35, 34, 35]), beats, 2, false),
+    )
+}
