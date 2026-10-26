@@ -1,0 +1,6 @@
+fg01 prediction, before implementation
+Seed census: predict at least 75% of admitted Book II-V seeds have a three-star answer found by the bounded generator search; report the actual numerator and denominator separately per book, with exhausted searches counted, not hidden.
+Species classifier: predict zero confusion on explicit legal/illegal passing, neighbour, cambiata, suspension and paired-eighth figures. These fixtures will assert named classes independently of whole-line legality.
+Frame cost: predict rich and plain render+diff means below 500 microseconds at 120x40 on kasumi, including stems, ties and beat labels.
+Recommendations to implement: R-fg01-1 B for II (passing only), A from III (neighbours allowed); R-fg01-2 A (weak paired eighths, stepwise).
+Contract: wolf/sprints/lair/fugue/01-the-species/fg01-the-species.md. Book I semantics and old replay selectors remain compatible. All tests and goldens run on kasumi 0-3 under the named flock/container; only one final gated Mac play build.
