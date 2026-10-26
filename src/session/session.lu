@@ -1,17 +1,45 @@
 use replay
+use theory
+
+/// A reversible single-note edit.
+pub struct Edit { bar: int, before: theory.Pitch }
 
 /// Deterministic editor state; no terminal or clock ownership.
 pub struct State {
     seed: int,
     cursor: int,
-    pitch: int,
     phase: int,
     quit: bool,
+    mode: int,
+    level: int,
+    cantus: List[theory.Pitch],
+    voice: List[theory.Pitch],
+    history: List[Edit],
+    hearing: int,
+    audition: int,
+    below: bool,
 }
 
 /// Start at the title or staff with the supplied seed.
 pub fn new(seed: int, title: bool) -> State {
-    State { seed: seed, cursor: 0, pitch: 0, phase: if title then 0 else 1, quit: false }
+    let mode = (seed % 6 + 6) % 6
+    let cantus = theory.generate(seed, mode) else List[theory.Pitch]()
+    var voice = List[theory.Pitch]()
+    for p in cantus { (mut voice).push(theory.pitch(theory.position(p) + 4)) }
+    State {
+        seed: seed,
+        cursor: 0,
+        phase: if title then 0 else 1,
+        quit: false,
+        mode: mode,
+        level: 0,
+        cantus: cantus,
+        voice: voice,
+        history: List[Edit](),
+        hearing: -1,
+        audition: 0,
+        below: false,
+    }
 }
 
 /// Stable replay key numbers, independent of the terminal decoder.
@@ -57,12 +85,58 @@ pub fn key(n: int) -> int {
     }
 }
 
+/// Advance one 30 Hz replay tick; one whole note sounds for one second.
+pub fn tick(mut s: State) {
+    if s.hearing >= 0 { s.hearing += 1; if s.hearing >= s.voice.len * 30 { s.hearing = -1 } }
+}
+
 /// Apply one replay key without reading any host state.
 pub fn step(mut s: State, k: int) {
     if k == 14 || k == 15 { s.quit = true; return }
     if s.phase == 0 && k != 0 { s.phase = 1; return }
-    if k == 1 { s.pitch += 1 }
-    if k == 2 { s.pitch -= 1 }
+    if k == 12 {
+        let next = new(s.seed + 1, false)
+        s = next
+        return
+    }
+    if k == 13 { s.phase = 1 }
+    if s.phase != 1 { return }
     if k == 3 && s.cursor > 0 { s.cursor -= 1 }
-    if k == 4 && s.cursor < 9 { s.cursor += 1 }
+    if k == 4 && s.cursor + 1 < s.voice.len { s.cursor += 1 }
+    if k == 9 { s.hearing = 0 }
+    if k == 8 { s.audition += 1 }
+    if k == 10 { s.phase = 2 }
+    if k == 11 {
+        let edit = (mut s.history).pop() else { return }
+        s.voice[edit.bar] = edit.before
+        s.cursor = edit.bar
+    }
+    if k >= 1 && k <= 2 || k == 5 || k == 6 || k == 7 {
+        let before = copy s.voice[s.cursor]
+        var next = copy before
+        if k == 7 {
+            let final = 28 + s.mode + (if s.below then -7 else 7)
+            if s.cursor != s.voice.len - 2 ||
+                theory.position(before) != final - 1 ||
+                !theory.raises(s.mode) {
+                return
+            }
+            next.accidental = 1 - next.accidental
+        } else {
+            let delta = match k {
+                1 => 1,
+                2 => -1,
+                5 => 7,
+                _ => -7,
+            }
+            let pos = theory.position(before) + delta
+            let bottom = if s.below then 21 + s.mode else 28 + s.mode
+            if pos < bottom || pos > bottom + 14 { return }
+            next = theory.pitch(pos)
+        }
+        (mut s.history).push(Edit { bar: s.cursor, before: before })
+        s.voice[s.cursor] = next
+        s.audition += 1
+        s.hearing = -1
+    }
 }

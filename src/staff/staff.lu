@@ -1,31 +1,236 @@
+//! One manuscript page, shared geometry on rich and plain terminals.
+
 use draw
 use grid
 use session
+use theory
 use tier
 use world
 
-/// Draw the manuscript at the requested size and glyph tier.
-pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
+/// Colour carries consonance, while the letter remains readable without colour.
+pub fn harmony_ink(cls: int, t: int) -> int {
+    if t == tier.PLAIN {
+        return match cls {
+            0 => 2,
+            1 => 3,
+            _ => 1,
+        }
+    }
+    match cls {
+        0 => 22,
+        1 => 130,
+        _ => 124,
+    }
+}
+
+/// All non-ASCII marks this renderer may draw.
+pub fn glyphs() -> List[int] { [0x00b7, 0x2500, 0x2502, 0x25cb, 0x25cf, 0x2588] }
+
+/// The minimum readable manuscript width.
+pub fn minimum_columns() -> int { 80 }
+
+fn text(mut g: grid.Grid, y: int, x: int, words: str, fg: int, bg: int, bold: bool) {
+    draw.put_text(mut g, y, x, words, grid.cell(32, fg, bg, if bold then 1 else 0))
+}
+
+fn ornament(mut g: grid.Grid, y: int, x: int, t: int, bg: int) {
+    let rows = [
+        "  +-------+",
+        "  |FFFFF  |",
+        "  |FF    .|",
+        "  |FFFF   |",
+        "  |FF  .  |",
+        "  |FF     |",
+        "  +-------+",
+    ]
+    for row in 0..rows.len {
+        for col in 0..rows[row].len {
+            let ch = rows[row].bytes()[col] as int
+            if ch == 70 {
+                grid.put(
+                    mut g,
+                    y + row,
+                    x + col,
+                    grid.cell(if t == 1 then 0x2588 else 35, if t == 1 then 24 else 4, bg, 1),
+                )
+            } else if ch != 32 {
+                grid.put(mut g, y + row, x + col, grid.cell(ch, if t == 1 then 130 else 3, bg, 0))
+            }
+        }
+    }
+}
+
+/// Draw a diagnostic clef alternative in the same reserved left margin.
+pub fn clef(mut g: grid.Grid, top: int, t: int, bg: int) {
+    let shape = ["  /", " /|", "( |", " \"|", " /|", "( @)", " \\|", "  |", " (_)"]
+    for i in 0..shape.len { text(mut g, top + i, 1, shape[i], if t == 1 then 94 else 3, bg, false) }
+}
+
+/// Draw the manuscript with names or the experimental cell-drawn clef.
+pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -> grid.Grid {
     var g = grid.new(rows, cols)
     let bg = if t == tier.RICH then 230 else 7
     let ink = if t == tier.RICH then 94 else 3
+    let blue = if t == tier.RICH then 24 else 4
     for y in 0..rows {
+        let grain = world.noise(s.seed, 19, y * 7)
         for x in 0..cols {
-            let mark = world.hash(s.seed, y, x, 31) == 0
-            grid.put(mut g, y, x, grid.cell(if mark then 46 else 32, ink, bg, 0))
+            let mark = world.hash(s.seed, y, x, 53) < 2
+            let ground = if t == 1 && world.hash(s.seed, y, x, 256) < grain / 12 then 223 else bg
+            grid.put(
+                mut g,
+                y,
+                x,
+                grid.cell(
+                    if mark then (if t == 1 then 0x00b7 else 46) else 32,
+                    if t == 1 then 180 else 3,
+                    ground,
+                    0,
+                ),
+            )
         }
     }
-    draw.put_text(mut g, 1, 3, "F U G U E   /   Book I", grid.cell(32, ink, bg, 1))
-    draw.put_text(mut g, 3, 3, "The staff is being prepared", grid.cell(32, ink, bg, 0))
-    draw.put_text(
+    if s.phase == 0 {
+        ornament(mut g, rows / 2 - 5, cols / 2 - 22, t, bg)
+        text(mut g, rows / 2 - 3, cols / 2 - 7, "fugue", blue, bg, true)
+        text(mut g, rows / 2 - 1, cols / 2 - 7, "A second voice", ink, bg, false)
+        text(mut g, rows / 2 + 1, cols / 2 - 7, "Book I / note against note", ink, bg, false)
+        text(
+            mut g,
+            rows / 2 + 4,
+            cols / 2 - 20,
+            "Enter or any key to open the manuscript",
+            blue,
+            bg,
+            false,
+        )
+        text(mut g, rows - 3, 4, "q or Escape leaves the desk", ink, bg, false)
+        return g
+    }
+    let margin = cols - (if cols >= 100 then 29 else 24)
+    text(mut g, 1, 3, "fugue   /   I. Note against note", blue, bg, true)
+    text(
+        mut g,
+        2,
+        3,
+        "{theory.mode_name(s.mode)}   seed {s.seed}   {if s.below then "cantus above" else "cantus below"}",
+        ink,
+        bg,
+        false,
+    )
+    let top = 5 + (rows - 24) / 2
+    let bottom = top + (if rows >= 25 then 14 else 13)
+    let height = bottom - top
+    var base = 28
+    if s.below { base -= 7 }
+    // The window follows the edited pitch without compressing line/space spacing.
+    if s.voice.len > 0 {
+        let selected = theory.position(s.voice[s.cursor])
+        if selected > base + height { base = selected - height }
+        if selected < base { base = selected }
+    }
+    let width = (margin - 9) / (if s.cantus.len > 0 then s.cantus.len else 1)
+    for y in top..bottom + 1 {
+        let pos = base + bottom - y
+        if pos >= 30 && pos <= 38 && pos % 2 == 0 {
+            for x in 7..margin - 2 {
+                grid.put(
+                    mut g,
+                    y,
+                    x,
+                    grid.cell(if t == 1 then 0x2500 else 45, if t == 1 then 180 else 8, bg, 0),
+                )
+            }
+        }
+        if !drawn_clef && (pos % 2 == 0 || pos == 28) {
+            text(mut g, y, 1, theory.name(theory.pitch(pos)), ink, bg, pos == 28)
+        }
+    }
+    if drawn_clef { clef(mut g, top + 1, t, bg) }
+    for i in 0..s.cantus.len {
+        let x = 8 + i * width
+        text(mut g, top - 1, x, "{i + 1}", ink, bg, false)
+        for which in 0..2 {
+            let p = if which == 0 then copy s.cantus[i] else copy s.voice[i]
+            let pos = theory.position(p)
+            let y = bottom - (pos - base)
+            let nx = x + which
+            if y >= top && y <= bottom {
+                if pos < 30 || pos > 38 {
+                    let edge = if pos < 30 then 30 else 38
+                    let lo = if pos < edge then pos else edge
+                    let hi = if pos > edge then pos else edge
+                    for ledger in lo..hi + 1 {
+                        let ly = bottom - (ledger - base)
+                        if ledger % 2 == 0 && ly >= top && ly <= bottom {
+                            for dx in -1..3 {
+                                grid.put(
+                                    mut g,
+                                    ly,
+                                    nx + dx,
+                                    grid.cell(if t == 1 then 0x2500 else 45, ink, bg, 0),
+                                )
+                            }
+                        }
+                    }
+                }
+                let cp = if which == 0 {
+                    (if t == 1 then 0x25cb else 111)
+                } else {
+                    (if t == 1 then 0x25cf else 42)
+                }
+                let lit = s.hearing >= 0 && s.hearing / 30 == i
+                grid.put(
+                    mut g,
+                    y,
+                    nx,
+                    grid.cell(
+                        cp,
+                        if which == 0 then ink else blue,
+                        if lit then (if t == 1 then 222 else 11) else bg,
+                        if which == 1 && i == s.cursor then 1 else 0,
+                    ),
+                )
+                if p.accidental == 1 { grid.put(mut g, y, nx - 1, grid.cell(35, blue, bg, 0)) }
+            }
+        }
+        let iv = theory.interval(s.cantus[i], s.voice[i])
+        let label = if t == 0 then (
+                match iv.consonance {
+                    0 => "P",
+                    1 => "i",
+                    _ => "x",
+                }
+            ) else iv.quality
+        text(mut g, bottom + 2, x, "{label}{iv.number}", harmony_ink(iv.consonance, t), bg, false)
+        if i == s.cursor { text(mut g, bottom + 3, x, "^", blue, bg, true) }
+    }
+    for y in 4..rows - 3 {
+        grid.put(mut g, y, margin, grid.cell(if t == 1 then 0x2502 else 124, ink, bg, 0))
+    }
+    text(mut g, 4, margin + 2, "The margin", ink, bg, true)
+    text(mut g, 6, margin + 2, "Bar {s.cursor + 1}", blue, bg, true)
+    if s.voice.len > 0 {
+        text(mut g, 8, margin + 2, theory.name(s.voice[s.cursor]), blue, bg, false)
+    }
+    text(mut g, 10, margin + 2, "o  given voice", ink, bg, false)
+    text(mut g, 11, margin + 2, "*  your voice", blue, bg, false)
+    text(mut g, 13, margin + 2, "P perfect", harmony_ink(0, t), bg, false)
+    text(mut g, 14, margin + 2, "i imperfect", harmony_ink(1, t), bg, false)
+    text(mut g, 15, margin + 2, "x dissonant", harmony_ink(2, t), bg, false)
+    text(
         mut g,
         rows - 2,
         3,
-        "Arrows move | Enter checks | h hears | q quits",
-        grid.cell(32, ink, bg, 0),
+        "Arrows write   Space sounds   h hears   Enter checks   u undo   q quit",
+        blue,
+        bg,
+        false,
     )
     g
 }
 
-/// The minimum readable manuscript width.
-pub fn minimum_columns() -> int { 80 }
+/// Normal play uses named pitches; a drawn clef is available only in art studies.
+pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
+    study(s, cols, rows, t, false)
+}

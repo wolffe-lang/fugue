@@ -1,24 +1,24 @@
-               .       ...  .    .                                           .  
- . F U G U E   /   Book I                       .   .                           
-              .                          .                 .                    
-   The staff is being prepared    .             . .                             
-                                                       .                        
-                    . .                                  . .     .              
-                                                                 .             .
-         .                                    .                 .               
-     .                                                                          
- .                       .                                     .                
-                    .  .                       .            .                   
-                                 .                                  .           
-                        .                                                       
-  .   ..      .                               .                   .             
-          .                                                   . .               
-    .              .                                                            
-.                                                                    .          
-           .   .       .             .                                 .        
-    .                                   .            .                          
-                                                                                
-     .                         . .                                   .          
-              .                 .          .                    .               
-   Arrows move | Enter checks | h hears | q quits .     .        .              
-     .                                                                          
+.                                                           .                   
+   fugue   /   I. Note against note                                             
+   Dorian   seed 7   cantus below                     .                         
+                                           .     .       .                    . 
+        1   2   3   4   5   6   7   8   9   10          | The margin            
+                                                        |  .                    
+ A5     .  .  .                                 .       | Bar 2. . .            
+             .               .                          |                 .     
+ F5    ----------------------------------------------- .| B4                .   
+                                 *                      |       .           .  .
+ D5   .------------------*----------------------------  | o  given voice        
+   .    .        * ..        *.      *   .       .      | *  your voice         
+ B4    --*---*---------------------------*------------  |                    .  
+               .     * .        o  .         *          | P perfect             
+ G4    -----------------o-----------------------------  | i imperfect           
+  .             o          .o       o                   | x dissonant           
+ E4  . -----o---------------------------o-------------. |            .          
+ .      o           o.   . .      .    .    o           |                      .
+ C4                                                     |                       
+                                                   .    |             .         
+        i6  P5  P5  P5  P5  P5  P5  P5  P5  P5          |        .              
+            ^ .  .      .                             .                   .     
+   Arrows write   Space sounds   h hears   Enter checks   u undo   q quit       
+                                         .                  .              .    

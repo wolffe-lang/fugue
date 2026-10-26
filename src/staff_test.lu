@@ -1,0 +1,36 @@
+use grid
+use session
+use staff
+use theory
+
+fn test_dissonance_is_never_drawn_green() {
+    assert(staff.harmony_ink(2, 1) == 124)
+    assert(staff.harmony_ink(2, 0) == 1)
+    assert(staff.harmony_ink(0, 1) == 22)
+    assert(staff.harmony_ink(1, 1) == 130)
+}
+
+fn test_plain_staff_and_grain() {
+    let s = session.new(7, false)
+    let g = staff.frame(s, 80, 24, 0)
+    assert(grid.plain_ok(g))
+    var dots = 0
+    for c in g.cells { if c.cp == 46 { dots += 1 } }
+    assert(dots > 0)
+    let rich = staff.frame(s, 120, 40, 1)
+    var warm = 0
+    for c in rich.cells { if c.bg == 223 { warm += 1 } }
+    assert(warm > 0)
+}
+
+fn test_editor_step_undo_and_octave() {
+    var s = session.new(7, false)
+    let before = theory.position(s.voice[0])
+    session.step(mut s, 1)
+    assert(theory.position(s.voice[0]) == before + 1)
+    assert(s.audition == 1)
+    session.step(mut s, 11)
+    assert(theory.position(s.voice[0]) == before)
+    session.step(mut s, 5)
+    assert(theory.position(s.voice[0]) == before + 7)
+}

@@ -136,8 +136,9 @@ fn offline(o: Options, r: replay.Replay) -> int {
     var total: int = 0
     var worst: int = 0
     for tick in 0..count {
+        apply_events(mut s, r, tick)
+        session.tick(mut s)
         region frame {
-            apply_events(mut s, r, tick)
             let begin = clock.now_ns()
             let g = staff.frame(s, r.cols, r.rows, r.tier)
             var bytes = List[byte]()
@@ -209,6 +210,7 @@ fn live(o: Options, r: replay.Replay) -> int {
         while d < due {
             if o.script != "" { apply_events(mut s, r, tick) }
             if o.trap_at == tick { assert(false) }
+            session.tick(mut s)
             tick += 1
             d += 1
         }
@@ -253,8 +255,18 @@ fn main() -> int {
     if o.art {
         let s = session.new(7, false)
         for t in 0..2 {
-            let g = staff.frame(s, 80, 24, t)
-            headless.write_frame(o.dump, "staff-{tier.name(t)}", g) else |_| { return 2 }
+            for size in 0..2 {
+                let cols = if size == 0 then 80 else 120
+                let rows = if size == 0 then 24 else 40
+                for variant in 0..2 {
+                    let g = staff.study(s, cols, rows, t, variant == 1)
+                    headless.write_frame(
+                        o.dump,
+                        "{if variant == 0 then "names" else "clef"}-{cols}-{tier.name(t)}",
+                        g,
+                    ) else |_| { return 2 }
+                }
+            }
         }
         return 0
     }
