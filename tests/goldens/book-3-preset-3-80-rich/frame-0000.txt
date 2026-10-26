@@ -1,0 +1,24 @@
+                                                                     ·         ·
+   fugue / III. Four against one                ·                 ·  ·          
+   Mixolydian  seed 2  cantus below                      ·                      
+                          ·                                                     
+        1                 2       ·                     |                       
+ D6                 ·                        · · ·      | Bar 1 / 1:8           
+ C6·      ·                                         ·   |                ··     
+ B5                                                     | D5       ·            
+ A5    │─────────────────│──|───|───|───|──│─────────── |·                      
+ G5    │  |   |   |   |  │  |   |  ·|   |  │    ·       | h hear both voices    
+·F5    │──|───|───|───|──│──|───|───|───|──│───────────·|         ·             
+ E5    │· |   |   |·  |  │ ●   ●   ●   ●   │            | S strong / w weak     
+ D5    │─●───●───●───●───│─────────────────│─────────── |        ·              
+ C5 ·  │                 │                 │            | _ tied, r rest        
+ B4    │─────────────────│─────────────────│─────────── | t tie  0 first rest   
+ A4    │                 │○                │    ·       |             ·         
+ G4  · │○────────────────│─────────────────│─────────── |                ·      
+ F4                       ·            ·           ·    |     ·                 
+ E4     ·                  ·                            | parallel-perfect      
+      · SP5 wP5 wP5 wP5   SP5 wP5 wP5 wP5    ·          |·      ·               
+  ·     /4  /4  /4  /4    /4  /4  /4  /4            ·   |                       
+      ·  ^                         ·                                            
+   Arrows write  h hear  Enter check  u undo  n next  b books  q quit           
+··    ·                    ·                      ·  ·                          
