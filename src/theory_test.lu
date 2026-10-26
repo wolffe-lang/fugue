@@ -1,0 +1,142 @@
+use theory
+
+fn test_spelled_intervals_and_motion() {
+    let c = theory.pitch(28)
+    assert(theory.interval(c, theory.pitch(32)).consonance == 0)
+    assert(theory.interval(c, theory.pitch(30)).consonance == 1)
+    assert(theory.interval(c, theory.pitch(31)).consonance == 2)
+    assert(theory.interval(c, theory.pitch(37)).number == 10)
+    assert(theory.interval(theory.pitch(31), theory.pitch(34)).quality == "A")
+    assert(theory.motion(c, theory.pitch(32), theory.pitch(29), theory.pitch(33)) == "parallel")
+    assert(theory.motion(c, theory.pitch(32), theory.pitch(29), theory.pitch(31)) == "contrary")
+    assert(theory.motion(c, theory.pitch(32), c, theory.pitch(33)) == "oblique")
+}
+
+fn census(mode: int) {
+    let pool = theory.candidates(mode)
+    assert(pool.len > 0)
+    var leap2 = 0, leap3 = 0, leap4 = 0
+    for seed in 0..50 {
+        let line = theory.choose(pool, seed) else List[theory.Pitch]()
+        assert(theory.validate(line, mode).len == 0)
+        assert(line.len == 10)
+        let count = theory.leaps(line)
+        if count == 2 { leap2 += 1 }
+        if count == 3 { leap3 += 1 }
+        if count == 4 { leap4 += 1 }
+    }
+    print(
+        "census {theory.mode_name(mode)} valid 50/50 length10 50 leaps2 {leap2} leaps3 {leap3} leaps4 {leap4} pool {pool.len}",
+    )
+}
+
+fn test_census_ionian_50() { census(0) }
+
+fn test_census_dorian_50() { census(1) }
+
+fn test_census_phrygian_50() { census(2) }
+
+fn test_census_lydian_50() { census(3) }
+
+fn test_census_mixolydian_50() { census(4) }
+
+fn test_census_aeolian_50() { census(5) }
+
+fn test_generated_repeated_note_is_rejected() {
+    var line = theory.generate(7, 0) else List[theory.Pitch]()
+    assert(line.len == 10)
+    line[2] = line[1]
+    var repeated = false
+    for b in theory.validate(line, 0) { if b.rule == "repeat" { repeated = true } }
+    assert(repeated)
+}
+
+fn notes(positions: List[int]) -> List[theory.Pitch] {
+    var out = List[theory.Pitch]()
+    for pos in positions { (mut out).push(theory.pitch(pos)) }
+    out
+}
+
+fn broken(line: List[theory.Pitch], rule: str) -> bool {
+    for b in theory.validate(line, 0) { if b.rule == rule { return true } }
+    false
+}
+
+fn test_every_cantus_rule_has_a_positive_and_negative_witness() {
+    let good = theory.generate(0, 0) else List[theory.Pitch]()
+    let rules = [
+        "length",
+        "final",
+        "diatonic",
+        "repeat",
+        "leap-quality",
+        "recovery",
+        "successive-leaps",
+        "outlined-tritone",
+        "sequence",
+        "one-climax",
+        "climax-position",
+        "climax-leading",
+        "leap-count",
+        "octave-count",
+        "range",
+        "direction-changes",
+        "balance",
+        "cadence",
+    ]
+    for rule in rules { assert(!broken(good, rule)) }
+    assert(broken(notes([28]), "length"))
+    assert(broken(notes([29, 30, 31, 32, 33, 32, 30, 29]), "final"))
+    var altered = copy good
+    altered[3].accidental = 1
+    assert(broken(altered, "diatonic"))
+    assert(broken(notes([28, 28, 29, 30, 31, 30, 29, 28]), "repeat"))
+    assert(broken(notes([28, 34, 33, 32, 31, 30, 29, 28]), "leap-quality"))
+    assert(broken(notes([28, 31, 32, 33, 32, 30, 29, 28]), "recovery"))
+    assert(broken(notes([28, 30, 32, 33, 32, 30, 29, 28]), "successive-leaps"))
+    assert(broken(notes([28, 31, 32, 34, 32, 30, 29, 28]), "outlined-tritone"))
+    assert(broken(notes([28, 29, 30, 31, 32, 30, 29, 28]), "sequence"))
+    assert(broken(notes([28, 30, 32, 31, 32, 30, 29, 28]), "one-climax"))
+    assert(broken(notes([28, 32, 31, 30, 29, 30, 29, 28]), "climax-position"))
+    assert(broken(notes([28, 30, 32, 34, 33, 30, 29, 28]), "climax-leading"))
+    assert(broken(notes([28, 29, 30, 31, 30, 29, 28, 28]), "leap-count"))
+    assert(broken(notes([28, 35, 34, 27, 28, 30, 29, 28]), "octave-count"))
+    assert(broken(notes([28, 38, 37, 35, 33, 30, 29, 28]), "range"))
+    assert(broken(notes([28, 29, 30, 31, 32, 33, 34, 35]), "direction-changes"))
+    assert(broken(notes([28, 29, 30, 31, 32, 33, 34, 28]), "balance"))
+    assert(broken(notes([28, 30, 29, 32, 31, 30, 30, 28]), "cadence"))
+}
+
+fn oracle(mode: int, positions: List[int], expected: str) {
+    let line = notes(positions)
+    let verdict = theory.validate(line, mode)
+    print("Fux {theory.mode_name(mode)} breaks {verdict.len}")
+    var actual = ""
+    for b in verdict { print("  bar {b.bar}: {b.rule}"); actual += "{b.bar}:{b.rule} " }
+    assert(actual == expected)
+}
+
+fn test_fux_oracles_from_original_print() {
+    oracle(
+        1,
+        [29, 31, 30, 29, 32, 31, 33, 32, 31, 30, 29],
+        "3:sequence 5:sequence 7:sequence 8:sequence 1:balance ",
+    )
+    oracle(2, [30, 28, 29, 28, 26, 33, 32, 30, 31, 30], "3:sequence ")
+    oracle(
+        3,
+        [31, 32, 33, 31, 29, 30, 31, 35, 33, 31, 32, 31],
+        "5:successive-leaps 9:recovery 10:successive-leaps 1:leap-count ",
+    )
+    oracle(
+        4,
+        [32, 35, 34, 32, 35, 37, 36, 39, 37, 35, 36, 34, 33, 32],
+        "6:recovery 6:successive-leaps 9:recovery 9:sequence 10:successive-leaps 1:leap-count ",
+    )
+    oracle(
+        5,
+        [33, 35, 34, 36, 35, 37, 38, 37, 36, 35, 34, 33],
+        "1:sequence 2:sequence 3:sequence 7:sequence 7:sequence 8:sequence 9:sequence ",
+    )
+    oracle(0, [28, 30, 31, 32, 30, 33, 32, 30, 31, 30, 29, 28], "9:sequence ")
+}

@@ -1,0 +1,15 @@
+# Johann Joseph Fux, Gradus ad Parnassum (Vienna, 1725), Liber secundus.
+# Public-domain original scan, Internet Archive gradusadparnassu00fuxj_0.
+# https://archive.org/details/gradusadparnassu00fuxj_0
+# Independently transcribed from the printed Cantus firmus staves only.
+# No counterpoint, prose or music is used in any playable level.
+# Printed pages 47,51,52,53,55,62; archive page n60,n64,n65,n66,n68,n75.
+# Pitches normalized by whole octaves so each modal final is in octave 4.
+# Original D/E/C finals are D4/E4/C4; F/G/A finals are F3/G3/A3.
+# Aeolian uses its first presentation on p55, not the shortened p62 variant.
+Dorian|47|D4 F4 E4 D4 G4 F4 A4 G4 F4 E4 D4
+Phrygian|51|E4 C4 D4 C4 A3 A4 G4 E4 F4 E4
+Lydian|52|F4 G4 A4 F4 D4 E4 F4 C5 A4 F4 G4 F4
+Mixolydian|53|G4 C5 B4 G4 C5 E5 D5 G5 E5 C5 D5 B4 A4 G4
+Aeolian|55|A4 C5 B4 D5 C5 E5 F5 E5 D5 C5 B4 A4
+Ionian|62|C4 E4 F4 G4 E4 A4 G4 E4 F4 E4 D4 C4
