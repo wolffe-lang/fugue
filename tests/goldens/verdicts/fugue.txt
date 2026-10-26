@@ -1,0 +1,12 @@
+tutorial 1: Real answer; mutation 0; stars 3; breaks 0
+tutorial 2: Real answer; mutation 0; stars 3; breaks 0
+tutorial 3: Tonal answer; mutation 1; stars 3; breaks 0
+wrong answer bar 3: hidden-perfect
+wrong answer bar 3: inversion-fifth
+wrong answer bar 3: answer-transposition
+bad inversion bar 1: inverted-downbeat-consonance
+bad inversion bar 1: inverted-downbeat-consonance
+bad inversion bar 1: repeat
+bad inversion bar 1: inversion-fifth
+tail leap bar 1: subject-steps
+tail leap bar 6: subject-tail

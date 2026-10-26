@@ -1,0 +1,24 @@
+                                                                                
+   fugue / VI. The fugue                                  VI. The fugue         
+                                                                                
+ Treble 7          8      9          10            >>     Answer                
+ B5                                                       Writing Counter       
+ A5      |                      |   -o-        |          Countersubject        
+ G5      |    |            |    |     |   o    |          Bar 4                 
+ F5    |o-----|---|------|-|--#o-|--|-|----|---||-|---|                         
+ E5    |     o    |      |o |    |  |  |   || o | |   |   Real or tonal         
+ D5    |----------|o-----|--|---*---|--|---||---|-|---|                         
+ C5    |  |       |      | *        | *     |  *  |   |   Tonal answer          
+ B4    |--|----|--|-*----|----------|------*------|---|             .           
+ A4    | *     |  |      |          |             |   |   Mutation attack 1     
+ G4    |------*---|------|----------|-------------|---|                         
+ F4    |          |      |          |             |   |   Values /4 : /4        
+ E4    |----------|------|----------|-------------|---|                         
+ D4     Sm6  wM6   Sm3    SM3  wM3   SM6  wm6 wM3         h exposition          
+ C4     /2   /2    /1     /2   /2    /2   /4 ./4                                
+ B3                   .                                   v change voice        
+ A3                                                    .                        
+ G3                                                                             
+                                                                                
+  [ ] . t r rhythm  Arrows/# pitch  v voice  h hear  Enter check  n b q         
+                                                                                

@@ -24,7 +24,7 @@
                                                      3  III. Four against one  [0*]                                     
    .                                                 4  IV. The suspended voice  [0*]                                   
                                                      5  V. The florid voice  [0*]                                       
-                                                                                                                        
+                                                     6  VI. The fugue  [0*]                                             
                                                                                                                         
                                                                                                                         
                                                                                                                         
@@ -35,6 +35,6 @@
                                                                                                                         
                                                                                                                         
                                                                                                                      .  
-    1-5 choose a book   Enter resumes   q leaves the desk            .        .                             .           
+    1-6 choose a book   Enter resumes   q leaves the desk            .        .                             .           
                    .            .                               .       .    .     .                .                   
                .                        .              .  .                                                             

@@ -1,0 +1,24 @@
+                                                                                
+   fugue / VI. The fugue                                  VI. The fugue         
+                                                                                
+ Treble 1          2      3          4             >>     Subject alone         
+ B5                                                                             
+ A5                                                       Subject               
+ G5                                                       Bar 2                 
+ F5    │──────────│──────│──────────│─|────|──────│───│                         
+ E5    │ |        │      │          │ |    |      │   │   Real or tonal         
+ D5    │─|────────│──────│──────|───│○─────|───|──│───│                         
+ C5    │○     |   │      │ |    |   │     ○    |  │   │   Tonal answer          
+ B4    │──────|───│──────│─|───○────│──────────|──│───│             ·           
+ A4    │     ○    │      │○         │         ○   │   │   Mutation attack 1     
+ G4    │──────────│○─────│──────────│─────────────│───│                         
+ F4    │          │      │          │             │   │   Values /1 : /1        
+ E4    │──────────│──────│──────────│─────────────│───│                         
+ D4     /2   /2    /1     /2   /2    /2   /4  /4          h exposition          
+ C4                                          ·                                  
+ B3                   ·                                   v change voice        
+ A3                                                    ·                        
+ G3                                                                             
+                                                                                
+  [ ] . t r rhythm  Arrows/# pitch  v voice  h hear  Enter check  n b q         
+                                                                                

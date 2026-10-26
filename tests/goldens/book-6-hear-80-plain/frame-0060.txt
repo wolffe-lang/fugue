@@ -1,0 +1,24 @@
+                                                                                
+   fugue / VI. The fugue                                  VI. The fugue         
+                                                                                
+ Treble 1             2          3      4          >>     Subject alone         
+ B5                .                                                            
+ A5                                                       Bar 2                 
+ G5                                                                             
+ F5    |-------------|----------|------|----------|---|   Real only             
+ E5    |             |          |      | .        |   |                         
+ D5.   |-------------|----------|------|----------|---|   Subject               
+ C5    |             |          |      |          |   |   Real answer           
+ B4    |----------|--|-|--------|------|----------|---|       .                 
+ A4    |      |   |  | |    |   |      |          |   |     .                   
+ G4    |------|---|--|o-----|---|------|------|---|---|                         
+ F4    |      |  o   |     o    |      |      |   |  .|   Values /2 : /2        
+ E4    |-|---o-------|----------|o-----|-|---o----|---|                         
+ D4      |   /4  /4   /2   /2    /1      |   /2           h exposition          
+ C4    -o-                             -o-                                      
+ B3     /2                              /2                One voice given       
+ A3     .                                        .                              
+ G3                                                                             
+                                                                                
+  Arrows/# pitch   h exposition   Enter check   n next   b books   q quit       
+                                                                                

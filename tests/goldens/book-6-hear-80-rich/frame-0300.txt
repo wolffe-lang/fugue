@@ -1,0 +1,24 @@
+                                                                                
+   fugue / VI. The fugue                                  VI. The fugue         
+                                                                                
+ Treble 7             8          9      10         >>     Writing Answer        
+ B5                ·                                                            
+ A5                                                       Answer                
+ G5                                                       Bar 4                 
+ F5    │──────────|──│─|────────│──────│──────────│───│                         
+ E5    │      |   |  │ |    |   │      │ ·        │   │   Countersubject        
+ D5·   │──────|───|──│○─────|───│──────│──────|───│───│   Real only             
+ C5    │      |  ○   │     ○ |  │      │      |   │   │                         
+ B4    │─|───○───────│───────|──│○─────│─|───○────│───│   Real answer           
+ A4    │ |         | │  |   ●   │      │ |        │   │     ·                   
+ G4    │○─|────|───|─│──|───────│──────│○─|───────│───│                         
+ F4    │  |    |   | │♯●        │      │  |    |  │  ·│                         
+ E4    │─●─────|──●──│──────────│──────│─●─────|──│───│   Values /2 : /2        
+ D4     Sm3   ●  wm6  Sm6  wm3    ●     Sm3   ●              ·                  
+ C4     /2   wM6 /4   /2   /2    SM6    /2   wM6          h exposition          
+ B3          /4                  /1      ·   /2               ·                 
+ A3     ·                                        ·        One voice given       
+ G3                                                                             
+                                                                                
+  Arrows/# pitch   h exposition   Enter check   n next   b books   q quit       
+                                                                                
