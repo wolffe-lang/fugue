@@ -17,6 +17,8 @@ pub struct State {
     voice_clef: int,
     range_low: int,
     range_high: int,
+    rhythm_editable: bool,
+    notice: str,
     failure: str,
     beats: List[rhythm.Beat],
     seed: int,
@@ -53,6 +55,8 @@ pub fn new(seed: int, title: bool) -> State {
         voice_clef: choose_clef(voice, voice),
         range_low: lowest_pitch(),
         range_high: highest_pitch(),
+        rhythm_editable: false,
+        notice: "",
         failure: "",
         beats: rhythm.pattern(1, cantus.len),
         seed: seed,
@@ -102,6 +106,9 @@ pub fn vocab() -> replay.Vocab {
             "join",
             "tie",
             "rest",
+            "book-6",
+            "voice-switch",
+            "dot",
         ],
         take List[str](),
     )
@@ -123,10 +130,11 @@ pub fn key(n: int) -> int {
         1113 => 14,
         1049..=1053 => n - 1033,
         1098 => 21,
-        1093 => 22,
-        1091 => 23,
+        1091 => 22,
+        1093 => 23,
         1116 => 24,
         1048 => 25,
+        1046 => 28,
         _ => 0,
     }
 }
@@ -172,6 +180,7 @@ pub fn step(mut s: State, k: int) {
         s.progress = progress
         return
     }
+    if k == 13 && s.phase == 1 && s.rhythm_editable { edit_rhythm(mut s, 25); return }
     if k == 13 {
         s.phase = 1
         s.cursor = 0
@@ -184,7 +193,7 @@ pub fn step(mut s: State, k: int) {
         return
     }
     if s.phase != 1 { return }
-    let unit = if s.book == 1 then 8 else if s.book == 3 then 2 else if s.book == 5 then 1 else 4
+    let unit = editor_unit(s)
     if k == 3 {
         if s.within >= unit {
             s.within -= unit
@@ -217,7 +226,7 @@ pub fn step(mut s: State, k: int) {
         s.cursor = edit.bar
         s.within = edit.within
     }
-    if k >= 22 && k <= 25 { edit_rhythm(mut s, k); return }
+    if k >= 22 && k <= 25 || k == 28 { edit_rhythm(mut s, k); return }
     if k >= 1 && k <= 2 || k == 5 || k == 6 || k == 7 {
         let before = copy s.voice[s.cursor]
         var next = copy before
@@ -225,8 +234,12 @@ pub fn step(mut s: State, k: int) {
             let degree = (theory.position(before) - 28 - s.mode + 70) % 7
             let seventh = s.cursor == s.voice.len - 2 && degree == 6 && theory.raises(s.mode)
             let sixth = s.cursor == s.voice.len - 3 && degree == 5 && s.mode == 5 && s.book > 1
-            if !seventh && !sixth { return }
-            next.accidental = 1 - next.accidental
+            if s.book != 6 && !seventh && !sixth { return }
+            next.accidental = if s.book == 6 {
+                if next.accidental == 0 then 1 else if next.accidental == 1 then -1 else 0
+            } else {
+                1 - next.accidental
+            }
         } else {
             let delta = match k {
                 1 => 1,
@@ -265,6 +278,8 @@ pub fn tutorial(index: int, title: bool) -> State {
         voice_clef: choose_clef(cp, cp),
         range_low: lowest_pitch(),
         range_high: highest_pitch(),
+        rhythm_editable: false,
+        notice: "",
         failure: "",
         beats: rhythm.pattern(1, cf.len),
         seed: index,
@@ -312,6 +327,7 @@ pub fn from_replay(r: replay.Replay, title: bool) -> State {
 pub fn with_book(take s: State, book: int) -> State {
     var next = s
     next.book = book
+    next.rhythm_editable = book == 5
     if book == 1 { return next }
     if next.level < 3 {
         let page = presets.page(book, next.level)
@@ -351,40 +367,101 @@ fn remember(mut s: State) {
     })
 }
 
-/// Rhythm edits are ordinary undoable events; no edit crosses a barline.
+/// Cursor time is page-driven: free rhythm uses eighths, fixed rhythm its shortest value.
+pub fn editor_unit(s: State) -> int {
+    if s.rhythm_editable { return 1 }
+    var unit = 8
+    for b in s.beats { if b.length < unit { unit = b.length } }
+    unit
+}
+
+/// Rhythm edits preserve a bar's sum and undo as one transaction; refusals are named.
 fn edit_rhythm(mut s: State, k: int) {
     let i = s.cursor
     let time = rhythm.onset(s.beats, i)
-    if k == 25 && (s.book == 2 || s.book == 4 || s.book == 5) && i == 0 && s.beats[0].length == 4 {
-        remember(mut s)
-        s.beats[0].rest = !s.beats[0].rest
-        s.beats[0].tied = false
+    s.notice = ""
+    // Fixed species retain their conventional opening-rest and incoming-barline tie.
+    if !s.rhythm_editable {
+        if k == 25 && (s.book == 2 || s.book == 4) && i == 0 && s.beats[0].length == 4 {
+            remember(mut s)
+            s.beats[0].rest = !s.beats[0].rest
+            s.beats[0].tied = false
+        } else if k == 24 && s.book == 4 && i > 0 && time % 8 == 0 {
+            remember(mut s)
+            s.beats[i].tied = !s.beats[i].tied
+            if s.beats[i].tied { s.voice[i] = copy s.voice[i - 1] }
+        } else {
+            s.notice = "Fixed species rhythm"
+        }
         return
     }
-    if k == 24 && (s.book == 4 || s.book == 5) && i > 0 && time % 8 == 0 {
+    if k == 25 {
         remember(mut s)
-        s.beats[i].tied = !s.beats[i].tied
-        if s.beats[i].tied { s.voice[i] = copy s.voice[i - 1] }
+        s.beats[i].rest = !s.beats[i].rest
+        s.beats[i].tied = false
+        if i + 1 < s.beats.len { s.beats[i + 1].tied = false }
         return
     }
-    if s.book != 5 || time / 8 == s.cantus.len - 1 { return }
-    let split = k == 22 && s.beats[i].length > 1
-    let join = k == 23 &&
-        i + 1 < s.beats.len &&
-        s.beats[i].length == s.beats[i + 1].length &&
-        time % 8 + s.beats[i].length * 2 <= 8
-    if !split && !join { return }
+    if k == 24 {
+        if i + 1 >= s.beats.len || s.beats[i].rest || s.beats[i + 1].rest {
+            s.notice = "Tie needs two notes"
+            return
+        }
+        remember(mut s)
+        s.beats[i + 1].tied = !s.beats[i + 1].tied
+        if s.beats[i + 1].tied {
+            var j = i + 1
+            while j < s.voice.len && s.beats[j].tied { s.voice[j] = copy s.voice[i]; j += 1 }
+        }
+        return
+    }
+    if time / 8 == s.cantus.len - 1 { s.notice = "Final whole is fixed"; return }
+    let length = s.beats[i].length
+    let split = k == 22
+    let join = k == 23
+    let dot = k == 28
+    var next_length = 0
+    if i + 1 < s.beats.len { next_length = s.beats[i + 1].length }
+    var changed = length
+    if split {
+        if length % 2 != 0 || !rhythm.value(length / 2) {
+            s.notice = "Cannot halve this value"
+            return
+        }
+        changed = length / 2
+    } else if join {
+        if next_length == 0 || time % 8 + length + next_length > 8 {
+            s.notice = "Join crosses barline"
+            return
+        }
+        changed = length + next_length
+        if !rhythm.value(changed) { s.notice = "Join is not one value"; return }
+    } else if dot {
+        if length != 2 && length != 4 { s.notice = "Dot needs quarter/half"; return }
+        changed = length + length / 2
+        if time % 8 + changed > 8 || next_length < length / 2 {
+            s.notice = "No room for dot in bar"
+            return
+        }
+        next_length -= length / 2
+        if next_length != 0 && !rhythm.value(next_length) {
+            s.notice = "Dot leaves invalid value"
+            return
+        }
+    } else {
+        return
+    }
     remember(mut s)
     var beats = List[rhythm.Beat](), notes = List[theory.Pitch]()
     for j in 0..s.beats.len {
-        if join && j == i + 1 { continue }
+        if j == i + 1 && (join || dot && next_length == 0) { continue }
         var b = copy s.beats[j]
-        if j == i { b.length = if split then b.length / 2 else b.length * 2 }
+        if j == i { b.length = changed }
+        if j == i + 1 && dot { b.length = next_length }
         (mut beats).push(copy b)
         (mut notes).push(copy s.voice[j])
         if j == i && split {
             b.tied = false
-            b.rest = false
             (mut beats).push(b)
             (mut notes).push(copy s.voice[j])
         }
@@ -392,6 +469,7 @@ fn edit_rhythm(mut s: State, k: int) {
     s.beats = beats
     s.voice = notes
     s.within = 0
+    assert(rhythm.valid(s.beats, s.cantus.len))
 }
 
 /// Encode the same old start selector inside a book-specific namespace.

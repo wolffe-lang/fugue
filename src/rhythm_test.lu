@@ -28,6 +28,7 @@ fn test_rhythm_fourth_has_preparation_and_ties() {
 fn test_later_book_minimum_unit_and_reversible_rhythm_edit() {
     var s = session.tutorial(0, false)
     s.book = 5
+    s.rhythm_editable = true
     session.step(mut s, 4)
     assert(s.cursor == 0 && s.within == 1)
     session.step(mut s, 22)
@@ -73,4 +74,55 @@ fn test_rhythmic_part_lengths_and_outgoing_tie() {
     assert(part.ends_with("voice C5/1\n"))
     let score = sound.read(part)
     assert(score.err == "")
+}
+
+fn test_rhythm_keys_split_join_dot_tie_rest_are_undoable() {
+    assert(session.key(1091) == 22 && session.key(1093) == 23 && session.key(1046) == 28)
+    var s = session.with_book(take session.tutorial(0, false), 5)
+    s.beats[0].rest = false
+    let count = s.beats.len
+    session.step(mut s, 22)
+    assert(s.beats[0].length == 2 && s.beats[1].length == 2 && s.beats.len == count + 1)
+    assert(rhythm.valid(s.beats, s.cantus.len))
+    session.step(mut s, 28)
+    assert(s.beats[0].length == 3 && s.beats[1].length == 1)
+    assert(rhythm.valid(s.beats, s.cantus.len))
+    assert(sound.read(manuscript.part(s, 240)).err == "")
+    session.step(mut s, 11)
+    assert(s.beats[0].length == 2 && s.beats[1].length == 2)
+    session.step(mut s, 23)
+    assert(s.beats[0].length == 4 && s.beats.len == count)
+    let tied = s.beats[1].tied
+    session.step(mut s, 24)
+    assert(s.beats[1].tied != tied)
+    session.step(mut s, 11)
+    assert(s.beats[1].tied == tied)
+    session.step(mut s, 13)
+    assert(s.beats[0].rest)
+    session.step(mut s, 13)
+    assert(!s.beats[0].rest)
+    session.step(mut s, 11)
+    assert(s.beats[0].rest)
+    let v = session.verdict(s)
+    assert(v.stars == 0)
+}
+
+fn test_split_preserves_every_bar_sum() {
+    var s = session.with_book(take session.tutorial(0, false), 5)
+    for i in 0..s.beats.len - 1 {
+        s.cursor = i
+        let before = rhythm.onset(s.beats, s.beats.len)
+        session.step(mut s, 22)
+        assert(rhythm.onset(s.beats, s.beats.len) == before)
+        assert(rhythm.valid(s.beats, s.cantus.len))
+        session.step(mut s, 11)
+    }
+}
+
+fn test_join_refuses_crossed_bar_by_name() {
+    var s = session.with_book(take session.tutorial(0, false), 5)
+    s.cursor = 1
+    session.step(mut s, 23)
+    assert(s.notice == "Join crosses barline")
+    assert(s.history.len == 0)
 }

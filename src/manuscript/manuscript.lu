@@ -71,7 +71,7 @@ pub fn part(s: session.State, tempo: int) -> str {
         for i in 0..s.voice.len {
             if rhythm.onset(s.beats, i) / 8 != bar { continue }
             let b = copy s.beats[i]
-            text += " {if b.rest then "r" else theory.name(s.voice[i])}/{8 / b.length}"
+            text += " {if b.rest then "r" else theory.name(s.voice[i])}/{rhythm.value_name(b.length)}"
             if !b.rest && i + 1 < s.beats.len && s.beats[i + 1].tied { text += "~" }
         }
         text += "\n"

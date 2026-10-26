@@ -91,21 +91,27 @@ fn render(path: str, text: str, seconds: int) -> () ! {io} {
 /// Render the supported editor register and permitted cadence sharps before playing.
 pub fn prepare(mut e: Ear, s: session.State) -> () ! {io} {
     if !e.enabled { return }
-    e.base = session.lowest_pitch()
+    e.base = s.range_low
     let begin = clock.now_ns()
-    for i in 0..session.highest_pitch() - e.base + 1 {
+    for i in 0..s.range_high - e.base + 1 {
         region note {
             let p = theory.pitch(e.base + i)
             render("{e.dir}/note-{e.base + i}-0.wav", note_part(p), 1)?
         }
     }
-    for pos in e.base..session.highest_pitch() + 1 {
+    for pos in e.base..s.range_high + 1 {
         let degree = (pos - 28 - s.mode + 70) % 7
-        if degree == 6 && theory.raises(s.mode) || degree == 5 && s.mode == 5 && s.book > 1 {
+        if s.book == 6 ||
+            degree == 6 && theory.raises(s.mode) ||
+            degree == 5 && s.mode == 5 && s.book > 1 {
             region note {
                 var p = theory.pitch(pos)
                 p.accidental = 1
                 render("{e.dir}/note-{pos}-1.wav", note_part(p), 1)?
+                if s.book == 6 {
+                    p.accidental = -1
+                    render("{e.dir}/note-{pos}--1.wav", note_part(p), 1)?
+                }
             }
         }
     }
