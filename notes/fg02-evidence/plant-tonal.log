@@ -1,0 +1,10 @@
+test src/answer_test.lu::test_real_answers_preserve_spelling_and_semitones_both_sides ... ok
+test src/answer_test.lu::test_tonal_answer_is_never_misread_as_real ... FAILED (trap(assert))
+test src/answer_test.lu::test_wrong_transposition_and_misplaced_mutation_name_the_bar ... ok
+test src/answer_test.lu::test_answer_census_ionian ... FAILED (trap(assert))
+test src/answer_test.lu::test_answer_census_dorian ... FAILED (trap(assert))
+test src/answer_test.lu::test_answer_census_phrygian ... FAILED (trap(assert))
+test src/answer_test.lu::test_answer_census_lydian ... FAILED (trap(assert))
+test src/answer_test.lu::test_answer_census_mixolydian ... FAILED (trap(assert))
+test src/answer_test.lu::test_answer_census_aeolian ... FAILED (trap(assert))
+wolf test: 2 passed; 7 failed; 0 rejected; 0 unsupported; 0 filtered out

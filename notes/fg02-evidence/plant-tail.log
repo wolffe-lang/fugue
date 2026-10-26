@@ -1,0 +1,15 @@
+subject census Ionian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_ionian_50 ... ok
+subject census Dorian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_dorian_50 ... ok
+subject census Phrygian valid 50/50 pool 60
+test src/subject_test.lu::test_subject_census_phrygian_50 ... ok
+subject census Lydian valid 50/50 pool 44
+test src/subject_test.lu::test_subject_census_lydian_50 ... ok
+subject census Mixolydian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_mixolydian_50 ... ok
+subject census Aeolian valid 50/50 pool 64
+test src/subject_test.lu::test_subject_census_aeolian_50 ... ok
+test src/subject_test.lu::test_subject_unrecovered_tail_is_never_admitted ... FAILED (trap(assert))
+test src/subject_test.lu::test_three_original_tutorial_subjects ... ok
+wolf test: 7 passed; 1 failed; 0 rejected; 0 unsupported; 0 filtered out

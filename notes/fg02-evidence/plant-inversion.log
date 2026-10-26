@@ -1,0 +1,5 @@
+test src/counter_test.lu::test_invertible_references_earn_three_stars_both_ways ... ok
+test src/counter_test.lu::test_inversion_fifth_is_never_accepted ... FAILED (trap(assert))
+test src/counter_test.lu::test_counter_rules_reject_named_mutations ... ok
+test src/counter_test.lu::test_counter_search_certifies_its_output ... ok
+wolf test: 3 passed; 1 failed; 0 rejected; 0 unsupported; 0 filtered out

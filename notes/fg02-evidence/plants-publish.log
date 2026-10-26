@@ -1,0 +1,36 @@
+[fg02-plant-tonal 64bb6ca] Plant tonal judgment failure
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+remote: 
+remote: Create a pull request for 'fg02-plant-tonal' on GitHub by visiting:        
+remote:      https://github.com/wolffe-lang/fugue/pull/new/fg02-plant-tonal        
+remote: 
+To https://github.com/wolffe-lang/fugue
+ * [new branch]      fg02-plant-tonal -> fg02-plant-tonal
+branch 'fg02-plant-tonal' set up to track 'origin/fg02-plant-tonal'.
+https://github.com/wolffe-lang/fugue/pull/13
+[]
+64bb6ca6ffb96edbe7e2ed6ba56df279ff96eefd
+[fg02-plant-inversion cb96d2e] Plant inversion judgment failure
+ 1 file changed, 4 insertions(+)
+remote: 
+remote: Create a pull request for 'fg02-plant-inversion' on GitHub by visiting:        
+remote:      https://github.com/wolffe-lang/fugue/pull/new/fg02-plant-inversion        
+remote: 
+To https://github.com/wolffe-lang/fugue
+ * [new branch]      fg02-plant-inversion -> fg02-plant-inversion
+branch 'fg02-plant-inversion' set up to track 'origin/fg02-plant-inversion'.
+https://github.com/wolffe-lang/fugue/pull/14
+[]
+cb96d2e2ad7b53b8f612e2221cb8f102eeab24a7
+[fg02-plant-tail a665f95] Plant tail judgment failure
+ 1 file changed, 3 insertions(+)
+remote: 
+remote: Create a pull request for 'fg02-plant-tail' on GitHub by visiting:        
+remote:      https://github.com/wolffe-lang/fugue/pull/new/fg02-plant-tail        
+remote: 
+To https://github.com/wolffe-lang/fugue
+ * [new branch]      fg02-plant-tail -> fg02-plant-tail
+branch 'fg02-plant-tail' set up to track 'origin/fg02-plant-tail'.
+https://github.com/wolffe-lang/fugue/pull/15
+[]
+a665f9579a71cfb29a2fea38dc64624aa7006523
