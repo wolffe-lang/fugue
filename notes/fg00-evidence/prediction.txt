@@ -1,0 +1,12 @@
+Prediction, before implementation
+The bounded enumerator will produce 300/300 valid cantus firmi across six modes.
+I expect two-leap lines to dominate (roughly 60%), followed by three (30%) and
+four (10%); the census will publish actual lengths and counts, not this estimate.
+I expect at least one of Fux's six to fail the modern climax-position or sequence
+checks; no oracle verdict is claimed until the cited transcription is checked.
+Preparing the two-octave note WAV bank should take under five seconds on kasumi.
+A 120x40 render plus diff should average below 500 us on rich and plain tiers.
+Pitch names should be clearer than a drawn clef on plain; both will be shown.
+Footprint: cross-cutting
+The complete five-section note will be carried in the PR body because this
+agent's wrapper prohibits Markdown report files. This prediction is evidence.
