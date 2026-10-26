@@ -3,18 +3,21 @@
 /// Parse five best-star counts, refusing malformed or future versions.
 pub fn decode(text: str) -> List[int] ! {parse} {
     let words = text.words()
-    if words.len != 7 || words[0] != "fugue" || words[1] != "1" { return parse }
+    if words.len < 2 || words[0] != "fugue" { return parse }
+    let old = words[1] == "1" && words.len == 7
+    if !old && !(words[1] == "2" && words.len == 8) { return parse }
     var out = List[int]()
-    for i in 2..7 {
+    for i in 2..words.len {
         let n = words[i].to_int()?
         if n < 0 || n > 3 { return parse }
         (mut out).push(n)
     }
+    if old { (mut out).push(0) }
     out
 }
 
 /// Stable on-disk text, also used as a replay's optional cosmetic title comment.
 pub fn format(best: List[int]) -> str {
-    assert(best.len == 5)
-    "fugue 1 {best[0]} {best[1]} {best[2]} {best[3]} {best[4]}\n"
+    assert(best.len == 6)
+    "fugue 2 {best[0]} {best[1]} {best[2]} {best[3]} {best[4]} {best[5]}\n"
 }

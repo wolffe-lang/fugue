@@ -1,0 +1,117 @@
+//! Book VI's two entries: the subject alone, then its answer and continuation.
+
+use answer
+use counter
+use first
+use rhythm
+use subject
+use theory
+
+/// Both written voices remain independent while v changes the editing desk.
+pub struct Page {
+    given: subject.Line,
+    response: subject.Line,
+    continuation: subject.Line,
+    answer_below: bool,
+    editing: int,
+    tutorial: int,
+}
+
+/// Empty, cheap placeholder for the earlier books.
+pub fn blank() -> Page {
+    let empty = subject.Line { notes: [], beats: [], mode: 0 }
+    Page {
+        given: copy empty,
+        response: copy empty,
+        continuation: empty,
+        answer_below: false,
+        editing: 0,
+        tutorial: -1,
+    }
+}
+
+/// A certified seed is selected without weakening any subject or counter rule.
+pub fn exercise(seed: int, mode: int, below: bool) -> subject.Line ! {empty} {
+    let pool = subject.candidates(mode)
+    for offset in 0..pool.len {
+        let s = subject.choose(pool, seed + offset) else { continue }
+        for tonal in [true, false] {
+            if tonal && answer.mutation(s) < 0 { continue }
+            let a = answer.make(s, below, tonal)
+            let proof = counter.solve(a, below) else { continue }
+            if counter.check(a, proof, below, false).stars > 0 { return s }
+        }
+    }
+    empty
+}
+
+/// Tutorials teach answer, counterpoint, then both; seed pages give neither.
+pub fn new(index: int, seed: int, mode: int, below: bool) -> Page ! {empty} {
+    let s = if index < 3 then subject.tutorial(index) else exercise(seed, mode, below)?
+    var a = copy s, cs = copy s
+    if index == 1 { a = answer.make(s, below, true) }
+    if index == 0 {
+        cs = counter.reference(0)
+    } else {
+        for i in 0..cs.notes.len { cs.notes[i] = theory.pitch(28 + s.mode) }
+    }
+    Page {
+        given: s,
+        response: a,
+        continuation: cs,
+        answer_below: below,
+        editing: if index == 1 then 1 else 0,
+        tutorial: index,
+    }
+}
+
+/// Snapshot the editable voice before a judge, switch, render or sound request.
+pub fn written(page: Page, notes: List[theory.Pitch], beats: List[rhythm.Beat]) -> Page {
+    var p = copy page
+    if p.editing == 0 {
+        p.response.notes = copy notes
+        p.response.beats = copy beats
+    } else {
+        p.continuation.notes = copy notes
+        p.continuation.beats = copy beats
+    }
+    p
+}
+
+/// No solution is trusted: the two independent judges recompute every verdict.
+pub fn check(p: Page) -> first.Verdict {
+    let a = answer.check(p.given, p.response.notes, p.response.beats, p.answer_below)
+    var v = counter.check(p.response, p.continuation, p.answer_below, !p.answer_below)
+    for b in a.breaks { (mut v.breaks).push(copy b) }
+    if a.breaks.len > 0 { v.stars = 0 }
+    v
+}
+
+/// Six tutorial bars become twelve exposition bars, on the shared clock.
+pub fn bars(p: Page) -> int { subject.span(p.given.beats) / 8 }
+
+fn line(s: subject.Line, bar: int) -> str {
+    var text = ""
+    for i in 0..s.notes.len {
+        if rhythm.onset(s.beats, i) / 8 != bar { continue }
+        let b = copy s.beats[i]
+        text += " {if b.rest then "r" else theory.name(s.notes[i])}/{8 / b.length}"
+        if !b.rest && i + 1 < s.beats.len && s.beats[i + 1].tied { text += "~" }
+    }
+    text
+}
+
+/// The subject's player continues as the countersubject while the answer enters.
+/// Entries are separate named tracks, with explicit rests before their entry.
+pub fn part(p: Page, tempo: int) -> str {
+    var text = "title The fugue\ntempo {tempo}\nmeter 4/4\npart subject organ p pan -25\npart answer choir mp pan 25\npart counter organ p pan -25\n"
+    for bar in 0..bars(p) * 2 {
+        text += "bar {bar + 1}\n"
+        if bar < bars(p) {
+            text += "subject{line(p.given, bar)}\nanswer r/1\ncounter r/1\n"
+        } else {
+            text += "subject r/1\nanswer{line(p.response, bar - bars(p))}\ncounter{line(p.continuation, bar - bars(p))}\n"
+        }
+    }
+    text
+}
