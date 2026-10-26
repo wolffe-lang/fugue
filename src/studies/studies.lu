@@ -1,0 +1,223 @@
+//! Executable legal/illegal verdict rows; every mutation must trip its named rule.
+
+use presets
+use rhythm
+use species
+use theory
+
+fn row(
+    book: int,
+    name: str,
+    wanted: str,
+    cf: List[theory.Pitch],
+    cp: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+) -> str {
+    let v = species.check(cf, cp, beats, 0, false, book)
+    var found = wanted == ""
+    var text = "book {book} {name}: stars {v.stars}"
+    for b in v.breaks {
+        if b.rule == wanted { found = true }
+        text += " | bar {b.bar} {b.rule}"
+    }
+    if !found { eprint("verdict witness missing {book} {name}: {wanted}") }
+    assert(found)
+    assert(if wanted == "" then v.stars == 3 else v.stars == 0)
+    text + "\n"
+}
+
+/// Full named findings for one legal reference and hard-rule mutations in every book.
+pub fn verdicts() -> str {
+    var text = ""
+    for book in 2..6 {
+        let p = presets.page(book, 0)
+        text += row(book, "legal", "", p.cantus, p.answer, p.beats)
+        var attacks = List[int]()
+        for i in 0..p.answer.len {
+            if !p.beats[i].rest && !p.beats[i].tied { (mut attacks).push(i) }
+        }
+        let strong = rhythm.at(p.beats, 8)
+        for name in [
+            "voice-length",
+            "opening",
+            "closing",
+            "two-voice-cadence",
+            "crossing",
+            "overlap",
+            "downbeat-unison",
+            "parallel-perfect",
+            "hidden-perfect",
+            "accented-parallel",
+            "diatonic",
+            "repeat",
+            "leap-quality",
+            "recovery",
+            "successive-leaps",
+            "outlined-tritone",
+            "sequence",
+            "one-climax",
+            "climax-position",
+            "climax-leading",
+            "leap-count",
+            "octave-count",
+            "range",
+            "direction-changes",
+            "balance",
+        ] {
+            var cp = copy p.answer, beats = copy p.beats
+            let first = attacks[0], second = attacks[1], third = attacks[2], fourth = attacks[3]
+            match name {
+                "voice-length" => { cp = cp[0..cp.len - 1] },
+                "opening" => { cp[first] = theory.pitch(30) },
+                "closing" => { cp[cp.len - 1] = theory.pitch(32) },
+                "two-voice-cadence" => { cp[cp.len - 2] = copy cp[cp.len - 1] },
+                "crossing" => { cp[first] = theory.pitch(27) },
+                "overlap" => { cp[strong] = theory.pitch(27) },
+                "downbeat-unison" => { cp[strong] = copy p.cantus[1] },
+                "parallel-perfect" => {
+                    cp[strong - 1] = theory.pitch(theory.position(p.cantus[0]) + 7)
+                    cp[strong] = theory.pitch(theory.position(p.cantus[1]) + 7)
+                },
+                "hidden-perfect" => {
+                    cp[strong - 1] = theory.pitch(theory.position(p.cantus[0]) + 2)
+                    cp[strong] = theory.pitch(theory.position(p.cantus[1]) + 4)
+                },
+                "accented-parallel" => {
+                    beats[0].rest = false
+                    cp[0] = theory.pitch(theory.position(p.cantus[0]) + 7)
+                    cp[strong] = theory.pitch(theory.position(p.cantus[1]) + 7)
+                },
+                "diatonic" => { cp[first].accidental = -1 },
+                "repeat" => { cp[second] = copy cp[first] },
+                "leap-quality" => { cp[second] = theory.pitch(theory.position(cp[first]) + 6) },
+                "recovery" => {
+                    cp[first] = theory.pitch(28)
+                    cp[second] = theory.pitch(31)
+                    cp[third] = theory.pitch(32)
+                },
+                "successive-leaps" => {
+                    cp[first] = theory.pitch(28)
+                    cp[second] = theory.pitch(30)
+                    cp[third] = theory.pitch(32)
+                },
+                "outlined-tritone" => {
+                    cp[first] = theory.pitch(28)
+                    cp[second] = theory.pitch(29)
+                    cp[third] = theory.pitch(31)
+                    cp[third].accidental = 1
+                },
+                "sequence" => {
+                    cp[first] = theory.pitch(28)
+                    cp[second] = theory.pitch(29)
+                    cp[third] = theory.pitch(30)
+                    cp[fourth] = theory.pitch(31)
+                },
+                "one-climax" => { cp[first] = theory.pitch(55); cp[second] = theory.pitch(55) },
+                "climax-position" => { cp[cp.len - 1] = theory.pitch(60) },
+                "climax-leading" => { cp[attacks[attacks.len / 2]] = theory.pitch(55) },
+                "octave-count" => {
+                    cp[first] = theory.pitch(28)
+                    cp[second] = theory.pitch(35)
+                    cp[third] = theory.pitch(29)
+                    cp[fourth] = theory.pitch(36)
+                },
+                "range" => { cp[attacks[attacks.len / 2]] = theory.pitch(60) },
+                _ => { for j in 0..attacks.len { cp[attacks[j]] = theory.pitch(28 + j) } },
+            }
+            text += row(book, name, name, p.cantus, cp, beats)
+        }
+        var cp = copy p.answer
+        cp[strong] = theory.pitch(theory.position(p.cantus[1]) + 1)
+        text += row(
+            book,
+            "strong-dissonance",
+            if book == 4 then "suspension" else "downbeat-consonance",
+            p.cantus,
+            cp,
+            p.beats,
+        )
+        cp = copy p.answer
+        cp[1] = theory.pitch(29)
+        text += row(
+            book,
+            "weak-dissonance",
+            if book == 3 {
+                "third-dissonance"
+            } else if book == 4 {
+                "weak-consonance"
+            } else {
+                "passing-dissonance"
+            },
+            p.cantus,
+            cp,
+            p.beats,
+        )
+        var rest = copy p.beats
+        rest[1].rest = true
+        text += row(book, "opening-rest", "opening-rest", p.cantus, p.answer, rest)
+        if book == 2 || book == 3 {
+            var beats = copy p.beats
+            beats[strong].tied = true
+            text += row(
+                book,
+                "forbidden-tie",
+                if book == 3 then "third-tie" else "second-tie",
+                p.cantus,
+                p.answer,
+                beats,
+            )
+        }
+        if book != 5 {
+            let wrong = rhythm.pattern(if book == 3 then 2 else 3, p.cantus.len)
+            var wrong_voice = List[theory.Pitch]()
+            for i in 0..wrong.len {
+                (mut wrong_voice).push(
+                    theory.pitch(theory.position(p.cantus[rhythm.onset(wrong, i) / 8]) + 4),
+                )
+            }
+            text += row(
+                book,
+                "wrong-subdivision",
+                if book == 3 {
+                    "third-rhythm"
+                } else if book == 4 {
+                    "fourth-rhythm"
+                } else {
+                    "second-rhythm"
+                },
+                p.cantus,
+                wrong_voice,
+                wrong,
+            )
+        }
+        if book == 3 || book == 5 {
+            cp = copy p.answer
+            let weak_index = rhythm.at(p.beats, 4), next = rhythm.at(p.beats, 12)
+            cp[weak_index] = theory.pitch(theory.position(p.cantus[0]) + 7)
+            cp[next] = theory.pitch(theory.position(p.cantus[1]) + 7)
+            text += row(book, "same-beat-parallel", "same-beat-parallel", p.cantus, cp, p.beats)
+        }
+        if book == 5 {
+            let eighths = rhythm.pattern(5, 10)
+            var repeated = List[theory.Pitch]()
+            for i in 0..eighths.len { (mut repeated).push(theory.pitch(35)) }
+            text += row(book, "paired-eighths", "paired-eighths", p.cantus, repeated, eighths)
+        }
+        if book == 4 || book == 5 {
+            var beats = copy p.beats
+            beats[strong].tied = true
+            cp = copy p.answer
+            cp[strong] = theory.pitch(theory.position(cp[strong - 1]) + 1)
+            text += row(book, "tie-pitch", "tie-pitch", p.cantus, cp, beats)
+        }
+        if book == 4 {
+            cp = copy p.answer
+            var beats = copy p.beats
+            let pen = rhythm.at(beats, 64)
+            beats[pen].tied = false
+            cp[pen] = copy cp[pen + 1]
+            text += row(book, "suspension-cadence", "suspension-cadence", p.cantus, cp, beats)
+        }
+    }
+    text
+}

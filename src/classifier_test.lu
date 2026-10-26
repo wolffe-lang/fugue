@@ -1,0 +1,46 @@
+use rhythm
+use species
+use theory
+
+fn line(values: List[int]) -> List[theory.Pitch] {
+    var out = List[theory.Pitch]()
+    for value in values { (mut out).push(theory.pitch(value)) }
+    out
+}
+
+fn expect(
+    cf: List[int],
+    cp: List[int],
+    beats: List[rhythm.Beat],
+    index: int,
+    book: int,
+    below: bool,
+    wanted: str,
+) {
+    let actual = species.classify(line(cf), line(cp), beats, index, book, below)
+    print("classifier book {book} expected {wanted} actual {actual}")
+    assert(actual == wanted)
+}
+
+fn test_species_classifier_confusion_matrix() {
+    let halves = rhythm.pattern(2, 3), quarters = rhythm.pattern(3, 2), tied = rhythm.pattern(4, 3)
+    expect([28, 28, 28], [33, 34, 35, 37, 35], halves, 1, 2, false, "passing")
+    expect([28, 28, 28], [33, 34, 33, 37, 35], halves, 1, 2, false, "unlicensed")
+    expect([28, 28], [30, 31, 30, 32, 35], quarters, 1, 3, false, "neighbour")
+    expect([28, 28], [30, 31, 32, 33, 35], quarters, 1, 3, false, "double-passing")
+    expect([28, 29], [35, 34, 32, 33, 34], quarters, 1, 3, false, "cambiata")
+    expect([28, 29], [35, 34, 31, 33, 34], quarters, 1, 3, false, "unlicensed")
+    expect([35, 34], [28, 29, 31, 30, 29], quarters, 1, 3, true, "cambiata")
+    expect([28, 29, 28], [35, 35, 35, 34, 35], tied, 2, 4, false, "suspension")
+    expect([28, 29, 28], [35, 35, 35, 36, 35], tied, 2, 4, false, "unprepared")
+    expect([30, 29, 28], [28, 28, 28, 27, 28], tied, 2, 4, true, "suspension")
+    expect([28, 29, 28], [35, 35, 35, 34, 35], tied, 0, 4, false, "rest")
+    expect([28, 29, 28], [35, 35, 35, 34, 35], tied, 1, 4, false, "consonance")
+    expect([28, 29], [35, 34, 32, 33, 34], quarters, 1, 5, false, "cambiata")
+    expect([28, 29, 28], [35, 35, 35, 34, 35], tied, 2, 5, false, "suspension")
+    var eighths = List[rhythm.Beat]()
+    for value in [4, 2, 1, 1, 8] { (mut eighths).push(rhythm.Beat { length: value, rest: false, tied: false }) }
+    expect([28, 28], [35, 32, 33, 34, 35], eighths, 2, 5, false, "eighth-pair")
+    expect([28, 28], [35, 31, 33, 34, 35], eighths, 2, 5, false, "unlicensed-eighth")
+    expect([28, 28], [35, 32, 33, 34, 35], eighths, 2, 3, false, "unlicensed-eighth")
+}

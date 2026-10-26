@@ -251,14 +251,20 @@ pub fn vertical(
             mut out,
             book == 5 && !ending || b.length == (if ending then 8 else if book == 3 then 2 else 4),
             bar + 1,
-            if book == 3 then "third-rhythm" else "second-rhythm",
+            if book == 3 {
+                "third-rhythm"
+            } else if book == 4 {
+                "fourth-rhythm"
+            } else {
+                "second-rhythm"
+            },
             "Use this book's equal subdivisions, then a whole at the close.",
         )
         theory.require(
             mut out,
             !b.tied || book == 4 || book == 5,
             bar + 1,
-            "second-tie",
+            if book == 3 then "third-tie" else "second-tie",
             "In this book, strike each half anew.",
         )
         if b.rest {
@@ -336,8 +342,18 @@ pub fn vertical(
                                 )
                     ),
                 bar + 1,
-                if book == 3 then "third-dissonance" else "passing-dissonance",
-                "Give the dissonance a complete passing, neighbour or cambiata figure allowed in this book.",
+                if book == 3 {
+                    "third-dissonance"
+                } else if book == 4 {
+                    "weak-consonance"
+                } else {
+                    "passing-dissonance"
+                },
+                if book == 4 {
+                    "Let the weak beat prepare or resolve on a consonance."
+                } else {
+                    "Give the dissonance a complete passing, neighbour or cambiata figure allowed in this book."
+                },
             )
         }
         if last >= 0 {
@@ -479,8 +495,8 @@ pub fn check(
     var normalized = List[theory.Pitch]()
     let shift = (line[line.len - 1].octave - 4) * 7
     for p in line {
-        var q = theory.pitch(theory.position(p) - shift)
-        q.accidental = p.accidental
+        var q = copy p
+        q.octave -= shift / 7
         (mut normalized).push(q)
     }
     for b in theory.validate(normalized, mode) {
