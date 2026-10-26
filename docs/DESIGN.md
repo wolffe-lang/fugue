@@ -192,4 +192,4 @@ Progress version 2 stores six best-star counts and reads version 1 with a zero
 sixth count. The sixth count is earned only after all three tutorials pass.
 The current three tutorial scores live in the session; a completed sixth-book
 light persists, but an interrupted tutorial sequence restarts at its first
-page. Replay keys 26 (book-6) and 27 (voice) append to the old vocabulary.
+page. Replay keys 26 (book-6) and 27 (voice-switch) append to the old vocabulary.

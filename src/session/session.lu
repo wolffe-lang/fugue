@@ -224,6 +224,7 @@ pub fn step(mut s: State, k: int) {
         s.cursor = 0
         s.within = 0
         s.history = []
+        fugue_setup(mut s)
         return
     }
     let unit = editor_unit(s)
@@ -253,6 +254,7 @@ pub fn step(mut s: State, k: int) {
         }
         s.phase = 2
         if s.book == 6 &&
+            s.level < 3 &&
             stars > 0 &&
             s.completed[0] > 0 &&
             s.completed[1] > 0 &&
@@ -384,13 +386,15 @@ pub fn with_book(take s: State, book: int) -> State {
             return next
         }
         next.mode = p.given.mode
-        next.cantus = copy p.given.notes
+        next.cantus = []
+        for bar in 0..exposition.bars(p) { (mut next.cantus).push(copy p.given.notes[rhythm.at(p.given.beats, bar * 8)]) }
         let line = if p.editing == 0 then copy p.response else copy p.continuation
         next.voice = line.notes
         next.beats = line.beats
         next.below = if p.editing == 0 then p.answer_below else !p.answer_below
         next.fugue = p
         next.cursor = 0
+        fugue_setup(mut next)
         return next
     }
     if next.level < 3 {
@@ -565,4 +569,17 @@ pub fn needs_system(cantus: List[theory.Pitch], voice: List[theory.Pitch]) -> bo
         if theory.position(p) < clef - 7 || theory.position(p) > clef + 15 { return true }
     }
     false
+}
+
+/// Book VI supplies ranges and editing permissions to the shared editor.
+fn fugue_setup(mut s: State) {
+    s.range_low = 21; s.range_high = 49
+    s.rhythm_editable = s.fugue.editing == 1
+    s.notice = ""
+    var expected = List[theory.Pitch]()
+    for p in s.fugue.given.notes { (mut expected).push(theory.pitch(theory.position(p) + (if s.fugue.answer_below then -3 else 4))) }
+    s.clef = choose_clef(s.fugue.given.notes, expected)
+    s.grand = needs_system(s.fugue.given.notes, expected)
+    s.cantus_clef = choose_clef(s.fugue.given.notes, s.fugue.given.notes)
+    s.voice_clef = choose_clef(expected, expected)
 }

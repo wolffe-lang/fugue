@@ -13,6 +13,7 @@ pub struct Page {
     response: subject.Line,
     continuation: subject.Line,
     answer_below: bool,
+    tonal_available: bool,
     editing: int,
     tutorial: int,
 }
@@ -25,6 +26,7 @@ pub fn blank() -> Page {
         response: copy empty,
         continuation: empty,
         answer_below: false,
+        tonal_available: false,
         editing: 0,
         tutorial: -1,
     }
@@ -55,11 +57,13 @@ pub fn new(index: int, seed: int, mode: int, below: bool) -> Page ! {empty} {
     } else {
         for i in 0..cs.notes.len { cs.notes[i] = theory.pitch(28 + s.mode) }
     }
+    let available = answer.tonal_allowed(s)
     Page {
         given: s,
         response: a,
         continuation: cs,
         answer_below: below,
+        tonal_available: available,
         editing: if index == 1 then 1 else 0,
         tutorial: index,
     }
@@ -95,7 +99,7 @@ fn line(s: subject.Line, bar: int) -> str {
     for i in 0..s.notes.len {
         if rhythm.onset(s.beats, i) / 8 != bar { continue }
         let b = copy s.beats[i]
-        text += " {if b.rest then "r" else theory.name(s.notes[i])}/{8 / b.length}"
+        text += " {if b.rest then "r" else theory.name(s.notes[i])}/{rhythm.value_name(b.length)}"
         if !b.rest && i + 1 < s.beats.len && s.beats[i + 1].tied { text += "~" }
     }
     text

@@ -73,3 +73,9 @@ The answer must preserve the given rhythm; the critic names changes rather
 than silently correcting them. `h` plays the whole exposition: subject alone,
 then answer with countersubject. The end card follows three passed tutorials;
 `n` then opens a seeded page and `b` shows the lit sixth book.
+
+Book VI's pitch range is C3–C7. `#` cycles natural, sharp, flat and back to
+natural anywhere in either written line; it is not restricted to a cadence.
+The Answer desk keeps the subject's values fixed. The Countersubject desk
+uses Book V's `[`, `]`, `.`, `t` and `r` rhythm controls. Every change is judged
+against the moving answer in both octave dispositions.

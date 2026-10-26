@@ -376,9 +376,13 @@ def fugue_record(bin, ctx, index=1):
         if b'note-bank render_us' not in s.err:problems.append('fugue note bank did not prepare')
     s.type(b'\r',.15)
     for _ in range(index-1):s.type(b'n',.2)
-    keys={'up':b'\x1b[A','down':b'\x1b[B','right':b'\x1b[C','sharp':b'#','voice':b'v'}
-    batch=b''.join(keys[line.split()[-1]] for line in case.read_text().splitlines() if line.startswith('t 1 '))
-    s.type(batch,.6)
+    keys={'up':b'\x1b[A','down':b'\x1b[B','right':b'\x1b[C','sharp':b'#','voice-switch':b'v'}
+    actions=[keys[line.split()[-1]] for line in case.read_text().splitlines() if line.startswith('t 1 ')]
+    if audio:
+        for key in actions: s.type(key,.04)
+        s.pump(1.1)  # let the owned one-second audition cues finish before whole-piece playback
+    else:
+        s.type(b''.join(actions),.6)
     if audio:
         s.type(b'h',.3)
         deadline=time.monotonic()+20
@@ -394,7 +398,7 @@ def fugue_record(bin, ctx, index=1):
         # The audible timeline starts only after rendering and output handoff.
         s.pump(6.2)
         screen=ctx.screen_text(bin,s.out)
-        if 'Answer / Countersubject' not in screen:problems.append('answer and continuation entries are not named')
+        if 'Answer' not in screen or 'Countersubject' not in screen:problems.append('answer and continuation entries are not named')
         s.pump(6.2)
         if Path('/usr/bin/afplay').exists():
             if b'player-start' not in s.err or b'player-end' not in s.err:problems.append('owned exposition player did not start and reap')
@@ -421,7 +425,7 @@ def fugue_end(bin,ctx):
     env=ctx.env_for();env['FUGUE_STATE']=str(state)
     s=ctx.Session([bin,'--book','6','--mute'],24,80,env)
     s.type(b'\r',.1)
-    keys={'up':b'\x1b[A','down':b'\x1b[B','right':b'\x1b[C','sharp':b'#','voice':b'v','check':b'\r','new':b'n'}
+    keys={'up':b'\x1b[A','down':b'\x1b[B','right':b'\x1b[C','sharp':b'#','voice-switch':b'v','check':b'\r','new':b'n'}
     events=(Path(ctx.ROOT)/'tests/cases/book-6-end-80.pk').read_text().splitlines()
     for tick in range(1,9):
         batch=b''.join(keys[line.split()[-1]] for line in events if line.startswith(f't {tick} '))

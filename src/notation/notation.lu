@@ -54,14 +54,15 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
             text(mut g, row, left, " ".repeat(cols - left - 3), ink, bg, false)
         }
         for book in 1..7 {
+            let lit = book == 6 && s.progress[5] > 0
             text(
                 mut g,
                 rows / 2 + book,
                 cols / 2 - 7,
                 "{book}  {rhythm.name(book)}  [{s.progress[book - 1]}*]",
                 blue,
-                bg,
-                book == s.book,
+                if lit then (if t == 1 then 222 else 11) else bg,
+                book == s.book || lit,
             )
         }
         text(

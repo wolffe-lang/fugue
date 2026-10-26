@@ -1,0 +1,60 @@
+use chapterstudy
+use fuguepage
+use grid
+use notation
+use session
+use staff
+use theory
+
+fn text_has(g: grid.Grid, wanted: str) -> bool {
+    var bytes = List[byte]()
+    grid.dump_text(g, mut bytes)
+    let text = str_from_utf8(bytes) else ""
+    text.contains(wanted)
+}
+
+fn test_fugue_labels_follow_entries_on_both_sizes_and_tiers() {
+    for width in [80, 120] {
+        for tier in [0, 1] {
+            var s = chapterstudy.solved(2)
+            let rows = if width == 80 then 24 else 40
+            s.hearing = 1
+            let solo = fuguepage.frame(s, width, rows, tier)
+            assert(text_has(solo, "Subject") && !text_has(solo, "Countersubject"))
+            s.hearing = 181
+            let duet = fuguepage.frame(s, width, rows, tier)
+            assert(text_has(duet, "Answer") && text_has(duet, "Countersubject"))
+            s.hearing = -1
+            let editing = fuguepage.frame(s, width, rows, tier)
+            assert(text_has(editing, "Subject") && text_has(editing, "Answer"))
+            if tier == 0 { assert(grid.plain_ok(editing)) }
+        }
+    }
+}
+
+fn test_fugue_short_subject_uses_six_bar_editor_invariant() {
+    let s = chapterstudy.solved(0)
+    assert(s.cantus.len == 6 && s.fugue.given.notes.len == 10)
+    assert(session.piece_ticks(s) == 360)
+    assert(s.clef == session.choose_clef(s.fugue.given.notes, s.fugue.response.notes))
+    let v = staff.system(s, take staff.viewport(4, 20, 25, 7, 54))
+    let high = theory.pitch(40)
+    assert(
+        staff.label_row(v, high) <= staff.row_of(v, high) - 1 ||
+            staff.label_row(v, high) == v.top - 1,
+    )
+}
+
+fn test_completed_sixth_book_is_visibly_lit_on_the_title() {
+    var s = chapterstudy.solved(0)
+    s.phase = 0
+    for t in [0, 1] {
+        s.progress[5] = 0
+        let dark = notation.frame(s, 80, 24, t)
+        s.progress[5] = 3
+        let lit = notation.frame(s, 80, 24, t)
+        let at = 18 * 80 + 33
+        assert(dark.cells[at].bg != lit.cells[at].bg)
+        assert(lit.cells[at].bg == (if t == 1 then 222 else 11))
+    }
+}

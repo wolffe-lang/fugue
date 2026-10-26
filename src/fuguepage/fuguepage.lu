@@ -4,6 +4,7 @@ use answer
 use draw
 use exposition
 use grid
+use manuscript
 use rhythm
 use session
 use staff
@@ -15,39 +16,97 @@ fn text(mut g: grid.Grid, y: int, x: int, words: str, ink: int, bg: int, bold: b
     draw.put_text(mut g, y, x, words, grid.cell(32, ink, bg, if bold then 1 else 0))
 }
 
+fn shown(s: session.State, a: subject.Line, b: subject.Line, time: int) -> session.State {
+    var out = copy s
+    out.cantus = []
+    out.voice = []
+    out.beats = []
+    let span = subject.span(a.beats)
+    for bar in 0..span / 8 { (mut out.cantus).push(copy a.notes[rhythm.at(a.beats, bar * 8)]) }
+    var at = 0
+    while at < span {
+        var next = at + 1
+        while next < span {
+            if rhythm.onset(a.beats, rhythm.at(a.beats, next)) == next ||
+                rhythm.onset(b.beats, rhythm.at(b.beats, next)) == next {
+                break
+            }
+            next += 1
+        }
+        (mut out.voice).push(copy b.notes[rhythm.at(b.beats, at)])
+        (mut out.beats).push(rhythm.Beat { length: next - at, rest: false, tied: false })
+        at = next
+    }
+    out.cursor = rhythm.at(out.beats, time)
+    out.hearing = -1
+    out.cantus_clef = session.choose_clef(a.notes, a.notes)
+    out.voice_clef = session.choose_clef(b.notes, b.notes)
+    out
+}
+
+fn highest(line: subject.Line) -> theory.Pitch {
+    var p = copy line.notes[0]
+    for note in line.notes { if theory.position(note) > theory.position(p) { p = copy note } }
+    p
+}
+
 fn voice(
     mut g: grid.Grid,
     v: staff.Viewport,
+    layout: session.State,
     line: subject.Line,
     start: int,
-    count: int,
     t: int,
     given: bool,
     selected: int,
     lit: int,
-    value_row: int,
 ) {
     let bg = if t == 1 then 230 else 7
     let ink = if given then staff.cantus_ink(t) else staff.player_ink(t)
     for i in 0..line.notes.len {
-        let time = rhythm.onset(line.beats, i), bar = time / 8
-        if bar < start || bar >= start + count { continue }
-        let x = 9 + (bar - start) * 26 + time % 8 * 3
+        let time = rhythm.onset(line.beats, i)
+        if time / 8 < start { continue }
+        let event = rhythm.at(layout.beats, time)
+        let x = manuscript.event_column(layout, start, event)
+        if x + manuscript.event_width(layout, event) - 2 >= g.cols - 27 { break }
+        let nx = x - (if given then 1 else 0)
         if line.beats[i].rest {
-            text(mut g, v.top + 5, x, "r", ink, bg, selected == i)
+            text(
+                mut g,
+                staff.row_of(v, theory.pitch(v.voice_line + 4)),
+                nx,
+                "r",
+                ink,
+                bg,
+                selected == i,
+            )
         } else {
-            let y = staff.head(mut g, v, line.notes[i], x, t, given, selected == i, lit == i)
+            let y = staff.head(mut g, v, line.notes[i], nx, t, given, selected == i, lit == i)
             if y >= v.top && y <= v.bottom {
                 if line.beats[i].length < 8 {
-                    let d = if y < v.top + 3 then 1 else -1
-                    for n in 1..3 { text(mut g, y + d * n, x + 1, "|", ink, bg, false) }
+                    let stem = if line.beats[i].length == 4 || line.beats[i].length == 6 {
+                        2
+                    } else {
+                        3
+                    }
+                    let d = if y < v.top + stem then 1 else -1
+                    for n in 1..stem + 1 {
+                        if y + d * n >= v.top && y + d * n <= v.bottom {
+                            text(mut g, y + d * n, nx + 1, "|", ink, bg, false)
+                        }
+                    }
+                    if line.beats[i].length == 1 {
+                        text(mut g, y + d * stem, nx + 2, "'", ink, bg, false)
+                    }
+                    if line.beats[i].length == 3 || line.beats[i].length == 6 {
+                        text(mut g, y, nx + 2, ".", ink, bg, false)
+                    }
                 }
                 if line.beats[i].tied && y < v.bottom {
-                    text(mut g, y + 1, x - 1, "~", ink, bg, false)
+                    text(mut g, y + 1, nx - 1, "~", ink, bg, false)
                 }
             }
         }
-        text(mut g, value_row, x, "/{8 / line.beats[i].length}", ink, bg, selected == i)
     }
 }
 
@@ -184,16 +243,22 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     }
     let bars = exposition.bars(p), duration = bars * session.ticks_per_whole()
     let solo = s.hearing >= 0 && s.hearing < duration
+    let answer_desk = s.hearing < 0 && p.editing == 0
     let local_time = if s.hearing >= 0 {
         s.hearing % duration * 8 / session.ticks_per_whole()
     } else {
         rhythm.onset(s.beats, s.cursor) + s.within
     }
-    let count = (cols - 32) / 26, start = local_time / 8 / count * count
-    let margin = cols - 23, top = 7 + (rows - 24) / 2, bottom = rows - 5
-    let answer_desk = s.hearing < 0 && p.editing == 0
     let first = if solo || answer_desk then copy p.given else copy p.response
-    let second = if answer_desk then copy p.response else copy p.continuation
+    let second = if solo {
+        copy p.given
+    } else if answer_desk {
+        copy p.response
+    } else {
+        copy p.continuation
+    }
+    let layout = shown(s, first, second, local_time)
+    let start = manuscript.first_bar(layout, cols), margin = cols - 24
     var low = 100, high = 0
     for line in [copy first, copy second] {
         for note in line.notes {
@@ -202,102 +267,154 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
             if pos > high { high = pos }
         }
     }
-    let base = if high - low < bottom - top then low - 1 else low
-    let v = staff.viewport(top, bottom, base, 7, margin - 2)
+    var top = if rows == 24 then 4 else 5 + (rows - 24) / 2
+    var bottom = rows - 4
+    if high - low > bottom - top && rows == 24 { top = 1; bottom = 21 }
+    let height = bottom - top
+    var minimum = high - height
+    if minimum < s.clef + 8 - height { minimum = s.clef + 8 - height }
+    let maximum = if low < s.clef then low else s.clef
+    var base = s.clef - 5
+    if base < minimum { base = minimum }
+    if base > maximum { base = maximum }
+    let v = staff.system(layout, take staff.viewport(top, bottom, base, 7, margin - 2))
+    if v.top == 1 { for y in 0..4 { text(mut g, y, 0, " ".repeat(margin), ink, bg, false) } }
     var boundaries = List[int]()
-    for bar in 0..count + 1 { (mut boundaries).push(7 + bar * 26) }
+    for bar in start..bars {
+        let event = rhythm.at(layout.beats, bar * 8)
+        let x = manuscript.event_column(layout, start, event)
+        if x >= cols - 27 { break }
+        (mut boundaries).push(x - 2)
+    }
+    (mut boundaries).push(margin - 2)
     staff.draw_staff(mut g, v, t, boundaries)
-    for bar in start..start + count {
-        if bar < bars {
-            text(
-                mut g,
-                top - 1,
-                9 + (bar - start) * 26,
-                "{bar + 1 + (if solo || answer_desk then 0 else bars)}",
-                ink,
-                bg,
-                true,
-            )
-        }
+    for bar in start..bars {
+        let event = rhythm.at(layout.beats, bar * 8),
+            x = manuscript.event_column(layout, start, event)
+        if x >= cols - 27 { break }
+        text(
+            mut g,
+            v.top - 1,
+            x - 1,
+            "{bar + 1 + (if solo || answer_desk then 0 else bars)}",
+            ink,
+            bg,
+            true,
+        )
     }
-    text(
-        mut g,
-        2,
-        3,
-        "{theory.mode_name(s.mode)}  {if s.level < 3 then "Tutorial" else "Seed"} {if s.level < 3 then s.level + 1 else s.seed}",
-        ink,
-        bg,
-        false,
-    )
-    let title = if solo {
-        "Subject"
-    } else if answer_desk {
-        "Subject (given) / Answer (write)"
-    } else {
-        "Answer / Countersubject"
-    }
-    text(mut g, 4, 8, title, blue, bg, true)
-    text(
-        mut g,
-        5,
-        8,
-        if solo {
-            "The first voice enters alone."
-        } else if answer_desk {
-            "Echo the subject at the fifth, or fourth below."
-        } else {
-            "The first voice continues; the second answers."
-        },
-        ink,
-        bg,
-        false,
-    )
     let lit_a = if s.hearing >= 0 then rhythm.at(first.beats, local_time) else -1
     let lit_b = if s.hearing >= duration then rhythm.at(second.beats, local_time) else -1
-    voice(mut g, v, first, start, count, t, true, -1, lit_a, bottom + 1)
+    voice(mut g, v, layout, first, start, t, true, -1, lit_a)
     if !solo {
         voice(
             mut g,
             v,
+            layout,
             second,
             start,
-            count,
             t,
             false,
             if s.hearing < 0 then s.cursor else -1,
             lit_b,
-            bottom + 2,
         )
     }
-    text(
-        mut g,
-        top,
-        margin + 1,
-        if solo then "Subject" else if p.editing == 0 then "Writing Answer" else "Writing Counter",
-        blue,
-        bg,
-        true,
-    )
-    text(mut g, top + 2, margin + 1, "Bar {local_time / 8 + 1}", blue, bg, false)
-    text(mut g, top + 4, margin + 1, draw.fit(av.kind, 21, false), ink, bg, false)
-    if av.mutation >= 0 {
-        text(mut g, top + 5, margin + 1, "Mutation: attack {av.mutation + 1}", ink, bg, false)
+    for event in 0..layout.beats.len {
+        let time = rhythm.onset(layout.beats, event)
+        if time / 8 < start { continue }
+        let x = manuscript.event_column(layout, start, event)
+        if x + manuscript.event_width(layout, event) - 2 >= cols - 27 {
+            text(mut g, v.top - 1, margin - 5, ">>", blue, bg, true)
+            break
+        }
+        if solo {
+            let a = rhythm.at(first.beats, time)
+            let iy = staff.interval_row(v, first.notes[a], first.notes[a], first.beats[a].tied)
+            text(
+                mut g,
+                iy,
+                x - 1,
+                "/{rhythm.value_name(first.beats[a].length)}",
+                staff.cantus_ink(t),
+                bg,
+                false,
+            )
+        } else {
+            let a = rhythm.at(first.beats, time), b = rhythm.at(second.beats, time)
+            let iv = theory.interval(first.notes[a], second.notes[b])
+            let iy = staff.interval_row(v, first.notes[a], second.notes[b], second.beats[b].tied)
+            text(
+                mut g,
+                iy,
+                x - 1,
+                if first.beats[a].rest || second.beats[b].rest {
+                    "r"
+                } else {
+                    "{if time % 8 == 0 then "S" else "w"}{iv.quality}{iv.number}"
+                },
+                staff.harmony_ink(iv.consonance, t),
+                bg,
+                false,
+            )
+            if iy + 1 < rows - 2 {
+                text(
+                    mut g,
+                    iy + 1,
+                    x - 1,
+                    "/{rhythm.value_name(second.beats[b].length)}",
+                    blue,
+                    bg,
+                    false,
+                )
+            }
+        }
     }
-    text(mut g, top + 7, margin + 1, "h exposition", blue, bg, true)
-    text(
-        mut g,
-        top + 9,
-        margin + 1,
+    let label_a = staff.label_row(v, highest(first)), label_b = staff.label_row(v, highest(second))
+    let name_a = if solo || answer_desk then "Subject" else "Answer"
+    let name_b = if answer_desk then "Answer" else "Countersubject"
+    if !solo && label_a == label_b {
+        text(mut g, label_a, margin + 2, "{name_a}+{name_b}", blue, bg, true)
+    } else {
+        text(mut g, label_a, margin + 2, name_a, staff.cantus_ink(t), bg, true)
+        if !solo { text(mut g, label_b, margin + 2, name_b, blue, bg, true) }
+    }
+    let lines = [
+        "VI. The fugue",
+        if solo {
+            "Subject alone"
+        } else if p.editing == 0 {
+            "Writing Answer"
+        } else {
+            "Writing Counter"
+        },
+        "Bar {local_time / 8 + 1}",
+        if p.tonal_available then "Real or tonal" else "Real only",
+        av.kind,
+        if av.mutation >= 0 then "Mutation attack {av.mutation + 1}" else "",
+        "Values /{rhythm.value_name(first.beats[rhythm.at(first.beats, local_time)].length)} : /{rhythm.value_name(second.beats[rhythm.at(second.beats, local_time)].length)}",
+        "h exposition",
         if s.level < 2 then "One voice given" else "v change voice",
-        ink,
-        bg,
-        false,
-    )
+        s.notice,
+    ]
+    var row = 1
+    for words in lines {
+        while row == label_a || !solo && row == label_b { row += 1 }
+        if row < rows - 3 {
+            text(mut g, row, margin + 2, draw.fit(words, 21, false), ink, bg, false)
+        }
+        row += 2
+    }
+    let hint = if v.grand && rows == 24 then rows - 1 else rows - 2
     text(
         mut g,
-        rows - 2,
-        3,
-        "Arrows write   v voice   h exposition   Enter check   n next   b books",
+        hint,
+        2,
+        if s.rhythm_editable {
+            "[ ] . t r rhythm  Arrows/# pitch  v voice  h hear  Enter check  n b q"
+        } else if s.level >= 2 {
+            "Arrows/# pitch   v voice   h exposition   Enter check   n next b q"
+        } else {
+            "Arrows/# pitch   h exposition   Enter check   n next   b books   q quit"
+        },
         blue,
         bg,
         false,

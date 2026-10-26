@@ -71,6 +71,7 @@ pub fn tonal_breaks(s: subject.Line, below: bool) -> List[theory.Break] {
         }
         var f = copy b
         f.rule = "answer-" + f.rule
+        f.reason = "This head is real-only: " + f.reason
         if f.bar > 0 && f.bar <= s.beats.len { f.bar = rhythm.onset(s.beats, f.bar - 1) / 8 + 1 }
         (mut out).push(f)
     }

@@ -75,3 +75,28 @@ fn test_progress_v1_migrates_without_lighting_sixth_book() {
     let fresh = progress.decode(progress.format([1, 2, 3, 2, 1, 3])) else []
     assert(fresh.len == 6 && fresh[5] == 3)
 }
+
+fn test_fugue_uses_shared_spelled_pitch_and_page_range_editor() {
+    var s = session.with_book(take session.tutorial(2, false), 6)
+    assert(s.range_low == 21 && s.range_high == 49 && !s.rhythm_editable)
+    assert(session.editor_unit(s) == 2)
+    session.step(mut s, 7)
+    assert(s.voice[0].accidental == 1)
+    session.step(mut s, 7)
+    assert(s.voice[0].accidental == -1)
+    session.step(mut s, 7)
+    assert(s.voice[0].accidental == 0)
+    let count = s.beats.len
+    session.step(mut s, 22)
+    assert(s.beats.len == count)
+    session.step(mut s, 27)
+    assert(s.rhythm_editable && session.editor_unit(s) == 1 && s.cantus.len == 6)
+    session.step(mut s, 22)
+    assert(s.beats.len == count + 1 && s.beats[0].length == 2)
+    session.step(mut s, 11)
+    assert(s.beats.len == count && s.beats[0].length == 4)
+    session.step(mut s, 28)
+    assert(s.beats[0].length == 6 && s.beats[1].length == 2)
+    let p = exposition.written(s.fugue, s.voice, s.beats)
+    assert(exposition.part(p, 240).contains("counter F4/2."))
+}

@@ -55,8 +55,8 @@ are authored solutions; `book-*-solved.pk` under `tests/replays` are actual
 pseudo-terminal recordings, verified by recomputing their scores.
 
 Book VI uses the same namespace: 22001–22003 are its tutorials and 22101–22103
-are their title-start recordings. `book-6` and `voice` append to the key
+are their title-start recordings. `book-6` and `voice-switch` append to the key
 vocabulary; no earlier key number changes. Progress comments now use
 `# books fugue 2 a b c d e f`; old five-book version-1 comments still load,
-with the sixth book unlit. A `voice` event changes the edit desk, never injects
+with the sixth book unlit. A `voice-switch` event changes the edit desk, never injects
 an answer. The exposition lasts 360 ticks for the six-bar tutorial subjects.
