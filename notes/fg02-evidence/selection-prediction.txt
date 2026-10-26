@@ -1,0 +1,4 @@
+fg02 item 7 prediction, before changes
+Held e90905bd advances the caret within a held event while Up/Down still edits that event. Predict Right once then Up on the first tutorial changes event 1, not event 2, with the caret no longer aligned to either event head.
+The extra ^ is predicted to be a high-pitch overflow marker in wide edited registers, not a second selection-caret call; test the exact start state and every selection in normal, joined, split, tied and wide-register fixtures.
+Recommend R-fg02-8 A: Book VI arrows navigate editable notated events, within=0. A single session selection function supplies edits, status and the caret; merged-time positions are layout only. Preserve I–V navigation and the musical judges/PCM. Expect exactly one caret per editing frame at the event column affected by Up/Down, including noncoincident voice rhythms.
