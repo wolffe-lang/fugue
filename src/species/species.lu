@@ -130,6 +130,39 @@ pub fn parallel(a: theory.Pitch, b: theory.Pitch, c: theory.Pitch, d: theory.Pit
         theory.direction(x) == theory.direction(y)
 }
 
+/// Paired eighths occupy a weak quarter and move by step in, through and out.
+pub fn eighth_pair(cp: List[theory.Pitch], beats: List[rhythm.Beat], i: int) -> bool {
+    if i >= beats.len || beats[i].length != 1 { return false }
+    let time = rhythm.onset(beats, i)
+    let start = if time % 2 == 0 then i else i - 1
+    if start < 1 || start + 2 >= cp.len || start + 2 >= beats.len { return false }
+    let offset = rhythm.onset(beats, start) % 8
+    if offset != 2 && offset != 6 { return false }
+    if beats[start].length != 1 || beats[start + 1].length != 1 { return false }
+    for j in start..start + 2 { if beats[j].rest || beats[j].tied { return false } }
+    for j in start..start + 3 {
+        if beats[j].rest || beats[j - 1].rest || theory.magnitude(delta(cp[j - 1], cp[j])) != 1 {
+            return false
+        }
+    }
+    true
+}
+
+/// Duration variety and tied duration share are visible, not hidden bonuses.
+pub fn rhythm_style(beats: List[rhythm.Beat]) -> (int, int) {
+    var mask: int = 0
+    var total = 0, tied = 0, variety = 0
+    for b in beats {
+        if !b.rest {
+            mask |= 1 << b.length
+            total += b.length
+            if b.tied { tied += b.length }
+        }
+    }
+    for value in [1, 2, 4, 8] { if mask & 1 << value != 0 { variety += 1 } }
+    (variety, if total > 0 then tied * 100 / total else 0)
+}
+
 /// Classifier precedence is rhythmic, not a special exemption in the verdict.
 pub fn classify(
     cf: List[theory.Pitch],
@@ -143,6 +176,12 @@ pub fn classify(
     let time = rhythm.onset(beats, i)
     if time / 8 >= cf.len { return "invalid" }
     if beats[i].rest { return "rest" }
+    if beats[i].length == 1 {
+        if book != 5 || !eighth_pair(cp, beats, i) { return "unlicensed-eighth" }
+        let consonant = theory.interval(cf[time / 8], cp[i]).consonance != 2
+        if consonant || passing(cp, beats, i) || neighbour(cp, beats, i) { return "eighth-pair" }
+        return "unlicensed"
+    }
     if theory.interval(cf[time / 8], cp[i]).consonance != 2 { return "consonance" }
     if time % 8 == 0 {
         if (book == 4 || book == 5) && suspension(cf, cp, beats, i, below) { return "suspension" }
@@ -197,17 +236,26 @@ pub fn vertical(
             return out
         }
         let b = copy beats[i]
+        if book == 5 && b.length == 1 && (complete || i + 2 < cp.len) {
+            theory.require(
+                mut out,
+                eighth_pair(cp, beats, i),
+                bar + 1,
+                "paired-eighths",
+                "Pair eighths on a weak quarter; walk into, through and out of the pair.",
+            )
+        }
         let ending = bar == cf.len - 1
         theory.require(
             mut out,
-            b.length == (if ending then 8 else if book == 3 then 2 else 4),
+            book == 5 && !ending || b.length == (if ending then 8 else if book == 3 then 2 else 4),
             bar + 1,
             if book == 3 then "third-rhythm" else "second-rhythm",
             "Use this book's equal subdivisions, then a whole at the close.",
         )
         theory.require(
             mut out,
-            !b.tied || book == 4,
+            !b.tied || book == 4 || book == 5,
             bar + 1,
             "second-tie",
             "In this book, strike each half anew.",
@@ -259,7 +307,7 @@ pub fn vertical(
             theory.require(
                 mut out,
                 iv.consonance != 2 ||
-                    book == 4 &&
+                    (book == 4 || book == 5) &&
                         (!complete && i + 1 >= cp.len || suspension(cf, cp, beats, i, below)),
                 bar + 1,
                 if book == 4 then "suspension" else "downbeat-consonance",
@@ -278,7 +326,7 @@ pub fn vertical(
                 book != 4 &&
                     (
                         passing(cp, beats, i) ||
-                            book == 3 &&
+                            (book == 3 || book == 5) &&
                                 (
                                     neighbour(cp, beats, i) ||
                                         double_passing(cf, cp, beats, i) ||
@@ -331,7 +379,7 @@ pub fn vertical(
                 )
             }
         }
-        if book == 3 && bar > 0 && time % 8 != 0 {
+        if (book == 3 || book == 5) && bar > 0 && time % 8 != 0 {
             let old = rhythm.at(beats, time - 8)
             if old < cp.len && !beats[old].rest {
                 theory.require(
@@ -489,6 +537,15 @@ pub fn check(
     if v.separate_climax { goals += 1 }
     if v.parallel_limit { goals += 1 }
     if v.variety >= 3 { goals += 1 }
-    if v.breaks.len == 0 { v.stars = if goals == 5 then 3 else if goals >= 3 then 2 else 1 }
+    var total_goals = 5
+    if book == 5 {
+        let (values, share) = rhythm_style(beats)
+        total_goals = 7
+        if values >= 3 { goals += 1 }
+        if share >= 10 { goals += 1 }
+    }
+    if v.breaks.len == 0 {
+        v.stars = if goals == total_goals then 3 else if goals >= 3 then 2 else 1
+    }
     v
 }

@@ -135,3 +135,37 @@ fn test_suspension_types_and_preparation() {
         !species.suspension(pitches([28, 29, 28]), pitches([35, 35, 35, 34, 35]), beats, 2, false),
     )
 }
+
+fn test_florid_classifier_eighths_and_species_figures() {
+    let cf = pitches([28, 29, 28])
+    var beats = [
+        rhythm.Beat { length: 4, rest: false, tied: false },
+        rhythm.Beat { length: 2, rest: false, tied: false },
+        rhythm.Beat { length: 1, rest: false, tied: false },
+        rhythm.Beat { length: 1, rest: false, tied: false },
+        rhythm.Beat { length: 8, rest: false, tied: false },
+    ]
+    let cp = pitches([35, 32, 33, 34, 35])
+    assert(species.eighth_pair(cp, beats, 2) && species.eighth_pair(cp, beats, 3))
+    assert(species.classify(cf, cp, beats, 2, 5, false) == "eighth-pair")
+    assert(species.classify(cf, cp, beats, 3, 5, false) == "eighth-pair")
+    assert(!species.eighth_pair(pitches([35, 31, 33, 34, 35]), beats, 2))
+    beats[0].length = 2
+    assert(!species.eighth_pair(cp, beats, 2))
+    let quarters = rhythm.pattern(3, 2)
+    assert(
+        species.classify(pitches([28, 29]), pitches([35, 34, 32, 33, 34]), quarters, 1, 5, false) ==
+            "cambiata",
+    )
+    assert(
+        species.classify(cf, pitches([35, 35, 35, 34, 35]), rhythm.pattern(4, 3), 2, 5, false) ==
+            "suspension",
+    )
+}
+
+fn test_rhythm_style_counts_values_and_tied_time() {
+    let (values, share) = species.rhythm_style(rhythm.pattern(4, 3))
+    assert(values == 2 && share == 20)
+    let (free_values, free_share) = species.rhythm_style(rhythm.pattern(5, 5))
+    assert(free_values == 4 && free_share == 0)
+}
