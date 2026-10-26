@@ -320,7 +320,8 @@ pub fn vertical(
                 "downbeat-unison",
                 "Reserve a strong-beat unison for the edges.",
             )
-        } else if iv.consonance == 2 && (complete || i + 1 < cp.len) {
+        } else if iv.consonance == 2 &&
+            (complete || i + (if book == 3 || book == 5 then 3 else 1) < cp.len) {
             theory.require(
                 mut out,
                 book != 4 &&
@@ -447,7 +448,8 @@ pub fn check(
     let approach = theory.magnitude(delta(cp[n - 2], cp[n - 1])) == 1 &&
         theory.magnitude(delta(cf[cf.len - 2], cf[cf.len - 1])) == 1
     let shape = last.number == 8 && penult.number == 6 && penult.quality == "M" ||
-        last.number == 1 && penult.number == 3 && penult.quality == "m"
+        last.number == 1 && penult.number == 3 && penult.quality == "m" ||
+        below && last.number == 8 && penult.number == 10 && penult.quality == "m"
     theory.require(
         mut v.breaks,
         approach && shape,
@@ -466,6 +468,13 @@ pub fn check(
             "Let a prepared seventh fall to a sixth above, or a second open to a third below, before the close.",
         )
     }
+    theory.require(
+        mut v.breaks,
+        theory.leaps(line) >= 2 && theory.leaps(line) <= leap_limit(line.len),
+        1,
+        "leap-count",
+        "Use at least two leaps, and at most four per ten attacks rounded up; let steps do the rest.",
+    )
     var normalized = List[theory.Pitch]()
     let shift = (line[line.len - 1].octave - 4) * 7
     for p in line {
@@ -474,7 +483,11 @@ pub fn check(
         (mut normalized).push(q)
     }
     for b in theory.validate(normalized, mode) {
-        if b.rule != "length" && b.rule != "final" && b.rule != "cadence" {
+        if b.rule == "diatonic" && cadential_sixth(normalized, mode, b.bar - 1) { continue }
+        if b.rule != "length" &&
+            b.rule != "leap-count" &&
+            b.rule != "final" &&
+            b.rule != "cadence" {
             var finding = copy b
             if b.bar > 0 && b.bar <= times.len { finding.bar = times[b.bar - 1] / 8 + 1 }
             (mut v.breaks).push(finding)
@@ -548,4 +561,169 @@ pub fn check(
         v.stars = if goals == total_goals then 3 else if goals >= 3 then 2 else 1
     }
     v
+}
+
+/// Search evidence includes exhaustion, not just successful answers.
+pub struct Solution {
+    notes: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+    nodes: int,
+    stars: int,
+    leaves: int,
+    nearest: int,
+    reasons: str,
+}
+
+fn prefix_melody(cp: List[theory.Pitch], beats: List[rhythm.Beat]) -> bool {
+    var line = List[theory.Pitch]()
+    for i in 0..cp.len { if !beats[i].rest && !beats[i].tied { (mut line).push(copy cp[i]) } }
+    if line.len < 2 { return true }
+    if !theory.prefix_with_leaps(line, leap_limit(beats.len)) { return false }
+    var lo = 100, hi = 0
+    for p in line {
+        let n = theory.position(p)
+        if n < lo { lo = n }
+        if n > hi { hi = n }
+    }
+    hi - lo <= 9
+}
+
+fn search(
+    cf: List[theory.Pitch],
+    mut cp: List[theory.Pitch],
+    mut beats: List[rhythm.Beat],
+    mode: int,
+    below: bool,
+    book: int,
+    budget: int,
+    mut result: Solution,
+) {
+    if result.nodes >= budget || result.stars == 3 { return }
+    result.nodes += 1
+    let i = cp.len
+    if i == beats.len {
+        result.leaves += 1
+        region judge {
+            let v = check(cf, cp, beats, mode, below, book)
+            if v.breaks.len < result.nearest {
+                result.nearest = v.breaks.len
+                var why = ""
+                for b in v.breaks { why += " {b.rule}" }
+                result.reasons = copy why
+            }
+            if v.stars > result.stars {
+                result.stars = v.stars
+                result.notes = copy cp
+                result.beats = copy beats
+            }
+        }
+        return
+    }
+    let final = 28 + mode + (if below then 0 else 7)
+    let base = final - (if below then 8 else 7)
+    let time = rhythm.onset(beats, i)
+    let bar = time / 8
+    let was_tied = beats[i].tied
+    let choices = if (book == 4 || book == 5) &&
+        time % 8 == 0 &&
+        i > 0 &&
+        bar < cf.len - 1 &&
+        beats[i].length == 4 &&
+        beats[i - 1].length == 4 {
+        2
+    } else {
+        1
+    }
+    for variant in 0..choices {
+        if choices == 2 { beats[i].tied = variant == 0 }
+        for rank in 0..15 {
+            var pos = base + rank
+            if beats[i].rest { if rank > 0 { break }; pos = final }
+            if beats[i].tied { if rank > 0 { break }; pos = theory.position(cp[i - 1]) }
+            if bar == cf.len - 1 && pos != final && (!below || pos != final - 7) { continue }
+            var p = theory.pitch(pos)
+            if i == beats.len - 3 && mode == 5 && (pos == final - 2 || below && pos == final - 9) {
+                p.accidental = 1
+            }
+            if i == beats.len - 2 &&
+                (pos == final - 1 || below && pos == final - 8) &&
+                theory.raises(mode) {
+                p.accidental = 1
+            }
+            if beats[i].tied { p = copy cp[i - 1] }
+            (mut cp).push(p)
+            var good = false
+            region prune {
+                good = prefix_melody(cp, beats) &&
+                    vertical(cf, cp, beats, below, book, false).len == 0
+            }
+            if good { search(cf, mut cp, mut beats, mode, below, book, budget, mut result) }
+            let _ = (mut cp).pop() else theory.pitch(final)
+            if result.nodes >= budget || result.stars == 3 { break }
+        }
+        if result.nodes >= budget || result.stars == 3 { break }
+    }
+    beats[i].tied = was_tied
+}
+
+/// Bounded independent search; every returned answer passes the public checker.
+pub fn solve(cf: List[theory.Pitch], mode: int, below: bool, book: int, budget: int) -> Solution {
+    var result = Solution {
+        notes: List[theory.Pitch](),
+        beats: List[rhythm.Beat](),
+        nodes: 0,
+        stars: 0,
+        leaves: 0,
+        nearest: 1000,
+        reasons: "",
+    }
+    var cp = List[theory.Pitch](), beats = rhythm.pattern(book, cf.len)
+    search(cf, mut cp, mut beats, mode, below, book, budget, mut result)
+    if (book == 2 || book == 5) && result.stars < 3 {
+        beats[0].rest = true
+        search(cf, mut cp, mut beats, mode, below, book, budget, mut result)
+    }
+    result
+}
+
+/// A candidate is admitted only with an independently checked answer.
+pub struct Exercise { cantus: List[theory.Pitch], proof: Solution, candidate: int }
+
+/// The same melodic pool, cycled from the seed, on either side of the cantus.
+pub fn exercise(seed: int, mode: int, below: bool, book: int) -> Exercise ! {empty} {
+    exercise_goal(seed, mode, below, book, 1)?
+}
+
+/// Tutorials admit only references reaching all displayed style goals.
+pub fn exercise_goal(seed: int, mode: int, below: bool, book: int, goal: int) -> Exercise ! {
+    empty,
+} {
+    let pool = theory.candidates(mode)
+    if pool.len == 0 { return empty }
+    let start = (seed % pool.len + pool.len) % pool.len
+    for offset in 0..pool.len {
+        let index = (start + offset) % pool.len
+        let proof = solve(pool[index].notes, mode, below, book, 200000)
+        if proof.stars >= goal {
+            return Exercise { cantus: copy pool[index].notes, proof: proof, candidate: index }
+        }
+    }
+    empty
+}
+
+/// Four leaps per ten attacks, rounded upward; Book I keeps its original bound.
+pub fn leap_limit(attacks: int) -> int {
+    let limit = (attacks * 4 + 9) / 10
+    if limit < 2 then 2 else limit
+}
+
+/// Aeolian raises its sixth only in the final 6-sharp, 7-sharp, tonic ascent.
+pub fn cadential_sixth(line: List[theory.Pitch], mode: int, index: int) -> bool {
+    if mode != 5 || line.len < 3 || index != line.len - 3 { return false }
+    let final = theory.position(line[line.len - 1])
+    theory.position(line[index]) == final - 2 &&
+        line[index].accidental == 1 &&
+        theory.position(line[index + 1]) == final - 1 &&
+        line[index + 1].accidental == 1 &&
+        line[index + 2].accidental == 0
 }
