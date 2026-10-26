@@ -62,3 +62,97 @@ fn test_cadence_sharp_only_at_the_leading_note() {
     session.step(mut s, 11)
     assert(s.voice[8].accidental == 0)
 }
+
+fn test_five_staff_lines_are_unbroken_on_both_tiers() {
+    for t in 0..2 {
+        for size in 0..2 {
+            let cols = if size == 0 then 80 else 120
+            let rows = if size == 0 then 24 else 40
+            let v = staff.viewport(5, 18, 22, 7, cols - 26)
+            var g = grid.new(rows, cols)
+            staff.lines(mut g, v, t)
+            for line in 0..5 {
+                let y = staff.row_of(v, theory.pitch(v.line + line * 2))
+                for x in v.left..v.right + 1 {
+                    assert(g.cells[y * cols + x].cp == (if t == 1 then 0x2500 else 45))
+                }
+                if line < 4 {
+                    for x in v.left..v.right + 1 { assert(g.cells[(y - 1) * cols + x].cp == 32) }
+                }
+            }
+        }
+    }
+}
+
+fn test_pitch_row_margin_round_trip_whole_viewport() {
+    for t in 0..2 {
+        for base in 21..36 {
+            let v = staff.viewport(5, 18, base, 7, 54)
+            var g = grid.new(24, 80)
+            staff.draw_staff(mut g, v, t, [7, 54])
+            for y in v.top..v.bottom + 1 {
+                let expected = theory.pitch(base + 18 - y)
+                let name = theory.name(expected)
+                assert(theory.position(staff.pitch_of(v, y)) == theory.position(expected))
+                assert(staff.row_of(v, expected) == y)
+                for n in 0..name.len {
+                    assert(g.cells[y * 80 + 1 + n].cp == name.bytes()[n] as int)
+                }
+                assert((g.cells[y * 80 + 1].attrs == 1) == (theory.position(expected) == 28))
+            }
+            for step in 0..9 {
+                let p = theory.pitch(v.line + step)
+                assert(staff.row_of(v, p) == staff.row_of(v, theory.pitch(v.line)) - step)
+            }
+            let ledger = theory.pitch(v.line - 2)
+            let y = staff.head(mut g, v, ledger, 12, t, true, false, false)
+            assert(y == staff.row_of(v, theory.pitch(v.line)) + 2)
+            assert(theory.position(staff.pitch_of(v, y)) == theory.position(ledger))
+            assert(g.cells[y * 80 + 10].cp == 32 && g.cells[y * 80 + 14].cp == 32)
+            assert(g.cells[y * 80 + 11].cp == (if t == 1 then 0x2500 else 45))
+            assert(g.cells[y * 80 + 13].cp == (if t == 1 then 0x2500 else 45))
+        }
+    }
+    let classic = staff.viewport(5, 18, 28, 7, 54)
+    let names = ["E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5"]
+    for i in 0..9 { assert(theory.name(staff.pitch_of(classic, 16 - i)) == names[i]) }
+}
+
+fn test_bar_lines_survive_every_up_down_frame() {
+    for t in 0..2 {
+        var s = session.tutorial(1, false)
+        for n in 0..4 {
+            session.step(mut s, if n < 2 then 1 else 2)
+            let g = staff.frame(s, 80, 24, t)
+            // All ten boundaries and the right edge have nine consecutive cells.
+            for x in [7, 11, 15, 19, 23, 27, 31, 35, 39, 43, 54] {
+                var run = 0, best = 0
+                for y in 5..19 {
+                    if g.cells[y * 80 + x].cp == (if t == 1 then 0x2502 else 124) {
+                        run += 1
+                        if run > best { best = run }
+                    } else {
+                        run = 0
+                    }
+                }
+                assert(best == 9)
+            }
+        }
+    }
+}
+
+fn test_cantus_keeps_its_hollow_head_and_contrasting_ink() {
+    for t in 0..2 {
+        let v = staff.viewport(5, 18, 28, 7, 54)
+        var g = grid.new(24, 80)
+        staff.draw_staff(mut g, v, t, [7, 54])
+        let y = staff.head(mut g, v, theory.pitch(32), 12, t, true, false, false)
+        let cp_y = staff.head(mut g, v, theory.pitch(32), 13, t, false, true, true)
+        assert(cp_y == y)
+        assert(g.cells[y * 80 + 12].cp == (if t == 1 then 0x25cb else 111))
+        assert(g.cells[y * 80 + 12].fg == (if t == 1 then 130 else 1))
+        assert(g.cells[y * 80 + 13].cp == (if t == 1 then 0x25cf else 42))
+        assert(g.cells[y * 80 + 13].fg == (if t == 1 then 24 else 4))
+        assert(g.cells[y * 80 + 13].bg == (if t == 1 then 222 else 11))
+    }
+}

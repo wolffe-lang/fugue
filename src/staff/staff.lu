@@ -67,6 +67,142 @@ pub fn clef(mut g: grid.Grid, top: int, t: int, bg: int) {
     for i in 0..shape.len { text(mut g, top + i, 1, shape[i], if t == 1 then 94 else 3, bg, false) }
 }
 
+/// A shared diatonic viewport; base is the pitch position at bottom.
+pub struct Viewport { top: int, bottom: int, base: int, left: int, right: int, line: int }
+
+/// Fit five lines into a supplied pitch window, without compressing pitch steps.
+pub fn viewport(top: int, bottom: int, base: int, left: int, right: int) -> Viewport {
+    assert(bottom - top >= 10)
+    Viewport { top: top, bottom: bottom, base: base, left: left, right: right, line: base + 2 }
+}
+
+/// Pitch and row are inverses; accidentals share their natural letter's row.
+pub fn row_of(v: Viewport, p: theory.Pitch) -> int { v.bottom - (theory.position(p) - v.base) }
+
+/// Return the natural pitch named by this viewport row.
+pub fn pitch_of(v: Viewport, row: int) -> theory.Pitch { theory.pitch(v.base + v.bottom - row) }
+
+/// Saturated burnt orange against parchment; the player's ink remains blue.
+pub fn cantus_ink(t: int) -> int { if t == 1 then 130 else 1 }
+
+/// Dark blue distinguishes the editable voice.
+pub fn player_ink(t: int) -> int { if t == 1 then 24 else 4 }
+
+/// Five unbroken runs, before bars and noteheads cross them.
+pub fn lines(mut g: grid.Grid, v: Viewport, t: int) {
+    for line in 0..5 {
+        let y = row_of(v, theory.pitch(v.line + line * 2))
+        for x in v.left..v.right + 1 {
+            let bg = g.cells[y * g.cols + x].bg
+            grid.put(
+                mut g,
+                y,
+                x,
+                grid.cell(if t == 1 then 0x2500 else 45, if t == 1 then 180 else 8, bg, 0),
+            )
+        }
+    }
+}
+
+/// Draw names and crossing bar lines for supplied columns, on the same pitch space.
+pub fn draw_staff(mut g: grid.Grid, v: Viewport, t: int, bars: List[int]) {
+    lines(mut g, v, t)
+    let bg = if t == 1 then 230 else 7
+    for y in v.top..v.bottom + 1 {
+        let p = pitch_of(v, y)
+        text(mut g, y, 1, theory.name(p), if t == 1 then 94 else 3, bg, theory.position(p) == 28)
+    }
+    for x in bars {
+        for pos in v.line..v.line + 9 {
+            let y = row_of(v, theory.pitch(pos))
+            let ground = g.cells[y * g.cols + x].bg
+            grid.put(
+                mut g,
+                y,
+                x,
+                grid.cell(if t == 1 then 0x2502 else 124, if t == 1 then 180 else 8, ground, 0),
+            )
+        }
+    }
+}
+
+/// Three-cell ledgers only beyond the five lines; never erase a crossing bar.
+/// Return the true row, including when an overflow mark is drawn at an edge.
+pub fn ledger(mut g: grid.Grid, v: Viewport, p: theory.Pitch, x: int, t: int, cantus: bool) -> int {
+    let y = row_of(v, p)
+    let ink = if cantus then cantus_ink(t) else player_ink(t)
+    if y < v.top || y > v.bottom {
+        let edge = if y < v.top then v.top else v.bottom
+        let bg = g.cells[edge * g.cols + x].bg
+        grid.put(mut g, edge, x, grid.cell(if y < v.top then 94 else 118, ink, bg, 1))
+        return y
+    }
+    let pos = theory.position(p)
+    let low = if pos < v.line then pos else v.line + 10
+    let high = if pos < v.line then v.line - 2 else pos
+    for step in low..high + 1 {
+        let ly = row_of(v, theory.pitch(step))
+        if (step - v.line) % 2 == 0 && ly >= v.top && ly <= v.bottom {
+            for dx in -1..2 {
+                let cell = copy g.cells[ly * g.cols + x + dx]
+                if cell.cp != 0x2502 &&
+                    cell.cp != 124 &&
+                    cell.cp != 0x25cb &&
+                    cell.cp != 0x25cf &&
+                    cell.cp != 111 &&
+                    cell.cp != 42 {
+                    grid.put(
+                        mut g,
+                        ly,
+                        x + dx,
+                        grid.cell(if t == 1 then 0x2500 else 45, ink, cell.bg, 0),
+                    )
+                }
+            }
+        }
+    }
+    y
+}
+
+/// Place a hollow cantus or filled player head; callers may attach stems/ties at the returned row.
+pub fn head(
+    mut g: grid.Grid,
+    v: Viewport,
+    p: theory.Pitch,
+    x: int,
+    t: int,
+    cantus: bool,
+    selected: bool,
+    lit: bool,
+) -> int {
+    let y = ledger(mut g, v, p, x, t, cantus)
+    if y < v.top || y > v.bottom { return y }
+    let cell = copy g.cells[y * g.cols + x]
+    let cp = if cantus then (if t == 1 then 0x25cb else 111) else (if t == 1 then 0x25cf else 42)
+    grid.put(
+        mut g,
+        y,
+        x,
+        grid.cell(
+            cp,
+            if cantus then cantus_ink(t) else player_ink(t),
+            if lit then (if t == 1 then 222 else 11) else cell.bg,
+            if selected || lit then 1 else 0,
+        ),
+    )
+    if p.accidental == 1 {
+        let old = copy g.cells[y * g.cols + x - 1]
+        // A preceding cantus head or a boundary is never replaced by the accidental.
+        let ax = if old.cp == 0x25cb || old.cp == 111 || old.cp == 0x2502 || old.cp == 124 {
+            x + 1
+        } else {
+            x - 1
+        }
+        grid.put(mut g, y, ax, grid.cell(35, player_ink(t), cell.bg, 0))
+    }
+    y
+}
+
 /// Draw the manuscript with names or the experimental cell-drawn clef.
 pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -> grid.Grid {
     var g = grid.new(rows, cols)
@@ -213,77 +349,35 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
         if selected < base { base = selected }
     }
     let width = (margin - 9) / (if s.cantus.len > 0 then s.cantus.len else 1)
-    for y in top..bottom + 1 {
-        let pos = base + bottom - y
-        if pos >= 30 && pos <= 38 && pos % 2 == 0 {
-            for x in 7..margin - 2 {
-                grid.put(
-                    mut g,
-                    y,
-                    x,
-                    grid.cell(if t == 1 then 0x2500 else 45, if t == 1 then 180 else 8, bg, 0),
-                )
-            }
-        }
-        if !drawn_clef && (pos % 2 == 0 || pos == 28) {
-            text(mut g, y, 1, theory.name(theory.pitch(pos)), ink, bg, pos == 28)
+    let v = viewport(top, bottom, base, 7, margin - 2)
+    var bars = List[int]()
+    for i in 0..s.cantus.len { (mut bars).push(7 + i * width) }
+    (mut bars).push(margin - 2)
+    let current = if s.hearing >= 0 then s.hearing / 30 else s.cursor
+    for y in top - 1..bottom + 1 {
+        for x in 8 + current * width..7 + (current + 1) * width {
+            let old = copy g.cells[y * cols + x]
+            grid.put(mut g, y, x, grid.cell(old.cp, old.fg, if t == 1 then 223 else 15, old.attrs))
         }
     }
+    draw_staff(mut g, v, t, bars)
+    // The historical clef study is decorative, not a second pitch convention.
     if drawn_clef { clef(mut g, top + 1, t, bg) }
     for i in 0..s.cantus.len {
         let x = 8 + i * width
         text(mut g, top - 1, x, "{i + 1}", ink, bg, false)
         for which in 0..2 {
             let p = if which == 0 then copy s.cantus[i] else copy s.voice[i]
-            let pos = theory.position(p)
-            let y = bottom - (pos - base)
-            let nx = x + which
-            if y < top || y > bottom {
-                grid.put(
-                    mut g,
-                    if y < top then top else bottom,
-                    nx,
-                    grid.cell(if y < top then 94 else 118, if which == 0 then ink else blue, bg, 1),
-                )
-            }
-            if y >= top && y <= bottom {
-                if pos < 30 || pos > 38 {
-                    let edge = if pos < 30 then 30 else 38
-                    let lo = if pos < edge then pos else edge
-                    let hi = if pos > edge then pos else edge
-                    for ledger in lo..hi + 1 {
-                        let ly = bottom - (ledger - base)
-                        if ledger % 2 == 0 && ly >= top && ly <= bottom {
-                            for dx in -1..3 {
-                                grid.put(
-                                    mut g,
-                                    ly,
-                                    nx + dx,
-                                    grid.cell(if t == 1 then 0x2500 else 45, ink, bg, 0),
-                                )
-                            }
-                        }
-                    }
-                }
-                let cp = if which == 0 {
-                    (if t == 1 then 0x25cb else 111)
-                } else {
-                    (if t == 1 then 0x25cf else 42)
-                }
-                let lit = s.hearing >= 0 && s.hearing / 30 == i
-                grid.put(
-                    mut g,
-                    y,
-                    nx,
-                    grid.cell(
-                        cp,
-                        if which == 0 then ink else blue,
-                        if lit then (if t == 1 then 222 else 11) else bg,
-                        if which == 1 && i == s.cursor then 1 else 0,
-                    ),
-                )
-                if p.accidental == 1 { grid.put(mut g, y, nx - 1, grid.cell(35, blue, bg, 0)) }
-            }
+            let _ = head(
+                mut g,
+                v,
+                p,
+                x + which,
+                t,
+                which == 0,
+                i == s.cursor,
+                s.hearing >= 0 && s.hearing / 30 == i,
+            )
         }
         let iv = theory.interval(s.cantus[i], s.voice[i])
         let label = if t == 0 then (
@@ -294,24 +388,25 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
                 }
             ) else iv.quality
         text(mut g, bottom + 2, x, "{label}{iv.number}", harmony_ink(iv.consonance, t), bg, false)
-        if i == s.cursor { text(mut g, bottom + 3, x, "^", blue, bg, true) }
+        if i == current { text(mut g, bottom + 3, x, "^", blue, bg, true) }
     }
     for y in 4..rows - 3 {
         grid.put(mut g, y, margin, grid.cell(if t == 1 then 0x2502 else 124, ink, bg, 0))
     }
     text(mut g, 4, margin + 2, "The margin", ink, bg, true)
-    text(mut g, 6, margin + 2, "Bar {s.cursor + 1}", blue, bg, true)
+    text(mut g, 6, margin + 2, "Editing bar {s.cursor + 1}", blue, bg, true)
     if s.voice.len > 0 {
         text(mut g, 8, margin + 2, theory.name(s.voice[s.cursor]), blue, bg, false)
     }
     if s.hearing >= 0 {
         text(mut g, 9, margin + 2, "Hearing {s.hearing / 30 + 1}/{s.voice.len}", blue, bg, true)
     }
-    text(mut g, 10, margin + 2, "o  given voice", ink, bg, false)
+    text(mut g, 10, margin + 2, "o  cantus", cantus_ink(t), bg, false)
     text(mut g, 11, margin + 2, "*  your voice", blue, bg, false)
     if verdict.breaks.len > 0 {
         let b = copy verdict.breaks[0]
-        text(mut g, 17, margin + 2, "Bar {b.bar}", harmony_ink(2, t), bg, true)
+        text(mut g, 16, margin + 2, "First break", ink, bg, false)
+        text(mut g, 17, margin + 2, "at bar {b.bar}", harmony_ink(2, t), bg, true)
         text(
             mut g,
             18,
@@ -327,9 +422,19 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
     text(mut g, 15, margin + 2, "x dissonant", harmony_ink(2, t), bg, false)
     text(
         mut g,
+        rows - 1,
+        3,
+        "o cantus: burnt orange   * player: dark blue",
+        cantus_ink(t),
+        bg,
+        false,
+    )
+    text(mut g, rows - 1, 27, "* player: dark blue", blue, bg, false)
+    text(
+        mut g,
         rows - 2,
         3,
-        "Arrows write   Space sounds   h hears   Enter checks   u undo   q quit",
+        "h hear   Space sound   Enter check   Arrows write   u undo   q quit",
         blue,
         bg,
         false,
