@@ -1,0 +1,206 @@
+//! Original short subjects: one melodic canon, explicit head and stepping tail.
+
+use rhythm
+use species
+use theory
+
+/// A subject includes its own rhythm, not a whole-note cantus surrogate.
+pub struct Line { notes: List[theory.Pitch], beats: List[rhythm.Beat], mode: int }
+
+/// Total span in eighths; syntax is checked separately.
+pub fn span(beats: List[rhythm.Beat]) -> int {
+    var n = 0
+    for b in beats { n += b.length }
+    n
+}
+
+/// A clear head is a leap, or a three-note turning figure.
+pub fn head(notes: List[theory.Pitch]) -> bool {
+    if notes.len < 3 { return false }
+    let a = theory.position(notes[1]) - theory.position(notes[0])
+    let b = theory.position(notes[2]) - theory.position(notes[1])
+    theory.magnitude(a) > 1 || theory.magnitude(a) == 1 && a == -b
+}
+
+/// Book I's melodic canon, with the subject's shorter span and open ending.
+pub fn validate(s: Line) -> List[theory.Break] {
+    var out = List[theory.Break]()
+    let n = s.notes.len, duration = span(s.beats)
+    theory.require(
+        mut out,
+        duration >= 32 && duration <= 64 && duration % 8 == 0,
+        1,
+        "subject-length",
+        "Give the subject four to eight complete bars.",
+    )
+    if n != s.beats.len || !rhythm.valid(s.beats, duration / 8) {
+        theory.require(
+            mut out,
+            false,
+            1,
+            "subject-rhythm",
+            "Give every subject note a value within its bar.",
+        )
+        return out
+    }
+    if n < 2 {
+        theory.require(
+            mut out,
+            false,
+            1,
+            "subject-attacks",
+            "Give the head room to answer its tail.",
+        )
+        return out
+    }
+    let root = 28 + s.mode
+    let first = (theory.position(s.notes[0]) - root + 70) % 7
+    let last = (theory.position(s.notes[n - 1]) - root + 70) % 7
+    theory.require(
+        mut out,
+        first == 0 || first == 4,
+        1,
+        "subject-start",
+        "Begin on the final or its fifth.",
+    )
+    theory.require(
+        mut out,
+        last == 0 || last == 4,
+        duration / 8,
+        "subject-end",
+        "Leave the answer a final or a fifth to enter after.",
+    )
+    theory.require(
+        mut out,
+        head(s.notes),
+        1,
+        "subject-head",
+        "Mark the head with a leap or a turning step figure.",
+    )
+    var low = theory.position(s.notes[0]), high = low, steps = 0
+    for i in 0..n {
+        let pos = theory.position(s.notes[i]), bar = rhythm.onset(s.beats, i) / 8 + 1
+        if pos < low { low = pos }
+        if pos > high { high = pos }
+        theory.require(
+            mut out,
+            !s.beats[i].rest && !s.beats[i].tied,
+            bar,
+            "subject-attack",
+            "Strike each note of this short subject; no rests or tied repetitions.",
+        )
+        theory.require(
+            mut out,
+            s.notes[i].accidental == 0,
+            bar,
+            "subject-mode",
+            "Keep the subject in its named mode.",
+        )
+        if i > 0 && theory.magnitude(pos - theory.position(s.notes[i - 1])) == 1 { steps += 1 }
+        if s.beats[i].length == 1 {
+            theory.require(
+                mut out,
+                species.eighth_pair(s.notes, s.beats, i),
+                bar,
+                "paired-eighths",
+                "Pair weak eighths with steps in, through and out.",
+            )
+        }
+    }
+    theory.require(mut out, high - low <= 8, 1, "subject-range", "Keep the subject within a ninth.")
+    theory.require(
+        mut out,
+        steps * 100 >= (n - 1) * 60,
+        1,
+        "subject-steps",
+        "Let steps carry most of the subject.",
+    )
+    theory.require(
+        mut out,
+        n >= 3 &&
+            theory.magnitude(theory.position(s.notes[n - 1]) - theory.position(s.notes[n - 2])) ==
+                1 &&
+            theory.magnitude(theory.position(s.notes[n - 2]) - theory.position(s.notes[n - 3])) ==
+                1,
+        duration / 8,
+        "subject-tail",
+        "Walk through the final three notes; do not leave a tail leap unrecovered.",
+    )
+    for b in theory.validate(s.notes, s.mode) {
+        if b.rule == "length" || b.rule == "final" || b.rule == "cadence" || b.rule == "range" {
+            continue
+        }
+        var f = copy b
+        if f.bar > 0 && f.bar <= n { f.bar = rhythm.onset(s.beats, f.bar - 1) / 8 + 1 }
+        (mut out).push(f)
+    }
+    out
+}
+
+/// Ten attacks across six bars, mixing halves, quarters and wholes.
+pub fn values(variant: int) -> List[rhythm.Beat] {
+    let lengths = if variant % 2 == 0 {
+        [4, 2, 2, 4, 4, 8, 4, 4, 8, 8]
+    } else {
+        [4, 4, 8, 4, 4, 4, 2, 2, 8, 8]
+    }
+    var out = List[rhythm.Beat]()
+    for n in lengths { (mut out).push(rhythm.Beat { length: n, rest: false, tied: false }) }
+    out
+}
+
+fn enumerate(mut notes: List[theory.Pitch], mode: int, mut pool: List[Line], mut visits: int) {
+    visits += 1
+    if visits > 200000 || pool.len >= 32 { return }
+    if notes.len == 10 {
+        let s = Line { notes: copy notes, beats: values(pool.len), mode: mode }
+        if validate(s).len == 0 { (mut pool).push(s) }
+        return
+    }
+    let root = 28 + mode, prev = theory.position(notes[notes.len - 1])
+    for d in [1, -1, 2, -2, 4, -4, 3, -3] {
+        let pos = prev + d
+        if pos < root || pos > root + 8 { continue }
+        if notes.len == 1 && theory.magnitude(d) < 2 { continue }
+        if notes.len >= 8 && theory.magnitude(d) != 1 { continue }
+        if notes.len == 9 && pos != root && pos != root + 4 { continue }
+        (mut notes).push(theory.pitch(pos))
+        if theory.prefix_ok(notes) { enumerate(mut notes, mode, mut pool, mut visits) }
+        let _ = (mut notes).pop() else theory.pitch(root)
+        if visits > 200000 || pool.len >= 32 { break }
+    }
+}
+
+/// Bounded enumeration, never a bank copied from a published subject.
+pub fn candidates(mode: int) -> List[Line] {
+    var pool = List[Line]()
+    for opening in [0, 4] {
+        var notes = [theory.pitch(28 + mode + opening)], visits = 0
+        var batch = List[Line]()
+        enumerate(mut notes, mode, mut batch, mut visits)
+        for s in batch { (mut pool).push(copy s) }
+    }
+    pool
+}
+
+/// Deterministic seed selection; the caller may reuse the enumerated pool.
+pub fn choose(pool: List[Line], seed: int) -> Line ! {empty} {
+    if pool.len == 0 { return empty }
+    copy pool[(seed % pool.len + pool.len) % pool.len]
+}
+
+/// Generate one independently validated subject.
+pub fn generate(seed: int, mode: int) -> Line ! {empty} { choose(candidates(mode), seed)? }
+
+/// Three original, explicitly written tutorial subjects; no historical music.
+pub fn tutorial(index: int) -> Line {
+    let mode = if index == 0 then 0 else if index == 1 then 1 else 3
+    let degrees = match index {
+        0 => [0, 2, 3, 4, 3, 2, 0, 2, 1, 0],
+        1 => [0, 4, 3, 4, 5, 4, 3, 0, 1, 0],
+        _ => [4, 6, 5, 4, 5, 7, 5, 6, 5, 4],
+    }
+    var notes = List[theory.Pitch]()
+    for d in degrees { (mut notes).push(theory.pitch(28 + mode + d)) }
+    Line { notes: notes, beats: values(index), mode: mode }
+}
