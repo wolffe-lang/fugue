@@ -225,12 +225,8 @@ pub fn step(mut s: State, k: int) {
                 _ => -7,
             }
             let pos = theory.position(before) + delta
-            let bottom = if s.below {
-                (if s.book == 1 then 21 + s.mode else 20 + s.mode)
-            } else {
-                28 + s.mode
-            }
-            if pos < bottom || pos > bottom + 14 { return }
+            // Register is not a species rule: let the judge diagnose range/crossing.
+            if pos < lowest_pitch() || pos > highest_pitch() { return }
             next = theory.pitch(pos)
         }
         remember(mut s)
@@ -392,3 +388,8 @@ pub fn choose_clef(cantus: List[theory.Pitch], voice: List[theory.Pitch]) -> int
     for p in voice { if theory.position(p) < low { low = theory.position(p) } }
     if low >= 25 then 30 else 18
 }
+
+/// The editor and pre-rendered audition bank share this explicit sounding extent.
+pub fn lowest_pitch() -> int { 7 }
+
+pub fn highest_pitch() -> int { 48 }

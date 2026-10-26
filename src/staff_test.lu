@@ -170,3 +170,19 @@ fn test_treble_second_line_is_G4_and_bass_top_is_A3() {
         assert(theory.name(staff.pitch_of(bass, staff.row_of(bass, theory.pitch(26)))) == "A3")
     }
 }
+
+fn test_editor_reaches_three_ledgers_below_without_changing_clef() {
+    for book in 1..6 {
+        var s = session.with_book(take session.tutorial(0, false), book)
+        let clef = s.clef
+        let original = theory.position(s.voice[0])
+        while theory.position(s.voice[0]) > clef - 6 { session.step(mut s, 2) }
+        assert(theory.position(s.voice[0]) == clef - 6)
+        assert(s.clef == clef)
+        session.step(mut s, 6)
+        assert(theory.position(s.voice[0]) == clef - 13)
+        session.step(mut s, 11)
+        while theory.position(s.voice[0]) < original { session.step(mut s, 1) }
+        assert(theory.position(s.voice[0]) == original && s.clef == clef)
+    }
+}

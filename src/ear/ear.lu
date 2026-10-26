@@ -88,33 +88,25 @@ fn render(path: str, text: str, seconds: int) -> () ! {io} {
     fs.write_bytes(path, bytes) else |_| { return io }
 }
 
-/// Render the two-octave diatonic bank and the raised cadence note before playing.
+/// Render the supported editor register and permitted cadence sharps before playing.
 pub fn prepare(mut e: Ear, s: session.State) -> () ! {io} {
     if !e.enabled { return }
-    e.base = 28 + s.mode + (if s.below then (if s.book == 1 then -7 else -8) else 0)
+    e.base = session.lowest_pitch()
     let begin = clock.now_ns()
-    for i in 0..15 {
+    for i in 0..session.highest_pitch() - e.base + 1 {
         region note {
             let p = theory.pitch(e.base + i)
             render("{e.dir}/note-{e.base + i}-0.wav", note_part(p), 1)?
         }
     }
-    if s.book > 1 {
-        for i in 0..15 {
-            let degree = (e.base + i - 28 - s.mode + 70) % 7
-            if degree == 6 && theory.raises(s.mode) || degree == 5 && s.mode == 5 {
-                region note {
-                    var p = theory.pitch(e.base + i)
-                    p.accidental = 1
-                    render("{e.dir}/note-{e.base + i}-1.wav", note_part(p), 1)?
-                }
+    for pos in e.base..session.highest_pitch() + 1 {
+        let degree = (pos - 28 - s.mode + 70) % 7
+        if degree == 6 && theory.raises(s.mode) || degree == 5 && s.mode == 5 && s.book > 1 {
+            region note {
+                var p = theory.pitch(pos)
+                p.accidental = 1
+                render("{e.dir}/note-{pos}-1.wav", note_part(p), 1)?
             }
-        }
-    } else if theory.raises(s.mode) {
-        region note {
-            var p = theory.pitch(e.base + 6)
-            p.accidental = 1
-            render("{e.dir}/note-{e.base + 6}-1.wav", note_part(p), 1)?
         }
     }
     eprint("sound: note-bank render_us {(clock.now_ns() - begin) / 1000} base {e.base}")

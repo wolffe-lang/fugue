@@ -31,7 +31,7 @@ def editor(bin, ctx):
     ctx.common_checks(s, 0, problems)
     bank = list(root.glob('note-*.wav'))
     whole = list(root.glob('whole-*.wav'))
-    if len(bank) != 16: problems.append('two-octave bank plus raised seventh missing')
+    if len(bank) != 48: problems.append('full editor bank plus cadence sharps missing')
     if not whole: problems.append('hear did not render both voices')
     for path in bank + whole:
         data = path.read_bytes()
