@@ -39,6 +39,7 @@ target/fugue --seed 7 --size 120x40
 target/fugue --daily --plain
 target/fugue --mute --record my-answer.pk
 target/fugue --replay my-answer.pk --ticks 400
+target/fugue --script my-answer.pk --frames 400 --sound-replay my-answer.pcm
 ```
 
 `--mute` or `FUGUE_SOUND=0` disables audio. On Linux,
@@ -55,9 +56,10 @@ tools/check                         # local host, memory-gated on macOS
 .lair/tools/in-container tools/check-perf
 ```
 
-The gate includes 65 checked tests, native and release builds, both-tier goldens
-at 80x24 and 120x40, eleven pseudo-terminal rows, per-rule verdicts, a 300-line
-generator census, three three-star reference solutions, a real solved recording,
+The gate includes 71 checked tests, native and release builds, both-tier goldens
+at 80x24 and 120x40, thirteen pseudo-terminal rows, per-rule verdicts, a 300-line
+generator census, a pitch/row/margin round-trip, continuous staff and bar-line
+walks, a complete listening cursor and exact PCM golden, three three-star reference solutions, a real solved recording,
 score-tampering refusal, and a both-way glyph inventory. PR CI runs Linux; the
 full tier adds macOS and performance. Six cited Fux cantus firmi are historical
 test oracles only, never playable levels or source material for game music.
