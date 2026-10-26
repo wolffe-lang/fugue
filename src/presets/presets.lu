@@ -1,0 +1,391 @@
+//! Curated original tutorial pages and independently checked reference answers.
+
+use rhythm
+use theory
+
+/// A fixed cantus, rhythmic grid and test-only reference answer.
+pub struct Page {
+    mode: int,
+    cantus: List[theory.Pitch],
+    answer: List[theory.Pitch],
+    beats: List[rhythm.Beat],
+}
+
+fn notes(values: List[int], sharps: List[int]) -> List[theory.Pitch] {
+    var out = List[theory.Pitch]()
+    for value in values { (mut out).push(theory.pitch(value)) }
+    for index in sharps { out[index].accidental = 1 }
+    out
+}
+
+/// Fixed pages are not seeded output; their answers are never loaded into the editor.
+pub fn page(book: int, index: int) -> Page {
+    var cf = List[theory.Pitch](), cp = List[theory.Pitch](), beats = List[rhythm.Beat]()
+    var mode = 0
+    if book == 2 && index == 0 {
+        mode = 0
+        cf = notes([28, 29, 30, 28, 31, 30, 32, 28, 29, 28], [])
+        cp = notes([32, 33, 34, 33, 32, 30, 35, 34, 33, 34, 35, 37, 36, 34, 35, 34, 33, 34, 35], [])
+        for length in [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8] { (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false }) }
+    }
+    if book == 2 && index == 1 {
+        mode = 1
+        cf = notes([29, 30, 32, 29, 30, 31, 33, 29, 30, 29], [])
+        cp = notes(
+            [33, 34, 32, 35, 34, 35, 36, 35, 34, 35, 40, 39, 38, 35, 36, 35, 34, 35, 36],
+            [17],
+        )
+        for length in [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8] { (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false }) }
+    }
+    if book == 2 && index == 2 {
+        mode = 4
+        cf = notes([32, 33, 36, 35, 34, 35, 37, 32, 33, 32], [])
+        cp = notes(
+            [39, 39, 38, 37, 38, 40, 37, 38, 39, 38, 37, 38, 39, 37, 39, 38, 37, 38, 39],
+            [17],
+        )
+        for length in [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8] { (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false }) }
+        beats[0].rest = true
+    }
+    if book == 3 && index == 0 {
+        mode = 0
+        cf = notes([28, 29, 30, 33, 32, 33, 35, 28, 29, 28], [])
+        cp = notes(
+            [
+                35,
+                36,
+                37,
+                39,
+                38,
+                36,
+                37,
+                38,
+                37,
+                36,
+                37,
+                38,
+                37,
+                36,
+                37,
+                38,
+                37,
+                36,
+                37,
+                38,
+                37,
+                36,
+                37,
+                38,
+                37,
+                36,
+                37,
+                38,
+                37,
+                36,
+                37,
+                42,
+                41,
+                40,
+                33,
+                34,
+                35,
+            ],
+            [],
+        )
+        for length in [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            8,
+        ] { (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false }) }
+    }
+    if book == 3 && index == 1 {
+        mode = 1
+        cf = notes([29, 30, 31, 29, 32, 31, 33, 31, 30, 29], [])
+        cp = notes(
+            [
+                33,
+                32,
+                33,
+                36,
+                35,
+                34,
+                35,
+                36,
+                35,
+                34,
+                35,
+                36,
+                34,
+                33,
+                32,
+                33,
+                34,
+                33,
+                32,
+                34,
+                35,
+                34,
+                33,
+                34,
+                35,
+                34,
+                33,
+                34,
+                35,
+                34,
+                33,
+                34,
+                35,
+                37,
+                36,
+                35,
+                36,
+            ],
+            [35],
+        )
+        for length in [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            8,
+        ] { (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false }) }
+    }
+    if book == 3 && index == 2 {
+        mode = 4
+        cf = notes([32, 33, 34, 37, 36, 37, 39, 32, 33, 32], [])
+        cp = notes(
+            [
+                36,
+                35,
+                36,
+                37,
+                35,
+                34,
+                35,
+                37,
+                36,
+                34,
+                41,
+                40,
+                39,
+                40,
+                41,
+                39,
+                41,
+                42,
+                43,
+                42,
+                41,
+                39,
+                40,
+                39,
+                41,
+                39,
+                40,
+                39,
+                41,
+                36,
+                37,
+                39,
+                37,
+                40,
+                39,
+                38,
+                39,
+            ],
+            [35],
+        )
+        for length in [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            8,
+        ] { (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false }) }
+    }
+    if book == 4 && index == 0 {
+        mode = 0
+        cf = notes([28, 29, 30, 28, 31, 30, 32, 28, 29, 28], [])
+        cp = notes([35, 32, 34, 33, 33, 32, 32, 33, 33, 36, 36, 35, 34, 32, 32, 35, 35, 34, 35], [])
+        for length in [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8] { (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false }) }
+        beats[0].rest = true
+        beats[4].tied = true
+        beats[6].tied = true
+        beats[8].tied = true
+        beats[10].tied = true
+        beats[14].tied = true
+        beats[16].tied = true
+    }
+    if book == 4 && index == 1 {
+        mode = 1
+        cf = notes([29, 30, 31, 29, 33, 32, 34, 29, 30, 29], [])
+        cp = notes(
+            [36, 33, 33, 32, 33, 31, 31, 36, 36, 35, 36, 37, 37, 36, 34, 36, 36, 35, 36],
+            [17],
+        )
+        for length in [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8] { (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false }) }
+        beats[0].rest = true
+        beats[2].tied = true
+        beats[6].tied = true
+        beats[8].tied = true
+        beats[12].tied = true
+        beats[16].tied = true
+    }
+    if book == 4 && index == 2 {
+        mode = 4
+        cf = notes([32, 33, 32, 34, 32, 33, 35, 32, 33, 32], [])
+        cp = notes(
+            [39, 36, 36, 35, 36, 37, 37, 36, 36, 34, 35, 40, 40, 39, 37, 39, 39, 38, 39],
+            [17],
+        )
+        for length in [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8] { (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false }) }
+        beats[0].rest = true
+        beats[2].tied = true
+        beats[6].tied = true
+        beats[8].tied = true
+        beats[12].tied = true
+        beats[16].tied = true
+    }
+    if book == 5 && index == 0 {
+        mode = 0
+        cf = notes([28, 29, 30, 28, 31, 30, 32, 28, 29, 28], [])
+        cp = notes(
+            [35, 35, 35, 34, 35, 36, 35, 34, 35, 33, 35, 35, 36, 37, 41, 40, 41, 42, 41, 34, 35],
+            [],
+        )
+        for length in [4, 4, 4, 4, 2, 2, 2, 2, 8, 4, 4, 4, 4, 2, 2, 2, 2, 8, 4, 4, 8] {
+            (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false })
+        }
+        beats[0].rest = true
+        beats[2].tied = true
+        beats[11].tied = true
+    }
+    if book == 5 && index == 1 {
+        mode = 1
+        cf = notes([29, 30, 29, 31, 32, 37, 36, 29, 30, 29], [])
+        cp = notes(
+            [36, 36, 36, 35, 36, 37, 36, 35, 36, 37, 41, 41, 40, 41, 43, 41, 42, 41, 34, 35, 36],
+            [19],
+        )
+        for length in [4, 4, 4, 4, 2, 2, 2, 2, 8, 4, 4, 4, 4, 2, 2, 2, 2, 8, 4, 4, 8] {
+            (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false })
+        }
+        beats[0].rest = true
+        beats[2].tied = true
+        beats[11].tied = true
+    }
+    if book == 5 && index == 2 {
+        mode = 4
+        cf = notes([32, 33, 34, 37, 36, 37, 39, 32, 33, 32], [])
+        cp = notes(
+            [39, 39, 39, 38, 39, 40, 39, 38, 39, 40, 43, 43, 42, 41, 39, 40, 39, 41, 37, 38, 39],
+            [19],
+        )
+        for length in [4, 4, 4, 4, 2, 2, 2, 2, 8, 4, 4, 4, 4, 2, 2, 2, 2, 8, 4, 4, 8] {
+            (mut beats).push(rhythm.Beat { length: length, rest: false, tied: false })
+        }
+        beats[0].rest = true
+        beats[2].tied = true
+        beats[11].tied = true
+    }
+    Page { mode: mode, cantus: cf, answer: cp, beats: beats }
+}
