@@ -1,3 +1,4 @@
+use exposition
 use first
 use presets
 use replay
@@ -19,6 +20,8 @@ pub struct State {
     range_high: int,
     rhythm_editable: bool,
     notice: str,
+    fugue: exposition.Page,
+    completed: List[int],
     failure: str,
     beats: List[rhythm.Beat],
     seed: int,
@@ -57,12 +60,14 @@ pub fn new(seed: int, title: bool) -> State {
         range_high: highest_pitch(),
         rhythm_editable: false,
         notice: "",
+        fugue: exposition.blank(),
+        completed: [0, 0, 0],
         failure: "",
         beats: rhythm.pattern(1, cantus.len),
         seed: seed,
         cursor: 0,
         within: 0,
-        progress: [0, 0, 0, 0, 0],
+        progress: [0, 0, 0, 0, 0, 0],
         phase: if title then 0 else 1,
         quit: false,
         mode: mode,
@@ -135,6 +140,8 @@ pub fn key(n: int) -> int {
         1116 => 24,
         1048 => 25,
         1046 => 28,
+        1054 => 26,
+        1118 => 27,
         _ => 0,
     }
 }
@@ -143,11 +150,19 @@ pub fn key(n: int) -> int {
 pub fn ticks_per_whole() -> int { 30 }
 
 /// Written phrase duration in 30 Hz ticks, independent of attack count.
-pub fn piece_ticks(s: State) -> int { s.cantus.len * ticks_per_whole() }
+pub fn piece_ticks(s: State) -> int {
+    if s.book == 6 { return exposition.bars(s.fugue) * 2 * ticks_per_whole() }
+    s.cantus.len * ticks_per_whole()
+}
 
 /// Event lookup seam for rhythm: elapsed ticks map to the sounding event.
 pub fn event_at(s: State, elapsed: int) -> int {
     if elapsed < 0 || elapsed >= piece_ticks(s) { return -1 }
+    if s.book == 6 {
+        let duration = exposition.bars(s.fugue) * ticks_per_whole()
+        let beats = if elapsed < duration then copy s.fugue.given.beats else copy s.beats
+        return rhythm.at(beats, elapsed % duration * 8 / ticks_per_whole())
+    }
     rhythm.at(s.beats, elapsed * 8 / ticks_per_whole())
 }
 
@@ -161,9 +176,11 @@ pub fn step(mut s: State, k: int) {
     if k == 14 || k == 15 { s.quit = true; return }
     if s.hearing >= 0 { return }
     if k == 21 { s.phase = 0; return }
-    if s.phase == 0 && k >= 16 && k <= 20 {
+    if s.phase == 0 && (k >= 16 && k <= 20 || k == 26) {
         let progress = copy s.progress
-        s = with_book(take tutorial(0, false), k - 15)
+        let completed = copy s.completed
+        s = with_book(take tutorial(0, false), if k == 26 then 6 else k - 15)
+        s.completed = completed
         s.progress = progress
         return
     }
@@ -176,8 +193,10 @@ pub fn step(mut s: State, k: int) {
         }
         let book = s.book
         let progress = copy s.progress
+        let completed = copy s.completed
         s = if book == 1 then next else with_book(take next, book)
         s.progress = progress
+        s.completed = completed
         return
     }
     if k == 13 && s.phase == 1 && s.rhythm_editable { edit_rhythm(mut s, 25); return }
@@ -192,7 +211,21 @@ pub fn step(mut s: State, k: int) {
         if k == 2 { s.cursor += 1 }
         return
     }
+    if s.phase == 4 { return }
     if s.phase != 1 { return }
+    if s.book == 6 && k == 27 {
+        if s.level < 2 { return }
+        s.fugue = exposition.written(s.fugue, s.voice, s.beats)
+        s.fugue.editing = 1 - s.fugue.editing
+        let line = if s.fugue.editing == 0 then copy s.fugue.response else copy s.fugue.continuation
+        s.voice = line.notes
+        s.beats = line.beats
+        s.below = if s.fugue.editing == 0 then s.fugue.answer_below else !s.fugue.answer_below
+        s.cursor = 0
+        s.within = 0
+        s.history = []
+        return
+    }
     let unit = editor_unit(s)
     if k == 3 {
         if s.within >= unit {
@@ -214,8 +247,20 @@ pub fn step(mut s: State, k: int) {
     if k == 8 { s.audition += 1 }
     if k == 10 {
         let stars = score(s)
-        if stars > s.progress[s.book - 1] { s.progress[s.book - 1] = stars }
+        if s.book != 6 && stars > s.progress[s.book - 1] { s.progress[s.book - 1] = stars }
+        if s.book == 6 && s.level < 3 && stars > s.completed[s.level] {
+            s.completed[s.level] = stars
+        }
         s.phase = 2
+        if s.book == 6 &&
+            stars > 0 &&
+            s.completed[0] > 0 &&
+            s.completed[1] > 0 &&
+            s.completed[2] > 0 {
+            s.phase = 4
+            let best = (s.completed[0] + s.completed[1] + s.completed[2]) / 3
+            if best > s.progress[5] { s.progress[5] = best }
+        }
         s.cursor = 0
         s.within = 0
     }
@@ -280,12 +325,14 @@ pub fn tutorial(index: int, title: bool) -> State {
         range_high: highest_pitch(),
         rhythm_editable: false,
         notice: "",
+        fugue: exposition.blank(),
+        completed: [0, 0, 0],
         failure: "",
         beats: rhythm.pattern(1, cf.len),
         seed: index,
         cursor: 0,
         within: 0,
-        progress: [0, 0, 0, 0, 0],
+        progress: [0, 0, 0, 0, 0, 0],
         phase: if title then 0 else 1,
         quit: false,
         mode: mode,
@@ -301,6 +348,7 @@ pub fn tutorial(index: int, title: bool) -> State {
 
 /// A score is recomputed from notes, never loaded from a replay comment.
 pub fn verdict(s: State) -> first.Verdict {
+    if s.book == 6 { return exposition.check(exposition.written(s.fugue, s.voice, s.beats)) }
     if s.book == 1 { return first.check(s.cantus, s.voice, s.mode, s.below) }
     species.check(s.cantus, s.voice, s.beats, s.mode, s.below, s.book)
 }
@@ -310,7 +358,7 @@ pub fn score(s: State) -> int { if s.failure != "" then 0 else verdict(s).stars 
 
 /// Initialize from the replay's optional tutorial start selector.
 pub fn from_replay(r: replay.Replay, title: bool) -> State {
-    if r.start >= 14000 && r.start < 22000 {
+    if r.start >= 14000 && r.start < 24000 {
         var old = copy r
         let book = (r.start - 10000) / 2000
         old.start = (r.start - 10000) % 2000
@@ -329,6 +377,22 @@ pub fn with_book(take s: State, book: int) -> State {
     next.book = book
     next.rhythm_editable = book == 5
     if book == 1 { return next }
+    if book == 6 {
+        let p = exposition.new(next.level, next.seed, next.mode, next.below) else {
+            next.failure = "No invertible exposition within the search budget."
+            next.phase = 3
+            return next
+        }
+        next.mode = p.given.mode
+        next.cantus = copy p.given.notes
+        let line = if p.editing == 0 then copy p.response else copy p.continuation
+        next.voice = line.notes
+        next.beats = line.beats
+        next.below = if p.editing == 0 then p.answer_below else !p.answer_below
+        next.fugue = p
+        next.cursor = 0
+        return next
+    }
     if next.level < 3 {
         let page = presets.page(book, next.level)
         next.mode = page.mode

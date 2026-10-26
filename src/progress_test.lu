@@ -1,8 +1,8 @@
 use progress
 
 fn test_book_progress_round_trip_and_refusals() {
-    let best = progress.decode(progress.format([0, 1, 2, 3, 0])) else List[int]()
-    assert(best.len == 5 && best[3] == 3)
+    let best = progress.decode(progress.format([0, 1, 2, 3, 0, 2])) else List[int]()
+    assert(best.len == 6 && best[3] == 3)
     assert((progress.decode("fugue 2 0 0 0 0 0") else List[int]()).len == 0)
     assert((progress.decode("fugue 1 0 0 0 4 0") else List[int]()).len == 0)
     assert((progress.decode("fugue 1 0 0 0 0") else List[int]()).len == 0)
