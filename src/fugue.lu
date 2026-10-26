@@ -127,7 +127,7 @@ fn options() -> Options ! {parse} {
         }
         i += 1
     }
-    if o.book < 1 || o.book > 5 { return parse }
+    if o.book < 1 || o.book > 6 { return parse }
     if o.cols < 80 || o.rows < 24 || o.every < 1 || o.frames < 0 { return parse }
     o
 }
@@ -445,7 +445,7 @@ fn main() -> int {
     let args = env.args()
     if has(args, "--help") || has(args, "-h") {
         print(
-            "fugue / Books I-V\n--book 1..5   --seed N | --daily   --size WxH (minimum 80x24)   --plain   --mute\n--record FILE   --replay FILE   --ticks N\nArrows write, Shift-Up/Down octave, # cadence, Space sound, h hear, Enter check, u undo, n next, q quit.",
+            "fugue / Books I-VI\n--book 1..6   --seed N | --daily   --size WxH (minimum 80x24)   --plain   --mute\n--record FILE   --replay FILE   --ticks N\nArrows write, Shift-Up/Down octave, # cadence, Space sound, h hear, Enter check, u undo, n next, q quit.",
         )
         return 0
     }

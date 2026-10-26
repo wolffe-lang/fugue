@@ -1,5 +1,6 @@
 //! Prepare outside rendering; the live adapter owns only its afplay children.
 
+use exposition
 use clock
 use manuscript
 use session
@@ -64,6 +65,12 @@ pub fn part(cantus: List[theory.Pitch], voice: List[theory.Pitch]) -> str {
 
 /// Both voices in a single score, on the session's playback clock.
 pub fn whole_part(s: session.State) -> str {
+    if s.book == 6 {
+        return exposition.part(
+            exposition.written(s.fugue, s.voice, s.beats),
+            30 * 60 * 4 / session.ticks_per_whole(),
+        )
+    }
     if s.book == 1 { return part(s.cantus, s.voice) }
     manuscript.part(s, 30 * 60 * 4 / session.ticks_per_whole())
 }
@@ -91,6 +98,19 @@ fn render(path: str, text: str, seconds: int) -> () ! {io} {
 /// Render the two-octave diatonic bank and the raised cadence note before playing.
 pub fn prepare(mut e: Ear, s: session.State) -> () ! {io} {
     if !e.enabled { return }
+    if s.book == 6 {
+        e.base = 21
+        for pos in 21..50 {
+            for accidental in [-1, 0, 1] {
+                region note {
+                    var p = theory.pitch(pos)
+                    p.accidental = accidental
+                    render("{e.dir}/note-{pos}-{accidental}.wav", note_part(p), 1)?
+                }
+            }
+        }
+        return
+    }
     e.base = 28 + s.mode + (if s.below then (if s.book == 1 then -7 else -8) else 0)
     let begin = clock.now_ns()
     for i in 0..15 {
