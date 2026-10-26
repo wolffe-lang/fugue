@@ -102,6 +102,7 @@ pub fn suspension(
         return false
     }
     if theory.interval(cf[bar - 1], cp[i - 1]).consonance == 2 { return false }
+    if delta(cp[i], cp[i + 1]) == 1 { return true }
     if delta(cp[i], cp[i + 1]) != -1 ||
         theory.magnitude(theory.chromatic(cp[i + 1]) - theory.chromatic(cp[i])) > 2 {
         return false
