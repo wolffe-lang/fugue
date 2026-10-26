@@ -91,8 +91,8 @@ def panel_right_twice(bin, ctx):
     problems = []
     if 'Editing bar 3' not in screen[4][58:]:
         problems.append('selected-bar panel did not become Editing bar 3')
-    if 'First break' not in screen[16][58:]:
-        problems.append('first break is not distinguished from the editing cursor')
+    if 'Breaks: whole page' not in screen[16][58:]:
+        problems.append('page breaks are not distinguished from the selected event')
     s.type(b'q'); s.finish(); ctx.common_checks(s, 0, problems)
     return s, problems
 
@@ -225,3 +225,64 @@ def rhythmic_ear(bin, ctx):
 
 
 ROWS['book-5-ear'] = rhythmic_ear
+
+
+def ledger_below_and_back(bin, ctx):
+    s = ctx.Session([bin, '--no-title', '--mute'], 24, 80, ctx.env_for())
+    s.pump(.2)
+    s.type(b'\x1b[B'*8, .3)
+    image = ctx.screen_text(bin, s.out).splitlines()
+    problems = []
+    matches = [row for row in image if row[1:4].strip() == 'F3']
+    if not matches or not any('*' in row[8:11] or '●' in row[8:11] for row in matches):
+        problems.append('three-ledger F3 not visible below treble')
+    for name in ['C4', 'A3', 'F3']:
+        row = next((row for row in image if row[1:4].strip() == name), '')
+        if not row or not any(c in '-─' for c in row[8:11]): problems.append('missing ledger '+name)
+    s.type(b'\x1b[A'*8, .3)
+    image = ctx.screen_text(bin, s.out).splitlines()
+    if 'G4' not in image[8][58:]: problems.append('walk did not return to G4')
+    s.type(b'q'); s.finish(); ctx.common_checks(s, 0, problems)
+    return s, problems
+
+
+def selected_event_status(bin, ctx):
+    s = ctx.Session([bin, '--book', '3', '--no-title', '--mute'], 24, 80, ctx.env_for())
+    # Give five adjacent events distinct pitches using only ordinary input.
+    for n in range(1, 6):
+        s.type(b'\x1b[A'*n, .07)
+        if n < 5: s.type(b'\x1b[C', .07)
+    s.type(b'\x1b[D'*4, .2)
+    problems = []
+    expected = ['M6 imperfect', 'M7 dissonant', 'P8 perfect', 'M9 dissonant', 'm10 imperfect']
+    for i, interval in enumerate(expected):
+        image = ctx.screen_text(bin, s.out).splitlines()
+        bar, beat = i//4+1, (i%4)*2+1
+        if f'Bar {bar}, beat {beat}:8' not in image[5][58:]: problems.append(f'stale cursor status at event {i}: '+image[5])
+        if interval not in image[7][58:]: problems.append(f'stale interval at event {i}: '+image[7])
+        if i < 4: s.type(b'\x1b[C', .2)
+    s.type(b'q'); s.finish(); ctx.common_checks(s, 0, problems)
+    return s, problems
+
+
+def edit_florid_bar(bin, ctx):
+    path = Path(ctx.ROOT)/'target/pty/edited-rhythm.pk'
+    s = ctx.Session([bin, '--book', '5', '--no-title', '--mute', '--record', str(path)], 24, 80, ctx.env_for())
+    s.type(b'r[.', .3)
+    image = ctx.screen_text(bin, s.out)
+    problems = []
+    if '/4.' not in image or '[ split ] join . dot t tie r rest' not in image: problems.append('dot or rhythm hint absent')
+    s.type(b'u]trr', .3)
+    s.type(b'\r', .2)
+    if 'Not yet' not in ctx.screen_text(bin, s.out): problems.append('edited rhythm was not re-judged')
+    s.type(b'q'); s.finish(); ctx.common_checks(s, 0, problems)
+    source = path.read_text()
+    if '# score 0' not in source: problems.append('edited rhythm score not recorded')
+    ticks = max(int(line.split()[1]) for line in source.splitlines() if line.startswith('t '))+1
+    p = subprocess.run([bin, '--headless', '--script', str(path), '--frames', str(ticks), '--every', str(ticks), '--dump', str(path.parent/'edited-verify')], capture_output=True, text=True)
+    if p.returncode or 'verified score 0' not in p.stderr: problems.append('edited rhythm did not replay with same verdict')
+    return s, problems
+
+ROWS['three-ledgers-below-and-back'] = ledger_below_and_back
+ROWS['selected-event-status'] = selected_event_status
+ROWS['book-5-rhythm-edits'] = edit_florid_bar

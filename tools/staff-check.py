@@ -31,15 +31,18 @@ for cols, rows in [(80, 24), (120, 40)]:
             subprocess.run([binary, '--headless', '--script', f'tests/cases/{case}-{cols}.pk', '--frames', '40' if case == 'walk' else '301', '--every', '1' if case == 'walk' else '30', '--tier', tier, '--dump', str(out)], cwd=root, check=True)
             for path in sorted(out.glob('frame-*.txt')):
                 image = path.read_text().splitlines(); sty = styles(path.with_suffix('.sty'))
-                # Every boundary crosses all five lines and four intervening spaces.
+                # Grand-staff lines retain their absolute pitches even while the
+                # viewport scrolls. Bar crossings cover the visible staff span.
                 ys = [y for y in range(rows) if image[y][7] == bar]
-                assert len(ys) == 9 and ys == list(range(ys[0], ys[0]+9)), path
+                assert ys and ys == list(range(ys[0], ys[-1]+1)), path
                 for y in ys:
                     for x in bars: assert image[y][x] == bar, (path, y, x)
-                for y in ys[::2]:
-                    assert all(ch in {line, bar, cf, cp, '#'} for ch in image[y][7:margin-1]), (path, y)
+                for y, row in enumerate(image):
+                    pitch = row[1:4].strip()
+                    if pitch in {'G2','B2','D3','F3','A3','E4','G4','B4','D5','F5'}:
+                        assert all(ch in {line, bar, cf, cp, '#', 'n', 'b', '♯', '♭', '♮'} for ch in row[7:margin-1]), (path,y)
                 assert all('_' not in row for row in image), path
-                assert 'h hear   Space sound   Enter check' in image[-2], path
+                assert any('h hear   Space sound   Enter check' in row for row in image[-2:]), path
                 assert 'Editing bar 1' in image[4][margin+2:], path
                 assert sty[4][margin+2][2] == 1, path
                 if case == 'hear':
