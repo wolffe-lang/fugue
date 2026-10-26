@@ -31,4 +31,44 @@ pool by summit placement and interval variety, then the seed chooses among
 the best sixteen. A census exercises fifty seeds in each mode. A seed is not
 a promise that no other seed shares the same line.
 
-Book I's vertical rules and style card are added with the first-species checker.
+
+## First species
+
+Place a consonance at every bar. Above a lower cantus, open with a perfect fifth
+or octave. Below an upper cantus, open with a unison or octave. Close on a unison
+or octave, both voices approaching by step: a minor third contracts to unison,
+or a major sixth expands to the octave. Use the raised leading tone where the
+mode needs it. Phrygian keeps its characteristic semitone in the cantus instead.
+
+Never carry perfect fifths, octaves or unisons in parallel. Do not approach a
+perfect interval with both voices moving the same way, even when the earlier
+interval was imperfect: this is the hidden-perfect rule. Do not cross the
+voices, step beyond the other voice's previous note, or meet at a unison inside
+the phrase. Your own melody follows the cantus's melodic rules; its beginning
+and ending are governed by these two-voice rules instead of the cantus's tonic
+endpoint requirement. The critic identifies each break by its one-based bar.
+
+## Stars
+
+No stars are awarded to an illegal answer. A legal answer earns one star, two
+when at least three goals are met, and three when all five are met:
+
+- At least 50% of transitions move in contrary motion.
+- At least 60% of your melodic transitions are steps.
+- Your one highest note occurs at a different bar from the cantus's highest note.
+- No chain of parallel thirds or sixths exceeds three bars.
+- At least three different simple interval numbers occur.
+
+The card shows the actual shares, booleans and interval count. The measures do
+not disguise hard errors inside an averaged number. A seeded exercise is proved
+to admit a legal answer before it is offered, but not every seed is guaranteed
+to admit a three-star one. The three tutorial reference solutions do.
+
+## Historical test lines
+
+The only borrowed music is the six cantus firmi transcribed in
+`tests/oracles/fux.txt`, from Fux's public-domain *Gradus ad Parnassum* (Vienna,
+1725), printed pages 47, 51, 52, 53, 55 and 62. The original scan is
+https://archive.org/details/gradusadparnassu00fuxj_0 . Their exact named breaks
+are expected test results, not errors suppressed to make the historical examples
+fit. No Fux line or counterpoint appears in a playable level.
