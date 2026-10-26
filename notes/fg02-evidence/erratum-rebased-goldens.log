@@ -1,0 +1,280 @@
+fugue fixtures: eighteen authored cases, not recordings
+goldens: wrote tests/goldens/active-bar-120-rich
+goldens: wrote tests/goldens/active-bar-120-plain
+goldens: wrote tests/goldens/active-bar-80-rich
+goldens: wrote tests/goldens/active-bar-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-3-80-plain
+goldens: wrote tests/goldens/book-2-seed-120-rich
+goldens: wrote tests/goldens/book-2-seed-120-plain
+goldens: wrote tests/goldens/book-2-seed-80-rich
+goldens: wrote tests/goldens/book-2-seed-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-3-80-plain
+goldens: wrote tests/goldens/book-3-seed-120-rich
+goldens: wrote tests/goldens/book-3-seed-120-plain
+goldens: wrote tests/goldens/book-3-seed-80-rich
+goldens: wrote tests/goldens/book-3-seed-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-3-80-plain
+goldens: wrote tests/goldens/book-4-seed-120-rich
+goldens: wrote tests/goldens/book-4-seed-120-plain
+goldens: wrote tests/goldens/book-4-seed-80-rich
+goldens: wrote tests/goldens/book-4-seed-80-plain
+goldens: wrote tests/goldens/book-5-eighths-120-rich
+goldens: wrote tests/goldens/book-5-eighths-120-plain
+goldens: wrote tests/goldens/book-5-eighths-80-rich
+goldens: wrote tests/goldens/book-5-eighths-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-3-80-plain
+goldens: wrote tests/goldens/book-5-seed-120-rich
+goldens: wrote tests/goldens/book-5-seed-120-plain
+goldens: wrote tests/goldens/book-5-seed-80-rich
+goldens: wrote tests/goldens/book-5-seed-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-complete-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-complete-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-complete-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-complete-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-end-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-end-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-end-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-end-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-hear-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-hear-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-hear-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-hear-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-2-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-2-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-3-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-3-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-3-80-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-seed-120-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-seed-120-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-seed-80-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-seed-80-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-status-120-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-status-120-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-status-80-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-status-80-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-wrong-120-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-wrong-120-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-wrong-80-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-wrong-80-plain
+goldens: wrote tests/goldens/critic-120-rich
+goldens: wrote tests/goldens/critic-120-plain
+goldens: wrote tests/goldens/critic-80-rich
+goldens: wrote tests/goldens/critic-80-plain
+goldens: wrote tests/goldens/cursor-1-120-rich
+goldens: wrote tests/goldens/cursor-1-120-plain
+goldens: wrote tests/goldens/cursor-1-80-rich
+goldens: wrote tests/goldens/cursor-1-80-plain
+goldens: wrote tests/goldens/cursor-3-120-rich
+goldens: wrote tests/goldens/cursor-3-120-plain
+goldens: wrote tests/goldens/cursor-3-80-rich
+goldens: wrote tests/goldens/cursor-3-80-plain
+goldens: wrote tests/goldens/hear-120-rich
+goldens: wrote tests/goldens/hear-120-plain
+goldens: wrote tests/goldens/hear-80-rich
+goldens: wrote tests/goldens/hear-80-plain
+goldens: wrote tests/goldens/ledger-120-rich
+goldens: wrote tests/goldens/ledger-120-plain
+goldens: wrote tests/goldens/ledger-80-rich
+goldens: wrote tests/goldens/ledger-80-plain
+goldens: wrote tests/goldens/partial-120-rich
+goldens: wrote tests/goldens/partial-120-plain
+goldens: wrote tests/goldens/partial-80-rich
+goldens: wrote tests/goldens/partial-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-plain
+goldens: wrote tests/goldens/rhythm-edit-120-rich
+goldens: wrote tests/goldens/rhythm-edit-120-plain
+goldens: wrote tests/goldens/rhythm-edit-80-rich
+goldens: wrote tests/goldens/rhythm-edit-80-plain
+goldens: wrote tests/goldens/staff-120-rich
+goldens: wrote tests/goldens/staff-120-plain
+goldens: wrote tests/goldens/staff-80-rich
+goldens: wrote tests/goldens/staff-80-plain
+goldens: wrote tests/goldens/title-120-rich
+goldens: wrote tests/goldens/title-120-plain
+goldens: wrote tests/goldens/title-80-rich
+goldens: wrote tests/goldens/title-80-plain
+goldens: wrote tests/goldens/walk-120-rich
+goldens: wrote tests/goldens/walk-120-plain
+goldens: wrote tests/goldens/walk-80-rich
+goldens: wrote tests/goldens/walk-80-plain
+goldens: wrote tests/goldens/art
+fugue junk 80x24 plain first: 1920 cells, glyph differences 0, styles equal True
+fugue junk 80x24 plain page-2: 1920 cells, glyph differences 0, styles equal True
+fugue junk 80x24 plain page-3: 1920 cells, glyph differences 0, styles equal True
+fugue junk 80x24 plain voice: 1920 cells, glyph differences 0, styles equal True
+fugue junk 80x24 plain refusal: 1920 cells, glyph differences 0, styles equal True
+fugue junk 80x24 plain after-hear: 1920 cells, glyph differences 0, styles equal True
+pty: fugue-junk-80-plain ok (linux x86_64, exit 0, 30924 bytes captured)
+fugue junk 80x24 rich first: 1920 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 92
+fugue junk 80x24 rich page-2: 1920 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 84
+fugue junk 80x24 rich page-3: 1920 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 85
+fugue junk 80x24 rich voice: 1920 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 80
+fugue junk 80x24 rich refusal: 1920 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 82
+fugue junk 80x24 rich after-hear: 1920 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 82
+pty: fugue-junk-80-rich ok (linux x86_64, exit 0, 56199 bytes captured)
+fugue junk 120x40 plain first: 4800 cells, glyph differences 0, styles equal True
+fugue junk 120x40 plain page-2: 4800 cells, glyph differences 0, styles equal True
+fugue junk 120x40 plain page-3: 4800 cells, glyph differences 0, styles equal True
+fugue junk 120x40 plain voice: 4800 cells, glyph differences 0, styles equal True
+fugue junk 120x40 plain refusal: 4800 cells, glyph differences 0, styles equal True
+fugue junk 120x40 plain after-hear: 4800 cells, glyph differences 0, styles equal True
+pty: fugue-junk-120-plain ok (linux x86_64, exit 0, 36340 bytes captured)
+fugue junk 120x40 rich first: 4800 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 252
+fugue junk 120x40 rich page-2: 4800 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 229
+fugue junk 120x40 rich page-3: 4800 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 244
+fugue junk 120x40 rich voice: 4800 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 244
+fugue junk 120x40 rich refusal: 4800 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 246
+fugue junk 120x40 rich after-hear: 4800 cells, glyph differences 0, styles equal True
+fugue deliberate grain cells: 246
+pty: fugue-junk-120-rich ok (linux x86_64, exit 0, 78627 bytes captured)
+fugue cursor 80 answer-first: bar 1, beat 1, F5
+fugue cursor 80 answer-second: bar 2, beat 1, D5
+fugue cursor 80 answer-third: bar 3, beat 5, Fb5
+fugue cursor 80 counter-first: bar 1, beat 1, A4
+fugue cursor 80 counter-second: bar 2, beat 1, B4
+fugue cursor 80 counter-third: bar 3, beat 5, D5
+pty: fugue-cursor-panel-80 ok (linux x86_64, exit 0, 31372 bytes captured)
+fugue cursor 120 answer-first: bar 1, beat 1, F5
+fugue cursor 120 answer-second: bar 2, beat 1, D5
+fugue cursor 120 answer-third: bar 3, beat 5, Fb5
+fugue cursor 120 counter-first: bar 1, beat 1, A4
+fugue cursor 120 counter-second: bar 2, beat 1, B4
+fugue cursor 120 counter-third: bar 3, beat 5, D5
+pty: fugue-cursor-panel-120 ok (linux x86_64, exit 0, 55062 bytes captured)

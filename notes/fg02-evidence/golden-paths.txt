@@ -1,3 +1,7 @@
+active-bar-120-plain
+active-bar-120-rich
+active-bar-80-plain
+active-bar-80-rich
 art
 audio
 book-2-preset-1-120-plain
@@ -80,6 +84,10 @@ book-6-seed-120-plain
 book-6-seed-120-rich
 book-6-seed-80-plain
 book-6-seed-80-rich
+book-6-status-120-plain
+book-6-status-120-rich
+book-6-status-80-plain
+book-6-status-80-rich
 book-6-wrong-120-plain
 book-6-wrong-120-rich
 book-6-wrong-80-plain
