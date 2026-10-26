@@ -1,0 +1,41 @@
+use subject
+use theory
+
+fn subject_census(mode: int) {
+    let pool = subject.candidates(mode)
+    assert(pool.len > 0)
+    for seed in 0..50 {
+        let s = subject.choose(pool, seed) else { assert(false); return }
+        assert(subject.validate(s).len == 0)
+        assert(subject.span(s.beats) == 48)
+    }
+    print("subject census {theory.mode_name(mode)} valid 50/50 pool {pool.len}")
+}
+
+fn test_subject_census_ionian_50() { subject_census(0) }
+
+fn test_subject_census_dorian_50() { subject_census(1) }
+
+fn test_subject_census_phrygian_50() { subject_census(2) }
+
+fn test_subject_census_lydian_50() { subject_census(3) }
+
+fn test_subject_census_mixolydian_50() { subject_census(4) }
+
+fn test_subject_census_aeolian_50() { subject_census(5) }
+
+fn test_subject_unrecovered_tail_is_never_admitted() {
+    var s = subject.generate(0, 0) else { assert(false); return }
+    s.notes[s.notes.len - 2] = theory.pitch(32)
+    var named = false
+    for b in subject.validate(s) { if b.rule == "subject-tail" { named = true } }
+    assert(named)
+}
+
+fn test_three_original_tutorial_subjects() {
+    for index in 0..3 {
+        let s = subject.tutorial(index)
+        for b in subject.validate(s) { print("tutorial {index} {b}") }
+        assert(subject.validate(s).len == 0)
+    }
+}
