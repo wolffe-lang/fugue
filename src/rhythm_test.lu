@@ -1,0 +1,22 @@
+use rhythm
+
+fn test_rhythm_books_fill_bars_and_close_whole() {
+    for book in 1..6 {
+        let beats = rhythm.pattern(book, 10)
+        assert(rhythm.valid(beats, 10))
+        assert(beats[beats.len - 1].length == 8)
+        assert(rhythm.onset(beats, beats.len) == 80)
+        assert(rhythm.at(beats, 79) == beats.len - 1)
+    }
+}
+
+fn test_rhythm_rejects_crossed_bar_and_bad_duration() {
+    assert(!rhythm.valid([rhythm.Beat { length: 3, rest: false, tied: false }], 1))
+    assert(!rhythm.valid([rhythm.Beat { length: 8, rest: true, tied: true }], 1))
+}
+
+fn test_rhythm_fourth_has_preparation_and_ties() {
+    let beats = rhythm.pattern(4, 10)
+    assert(beats[0].rest && !beats[1].rest)
+    assert(!beats[1].tied && beats[2].tied && !beats[3].tied)
+}

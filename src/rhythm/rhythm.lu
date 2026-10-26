@@ -1,0 +1,68 @@
+//! Integer eighth-note time; ties belong to the incoming event.
+
+/// A notated event keeps duration, rest and tie separate from pitch.
+pub struct Beat { length: int, rest: bool, tied: bool }
+
+/// Eight units fill one whole-note cantus bar.
+pub fn onset(beats: List[Beat], index: int) -> int {
+    var time = 0
+    for i in 0..index { time += beats[i].length }
+    time
+}
+
+/// Find the notated event sounding at an eighth-note time.
+pub fn at(beats: List[Beat], time: int) -> int {
+    var end = 0
+    for i in 0..beats.len { end += beats[i].length; if time < end { return i } }
+    if beats.len > 0 then beats.len - 1 else 0
+}
+
+/// Initial writing grids; the final bar always holds a whole note.
+pub fn pattern(book: int, bars: int) -> List[Beat] {
+    var out = List[Beat]()
+    for bar in 0..bars {
+        var values = [8]
+        if bar < bars - 1 {
+            if book == 2 || book == 4 { values = [4, 4] }
+            if book == 3 { values = [2, 2, 2, 2] }
+            if book == 5 {
+                values = match bar % 4 {
+                    0 => [4, 4],
+                    1 => [2, 2, 2, 2],
+                    2 => [4, 2, 1, 1],
+                    _ => [8],
+                }
+            }
+        }
+        for j in 0..values.len {
+            (mut out).push(Beat {
+                length: values[j],
+                rest: book == 4 && bar == 0 && j == 0,
+                tied: book == 4 && bar > 0 && bar < bars - 1 && j == 0,
+            })
+        }
+    }
+    out
+}
+
+/// Bar-local syntax; malformed timing never reaches the judge's indexing.
+pub fn valid(beats: List[Beat], bars: int) -> bool {
+    var time = 0
+    for b in beats {
+        if b.length != 1 && b.length != 2 && b.length != 4 && b.length != 8 { return false }
+        if time % 8 + b.length > 8 || b.rest && b.tied { return false }
+        time += b.length
+    }
+    time == bars * 8
+}
+
+/// Named book labels shared by the title, page and critic.
+pub fn name(book: int) -> str {
+    match book {
+        2 => "II. Two against one",
+        3 => "III. Four against one",
+        4 => "IV. The suspended voice",
+        5 => "V. The florid voice",
+        _ => "I. Note against note",
+    }
+}

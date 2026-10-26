@@ -1,5 +1,6 @@
 use first
 use replay
+use rhythm
 use theory
 
 /// A reversible single-note edit.
@@ -7,6 +8,8 @@ pub struct Edit { bar: int, before: theory.Pitch }
 
 /// Deterministic editor state; no terminal or clock ownership.
 pub struct State {
+    book: int,
+    beats: List[rhythm.Beat],
     seed: int,
     cursor: int,
     phase: int,
@@ -32,6 +35,8 @@ pub fn new(seed: int, title: bool) -> State {
         (mut voice).push(theory.pitch(theory.position(p) + (if below then -7 else 4)))
     }
     State {
+        book: 1,
+        beats: rhythm.pattern(1, cantus.len),
         seed: seed,
         cursor: 0,
         phase: if title then 0 else 1,
@@ -180,6 +185,8 @@ pub fn tutorial(index: int, title: bool) -> State {
     var cp = List[theory.Pitch]()
     for p in cf { (mut cp).push(theory.pitch(theory.position(p) + 4)) }
     State {
+        book: 1,
+        beats: rhythm.pattern(1, cf.len),
         seed: index,
         cursor: 0,
         phase: if title then 0 else 1,
@@ -205,4 +212,20 @@ pub fn from_replay(r: replay.Replay, title: bool) -> State {
     if r.start == 1000 { return new(r.seed, true) }
     if r.start >= 1 && r.start <= 3 { return tutorial(r.start - 1, title) }
     new(r.seed, title)
+}
+
+/// Install a rhythmic writing grid without supplying an answer.
+pub fn with_book(take s: State, book: int) -> State {
+    var next = s
+    next.book = book
+    next.beats = rhythm.pattern(book, next.cantus.len)
+    next.voice = List[theory.Pitch]()
+    for i in 0..next.beats.len {
+        let bar = rhythm.onset(next.beats, i) / 8
+        var p = theory.pitch(theory.position(next.cantus[bar]) + (if next.below then -7 else 4))
+        if next.beats[i].tied && i > 0 { p = copy next.voice[i - 1] }
+        (mut next.voice).push(p)
+    }
+    next.cursor = 0
+    next
 }
