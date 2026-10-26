@@ -2,23 +2,23 @@
    fugue   /   I. Note against note                                . .          
    Dorian   seed 1   cantus below                   .                           
       .                                                 .                       
-     .  1  .2   3   4   5   6   7   8   9   10   .      | The margin            
-             .                                .         |                       
- A5        .                                            | Bar 10.               
-                                                     .. |     .                 
- F5    -----------------------------------------------  | D5     .       .      
-       .              .  *                              | Hearing 5/10          
- D5    ----------------------*---------------*-------- .| o  given voice      . 
-               .                 *      #*              | *  your voice         
- B4.   --------------*--------------------------------  |                   .   
-         *       *          .   o .  *                  | P perfect             
- G4    ------*----------o-----------------------------  | i imperfect           
-                o         ..o       o                   | x dissonant           
- E4    -----o---------------------------o-------------  |                       
-        o   .  .    o        .              o       .   |                       
+     .  1  .2   3   4   5   6   7   8   9   10   .      | Editing bar 10        
+ B5          .                                .         |                       
+ A5        .                                            | Selected note         
+ G5                                                  .. |     .                 
+ F5    |---|---|---|---|---|---|---|---|---|----------| | D5     .       .      
+ E5    |   |   |   |  .| * |   |   |   |   |          | | Hearing 5/10          
+ D5    |---|---|---|---|---|-*-|---|---|---|-*--------|.| o  cantus           . 
+ C5    |   |   |   |   |   |   | * |   |#* |          | | *  your voice         
+ B4.   |---|---|---|-*-|---|---|---|---|---|----------| |                   .   
+ A4    | * |   | * |   |   |.  |o .| * |   |          | | P perfect             
+ G4    |---|-*-|---|---|o--|---|---|---|---|----------| | i imperfect           
+ F4    |   |   |o  |   |  .|o  |   |o  |   |          | | x dissonant           
+ E4    |---|o--|---|---|---|---|---|---|o--|----------| |                       
+ D4     o   .  .    o        .              o       .   |                       
  C4             .                                   .  .|                       
                                       . .               |                    .  
   .     P5  i3  i3  i6  i6  i6  i3. i3  i6  P8          |  .              .     
-                     .       .              ^                                  .
-   Arrows write   Space sounds   h hears   Enter checks   u undo   q quit       
-                        .                                            .     .    
+                     .  ^    .                                                 .
+   h hear   Space sound   Enter check   Arrows write   u undo   q quit          
+   o cantus: burnt orange  * player: dark blue                       .     .    

@@ -1,0 +1,24 @@
+.                                                           .                   
+   fugue   /   I. Note against note                                             
+   Dorian   seed 7   cantus above                     .                         
+                                           .     .       .                    . 
+        1   2   3   4   5   6   7   8   9   10          | Editing bar 1         
+ D5      *                                              |  .                    
+ C5     ---.  .                                 .       | Selected note         
+ B4          .               .  o                       |                 .     
+ A4    |---|---|---|---|o--|---|---|---|---|----------|.| D5                .   
+ G4    |   |   |   |   |   |o  |   |   |   |          | |       .           .  .
+ F4   .|---|---|o--|---|---|---|---|---|---|----------| | o  cantus             
+ E4.   |.  |o  |   |.  |   |  .|   |   |o. |     .    | | *  your voice         
+ D4    |o--|---|---|o--|---|---|---|o--|---|o---------| |                    .  
+ C4    |   |   |   |   |   |   |   |   |   |          | | P perfect             
+ B3    |---|---|---|---|---|---|-*-|---|---|----------| | i imperfect           
+ A3    |   |   |   |   | * |   |   |   |   |          | | x dissonant           
+ G3  . |---|---|---|---|---|-*-|---|---|---|----------| | First break.          
+ F3              *   .   . .      .    .                | at bar 1             .
+ E3         -*-      v               v  -*-  v          | crossing              
+                                                   .    |             .         
+        P8  P8  P8  P8  P8  P8  P8  P8  P8  P8          |        .              
+        ^     .  .      .                             .                   .     
+   h hear   Space sound   Enter check   Arrows write   u undo   q quit          
+   o cantus: burnt orange  * player: dark blue              .              .    

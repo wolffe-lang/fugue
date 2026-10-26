@@ -2,23 +2,23 @@
    fugue   /   I. Note against note             .                 .  .          
    Mixolydian   seed 2   cantus below                    .                      
                           .                                                     
-        1   2   3   4   5   6   7 . 8   9   10          | The margin            
-                    .                        . . .      |                       
- A5.      .                     -*--                .   | Bar 1          ..     
-                         *                              |          .            
- F5    ----------*-----------*-------*----------------  |.D5                    
-          .  *        .            .     *      .       |                       
-.D5    --*-----------*----------o------------*-------- .| o  given voice        
-        .          .    o                               | *  your voice         
- B4    ---------o-----------o-------o-----------------  |        .              
-    .       o                           o               | P perfect             
- G4    -o-----------o-----------------------o---------  | i imperfect           
-                                                .       | x dissonant .         
- E4  . -----------------------------------------------  |                .      
-                          .            .           .    | Bar 2                 
+        1   2   3   4   5   6   7 . 8   9   10          | Editing bar 1         
+ B5                 .                        . . .      |                       
+ A5.      .                     -*-                 .   | Selected note  ..     
+ G5                      *                              |          .            
+ F5    |---|---|-*-|---|---|-*-|---|-*-|---|----------| |.D5                    
+ E5    |  .| * |   |  .|   |   |   |   | * |    .     | |                       
+.D5    |-*-|---|---|-*-|---|---|o--|---|---|-*--------|.| o  cantus             
+ C5    |.  |   |   |   |o  |   |   |   |   |          | | *  your voice         
+ B4    |---|---|o--|---|---|o--|---|o--|---|----------| |        .              
+ A4 .  |   |o  |   |   |   |   |   |   |o  |          | | P perfect             
+ G4    |o--|---|---|o--|---|---|---|---|---|o---------| | i imperfect           
+ F4    |   |   |   |   |   |   |   |   |   |    .     | | x dissonant .         
+ E4  . |---|---|---|---|---|---|---|---|---|----------| | First break    .      
+ D4                       .            .           .    | at bar 2              
  C4     .                  .                            | parallel-perfect      
       .                   .                  .          |.      .               
   .     P5  P5  x5  P5  P5  x5  P5 .x5  P5  P5      .   |                       
       . ^                          .                                            
-   Arrows write   Space sounds   h hears   Enter checks   u undo   q quit       
-..    .                    .                      .  .                          
+   h hear   Space sound   Enter check   Arrows write   u undo   q quit          
+.. o cantus: burnt orange  * player: dark blue    .  .                          

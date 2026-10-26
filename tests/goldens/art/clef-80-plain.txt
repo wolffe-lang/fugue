@@ -2,23 +2,23 @@
    fugue   /   I. Note against note                                             
    Dorian   seed 7   cantus above                     .                         
                                            .     .       .                    . 
-        1   2   3   4   5   6   7   8   9   10          | The margin            
-       -------------------------o---------------------  |  .                    
-   /    .  .  .         o                       .       | Bar 1. . .            
-  /|   ---------------------o-------------------------  |                 .     
- ( |            o                                      .| D3                .   
-  "|   -----------------------------------------------  |       .           .  .
-  /|  . o           o .      .      o    .  o           | o  given voice        
- ( @)   ---------------------------------------- .      | *  your voice         
-  \|                             *                      |                    .  
-   |    -----------------*------   .------------        | P perfect             
-  (_)     ..        .        *          .               | i imperfect           
-  .     ---------*------   .        ------------        | x dissonant           
-     .       *                  . .      *       .  . . |            .          
- .      -*--        -*-- . .      . -*--    -*--        | Bar 2                .
-                                                        | parallel-perfect      
+        1   2   3   4   5   6   7   8   9   10          | Editing bar 1         
+ B4                             o                       |  .                    
+   /    .  .  .        -o-     ---              .       | Selected note         
+  /|         .              o.                          |                 .     
+ ( |   |---|---|o--|---|---|---|---|---|---|----------|.| D3                .   
+  "|   |   |o  |   |   |   |   |   |   |o  |          | |       .           .  .
+  /|  .|o--|---|---|o--|---|---|---|o--|---|o---------| | o  cantus             
+ ( @)  |.  |   |   |.  |   |  .|   |   | . |     .    | | *  your voice         
+  \|   |---|---|---|---|---|---|-*-|---|---|----------| |                    .  
+   |   |   |   |   |   | * |   |   |   |   |          | | P perfect             
+  ( )  |---|---|---|---|---|-*-|---|---|---|----------| | i imperfect           
+ F3    |   |   | * |   |   |   |   |   |   |          | | x dissonant           
+ E3  . |---|-*-|---|---|---|---|---|---|-*-|----------| | First break.          
+ D3      *           *   . .      .  * .     *          | at bar 2             .
+ C3                                                     | parallel-perfect      
                                                    .    |             .         
         P8  P8  P8  P8  P8  P8  P8  P8  P8  P8          |        .              
         ^     .  .      .                             .                   .     
-   Arrows write   Space sounds   h hears   Enter checks   u undo   q quit       
-                                         .                  .              .    
+   h hear   Space sound   Enter check   Arrows write   u undo   q quit          
+   o cantus: burnt orange  * player: dark blue              .              .    
