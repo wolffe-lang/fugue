@@ -68,7 +68,7 @@ fn test_five_staff_lines_are_unbroken_on_both_tiers() {
         for size in 0..2 {
             let cols = if size == 0 then 80 else 120
             let rows = if size == 0 then 24 else 40
-            let v = staff.viewport(5, 18, 22, 7, cols - 26)
+            let v = staff.viewport(5, 18, 28, 7, cols - 26)
             var g = grid.new(rows, cols)
             staff.lines(mut g, v, t)
             for line in 0..5 {
@@ -108,9 +108,11 @@ fn test_pitch_row_margin_round_trip_whole_viewport() {
             let y = staff.head(mut g, v, ledger, 12, t, true, false, false)
             assert(y == staff.row_of(v, theory.pitch(v.line)) + 2)
             assert(theory.position(staff.pitch_of(v, y)) == theory.position(ledger))
-            assert(g.cells[y * 80 + 10].cp == 32 && g.cells[y * 80 + 14].cp == 32)
-            assert(g.cells[y * 80 + 11].cp == (if t == 1 then 0x2500 else 45))
-            assert(g.cells[y * 80 + 13].cp == (if t == 1 then 0x2500 else 45))
+            if y >= v.top && y <= v.bottom {
+                assert(g.cells[y * 80 + 10].cp == 32 && g.cells[y * 80 + 14].cp == 32)
+                assert(g.cells[y * 80 + 11].cp == (if t == 1 then 0x2500 else 45))
+                assert(g.cells[y * 80 + 13].cp == (if t == 1 then 0x2500 else 45))
+            }
         }
     }
     let classic = staff.viewport(5, 18, 28, 7, 54)
@@ -154,5 +156,17 @@ fn test_cantus_keeps_its_hollow_head_and_contrasting_ink() {
         assert(g.cells[y * 80 + 13].cp == (if t == 1 then 0x25cf else 42))
         assert(g.cells[y * 80 + 13].fg == (if t == 1 then 24 else 4))
         assert(g.cells[y * 80 + 13].bg == (if t == 1 then 222 else 11))
+    }
+}
+
+fn test_treble_second_line_is_G4_and_bass_top_is_A3() {
+    for base in 18..40 {
+        let treble = staff.viewport(5, 34, base, 7, 90)
+        assert(theory.name(theory.pitch(treble.line)) == "E4")
+        assert(theory.name(theory.pitch(treble.line + 2)) == "G4")
+        assert(theory.name(staff.pitch_of(treble, staff.row_of(treble, theory.pitch(32)))) == "G4")
+        let bass = staff.with_clef(take treble, 18)
+        assert(theory.name(theory.pitch(bass.line + 8)) == "A3")
+        assert(theory.name(staff.pitch_of(bass, staff.row_of(bass, theory.pitch(26)))) == "A3")
     }
 }

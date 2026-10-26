@@ -197,7 +197,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     let selected = theory.position(s.voice[focus])
     if selected > base + bottom - top { base = selected - (bottom - top) }
     if selected < base { base = selected }
-    let v = staff.viewport(top, bottom, base, 7, margin - 2)
+    let v = staff.with_clef(take staff.viewport(top, bottom, base, 7, margin - 2), s.clef)
     var bars = List[int]()
     for bar in 0..count + 1 { (mut bars).push(8 + bar * width - 1) }
     staff.draw_staff(mut g, v, t, bars)

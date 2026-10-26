@@ -11,6 +11,7 @@ pub struct Edit { bar: int, within: int, notes: List[theory.Pitch], beats: List[
 /// Deterministic editor state; no terminal or clock ownership.
 pub struct State {
     book: int,
+    clef: int,
     failure: str,
     beats: List[rhythm.Beat],
     seed: int,
@@ -41,6 +42,7 @@ pub fn new(seed: int, title: bool) -> State {
     }
     State {
         book: 1,
+        clef: choose_clef(cantus, voice),
         failure: "",
         beats: rhythm.pattern(1, cantus.len),
         seed: seed,
@@ -251,6 +253,7 @@ pub fn tutorial(index: int, title: bool) -> State {
     for p in cf { (mut cp).push(theory.pitch(theory.position(p) + 4)) }
     State {
         book: 1,
+        clef: choose_clef(cf, cp),
         failure: "",
         beats: rhythm.pattern(1, cf.len),
         seed: index,
@@ -321,6 +324,7 @@ pub fn with_book(take s: State, book: int) -> State {
         (mut next.voice).push(p)
     }
     next.cursor = 0
+    next.clef = choose_clef(next.cantus, next.voice)
     next
 }
 
@@ -379,4 +383,12 @@ fn edit_rhythm(mut s: State, k: int) {
 /// Encode the same old start selector inside a book-specific namespace.
 pub fn replay_start(book: int, start: int) -> int {
     if book == 1 then start else 10000 + book * 2000 + start
+}
+
+/// Select once when opening a page; edits never change the clef.
+pub fn choose_clef(cantus: List[theory.Pitch], voice: List[theory.Pitch]) -> int {
+    var low = 100
+    for p in cantus { if theory.position(p) < low { low = theory.position(p) } }
+    for p in voice { if theory.position(p) < low { low = theory.position(p) } }
+    if low >= 25 then 30 else 18
 }
