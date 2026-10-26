@@ -69,12 +69,32 @@ pub fn clef(mut g: grid.Grid, top: int, t: int, bg: int) {
 }
 
 /// A shared diatonic viewport; base is the pitch position at bottom.
-pub struct Viewport { top: int, bottom: int, base: int, left: int, right: int, line: int }
+pub struct Viewport {
+    top: int,
+    bottom: int,
+    base: int,
+    left: int,
+    right: int,
+    line: int,
+    grand: bool,
+    cantus_line: int,
+    voice_line: int,
+}
 
 /// A treble pitch window; clef lines are fixed even when base scrolls.
 pub fn viewport(top: int, bottom: int, base: int, left: int, right: int) -> Viewport {
     assert(bottom - top >= 10)
-    Viewport { top: top, bottom: bottom, base: base, left: left, right: right, line: 30 }
+    Viewport {
+        top: top,
+        bottom: bottom,
+        base: base,
+        left: left,
+        right: right,
+        line: 30,
+        grand: false,
+        cantus_line: 30,
+        voice_line: 30,
+    }
 }
 
 /// Set the page's fixed bottom line: E4 (30) or G2 (18).
@@ -82,6 +102,8 @@ pub fn with_clef(take v: Viewport, line: int) -> Viewport {
     var out = v
     assert(line == 30 || line == 18)
     out.line = line
+    out.cantus_line = line
+    out.voice_line = line
     out
 }
 
@@ -89,6 +111,27 @@ pub fn with_clef(take v: Viewport, line: int) -> Viewport {
 pub fn label_row(v: Viewport, highest: theory.Pitch) -> int {
     let row = row_of(v, highest) - 4
     if row < v.top - 1 then v.top - 1 else row
+}
+
+/// Apply a page's clefs without changing the drawing API or pitch coordinate map.
+pub fn system(s: session.State, take v: Viewport) -> Viewport {
+    var out = with_clef(take v, s.clef)
+    out.grand = s.grand
+    if s.grand {
+        out.cantus_line = s.cantus_clef
+        out.voice_line = s.voice_clef
+        out.line = 18
+        // Twenty-one pitch rows fit both staves; compact pages spend the header.
+        if out.bottom - out.top < 20 { out.top = 1; out.bottom = 21 }
+        out.base = 18
+        let focus = if s.hearing >= 0 then session.event_at(s, s.hearing) else s.cursor
+        let selected = theory.position(s.voice[focus])
+        if selected < out.base { out.base = selected }
+        if selected > out.base + out.bottom - out.top {
+            out.base = selected - (out.bottom - out.top)
+        }
+    }
+    out
 }
 
 /// Pitch and row are inverses; accidentals share their natural letter's row.
@@ -105,8 +148,9 @@ pub fn player_ink(t: int) -> int { if t == 1 then 24 else 4 }
 
 /// Five unbroken runs, before bars and noteheads cross them.
 pub fn lines(mut g: grid.Grid, v: Viewport, t: int) {
-    for line in 0..5 {
-        let y = row_of(v, theory.pitch(v.line + line * 2))
+    for line in 0..(if v.grand then 10 else 5) {
+        let pos = if v.grand && line >= 5 then 30 + (line - 5) * 2 else v.line + line * 2
+        let y = row_of(v, theory.pitch(pos))
         if y < v.top || y > v.bottom { continue }
         for x in v.left..v.right + 1 {
             let bg = g.cells[y * g.cols + x].bg
@@ -128,7 +172,7 @@ pub fn draw_staff(mut g: grid.Grid, v: Viewport, t: int, bars: List[int]) {
         mut g,
         v.top - 1,
         1,
-        if v.line == 30 then "Treble" else "Bass",
+        if v.grand then "Grand" else if v.line == 30 then "Treble" else "Bass",
         if t == 1 then 94 else 3,
         bg,
         true,
@@ -137,8 +181,24 @@ pub fn draw_staff(mut g: grid.Grid, v: Viewport, t: int, bars: List[int]) {
         let p = pitch_of(v, y)
         text(mut g, y, 1, theory.name(p), if t == 1 then 94 else 3, bg, theory.position(p) == 28)
     }
+    if v.grand {
+        for line in [18, 30] {
+            let row = row_of(v, theory.pitch(line + 8))
+            if row >= v.top && row <= v.bottom {
+                text(
+                    mut g,
+                    row,
+                    4,
+                    if line == 30 then "Tr" else "Ba",
+                    if t == 1 then 94 else 3,
+                    bg,
+                    true,
+                )
+            }
+        }
+    }
     for x in bars {
-        for pos in v.line..v.line + 9 {
+        for pos in v.line..(if v.grand then 39 else v.line + 9) {
             let y = row_of(v, theory.pitch(pos))
             if y < v.top || y > v.bottom { continue }
             let ground = g.cells[y * g.cols + x].bg
@@ -164,11 +224,14 @@ pub fn ledger(mut g: grid.Grid, v: Viewport, p: theory.Pitch, x: int, t: int, ca
         return y
     }
     let pos = theory.position(p)
-    let low = if pos < v.line then pos else v.line + 10
-    let high = if pos < v.line then v.line - 2 else pos
+    let line = if cantus then v.cantus_line else v.voice_line
+    var low = if pos < line then pos else line + 10
+    var high = if pos < line then line - 2 else pos
+    if v.grand && line == 30 && low < 28 { low = 28 }
+    if v.grand && line == 18 && high > 28 { high = 28 }
     for step in low..high + 1 {
         let ly = row_of(v, theory.pitch(step))
-        if (step - v.line) % 2 == 0 && ly >= v.top && ly <= v.bottom {
+        if (step - line) % 2 == 0 && ly >= v.top && ly <= v.bottom {
             for dx in -1..2 {
                 let cell = copy g.cells[ly * g.cols + x + dx]
                 if cell.cp != 0x2502 &&
@@ -375,7 +438,7 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
         if selected < base { base = selected }
     }
     let width = (margin - 9) / (if s.cantus.len > 0 then s.cantus.len else 1)
-    let v = with_clef(take viewport(top, bottom, base, 7, margin - 2), s.clef)
+    let v = system(s, take viewport(top, bottom, base, 7, margin - 2))
     var bars = List[int]()
     for i in 0..s.cantus.len { (mut bars).push(7 + i * width) }
     (mut bars).push(margin - 2)

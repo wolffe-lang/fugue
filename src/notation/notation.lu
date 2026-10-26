@@ -171,22 +171,20 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
         return g
     }
     let margin = cols - 24
-    let width = manuscript.bar_width(s.book)
-    let count = (margin - 8) / width
     let start = manuscript.first_bar(s, cols)
-    let top = 5 + (rows - 24) / 2
-    let bottom = top + (if rows >= 25 then 14 else 13)
+    let top = 5
+    let bottom = rows - 6
     let focus = if s.hearing >= 0 then session.event_at(s, s.hearing) else s.cursor
     var low = 100, high = 0
-    for bar in start..start + count {
-        if bar >= s.cantus.len { break }
+    for bar in start..s.cantus.len {
+        if manuscript.event_column(s, start, rhythm.at(s.beats, bar * 8)) >= margin - 3 { break }
         let pos = theory.position(s.cantus[bar])
         if pos < low { low = pos }
         if pos > high { high = pos }
     }
     for i in 0..s.voice.len {
         let bar = rhythm.onset(s.beats, i) / 8
-        if bar >= start && bar < start + count && !s.beats[i].rest {
+        if bar >= start && manuscript.event_column(s, start, i) < margin - 3 && !s.beats[i].rest {
             let pos = theory.position(s.voice[i])
             if pos < low { low = pos }
             if pos > high { high = pos }
@@ -197,9 +195,14 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     let selected = theory.position(s.voice[focus])
     if selected > base + bottom - top { base = selected - (bottom - top) }
     if selected < base { base = selected }
-    let v = staff.with_clef(take staff.viewport(top, bottom, base, 7, margin - 2), s.clef)
+    let v = staff.system(s, take staff.viewport(top, bottom, base, 7, margin - 2))
     var bars = List[int]()
-    for bar in 0..count + 1 { (mut bars).push(8 + bar * width - 1) }
+    for bar in start..s.cantus.len {
+        let x = manuscript.event_column(s, start, rhythm.at(s.beats, bar * 8)) - 2
+        if x > margin - 3 { break }
+        (mut bars).push(x)
+    }
+    (mut bars).push(margin - 2)
     staff.draw_staff(mut g, v, t, bars)
     text(
         mut g,
@@ -211,16 +214,20 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
         false,
     )
     let sounding = session.event_at(s, s.hearing)
-    for bar in start..start + count {
-        if bar >= s.cantus.len { break }
-        let x = manuscript.column(s.book, start, bar * 8)
+    for bar in start..s.cantus.len {
+        if manuscript.event_column(s, start, rhythm.at(s.beats, bar * 8)) >= margin - 3 { break }
+        let x = manuscript.event_column(s, start, rhythm.at(s.beats, bar * 8))
         text(mut g, top - 1, x - 1, "{bar + 1}", ink, bg, true)
         let lit = s.hearing >= 0 && s.hearing / session.ticks_per_whole() == bar
         let _ = staff.head(mut g, v, s.cantus[bar], x - 1, t, true, false, lit)
         for i in 0..s.voice.len {
             let time = rhythm.onset(s.beats, i)
             if time / 8 != bar { continue }
-            let nx = manuscript.column(s.book, start, time)
+            let nx = manuscript.event_column(s, start, i)
+            if nx + manuscript.event_width(s, i) - 2 >= margin - 3 {
+                text(mut g, top - 1, margin - 5, ">>", blue, bg, true)
+                break
+            }
             let beat = copy s.beats[i]
             let y = staff.row_of(v, s.voice[i])
             if beat.rest {
@@ -253,7 +260,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
                 }
                 if beat.tied && y >= top && y < bottom {
                     let previous = if i > 0 {
-                        manuscript.column(s.book, start, rhythm.onset(s.beats, i - 1))
+                        manuscript.event_column(s, start, i - 1)
                     } else {
                         nx - 2
                     }
@@ -298,7 +305,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     } else {
         rhythm.onset(s.beats, s.cursor) + s.within
     }
-    text(mut g, bottom + 3, manuscript.column(s.book, start, time), "^", blue, bg, true)
+    text(mut g, bottom + 3, manuscript.event_column(s, start, focus), "^", blue, bg, true)
     for y in 4..rows - 3 { text(mut g, y, margin, "|", ink, bg, false) }
     text(mut g, 5, margin + 2, "Bar {time / 8 + 1} / {time % 8 + 1}:8", blue, bg, true)
     text(mut g, 7, margin + 2, theory.name(s.voice[focus]), blue, bg, false)

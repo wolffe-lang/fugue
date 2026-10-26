@@ -43,7 +43,7 @@ fn test_playback_cursor_tracks_rhythmic_events_and_scrolls() {
     assert(session.event_at(s, 30) == 4)
     assert(session.event_at(s, 300) == -1)
     s.hearing = 90
-    assert(manuscript.first_bar(s, 80) == 2)
+    assert(manuscript.first_bar(s, 80) == 1)
     assert(session.piece_ticks(s) == 300)
     for i in 0..210 { session.tick(mut s) }
     assert(s.hearing == -1)
@@ -54,4 +54,18 @@ fn test_eighths_share_the_same_integer_playback_clock() {
     s.beats = rhythm.pattern(5, 10)
     assert(session.event_at(s, 30 * 3 + 22) == rhythm.at(s.beats, 29))
     assert(session.event_at(s, -1) == -1)
+}
+
+fn test_partial_measure_space_and_cursor_never_cut() {
+    var s = session.with_book(take session.tutorial(0, false), 5)
+    for cols in [80, 120] {
+        for i in 0..s.voice.len {
+            s.cursor = i
+            let start = manuscript.first_bar(s, cols)
+            let x = manuscript.event_column(s, start, i)
+            assert(x >= 9 && x + manuscript.event_width(s, i) - 2 < cols - 27)
+        }
+    }
+    assert(manuscript.measure_width(s, 0) == 11)
+    assert(manuscript.measure_width(s, 2) == 17)
 }

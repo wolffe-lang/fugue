@@ -12,6 +12,11 @@ pub struct Edit { bar: int, within: int, notes: List[theory.Pitch], beats: List[
 pub struct State {
     book: int,
     clef: int,
+    grand: bool,
+    cantus_clef: int,
+    voice_clef: int,
+    range_low: int,
+    range_high: int,
     failure: str,
     beats: List[rhythm.Beat],
     seed: int,
@@ -43,6 +48,11 @@ pub fn new(seed: int, title: bool) -> State {
     State {
         book: 1,
         clef: choose_clef(cantus, voice),
+        grand: needs_system(cantus, voice),
+        cantus_clef: choose_clef(cantus, cantus),
+        voice_clef: choose_clef(voice, voice),
+        range_low: lowest_pitch(),
+        range_high: highest_pitch(),
         failure: "",
         beats: rhythm.pattern(1, cantus.len),
         seed: seed,
@@ -226,7 +236,7 @@ pub fn step(mut s: State, k: int) {
             }
             let pos = theory.position(before) + delta
             // Register is not a species rule: let the judge diagnose range/crossing.
-            if pos < lowest_pitch() || pos > highest_pitch() { return }
+            if pos < s.range_low || pos > s.range_high { return }
             next = theory.pitch(pos)
         }
         remember(mut s)
@@ -250,6 +260,11 @@ pub fn tutorial(index: int, title: bool) -> State {
     State {
         book: 1,
         clef: choose_clef(cf, cp),
+        grand: needs_system(cf, cp),
+        cantus_clef: choose_clef(cf, cf),
+        voice_clef: choose_clef(cp, cp),
+        range_low: lowest_pitch(),
+        range_high: highest_pitch(),
         failure: "",
         beats: rhythm.pattern(1, cf.len),
         seed: index,
@@ -321,6 +336,9 @@ pub fn with_book(take s: State, book: int) -> State {
     }
     next.cursor = 0
     next.clef = choose_clef(next.cantus, next.voice)
+    next.grand = needs_system(next.cantus, next.voice)
+    next.cantus_clef = choose_clef(next.cantus, next.cantus)
+    next.voice_clef = choose_clef(next.voice, next.voice)
     next
 }
 
@@ -394,3 +412,15 @@ pub fn lowest_pitch() -> int { 7 }
 
 /// Highest sounding editor pitch, B6.
 pub fn highest_pitch() -> int { 48 }
+
+/// More than three ledgers on either side selects a grand staff at page creation.
+pub fn needs_system(cantus: List[theory.Pitch], voice: List[theory.Pitch]) -> bool {
+    let clef = choose_clef(cantus, voice)
+    for p in cantus {
+        if theory.position(p) < clef - 7 || theory.position(p) > clef + 15 { return true }
+    }
+    for p in voice {
+        if theory.position(p) < clef - 7 || theory.position(p) > clef + 15 { return true }
+    }
+    false
+}
