@@ -1,0 +1,62 @@
+use grid
+use manuscript
+use notation
+use rhythm
+use session
+
+fn caret(g: grid.Grid, margin: int) -> int {
+    var found = -1
+    for y in 0..g.rows {
+        for x in 7..margin - 3 {
+            if g.cells[y * g.cols + x].cp == 94 {
+                assert(found == -1, "exactly one navigation caret")
+                found = y * g.cols + x
+            }
+        }
+    }
+    found
+}
+
+fn test_cursor_changes_on_every_held_event_press() {
+    for cols in [80, 120] {
+        for t in 0..2 {
+            var s = session.with_book(take session.tutorial(0, false), 5)
+            let rows = if cols == 80 then 24 else 40
+            var previous = caret(notation.frame(s, cols, rows, t), cols - 24)
+            assert(previous >= 0)
+            for k in 0..20 {
+                session.step(mut s, if k < 10 then 4 else 3)
+                let next = caret(notation.frame(s, cols, rows, t), cols - 24)
+                assert(next >= 0 && next != previous, "caret moves with the panel, including within held notes")
+                previous = next
+            }
+            assert(s.cursor == 0 && s.within == 0)
+        }
+    }
+}
+
+fn test_cursor_has_room_for_every_subdivision_and_compact_system() {
+    for cols in [80, 120] {
+        for t in 0..2 {
+            var s = session.with_book(take session.tutorial(0, false), 5)
+            let rows = if cols == 80 then 24 else 40
+            // Include wholes, halves, quarters, rests and incoming ties.
+            for i in 0..s.beats.len {
+                s.cursor = i
+                for offset in 0..s.beats[i].length {
+                    s.within = offset
+                    let first = manuscript.first_bar(s, cols)
+                    let x = manuscript.event_column(s, first, i) + offset
+                    assert(manuscript.event_width(s, i) >= s.beats[i].length)
+                    let at = caret(notation.frame(s, cols, rows, t), cols - 24)
+                    assert(at >= 0 && at % cols == x)
+                }
+            }
+            s.cursor = 0
+            s.within = 1
+            s.grand = true
+            let at = caret(notation.frame(s, cols, rows, t), cols - 24)
+            assert(at >= 0 && at % cols == 10, "compact grand staff retains its navigation caret")
+        }
+    }
+}

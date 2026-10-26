@@ -286,3 +286,11 @@ def edit_florid_bar(bin, ctx):
 ROWS['three-ledgers-below-and-back'] = ledger_below_and_back
 ROWS['selected-event-status'] = selected_event_status
 ROWS['book-5-rhythm-edits'] = edit_florid_bar
+
+
+def cursor_same_frame(bin, ctx):
+    import runpy
+    return runpy.run_path(str(Path(ctx.ROOT)/'tools/cursor-check.py'))['check'](bin, ctx)
+
+
+ROWS['cursor-same-frame'] = cursor_same_frame
