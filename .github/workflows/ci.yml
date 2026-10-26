@@ -93,6 +93,8 @@ jobs:
             target/test.log
             target/gameplay
             target/species-gameplay
+            target/fugue-gameplay
+            target/fugue-audio
   macos:
     name: macOS arm64 (build, goldens, pty rows)
     needs: plan
@@ -132,6 +134,8 @@ jobs:
           python3 -I tools/gameplay.py --bin target/release/fugue
           python3 -I tools/species-gameplay.py --bin target/native/fugue
           python3 -I tools/species-gameplay.py --bin target/release/fugue
+          python3 -I tools/fugue-gameplay.py --bin target/native/fugue
+          python3 -I tools/fugue-gameplay.py --bin target/release/fugue
           python3 -I tools/glyphs.py
           python3 -I tools/staff-check.py --bin target/native/fugue
           python3 -I tools/staff-check.py --bin target/release/fugue
@@ -139,7 +143,7 @@ jobs:
         run: |
           target/release/fugue --bench --size 120x40 --tier rich --frames 300 --mute
           target/release/fugue --bench --size 120x40 --tier plain --frames 300 --mute
-          for book in 2 3 4 5; do
+          for book in 2 3 4 5 6; do
             for tier in rich plain; do
               target/release/fugue --bench --script "tests/cases/book-$book-preset-1-120.pk" --size 120x40 --tier "$tier" --frames 300 --mute
             done

@@ -354,3 +354,86 @@ def cursor_long(bin, ctx):
 
 
 ROWS['cursor-long'] = cursor_long
+
+def fugue_record(bin, ctx, index=1):
+    """The real editor, named entry transition, PCM handoff and score recording."""
+    import hashlib
+    root=Path(ctx.ROOT)/'target/pty/fugue';root.mkdir(parents=True,exist_ok=True)
+    record=root/f'book-6-{index}-solved.pk'
+    env=ctx.env_for();env['FUGUE_STATE']=str(root/f'state-{index}')
+    audio=index==1
+    if audio:
+        env['FUGUE_WAV_DIR']=str(root);env['FUGUE_AUDIO_TRACE']='1'
+        path=root/'whole-1.wav'
+        if path.exists(): path.unlink()
+    case=Path(ctx.ROOT)/f'tests/cases/book-6-preset-{index}-80.pk'
+    argv=[bin,'--book','6','--record',str(record)]
+    if not audio: argv.append('--mute')
+    s=ctx.Session(argv,24,80,env);problems=[]
+    if audio:
+        deadline=time.monotonic()+20
+        while b'note-bank render_us' not in s.err and time.monotonic()<deadline:s.pump(.1)
+        if b'note-bank render_us' not in s.err:problems.append('fugue note bank did not prepare')
+    s.type(b'\r',.15)
+    for _ in range(index-1):s.type(b'n',.2)
+    keys={'up':b'\x1b[A','down':b'\x1b[B','right':b'\x1b[C','sharp':b'#','voice':b'v'}
+    batch=b''.join(keys[line.split()[-1]] for line in case.read_text().splitlines() if line.startswith('t 1 '))
+    s.type(batch,.6)
+    if audio:
+        s.type(b'h',.3)
+        deadline=time.monotonic()+20
+        while not path.exists() and time.monotonic()<deadline:s.pump(.1)
+        if not path.exists():problems.append('fugue h did not render an exposition')
+        else:
+            pcm=path.read_bytes()[44:]
+            digest=hashlib.sha256(pcm).hexdigest()
+            expected=(Path(ctx.ROOT)/'tests/goldens/audio/exposition-1.sha256').read_text().strip()
+            if len(pcm)!=12*192000 or digest!=expected:problems.append(f'played exposition PCM differs: {len(pcm)} {digest}')
+        screen=ctx.screen_text(bin,s.out)
+        if 'Subject' not in screen:problems.append('subject entry is not named')
+        # The audible timeline starts only after rendering and output handoff.
+        s.pump(6.2)
+        screen=ctx.screen_text(bin,s.out)
+        if 'Answer / Countersubject' not in screen:problems.append('answer and continuation entries are not named')
+        s.pump(6.2)
+        if Path('/usr/bin/afplay').exists():
+            if b'player-start' not in s.err or b'player-end' not in s.err:problems.append('owned exposition player did not start and reap')
+        elif not any(b'wav-sink' in line and b'whole-1.wav' in line for line in s.err.splitlines()):
+            problems.append('played exposition never reached the Linux sink')
+    s.type(b'\r',.3)
+    if 'Legal exposition    3 / 3 stars' not in ctx.screen_text(bin,s.out):problems.append('fugue editor did not reach three stars')
+    s.type(b'q');s.finish(timeout=20);ctx.common_checks(s,0,problems)
+    if not record.exists():problems.append('fugue recording absent')
+    else:
+        text=record.read_text()
+        if '# score 3' not in text:problems.append('recorded fugue score is not three')
+        last=max(int(line.split()[1]) for line in text.splitlines() if line.startswith('t '))
+        r=subprocess.run([bin,'--headless','--script',str(record),'--frames',str(last+1),'--every',str(last+1),'--dump',str(root/f'verify-{index}'),'--mute'],capture_output=True,text=True,timeout=45)
+        if r.returncode or 'verified score 3' not in r.stderr:problems.append('actual fugue recording did not verify: '+r.stderr)
+    print(s.err.decode(errors='replace'))
+    return s,problems
+
+
+def fugue_end(bin,ctx):
+    root=Path(ctx.ROOT)/'target/pty/fugue';root.mkdir(parents=True,exist_ok=True)
+    state=root/'end-state'
+    if state.exists():state.unlink()
+    env=ctx.env_for();env['FUGUE_STATE']=str(state)
+    s=ctx.Session([bin,'--book','6','--mute'],24,80,env)
+    s.type(b'\r',.1)
+    keys={'up':b'\x1b[A','down':b'\x1b[B','right':b'\x1b[C','sharp':b'#','voice':b'v','check':b'\r','new':b'n'}
+    events=(Path(ctx.ROOT)/'tests/cases/book-6-end-80.pk').read_text().splitlines()
+    for tick in range(1,9):
+        batch=b''.join(keys[line.split()[-1]] for line in events if line.startswith(f't {tick} '))
+        if batch:s.type(batch,.25)
+    problems=[];screen=ctx.screen_text(bin,s.out)
+    if 'The sixth book is lit' not in screen or '3 + 3 + 3 = 9 / 9' not in screen:problems.append('three played tutorials did not reach the end card')
+    s.type(b'b',.2)
+    if 'VI. The fugue  [3*]' not in ctx.screen_text(bin,s.out):problems.append('sixth title book did not light')
+    s.type(b'q');s.finish();ctx.common_checks(s,0,problems)
+    if not state.exists() or state.read_text().split()[-1]!='3':problems.append('sixth-book completion did not persist')
+    return s,problems
+
+ROWS['fugue-exposition-record']=fugue_record
+ROWS['fugue-two-desks-record']=lambda bin,ctx:fugue_record(bin,ctx,3)
+ROWS['fugue-end-card']=fugue_end

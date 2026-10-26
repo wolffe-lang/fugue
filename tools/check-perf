@@ -9,7 +9,7 @@ for tier in rich plain; do
     target/release/fugue --bench --size 120x40 --tier "$tier" --frames 300 --mute >"target/perf/120-$tier.txt"
     cat "target/perf/120-$tier.txt"
 done
-for book in 2 3 4 5; do
+for book in 2 3 4 5 6; do
     for tier in rich plain; do
         target/release/fugue --bench --script "tests/cases/book-$book-preset-1-120.pk" --size 120x40 --tier "$tier" --frames 300 --mute >"target/perf/book-$book-120-$tier.txt"
         cat "target/perf/book-$book-120-$tier.txt"

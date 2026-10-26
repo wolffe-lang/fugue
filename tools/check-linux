@@ -13,3 +13,6 @@ python3 -I tools/species-gameplay.py --bin target/release/fugue
 
 python3 -I tools/pitch-check.py --bin target/native/fugue
 python3 -I tools/pitch-check.py --bin target/release/fugue
+
+python3 -I tools/fugue-gameplay.py --bin target/native/fugue
+python3 -I tools/fugue-gameplay.py --bin target/release/fugue
