@@ -144,7 +144,7 @@ pub fn system(s: session.State, take v: Viewport) -> Viewport {
 pub fn row_of(v: Viewport, p: theory.Pitch) -> int { v.bottom - (theory.position(p) - v.base) }
 
 /// Return the natural pitch named by this viewport row.
-pub fn pitch_of(v: Viewport, row: int) -> theory.Pitch { theory.pitch(v.base + v.bottom - row) }
+pub fn pitch_of(v: Viewport, row: int) -> theory.Pitch { theory.pitch(v.base + v.bottom - row + 1) }
 
 /// Deep red, at least 7:1 on every parchment ground; plain bright red.
 pub fn cantus_ink(t: int) -> int { if t == 1 then 52 else 9 }
