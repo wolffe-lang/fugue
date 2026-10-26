@@ -20,7 +20,7 @@ pub fn harmony_ink(cls: int, t: int) -> int {
     match cls {
         0 => 22,
         1 => 130,
-        _ => 124,
+        _ => 22,
     }
 }
 
