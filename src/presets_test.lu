@@ -1,0 +1,18 @@
+use presets
+use species
+use theory
+
+fn test_twelve_original_species_references_have_three_stars() {
+    for book in 2..6 {
+        for index in 0..3 {
+            let page = presets.page(book, index)
+            assert(theory.validate(page.cantus, page.mode).len == 0)
+            let v = species.check(page.cantus, page.answer, page.beats, page.mode, false, book)
+            for b in v.breaks { print("book {book} preset {index + 1} bar {b.bar}: {b.rule}") }
+            print(
+                "book {book} preset {index + 1}: stars {v.stars} contrary {v.contrary} steps {v.steps}",
+            )
+            assert(v.stars == 3)
+        }
+    }
+}

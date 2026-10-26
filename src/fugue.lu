@@ -140,6 +140,19 @@ fn load(o: Options) -> replay.Replay ! {parse} {
     r
 }
 
+fn initial_state(o: Options, r: replay.Replay, title: bool) -> session.State {
+    var s = session.from_replay(r, title)
+    if o.script != "" {
+        let text = fs.read_text(o.script) else ""
+        for line in text.lines() {
+            if line.starts_with("# books ") {
+                s.progress = progress.decode(line[8..]) else copy s.progress
+            }
+        }
+    }
+    s
+}
+
 fn apply_events(mut s: session.State, r: replay.Replay, tick: int) {
     var keys = List[int]()
     let _ = replay.at(r, tick, mut keys)
@@ -160,7 +173,8 @@ fn verify_score(o: Options, s: session.State) -> int {
 }
 
 fn offline(o: Options, r: replay.Replay) -> int {
-    var s = session.from_replay(r, false)
+    var s = initial_state(o, r, false)
+    if s.failure != "" { eprint("fugue: {s.failure}"); return 2 }
     let count = if o.frames > 0 then o.frames else 60
     var prev = grid.new(r.rows, r.cols)
     var pen = grid.pen_new()
@@ -219,7 +233,7 @@ fn live(o: Options, r: replay.Replay) -> int {
         return 2
     }
     defer ear.close(mut audio)
-    var s = session.from_replay(r, o.title && o.script == "")
+    var s = initial_state(o, r, o.title && o.script == "")
     let state_path = env.get("FUGUE_STATE") else ".fugue-state"
     if o.script == "" {
         let text = fs.read_text(state_path) else ""
@@ -318,6 +332,7 @@ fn live(o: Options, r: replay.Replay) -> int {
     if o.record != "" {
         var bytes = List[byte]()
         replay.format_scored(recorded, session.vocab(), session.score(s), mut bytes)
+        for byte_value in ("# books " + initial_progress).bytes() { (mut bytes).push(byte_value) }
         fs.write_bytes(o.record, bytes) else |_| { return 2 }
     }
     if verify_score(o, s) != 0 { return 1 }
@@ -469,7 +484,13 @@ fn main() -> int {
         return 0
     }
     if has(args, "--species-report") {
+        var wanted = 0
+        for i in 0..args.len - 1 {
+            if args[i] == "--book" { wanted = args[i + 1].to_int() else -1 }
+        }
+        if wanted != 0 && (wanted < 2 || wanted > 5) { return 2 }
         for book in 2..6 {
+            if wanted != 0 && book != wanted { continue }
             for index in 0..3 {
                 let mode = if index == 0 then 0 else if index == 1 then 1 else 4
                 let e = species.exercise_goal(index, mode, false, book, 3) else {

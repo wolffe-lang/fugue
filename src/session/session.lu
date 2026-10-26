@@ -1,4 +1,5 @@
 use first
+use presets
 use replay
 use rhythm
 use species
@@ -10,6 +11,7 @@ pub struct Edit { bar: int, within: int, notes: List[theory.Pitch], beats: List[
 /// Deterministic editor state; no terminal or clock ownership.
 pub struct State {
     book: int,
+    failure: str,
     beats: List[rhythm.Beat],
     seed: int,
     cursor: int,
@@ -39,6 +41,7 @@ pub fn new(seed: int, title: bool) -> State {
     }
     State {
         book: 1,
+        failure: "",
         beats: rhythm.pattern(1, cantus.len),
         seed: seed,
         cursor: 0,
@@ -236,6 +239,7 @@ pub fn tutorial(index: int, title: bool) -> State {
     for p in cf { (mut cp).push(theory.pitch(theory.position(p) + 4)) }
     State {
         book: 1,
+        failure: "",
         beats: rhythm.pattern(1, cf.len),
         seed: index,
         cursor: 0,
@@ -261,7 +265,7 @@ pub fn verdict(s: State) -> first.Verdict {
 }
 
 /// Recompute the score from the current notes and rhythm.
-pub fn score(s: State) -> int { verdict(s).stars }
+pub fn score(s: State) -> int { if s.failure != "" then 0 else verdict(s).stars }
 
 /// Initialize from the replay's optional tutorial start selector.
 pub fn from_replay(r: replay.Replay, title: bool) -> State {
@@ -283,15 +287,20 @@ pub fn with_book(take s: State, book: int) -> State {
     var next = s
     next.book = book
     if book == 1 { return next }
-    let e = species.exercise_goal(
-        next.seed,
-        next.mode,
-        next.below,
-        book,
-        if next.level < 3 then 3 else 1,
-    ) else { assert(false); return next }
-    next.cantus = e.cantus
-    next.beats = e.proof.beats
+    if next.level < 3 {
+        let page = presets.page(book, next.level)
+        next.mode = page.mode
+        next.cantus = page.cantus
+        next.beats = page.beats
+    } else {
+        let e = species.exercise(next.seed, next.mode, next.below, book) else {
+            next.failure = "No certified exercise within the search budget."
+            next.phase = 3
+            return next
+        }
+        next.cantus = e.cantus
+        next.beats = e.proof.beats
+    }
     next.voice = List[theory.Pitch]()
     for i in 0..next.beats.len {
         let bar = rhythm.onset(next.beats, i) / 8
