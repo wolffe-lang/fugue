@@ -552,7 +552,7 @@ pub fn interval_row(v: Viewport, a: theory.Pitch, b: theory.Pitch, tied: bool) -
     lowest + 1
 }
 
-/// Cursor-local status above a separately titled page-wide list of breaks.
+/// Cursor-local status and findings from the active bar only.
 pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
     let bg = if t == 1 then 230 else 7
     let ink = if t == 1 then 94 else 3
@@ -622,7 +622,7 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
                 mut g,
                 row,
                 margin + 2,
-                draw.fit(b.rule, width, false),
+                draw.fit("bar {b.bar} - {b.rule}", width, false),
                 harmony_ink(2, t),
                 bg,
                 false,
@@ -631,9 +631,10 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
         }
     }
     if row == 12 { text(mut g, row, margin + 2, "No local break", blue, bg, false) }
-    text(mut g, 16, margin + 2, "Breaks: whole page", ink, bg, true)
+    text(mut g, 16, margin + 2, "Breaks: bar {bar + 1}", ink, bg, true)
     row = 17
     for b in verdict.breaks {
+        if b.bar != bar + 1 { continue }
         if row >= g.rows - 4 { break }
         text(
             mut g,
@@ -646,6 +647,7 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
         )
         row += 1
     }
+    if row == 17 { text(mut g, row, margin + 2, "No break in this bar", blue, bg, false) }
     if s.notice != "" {
         text(
             mut g,

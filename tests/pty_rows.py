@@ -91,8 +91,8 @@ def panel_right_twice(bin, ctx):
     problems = []
     if 'Editing bar 3' not in screen[4][58:]:
         problems.append('selected-bar panel did not become Editing bar 3')
-    if 'Breaks: whole page' not in screen[16][58:]:
-        problems.append('page breaks are not distinguished from the selected event')
+    if 'Breaks: bar 3' not in screen[16][58:]:
+        problems.append('diagnostics did not follow the selected bar')
     s.type(b'q'); s.finish(); ctx.common_checks(s, 0, problems)
     return s, problems
 
