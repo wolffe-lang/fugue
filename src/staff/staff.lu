@@ -527,7 +527,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
 /// Harmonic labels always use the score pitches, never a screen coordinate.
 pub fn interval_at(s: session.State, event: int) -> theory.Interval {
     let bar = rhythm.onset(s.beats, event) / 8
-    theory.interval(s.cantus[bar], s.voice[event])
+    theory.interval(s.cantus[bar], theory.pitch(46 - theory.position(s.voice[event])))
 }
 
 /// First free row below staff, notes and their lowest drawn tie/ledger element.
