@@ -1,0 +1,24 @@
+fg01a Prediction — before implementation
+
+The wrong convention is the drawn staff: viewport.line = base + 2 assigns
+new pitches to the lines whenever the viewport moves. Row names round-trip
+that movable map; intervals already use theory.interval(cantus, voice), and
+part output names the same pitches. Predict interval and sound are correct,
+but verify fundamental frequencies independently rather than assume it.
+
+session.step clamps edits at bottom = 28 + mode above, or 21/20 + mode below,
+and bottom + 14. Remove this arbitrary modal register clamp, retaining the
+audition bank's supported pitch extent and leaving species legality to the
+judge. Fixed page clef: treble if initial minimum >= G3 (25), bass otherwise.
+
+Predict content widths (whole 6, half 4, quarter 3, eighth 2, enlarged to fit
+pitch/interval names and stems, plus barline) show three complete mixed Book V
+bars and part of a fourth at 80, six complete and part of a seventh at 120.
+Predict at least one seeded lower page requires over three treble ledgers;
+measure the chosen-clef census before recommending a second staff.
+
+Keep viewport/row_of/pitch_of/draw_staff/ledger/head signatures stable for fg02;
+add an explicit clef-selection helper and a voice-label row helper. No engine
+change. Rhythm keys [ split, ] join, . dot, t outgoing tie, r rest/back in V.
+The wrapper prohibits report Markdown; the final PR body carries the complete
+five-section note for coordinator materialisation.
