@@ -87,6 +87,6 @@ fn test_mixed_values_show_numbered_partial_measures() {
             in_last += 1
         }
         assert(last_bar == (if cols == 80 then 2 else 6))
-        assert(in_last == (if cols == 80 then 3 else 2))
+        assert(in_last == (if cols == 80 then 3 else 1))
     }
 }

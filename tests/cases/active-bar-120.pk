@@ -1,0 +1,15 @@
+pk 1
+seed 0
+tier rich
+size 120x40
+start 20001
+# frames 3 every 1
+t 1 right
+t 1 right
+t 1 right
+t 1 right
+t 1 right
+t 1 right
+t 1 right
+t 1 right
+t 2 check

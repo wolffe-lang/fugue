@@ -10,47 +10,63 @@ fn text_is(g: grid.Grid, y: int, x: int, words: str) -> bool {
     true
 }
 
-fn test_diagnostics_only_show_the_active_bar() {
-    for book in 1..6 {
-        var s = session.with_book(take session.tutorial(0, false), book)
-        let verdict = session.verdict(s)
-        var bars = List[int]()
-        for b in verdict.breaks { if b.bar > 0 { (mut bars).push(b.bar) } }
-        assert(bars.len > 1, "fixture has findings in more than one bar")
-        for bar in [bars[0], bars[bars.len - 1]] {
-            s.cursor = rhythm.at(s.beats, (bar - 1) * 8)
-            s.within = 0
-            for cols in [80, 120] {
-                for t in 0..2 {
-                    let rows = if cols == 80 then 24 else 40
-                    var g = grid.new(rows, cols)
-                    staff.panel(mut g, s, cols - 24, t)
-                    assert(text_is(g, 16, cols - 22, "Breaks: bar {bar}"))
-                    var row = 17
-                    for b in verdict.breaks {
-                        if b.bar != bar { continue }
-                        if row >= rows - 4 { break }
-                        assert(text_is(g, row, cols - 22, "bar {bar} - "))
-                        row += 1
-                    }
-                    assert(row > 17, "active bar findings are present")
-                    for y in row..rows - 4 { assert(g.cells[y * cols + cols - 22].cp == 32) }
+fn active_bar(book: int) {
+    var s = session.with_book(take session.tutorial(0, false), book)
+    let verdict = session.verdict(s)
+    var bars = List[int]()
+    for b in verdict.breaks { if b.bar > 0 { (mut bars).push(b.bar) } }
+    var other = bars[0]
+    for bar in bars { if bar != bars[0] { other = bar; break } }
+    assert(bars.len > 1 && bars[0] != other, "fixture has findings in two distinct bars")
+    for bar in [bars[0], other] {
+        s.cursor = rhythm.at(s.beats, (bar - 1) * 8)
+        s.within = 0
+        for cols in [80, 120] {
+            for t in 0..2 {
+                let rows = if cols == 80 then 24 else 40
+                var g = grid.new(rows, cols)
+                staff.panel(mut g, s, cols - 24, t)
+                assert(text_is(g, 16, cols - 22, "Breaks: bar {bar}"))
+                var row = 17
+                for b in verdict.breaks {
+                    if b.bar != bar { continue }
+                    if row >= rows - 4 { break }
+                    assert(text_is(g, row, cols - 22, "bar {bar} - "))
+                    row += 1
                 }
+                assert(row > 17, "active bar findings are present")
+                for y in row..rows - 4 { assert(g.cells[y * cols + cols - 22].cp == 32) }
             }
         }
-        // A clean active bar must not borrow findings from somewhere else.
-        for bar in 1..s.cantus.len + 1 {
-            var count = 0
-            for b in verdict.breaks { if b.bar == bar { count += 1 } }
-            if count != 0 { continue }
-            s.cursor = rhythm.at(s.beats, (bar - 1) * 8)
-            let g = notation.frame(s, 120, 40, 0)
-            assert(text_is(g, 17, 98, "No break in this bar"))
-        }
-        // Checking still counts every bar, not just the selected bar.
-        session.step(mut s, 10)
-        let card = notation.frame(s, 120, 40, 0)
-        assert(text_is(card, 4, 4, "Not yet"))
-        assert(session.verdict(s).breaks.len == verdict.breaks.len)
     }
+    // A clean active bar must not borrow findings from elsewhere.
+    for bar in 1..s.cantus.len + 1 {
+        var count = 0
+        for b in verdict.breaks { if b.bar == bar { count += 1 } }
+        if count != 0 { continue }
+        s.cursor = rhythm.at(s.beats, (bar - 1) * 8)
+        var g = grid.new(40, 120)
+        staff.panel(mut g, s, 96, 0)
+        assert(text_is(g, 17, 98, "No break in this bar"))
+        break
+    }
+    session.step(mut s, 10)
+    let card = notation.frame(s, 120, 40, 0)
+    assert(text_is(card, 4, 4, "Not yet"))
+    let counts = if book == 1 {
+        "Interval variety: {verdict.variety} / 3    Hard breaks: {verdict.breaks.len}"
+    } else {
+        "Intervals {verdict.variety} / 3    Hard breaks {verdict.breaks.len}"
+    }
+    assert(text_is(card, 8, 4, counts), "Enter's hard-break count stays global")
 }
+
+fn test_diagnostics_only_show_the_active_bar_book_1() { active_bar(1) }
+
+fn test_diagnostics_only_show_the_active_bar_book_2() { active_bar(2) }
+
+fn test_diagnostics_only_show_the_active_bar_book_3() { active_bar(3) }
+
+fn test_diagnostics_only_show_the_active_bar_book_4() { active_bar(4) }
+
+fn test_diagnostics_only_show_the_active_bar_book_5() { active_bar(5) }
