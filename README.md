@@ -34,8 +34,8 @@ digest. The engine is pinned by commit in `lair.pin`; its modules are staged in
 that engine only.
 
 At the title, 1–6 chooses a book; Enter opens the current page. Left/Right
-moves by the book's smallest unit in I–V and by notated event in VI;
-Up/Down writes the selected note;
+selects the previous or next notated event in every book, including rests;
+Up/Down writes that selected note; the caret and bar/beat identify its attack;
 Shift-Up/Down move an octave. Space auditions, h hears both voices, Enter checks,
 u undoes, n turns the page, and q or Escape quits. The permitted cadence sharp
 is #; in VI it cycles natural, sharp and flat anywhere.
@@ -69,18 +69,20 @@ tools/check                         # local host, memory-gated on macOS
 .lair/tools/in-container tools/check-perf
 ```
 
-The gate includes 178 checked rule and interaction tests, native and release builds,
+The gate includes 187 checked rule and interaction tests, native and release builds,
 and rich/plain goldens at 80x24 and 120x40. It checks eighteen three-star tutorial
 references, actual solved recordings for all six books, score-tampering refusals,
 terminal restoration, rhythmic two-voice PCM, and the glyph inventory. Fixed-clef
 line/space mapping, grand staves, three-ledger walks, selected-event status,
-partial measures and rhythm edits are exercised in both tiers. In I–V the caret moves
-with every editable time step inside held notes; the live diagnostics list only
+partial measures and rhythm edits are exercised in both tiers. Every book has one
+caret per selected notated event, including rests; the live diagnostics list only
 the active bar, while Enter keeps the global verdict and counts. A real-pty
 `cursor-same-frame` row checks single arrows and ten-key 30 Hz bursts, with and
 without sound, in rich/plain at both sizes, retaining per-press frame evidence.
-A 632-press whole-page traversal also checks periodic stalls, p99 and worst-press
-latency through long held notes and scrolling. Audio rows join stderr to the
+A 160-press whole-page traversal also checks p99 and worst-press
+latency through held events and scrolling. An all-book real-pty row checks 408
+arrow/audition keys against event onsets and attack columns at both sizes and
+tiers. Audio rows join stderr to the
 terminal for page changes and verify that arrow auditions reuse the note bank. A 30-page
 census checks 1,254 initial/reference note rows and 24 synthesized fundamentals within 1%; exact
 Book I PCM remains gated. The first
@@ -93,8 +95,10 @@ three tutorial references and the end card. Book VI uses the same active-bar
 status column and one caret aligned with the event Up/Down edits, with every-cell repaint checks after
 page changes, voice switches, refusals and playback. Its event-selection census
 checks 1,955 positions and 7,820 frame/edit pairs per backend, including unequal
-rhythms, ties, rests and wide registers. The terminal harness has 38 rows on
-Linux and 40 on macOS. Sound-owner rows verify silent failing players, one
+rhythms, ties, rests and wide registers. The same census checks another 11,130
+positions and 44,520 frame/edit pairs in I–V, with forward/backward traversal of
+every preset and twelve seeded mode/side pages per book. The terminal harness has
+39 rows on Linux and 41 on macOS. Sound-owner rows verify silent failing players, one
 live audition through forty rapid accidental changes, h replacing an audition,
 and Linux's single rewritten audition file. PR CI runs Linux; the full tier adds macOS and performance.
 Six cited Fux cantus firmi are historical test oracles only, never playable
