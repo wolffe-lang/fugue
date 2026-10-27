@@ -192,7 +192,6 @@ fn start(mut e: Ear, path: str, audition: bool) -> () ! {io} {
 /// Audition a cached pitch; preparation never happens on this path.
 pub fn audition(mut e: Ear, p: theory.Pitch) -> () ! {io} {
     if !e.enabled { return }
-    stop_audition(mut e)?
     start(mut e, "{e.dir}/note-{theory.position(p)}-{p.accidental}.wav", true)?
 }
 
