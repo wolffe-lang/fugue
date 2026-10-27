@@ -8,7 +8,10 @@ fn test_right_never_moves_the_caret_without_selecting_the_next_event() {
         for page in 0..3 {
             var s = session.with_book(take session.tutorial(page, false), book)
             for event in 0..s.voice.len {
-                assert(session.selection(s).event == event, "Right selects exactly one editable event")
+                assert(
+                    session.selection(s).event == event,
+                    "Right selects exactly one editable event",
+                )
                 assert(session.selection(s).time == rhythm.onset(s.beats, event))
                 session.step(mut s, 4)
             }
@@ -36,10 +39,15 @@ fn sole_caret(book: int) {
 }
 
 fn test_exactly_one_event_caret_book_one() { sole_caret(1) }
+
 fn test_exactly_one_event_caret_book_two() { sole_caret(2) }
+
 fn test_exactly_one_event_caret_book_three() { sole_caret(3) }
+
 fn test_exactly_one_event_caret_book_four() { sole_caret(4) }
+
 fn test_exactly_one_event_caret_book_five() { sole_caret(5) }
+
 fn test_exactly_one_event_caret_book_six() { sole_caret(6) }
 
 fn test_book_five_rhythm_edits_follow_the_navigated_event() {
@@ -63,7 +71,11 @@ fn test_book_five_rhythm_edits_follow_the_navigated_event() {
         session.step(mut s, 11)
         assert(s.cursor == event && s.voice.len == count)
         for i in 0..count {
-            assert(s.beats[i].length == before[i].length && s.beats[i].rest == before[i].rest && s.beats[i].tied == before[i].tied)
+            assert(
+                s.beats[i].length == before[i].length &&
+                    s.beats[i].rest == before[i].rest &&
+                    s.beats[i].tied == before[i].tied,
+            )
         }
     }
 }

@@ -12,7 +12,10 @@ use theory
 /// Geometry oracle: build the union of the two notated timelines, but locate
 /// the expected editable event explicitly, not through the selected cursor.
 fn column(s: session.State, expected: int, cols: int) -> int {
-    if s.book == 1 { return 8 + expected * ((cols - 24 - 9) / s.cantus.len) }
+    if s.book == 1 {
+        let margin = cols - (if cols >= 100 then 29 else 24)
+        return 8 + expected * ((margin - 9) / s.cantus.len)
+    }
     if s.book != 6 {
         return manuscript.event_column(s, manuscript.first_bar(s, cols), expected)
     }
@@ -52,8 +55,7 @@ fn caret(g: grid.Grid, expected: int) -> bool {
 
 fn check_position(s: session.State, expected: int, cols: int, tier: int) -> bool {
     let selected = session.selection(s)
-    if selected.event != expected ||
-        selected.time != rhythm.onset(s.beats, expected) {
+    if selected.event != expected || selected.time != rhythm.onset(s.beats, expected) {
         return false
     }
     let rows = if cols == 80 then 24 else 40
@@ -103,7 +105,10 @@ pub fn reachable() -> int {
                 if before.time == after.time && before.event == after.event { break }
                 positions += 1
             }
-            print("event-reachable book {book} preset {page + 1}: positions {positions} events {s.voice.len}")
+            print(
+                "event-reachable book {book} preset {page + 1}: positions {positions} events {s.voice.len}",
+            )
+            if positions != s.voice.len { return 1 }
         }
     }
     0
@@ -117,13 +122,7 @@ pub fn event_map() -> int {
             for event in 0..s.voice.len {
                 s.cursor = event
                 let time = rhythm.onset(s.beats, event)
-                let x = if book == 6 {
-                    column(s, event, cols)
-                } else if book == 1 {
-                    8 + event * ((cols - 24 - 9) / s.cantus.len)
-                } else {
-                    manuscript.event_column(s, manuscript.first_bar(s, cols), event)
-                }
+                let x = column(s, event, cols)
                 print("event-map {book} {cols} {event} {time} {x}")
             }
         }
@@ -138,7 +137,16 @@ fn earlier_books() -> int {
     for book in 1..6 {
         for page in 0..15 {
             region page_scope {
-                let initial = session.with_book(take (if page < 3 then session.tutorial(page, false) else session.new(page - 3, false)), book)
+                let initial = session.with_book(
+                    take (
+                        if page < 3 {
+                            session.tutorial(page, false)
+                        } else {
+                            session.new(page - 3, false)
+                        }
+                    ),
+                    book,
+                )
                 for variant in 0..7 {
                     region scenario {
                         var s = copy initial
@@ -155,9 +163,13 @@ fn earlier_books() -> int {
                             for cols in [80, 120] {
                                 for tier in [0, 1] {
                                     var ok = false
-                                    region frame_scope { ok = check_position(s, expected, cols, tier) }
+                                    region frame_scope {
+                                        ok = check_position(s, expected, cols, tier)
+                                    }
                                     if !ok {
-                                        print("event-census FAILED book {book} page {page} variant {variant} event {expected} {cols} tier {tier}")
+                                        print(
+                                            "event-census FAILED book {book} page {page} variant {variant} event {expected} {cols} tier {tier}",
+                                        )
                                         return 1
                                     }
                                 }
@@ -171,11 +183,15 @@ fn earlier_books() -> int {
                         }
                     }
                 }
-                print("event-census book {book} page {page}: seven variants, every event, both sizes/tiers green")
+                print(
+                    "event-census book {book} page {page}: seven variants, every event, both sizes/tiers green",
+                )
             }
         }
     }
-    print("event-census Books I-V positions {positions} frame-and-edit checks {positions * 4}; backwards restored")
+    print(
+        "event-census Books I-V positions {positions} frame-and-edit checks {positions * 4}; backwards restored",
+    )
     0
 }
 

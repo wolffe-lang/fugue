@@ -61,7 +61,7 @@ def check(binary, ctx):
                     status = f'Bar {onset//8+1}, beat {onset%8+1}:8'
                     aligned = len(carets) == 1 and carets[0][1] == x
                     row = dict(case=name,frame=tick,keys=keys,event=index,onset=onset,expected_column=x,carets=carets,
-                               aligned=aligned,status=status in screen[5][cols-22:])
+                               aligned=aligned,status=status in screen[5])
                     journal.append(row)
                     if not aligned or not row['status']:
                         problems.append(f'{name}: event-caret frame {tick} selected {index}: {row}')
