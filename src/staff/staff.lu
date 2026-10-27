@@ -509,7 +509,10 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
             ) else iv.quality
         let iy = interval_row(v, s.cantus[i], s.voice[i], false)
         text(mut g, iy, x, "{label}{iv.number}", harmony_ink(iv.consonance, t), bg, false)
-        if i == current && iy + 1 < rows - 2 { text(mut g, iy + 1, x, "^", blue, bg, true) }
+        if i == current {
+            let cy = if iy + 1 < rows - 2 then iy + 1 else top - 1
+            text(mut g, cy, x, "^", blue, bg, true)
+        }
     }
     panel(mut g, s, margin, t)
     let hint = if s.grand && rows == 24 then rows - 1 else rows - 2
