@@ -1,0 +1,40 @@
+                                                                                                                        
+   fugue / VI. The fugue                                                                          Answer desk           
+                                                                                                  Subject+Answer        
+                                                                                                |                       
+                   .                                                                            | Editing bar 1         
+                                                                                                | Bar 1, beat 5:8       
+                                                                                                |                       
+                  .                                                                             | P1 perfect            
+                                         .                                                      | E4                    
+   .                                                                                            | answer-transposition  
+                                                                                                | weak beat             
+                                 .                            .                                 | Figure not allowed    
+ Treble 1             2          3      4          5      6 .                                   | bar 1 - answer-transp 
+ B6                                                                                             |                       
+ A6                                                  .                                          |                       
+ G6                              .                                                              |                       
+ F6                                                          .                     .            | Breaks: bar 1     .   
+ E6                                                                                             | bar 1 - inverted-cros 
+ D6                                      .                    .                                 | bar 1 - inverted-over 
+ C6     .                                        .                                              | bar 1 - inversion-spa 
+ B5                                                                                             | bar 1 - answer-transp 
+ A5                                                                                             | bar 1 - answer-transp 
+ G5                                                                                 .        .  | bar 1 - answer-transp 
+ F5    |-------------|----------|------|----------|------|------------------------------------| |                       
+ E5    |.            |          |      |          |      |                                    | |                       
+ D5    |-------------|----------|------|----------|------|------------------------------------| |                       
+ C5    |             |          |      |        . |      |                  .                 | |                       
+ B4    |----------||-|-||-------|------|----------|------|------------------------------------| |                       
+ A4    |      ||  || | ||   ||  |      |          |      |                                    | |                       
+ G4    |------||--||-|o*----||--|------|------||--|------|------------------------------------| |                       
+ F4    |      || o*  |     o*   |      |      ||  |      |                 .                  | |                       
+ E4    |-||--o*n-----|----------|o*----|-||--o*---|------|------------------------------------| |                       
+ D4      ||  wP1 wP1  SP1  wP1   SP1     ||  wP1   o*                                           |                       
+ C4    -o*-  /4  /4   /2   /2    /1    -o*-  /2    SP1   -o*-                                   |                       
+ B3     SP1   ^                         SP1        /1     SP1                                   |                       
+ A3     /2                              /2                /1                                    |                       
+ G3                                   .                                    .                    |                       
+                 .                                                                              |                       
+  Arrows/# pitch   h exposition   Enter check   n next   b books   q quit                                               
+                                                                                            .                           

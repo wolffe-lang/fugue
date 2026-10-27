@@ -1,0 +1,24 @@
+ Treble 2          3      4          5      6                                   
+ B5                                          !            Answer desk           
+ A5                                                       Subject+Answer        
+ G5                                                     |                       
+ F5    │──────────│──────│──────────│──────│──────────│ | Editing bar 6         
+ E5    │          │      │          │      │          │ | Bar 6, beat 1:8       
+ D5    │──────────│──────│──────────│──────│──────────│ |                       
+ C5    │          │      │          │      │          │ | P22 perfect           
+ B4    │─||───────│──────│──────────│──────│──────────│ | C7                    
+ A4·   │ ||   ||  │      │          │      │          │ | answer-transposition  
+ G4    │○●────||──│──────│──────||──│──────│──────────│ | strong beat           
+ F4    │     ○●   │      │      ||  │      │          │ | Figure not allowed    
+ E4    │──────────│○●────│─||──○●───│──────│──────────│ | bar 6 - answer-transp 
+ D4     SP1  wP1   SP1     ||  wP1   ○●                 |                       
+ C4     /2   /2    /1    ─○●─  /2    SP1   ─○─       ·  |                       
+ B3                       SP1    ·   /1     SP22        |                       
+ A3                       /2                /1          | Breaks: bar 6         
+ G3                                          ^          | bar 6 - downbeat-cons 
+ F3                                      ·              | bar 6 - downbeat-cons 
+ E3     ·                                        ·      | bar 6 - crossing      
+ D3                                                     |                       
+ C3                                                     |                       
+  Arrows/# pitch   h exposition   Enter check   n next   b books   q quit       
+                                                                                

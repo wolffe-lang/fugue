@@ -1,0 +1,40 @@
+                                                                                                                        
+   fugue / VI. The fugue                                                                          Countersubject desk   
+                                                                                                  Answer+Countersubject 
+                                                                                                |                       
+                                                                                  .             | Editing bar 2         
+                                                                                                | Bar 2, beat 1:8       
+                                                                                                |                       
+                                                                                                | M2 dissonant          
+                                                                                                | F4                    
+                .                                                                               | unprepared      .     
+                                                                                           . .  | strong beat           
+                                                                    .                           | Figure not allowed    
+ Treble 1          2        3          4             5        6                                 | bar 2 - unprepared    
+ B6                                          .                                                  |.                      
+ A6                                                                                             |                       
+ G6                                                                                             |                       
+ F6                                                                 .                           | Breaks: bar 2         
+ E6                                          .                                        .    .    | bar 2 - downbeat-cons 
+ D6                   .                                                                         | bar 2 - downbeat-cons 
+ C6                                                    .                                .       | bar 2 - inverted-down 
+ B5                                                                                             | bar 2 - inverted-down 
+ A5                                                                                             | bar 2 - diatonic      
+ G5                                                                                             | bar 2 - repeat        
+ F5    |----------|--------|----------|-|----|------|--------|--------------------------------| | bar 2 - sequence      
+ E5    | |        |        |          | |    |      |       .|                                | | bar 2 - sequence      
+ D5    |-|--------|--------|------|---|o-----|---|--|--------|--------------------------------| | bar 2 - answer-transp 
+ C5    |o     |   |        | |    |.  |     o    |  |       .|o         .                     | |                       
+ B4    |------|---|--------|-|---o----|-------|--||-|o-------|--------------------------------| |                       
+ A4    |     o    |        |o |    |  |  |    | o | |    .   |    .                           | |            .          
+ G4    |----------|o-------|--|----|--|--|----|---|-|--------|--------------------------------| |                     . 
+ F4    | *        |n*      | *    *   | *    *   *  | *      | *                              | |                       
+ E4    |----------|--------|----------|-------------|--------|--------------------------------| |                       
+ D4     SP5  wM3   SM2      SM3  wA4   SM6 .wP5 wM3  SA4      SP5                               |                       
+ C4     /1   /1    /1       /2   /2 .  /2   /4  /4   /1     . /1                                |                       
+ B3                 ^                                                                           |                       
+ A3                                                                                         .   |           .           
+ G3                                                                                             |                       
+                                                                                     .          |                       
+  [ ] . t r rhythm  Arrows/# pitch  v voice  h hear  Enter check  n b q                            .                    
+                        .                                                                                               

@@ -1,0 +1,24 @@
+                                                                                
+   fugue / VI. The fugue                                  Countersubject desk   
+                                                          Answer+Countersubject 
+ Treble 1          2        3          4           >>   |                       
+ B5                                                     | Editing bar 2         
+ A5                                                     | Bar 2, beat 1:8       
+ G5                                                     |                       
+ F5    │──────────│────────│──────────│─|────|────────│ | P1 perfect            
+ E5    │ |        │        │          │ |    |        │ | G4                    
+ D5    │─|────────│────────│──────|───│○─────|───|────│ | consonance            
+ C5    │○     |   │        │ |    |   │     ○    |    │ | strong beat           
+ B4    │──────|───│────────│─|───○────│───────|──||───│ | Figure allowed        
+ A4    │     ○    │        │○ |    |  │  |    | ○ |   │ | No local break        
+ G4    │──────────│○●♮─────│──|────|──│──|────|───|───│ |                       
+ F4    │ ●        │        │ ●    ●   │ ●    ●   ●    │ |                       
+ E4    │──────────│────────│──────────│───────────────│ |                       
+ D4     SP5  wM3   SP1      SM3  wA4   SM6  wP5 wM3     | Breaks: bar 2         
+ C4     /1   /1    /1       /2   /2    /2   /4  /4      | bar 2 - inverted-inte 
+ B3                 ^ ·                                 | bar 2 - climax-positi 
+ A3                                                    ·| bar 2 - answer-transp 
+ G3                                                     |                       
+                                                        |                       
+  [ ] . t r rhythm  Arrows/# pitch  v voice  h hear  Enter check  n b q         
+                                                                                

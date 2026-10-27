@@ -1,0 +1,24 @@
+                                                                                
+   fugue / VI. The fugue                                  Answer desk           
+                                                          Subject+Answer        
+ Treble 1^            2          3      4          >>   |                       
+ E5    |           . |          |      |          |   | | Editing bar 1         
+ D5    |-------------|----------|------|----------|---| | Bar 1, beat 1:8       
+ C5    |             |          |      |          |   | |                       
+ B4    |-------|--||-|-||-------|------|----------|---| | P8 perfect            
+ A4    |      ||  || | ||   ||  |      | .        |   | | C3                    
+ G4.   |------||--||-|o*----||--|------|------||--|---| | answer-transposition  
+ F4    |      *  o*  |     o*   |      |      ||  |   | | strong beat           
+ E4    |-|---o-------|----------|o*----|-||--o*---|---| | Figure not allowed    
+ D4      |   wm2 wP1  SP1  wP1   SP1     ||  wP1        | bar 1 - answer-transp 
+ C4    -o--  /4  /4   /2   /2    /1    -o*-  /2         |                       
+ B3                                     SP1          .  |                       
+ A3     ---                      .      /2              |                       
+ G3                                                     | Breaks: bar 1         
+ F3     ---                                             | bar 1 - inverted-cros 
+ E3       |                              .              | bar 1 - inverted-over 
+ D3     --|                                      .      | bar 1 - inversion-spa 
+ C3     n*                                              |                       
+        SP8                                             |                       
+  Arrows/# pitch   h exposition   Enter check   n next   b books   q quit       
+                                                                                

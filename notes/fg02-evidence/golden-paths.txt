@@ -68,6 +68,10 @@ book-6-hear-120-plain
 book-6-hear-120-rich
 book-6-hear-80-plain
 book-6-hear-80-rich
+book-6-joined-120-plain
+book-6-joined-120-rich
+book-6-joined-80-plain
+book-6-joined-80-rich
 book-6-preset-1-120-plain
 book-6-preset-1-120-rich
 book-6-preset-1-80-plain
@@ -84,6 +88,10 @@ book-6-seed-120-plain
 book-6-seed-120-rich
 book-6-seed-80-plain
 book-6-seed-80-rich
+book-6-selection-120-plain
+book-6-selection-120-rich
+book-6-selection-80-plain
+book-6-selection-80-rich
 book-6-status-120-plain
 book-6-status-120-rich
 book-6-status-80-plain
