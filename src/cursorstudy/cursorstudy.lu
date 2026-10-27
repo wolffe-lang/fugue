@@ -4,8 +4,6 @@ use chapterstudy
 use fuguepage
 use grid
 use manuscript
-use notation
-use staff
 use rhythm
 use session
 use subject
