@@ -14,13 +14,28 @@ both voices in one part-format score and plays that WAV, one whole note per seco
 Rendering time is excluded from playback's tick deadline. Tests retain and inspect
 the actual note bank and two-voice WAV, rather than substituting a click.
 
-macOS starts `/usr/bin/afplay` with an argv vector. The game polls only children
-it owns through wolf-std and reaps them nonblocking. There are at most 32 live
-cue owners; failure is named silence. Ordinary teardown restores the terminal
-before waiting for remaining children and deleting the exclusive temporary WAV
-directory. The default sink rotates audition and whole-play files to stay bounded.
+macOS starts `/usr/bin/afplay` with an argv vector. Both child stdout and child
+stderr always go to `/dev/null`, including when audio tracing is enabled. The
+adapter opens it for writing with `fs.open_append`, hands that handle to
+`process.set_stdout` and `process.set_stderr`, then closes the parent's copy
+on every spawn/error path. These pinned wolf-std setters build the descriptor
+map used by `os_spawn_fds`: `[1, handle, 2, handle]`. No shell, terminal-global
+redirection, engine modification or output-reading thread is involved.
 
-Linux is deliberately a WAV sink: the same rendered files are written, without
+Only one audition may be alive. Before Up/Down, # or Space starts a cached note,
+the adapter polls, kills the previous audition if still owned, and waits for its
+raw exit status to reap it. If reaping fails, no replacement is started. The
+handle slot is cleared both on ordinary exit and on replacement. h also stops
+the audition before rendering its whole-page WAV; that whole-page player has
+its own owner and is not mistaken for an audition. Nonblocking polling still
+reaps normal exits, and the 32-owner capacity guard remains a last resort, not
+a queueing policy. Ordinary teardown restores the terminal before waiting for
+remaining children and deleting the exclusive temporary WAV directory.
+
+Linux is deliberately a WAV sink: auditions rewrite one `audition.wav`, even
+with an explicit retained directory; they do not accumulate one file per key.
+Whole-play handoffs keep their separate numbered output (rotating in the
+private default directory). The same rendered files are written without
 requiring an audio server or a package install. `FUGUE_WAV_DIR=path` keeps them in
 an explicit directory for inspection or playback elsewhere; otherwise the private
 directory is removed at exit. `--mute` or `FUGUE_SOUND=0` disables preparation
@@ -49,7 +64,8 @@ Redirect stderr to a file when using this diagnostic in a real terminal;
 otherwise diagnostics could move the terminal cursor outside the draw pen.
 Normal play does not emit per-cue diagnostic lines. The Mac pty row requires
 an owned `/usr/bin/afplay` child with the whole WAV argument, observes it alive,
-and waits for its successful exit and reap. Linux's named WAV sink is not
+and waits for its successful exit and reap. These opt-in lines are fugue's own
+stderr, not afplay's: redirect them explicitly while tracing. Linux's named WAV sink is not
 claimed as speaker evidence. A rendered file without the output handoff fails.
 
 ## Rhythmic books
@@ -90,3 +106,19 @@ on the shared clock. `h`, replay PCM export and the entry lights all use that
 same written pair. No third entry or closing cadence is synthesized off-screen.
 The Book VI audition bank includes natural, sharp and flat spellings throughout
 its editable C3–C7 range; preparations still happen outside frame rendering.
+
+## Player ownership witnesses
+
+The sound-owner rows in `tests/ear_rows.py` join stderr to the actual pty. On
+macOS, `quiet-player-stderr` replaces the prepared notes with empty WAVs and
+requires that a failing real afplay leave every terminal text/style cell
+unchanged. `audition-storm` sends forty # keys in two seconds, polls the game's
+own children, checks at most one audition, and compares every captured frame
+with the two states from an independent muted run. The accidental's pitch,
+interval and judge labels may legitimately change too; no rectangular region
+is ignored. Every press must produce its expected frame with p99 <=70 ms.
+`audition-hear-owner` verifies h kills/reaps the audition before handing its
+whole WAV to a distinct live afplay. Linux's `linux-audition-sink` row sends the
+same storm and requires exactly one rewritten audition file, with all forty
+keys recorded. These rows run through the existing game pty gate, without a
+new workflow or an audio-server dependency.
