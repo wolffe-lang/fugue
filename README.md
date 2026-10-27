@@ -34,7 +34,8 @@ digest. The engine is pinned by commit in `lair.pin`; its modules are staged in
 that engine only.
 
 At the title, 1–6 chooses a book; Enter opens the current page. Left/Right
-moves by the book's smallest unit; Up/Down writes a note;
+moves by the book's smallest unit in I–V and by notated event in VI;
+Up/Down writes the selected note;
 Shift-Up/Down move an octave. Space auditions, h hears both voices, Enter checks,
 u undoes, n turns the page, and q or Escape quits. The permitted cadence sharp
 is #; in VI it cycles natural, sharp and flat anywhere.
@@ -73,7 +74,7 @@ and rich/plain goldens at 80x24 and 120x40. It checks eighteen three-star tutori
 references, actual solved recordings for all six books, score-tampering refusals,
 terminal restoration, rhythmic two-voice PCM, and the glyph inventory. Fixed-clef
 line/space mapping, grand staves, three-ledger walks, selected-event status,
-partial measures and rhythm edits are exercised in both tiers. The caret moves
+partial measures and rhythm edits are exercised in both tiers. In I–V the caret moves
 with every editable time step inside held notes; the live diagnostics list only
 the active bar, while Enter keeps the global verdict and counts. A real-pty
 `cursor-same-frame` row checks single arrows and ten-key 30 Hz bursts, with and
@@ -89,8 +90,10 @@ study pins 127 legal/illegal rows, and the classifier has seventeen explicit
 figure rows. Book VI adds a 300-subject census, exact real/tonal checks,
 independent inversion admission, a twelve-second played-exposition PCM,
 three tutorial references and the end card. Book VI uses the same active-bar
-status column and time-aware caret, with every-cell repaint checks after
-page changes, voice switches, refusals and playback. The terminal harness has 36 rows. PR CI runs Linux; the full tier adds macOS and performance.
+status column and one caret aligned with the event Up/Down edits, with every-cell repaint checks after
+page changes, voice switches, refusals and playback. Its event-selection census
+checks 1,815 positions and 7,260 frame/edit pairs per backend, including unequal
+rhythms, ties, rests and wide registers. The terminal harness has 37 rows. PR CI runs Linux; the full tier adds macOS and performance.
 Six cited Fux cantus firmi are historical test oracles only, never playable
 levels or source material for game music.
 
