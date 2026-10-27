@@ -1,0 +1,17 @@
+build: target/native/fugue
+build: target/release/fugue
+event-reachable book 1 preset 1: positions 10 events 10
+event-reachable book 1 preset 2: positions 10 events 10
+event-reachable book 1 preset 3: positions 10 events 10
+event-reachable book 2 preset 1: positions 20 events 19
+event-reachable book 2 preset 2: positions 20 events 19
+event-reachable book 2 preset 3: positions 20 events 19
+event-reachable book 3 preset 1: positions 40 events 37
+event-reachable book 3 preset 2: positions 40 events 37
+event-reachable book 3 preset 3: positions 40 events 37
+event-reachable book 4 preset 1: positions 20 events 19
+event-reachable book 4 preset 2: positions 20 events 19
+event-reachable book 4 preset 3: positions 20 events 19
+event-reachable book 5 preset 1: positions 80 events 21
+event-reachable book 5 preset 2: positions 80 events 21
+event-reachable book 5 preset 3: positions 80 events 21

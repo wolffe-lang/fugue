@@ -1,0 +1,10 @@
+test src/event_test.lu::test_right_never_moves_the_caret_without_selecting_the_next_event ... FAILED (trap(assert))
+test src/event_test.lu::test_exactly_one_event_caret_book_one ... ok
+test src/event_test.lu::test_exactly_one_event_caret_book_two ... ok
+test src/event_test.lu::test_exactly_one_event_caret_book_three ... ok
+test src/event_test.lu::test_exactly_one_event_caret_book_four ... ok
+test src/event_test.lu::test_exactly_one_event_caret_book_five ... ok
+test src/event_test.lu::test_exactly_one_event_caret_book_six ... ok
+test src/event_test.lu::test_book_five_rhythm_edits_follow_the_navigated_event ... FAILED (trap(assert))
+test src/event_test.lu::test_rest_and_audition_keep_the_selected_attack ... FAILED (trap(assert))
+wolf test: 6 passed; 3 failed; 0 rejected; 0 unsupported; 0 filtered out

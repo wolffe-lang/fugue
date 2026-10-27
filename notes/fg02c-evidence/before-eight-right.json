@@ -1,0 +1,236 @@
+[
+  {
+    "tier": "rich",
+    "press": 0,
+    "caret": [
+      [
+        28,
+        9
+      ]
+    ],
+    "time": 0,
+    "event_index": 0,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "rich",
+    "press": 1,
+    "caret": [
+      [
+        28,
+        10
+      ]
+    ],
+    "time": 1,
+    "event_index": 0,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "rich",
+    "press": 2,
+    "caret": [
+      [
+        28,
+        11
+      ]
+    ],
+    "time": 2,
+    "event_index": 0,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "rich",
+    "press": 3,
+    "caret": [
+      [
+        28,
+        12
+      ]
+    ],
+    "time": 3,
+    "event_index": 0,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "rich",
+    "press": 4,
+    "caret": [
+      [
+        28,
+        14
+      ]
+    ],
+    "time": 4,
+    "event_index": 1,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "rich",
+    "press": 5,
+    "caret": [
+      [
+        28,
+        15
+      ]
+    ],
+    "time": 5,
+    "event_index": 1,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "rich",
+    "press": 6,
+    "caret": [
+      [
+        28,
+        16
+      ]
+    ],
+    "time": 6,
+    "event_index": 1,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "rich",
+    "press": 7,
+    "caret": [
+      [
+        28,
+        17
+      ]
+    ],
+    "time": 7,
+    "event_index": 1,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "rich",
+    "press": 8,
+    "caret": [
+      [
+        27,
+        20
+      ]
+    ],
+    "time": 8,
+    "event_index": 2,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "plain",
+    "press": 0,
+    "caret": [
+      [
+        28,
+        9
+      ]
+    ],
+    "time": 0,
+    "event_index": 0,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "plain",
+    "press": 1,
+    "caret": [
+      [
+        28,
+        10
+      ]
+    ],
+    "time": 1,
+    "event_index": 0,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "plain",
+    "press": 2,
+    "caret": [
+      [
+        28,
+        11
+      ]
+    ],
+    "time": 2,
+    "event_index": 0,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "plain",
+    "press": 3,
+    "caret": [
+      [
+        28,
+        12
+      ]
+    ],
+    "time": 3,
+    "event_index": 0,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "plain",
+    "press": 4,
+    "caret": [
+      [
+        28,
+        14
+      ]
+    ],
+    "time": 4,
+    "event_index": 1,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "plain",
+    "press": 5,
+    "caret": [
+      [
+        28,
+        15
+      ]
+    ],
+    "time": 5,
+    "event_index": 1,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "plain",
+    "press": 6,
+    "caret": [
+      [
+        28,
+        16
+      ]
+    ],
+    "time": 6,
+    "event_index": 1,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "plain",
+    "press": 7,
+    "caret": [
+      [
+        28,
+        17
+      ]
+    ],
+    "time": 7,
+    "event_index": 1,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  },
+  {
+    "tier": "plain",
+    "press": 8,
+    "caret": [
+      [
+        27,
+        20
+      ]
+    ],
+    "time": 8,
+    "event_index": 2,
+    "selection_basis": "panel time resolved against shipped Book V preset onsets; compiled state census corroborates"
+  }
+]
