@@ -50,7 +50,8 @@ fn panel_model(
     p: exposition.Page,
     findings: List[theory.Break],
 ) -> staff.PanelData {
-    let current = exposition.status(p, s.cursor, s.within, findings)
+    let selected = session.selection(s)
+    let current = exposition.status(p, selected.event, selected.within, findings)
     let iv = current.interval
     let cls = if iv.consonance == 0 {
         "perfect"
@@ -109,6 +110,12 @@ fn voice(
             )
         } else {
             let y = staff.head(mut g, v, line.notes[i], nx, t, given, selected == i, lit == i)
+            if y < v.top || y > v.bottom {
+                // A clipped pitch is not another selection cursor.
+                let edge = if y < v.top then v.top else v.bottom
+                let old = copy g.cells[edge * g.cols + nx]
+                grid.put(mut g, edge, nx, grid.cell(33, old.fg, old.bg, old.attrs))
+            }
             if y >= v.top && y <= v.bottom {
                 if line.beats[i].length < 8 {
                     let stem = if line.beats[i].length == 4 || line.beats[i].length == 6 {
@@ -274,7 +281,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
     let local_time = if s.hearing >= 0 {
         s.hearing % duration * 8 / session.ticks_per_whole()
     } else {
-        rhythm.onset(s.beats, s.cursor) + s.within
+        session.selection(s).time
     }
     let first = if solo || answer_desk then copy p.given else copy p.response
     let second = if solo {
@@ -341,7 +348,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
             start,
             t,
             false,
-            if s.hearing < 0 then s.cursor else -1,
+            if s.hearing < 0 then session.selection(s).event else -1,
             lit_b,
         )
     }
@@ -401,8 +408,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
         let a = rhythm.at(first.beats, local_time), b = rhythm.at(second.beats, local_time)
         let lower = staff.interval_row(v, first.notes[a], second.notes[b], second.beats[b].tied) + 2
         let caret_y = if lower < rows - 2 then lower else v.top - 1
-        let offset = if s.hearing >= 0 then 0 else layout.within / session.editor_unit(layout)
-        text(mut g, caret_y, caret_x + offset, "^", blue, bg, true)
+        text(mut g, caret_y, caret_x, "^", blue, bg, true)
     }
     staff.panel_data(mut g, panel_model(s, p, verdict.breaks), margin, t)
     text(

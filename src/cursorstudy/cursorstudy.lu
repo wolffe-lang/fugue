@@ -1,0 +1,155 @@
+//! Exhaustive editable-event witnesses, independent of the renderer's focus choice.
+
+use chapterstudy
+use fuguepage
+use grid
+use manuscript
+use rhythm
+use session
+use subject
+use theory
+
+/// Geometry oracle: build the union of the two notated timelines, but locate
+/// the expected editable event explicitly, not through the selected cursor.
+fn column(s: session.State, expected: int, cols: int) -> int {
+    let other = if s.fugue.editing == 0 then copy s.fugue.given else copy s.fugue.response
+    var cuts = List[int]()
+    let span = subject.span(s.beats)
+    for time in 0..span {
+        if rhythm.onset(s.beats, rhythm.at(s.beats, time)) == time ||
+            rhythm.onset(other.beats, rhythm.at(other.beats, time)) == time {
+            (mut cuts).push(time)
+        }
+    }
+    (mut cuts).push(span)
+    var layout = copy s
+    layout.cantus = []
+    layout.voice = []
+    layout.beats = []
+    layout.history = []
+    for bar in 0..span / 8 {
+        (mut layout.cantus).push(copy other.notes[rhythm.at(other.beats, bar * 8)])
+    }
+    for i in 0..cuts.len - 1 {
+        (mut layout.voice).push(copy s.voice[rhythm.at(s.beats, cuts[i])])
+        (mut layout.beats).push(rhythm.
+            Beat { length: cuts[i + 1] - cuts[i], rest: false, tied: false })
+    }
+    layout.cursor = rhythm.at(layout.beats, rhythm.onset(s.beats, expected))
+    layout.within = 0
+    layout.hearing = -1
+    manuscript.event_column(layout, manuscript.first_bar(layout, cols), layout.cursor)
+}
+
+fn caret(g: grid.Grid, expected: int) -> bool {
+    var count = 0, x = -1
+    for i in 0..g.cells.len { if g.cells[i].cp == 94 { count += 1; x = i % g.cols } }
+    count == 1 && x == expected
+}
+
+fn check_position(s: session.State, expected: int, cols: int, tier: int) -> bool {
+    let selected = session.selection(s)
+    if selected.event != expected ||
+        selected.within != 0 ||
+        selected.time != rhythm.onset(s.beats, expected) {
+        return false
+    }
+    let rows = if cols == 80 then 24 else 40
+    let x = column(s, expected, cols)
+    if !caret(fuguepage.frame(s, cols, rows, tier), x) { return false }
+    var edited = copy s
+    let delta = if theory.position(s.voice[expected]) < s.range_high then 1 else -1
+    session.step(mut edited, if delta == 1 then 1 else 2)
+    var start = expected, end = expected + 1
+    while start > 0 && s.beats[start].tied { start -= 1 }
+    while end < s.beats.len && s.beats[end].tied { end += 1 }
+    for i in 0..s.voice.len {
+        if i >= start && i < end {
+            if theory.position(edited.voice[i]) != theory.position(s.voice[expected]) + delta ||
+                edited.voice[i].accidental != 0 {
+                return false
+            }
+        } else if theory.position(edited.voice[i]) != theory.position(s.voice[i]) ||
+            edited.voice[i].accidental != s.voice[i].accidental {
+            return false
+        }
+    }
+    if !caret(fuguepage.frame(edited, cols, rows, tier), column(edited, expected, cols)) {
+        return false
+    }
+    session.step(mut edited, 11)
+    for i in 0..s.voice.len {
+        if theory.position(edited.voice[i]) != theory.position(s.voice[i]) ||
+            edited.voice[i].accidental != s.voice[i].accidental {
+            return false
+        }
+    }
+    true
+}
+
+/// One caret at the event actually changed by Up/Down, through complete forward
+/// and backward traversals. Tied pitch chains are checked explicitly.
+pub fn census() -> int {
+    var positions = 0, edits = 0
+    for page in 0..13 {
+        region page_scope {
+            let initial = if page == 0 {
+                chapterstudy.solved(2)
+            } else {
+                session.with_book(take session.new(page - 1, false), 6)
+            }
+            for desk in 0..2 {
+                for variant in 0..7 {
+                    region scenario {
+                        var s = copy initial
+                        if desk != s.fugue.editing { session.step(mut s, 27) }
+                        if variant == 1 { session.step(mut s, 23) }
+                        if variant == 2 { session.step(mut s, 22) }
+                        if variant == 3 { session.step(mut s, 28) }
+                        if variant == 4 { session.step(mut s, 24) }
+                        if variant == 5 && s.rhythm_editable { session.step(mut s, 13) }
+                        if variant == 6 {
+                            s.voice[0] = theory.pitch(21)
+                            s.voice[s.voice.len - 1] = theory.pitch(49)
+                        }
+                        let count = s.voice.len
+                        for expected in 0..count {
+                            for cols in [80, 120] {
+                                for tier in [0, 1] {
+                                    var ok = false
+                                    region frame_scope {
+                                        ok = check_position(s, expected, cols, tier)
+                                    }
+                                    if !ok {
+                                        print(
+                                            "cursor-census FAILED page {page} desk {desk} variant {variant} event {expected + 1} {cols} tier {tier}",
+                                        )
+                                        return 1
+                                    }
+                                    edits += 1
+                                }
+                            }
+                            positions += 1
+                            if expected + 1 < count { session.step(mut s, 4) }
+                        }
+                        for back in 0..count {
+                            let expected = count - 1 - back
+                            if session.selection(s).event != expected ||
+                                session.selection(s).within != 0 {
+                                return 1
+                            }
+                            if expected > 0 { session.step(mut s, 3) }
+                        }
+                    }
+                }
+            }
+            print(
+                "cursor-census page {page}: both desks, seven rhythm/register scenarios, every event, both sizes/tiers green",
+            )
+        }
+    }
+    print(
+        "cursor-census positions {positions} frame-and-edit checks {edits} exactly-one-caret all aligned; every backward selection restored",
+    )
+    0
+}

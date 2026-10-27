@@ -4,6 +4,7 @@ use std.signal
 use std.time
 use chapterstudy
 use clock
+use cursorstudy
 use ear
 use first
 use grid
@@ -228,7 +229,9 @@ fn play_key(mut s: session.State, mut audio: ear.Ear, k: int, mut c: clock.Clock
         c = clock.new(clock.now_ns())
     }
     if s.audition != before_audition && k != 12 {
-        ear.audition(mut audio, s.voice[s.cursor]) else |_| { eprint("sound: audition failed") }
+        ear.audition(mut audio, s.voice[session.selection(s).event]) else |_| {
+            eprint("sound: audition failed")
+        }
     }
     if k == 9 && before_hearing < 0 && s.hearing == 0 {
         ear.hear(mut audio, s) else |_| { eprint("sound: whole failed") }
@@ -458,6 +461,7 @@ fn main() -> int {
         return 0
     }
     if has(args, "--fugue-audio-study") { return chapterstudy.audio() }
+    if has(args, "--fugue-cursor-census") { return cursorstudy.census() }
     if has(args, "--fugue-census") { return chapterstudy.census() }
     if has(args, "--fugue-verdicts") { print_raw(chapterstudy.verdicts()); return 0 }
     if has(args, "--species-verdicts") { print_raw(studies.verdicts()); return 0 }

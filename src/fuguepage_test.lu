@@ -65,10 +65,10 @@ fn common_panel(desk: int, width: int) {
     if desk == 1 { session.step(mut s, 27) }
     for t in [0, 1] {
         s.cursor = 0
-        s.within = 2
+        s.within = 0
         let rows = if width == 80 then 24 else 40
         let first = fuguepage.frame(s, width, rows, t)
-        assert(text_has(first, "Editing bar 1") && text_has(first, "Bar 1, beat 3:8"))
+        assert(text_has(first, "Editing bar 1") && text_has(first, "Bar 1, beat 1:8"))
         assert(text_has(first, "Breaks: bar 1") && !text_has(first, "bar 3 -"))
         s.cursor = 4
         s.within = 0
@@ -98,30 +98,33 @@ fn caret_column(g: grid.Grid) -> int {
     found
 }
 
-fn held_caret(desk: int) {
+fn test_fugue_right_selects_the_event_up_will_edit() {
     var s = chapterstudy.solved(2)
-    if desk == 1 { session.step(mut s, 27) }
-    s.cursor = 2
-    s.within = 0
-    var previous = caret_column(fuguepage.frame(s, 80, 24, 0))
-    for _ in 0..3 {
-        session.step(mut s, 4)
-        let next = caret_column(fuguepage.frame(s, 80, 24, 0))
-        assert(next == previous + 1)
-        previous = next
-    }
+    let first = theory.position(s.voice[0]), second = theory.position(s.voice[1])
+    session.step(mut s, 4)
+    assert(session.selection(s).event == 1 && session.selection(s).within == 0)
+    assert(caret_column(fuguepage.frame(s, 80, 24, 0)) == 14)
+    session.step(mut s, 1)
+    assert(theory.position(s.voice[0]) == first && theory.position(s.voice[1]) == second + 1)
 }
 
-fn test_fugue_answer_caret_moves_within_a_whole() { held_caret(0) }
-
-fn test_fugue_counter_caret_moves_within_a_whole() { held_caret(1) }
-
-fn test_fugue_caret_uses_merged_event_offset_after_join() {
+fn test_fugue_cursor_never_selects_the_other_voices_slot() {
     var s = chapterstudy.solved(2)
     session.step(mut s, 27)
     session.step(mut s, 23)
     assert(s.beats[0].length == 8)
-    for _ in 0..4 { session.step(mut s, 4) }
-    assert(s.cursor == 0 && s.within == 4)
-    assert(caret_column(fuguepage.frame(s, 80, 24, 0)) == 14)
+    assert(caret_column(fuguepage.frame(s, 80, 24, 0)) == 9)
+    session.step(mut s, 4)
+    assert(session.selection(s).event == 1 && session.selection(s).time == 8)
+    assert(caret_column(fuguepage.frame(s, 80, 24, 0)) == 20)
+}
+
+fn test_fugue_overflow_mark_is_not_an_extra_cursor() {
+    var s = chapterstudy.solved(2)
+    s.voice[0] = theory.pitch(21)
+    s.voice[s.voice.len - 1] = theory.pitch(49)
+    s.cursor = s.voice.len - 1
+    let g = fuguepage.frame(s, 120, 40, 0)
+    let x = caret_column(g)
+    assert(x >= 0 && text_has(g, "!"))
 }

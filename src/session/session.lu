@@ -40,6 +40,17 @@ pub struct State {
     below: bool,
 }
 
+/// One authoritative editable-voice selection. Book VI selects whole notated
+/// events; its merged display timeline never creates additional edit positions.
+pub struct Selection { event: int, within: int, time: int }
+
+/// Resolve a valid editor cursor to its event, offset and musical time.
+/// Book VI snaps to the event onset; I–V retain their existing grid offsets.
+pub fn selection(s: State) -> Selection {
+    let within = if s.book == 6 then 0 else s.within
+    Selection { event: s.cursor, within: within, time: rhythm.onset(s.beats, s.cursor) + within }
+}
+
 /// Start at the title or staff with the supplied seed.
 pub fn new(seed: int, title: bool) -> State {
     let mode = (seed % 6 + 6) % 6
@@ -227,21 +238,28 @@ pub fn step(mut s: State, k: int) {
         fugue_setup(mut s)
         return
     }
-    let unit = editor_unit(s)
-    if k == 3 {
-        if s.within >= unit {
-            s.within -= unit
-        } else if s.cursor > 0 {
-            s.cursor -= 1
-            s.within = s.beats[s.cursor].length - unit
+    if s.book == 6 {
+        let selected = selection(s)
+        if k == 3 && selected.event > 0 { s.cursor = selected.event - 1 }
+        if k == 4 && selected.event + 1 < s.voice.len { s.cursor = selected.event + 1 }
+        s.within = 0
+    } else {
+        let unit = editor_unit(s)
+        if k == 3 {
+            if s.within >= unit {
+                s.within -= unit
+            } else if s.cursor > 0 {
+                s.cursor -= 1
+                s.within = s.beats[s.cursor].length - unit
+            }
         }
-    }
-    if k == 4 {
-        if s.within + unit < s.beats[s.cursor].length {
-            s.within += unit
-        } else if s.cursor + 1 < s.voice.len {
-            s.cursor += 1
-            s.within = 0
+        if k == 4 {
+            if s.within + unit < s.beats[s.cursor].length {
+                s.within += unit
+            } else if s.cursor + 1 < s.voice.len {
+                s.cursor += 1
+                s.within = 0
+            }
         }
     }
     if k == 9 && s.hearing < 0 { s.hearing = 0 }
@@ -275,7 +293,8 @@ pub fn step(mut s: State, k: int) {
     }
     if k >= 22 && k <= 25 || k == 28 { edit_rhythm(mut s, k); return }
     if k >= 1 && k <= 2 || k == 5 || k == 6 || k == 7 {
-        let before = copy s.voice[s.cursor]
+        let selected = selection(s)
+        let before = copy s.voice[selected.event]
         var next = copy before
         if k == 7 {
             let degree = (theory.position(before) - 28 - s.mode + 70) % 7
@@ -300,7 +319,7 @@ pub fn step(mut s: State, k: int) {
             next = theory.pitch(pos)
         }
         remember(mut s)
-        var start = s.cursor
+        var start = selected.event
         while start > 0 && s.beats[start].tied { start -= 1 }
         s.voice[start] = copy next
         var end = start + 1
@@ -429,9 +448,10 @@ pub fn with_book(take s: State, book: int) -> State {
 }
 
 fn remember(mut s: State) {
+    let selected = selection(s)
     (mut s.history).push(Edit {
-        bar: s.cursor,
-        within: s.within,
+        bar: selected.event,
+        within: selected.within,
         notes: copy s.voice,
         beats: copy s.beats,
     })
@@ -447,7 +467,7 @@ pub fn editor_unit(s: State) -> int {
 
 /// Rhythm edits preserve a bar's sum and undo as one transaction; refusals are named.
 fn edit_rhythm(mut s: State, k: int) {
-    let i = s.cursor
+    let i = selection(s).event
     let time = rhythm.onset(s.beats, i)
     s.notice = ""
     // Fixed species retain their conventional opening-rest and incoming-barline tie.
