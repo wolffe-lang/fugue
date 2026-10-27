@@ -178,7 +178,6 @@ fn start(mut e: Ear, path: str, audition: bool) -> () ! {io} {
     let quiet = fs.open_append("/dev/null") else |_| { return io }
     defer fs.close(take quiet) else |_| {}
     process.set_stdout(mut cmd, quiet)
-    process.set_stderr(mut cmd, quiet)
     let child = process.start(cmd) else |_| { return io }
     if audition { e.audition_slot = child.slot }
     let pid = process.pid(child) else -1
