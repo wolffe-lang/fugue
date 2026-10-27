@@ -103,11 +103,13 @@ def quiet_failure(binary, ctx):
 
 
 def cadence(s, binary, root):
-    # Seed 7 is Dorian. Walk to the final event, then one whole back to
+    # Seed 7 is Dorian. Walk to the final event, then one event back to
     # the penultimate event. Its seventh is C; C3 is inside the bass bank.
     s.type(b'\x1b[C'*200, .15)
-    s.type(b'\x1b[D'*8, .15)
+    s.type(b'\x1b[D', .15)
     screen = image(binary, root, s.out).decode().split('--\n')[0].splitlines()
+    if 'Bar 9, beat 5:8' not in screen[5]:
+        raise RuntimeError('cadence setup did not select the penultimate event: '+screen[5])
     label = screen[8][98:].strip()
     match = re.match(r'([A-G])([#b]?)([0-9])', label)
     if not match: raise RuntimeError('cannot read selected pitch: '+label)
