@@ -14,6 +14,11 @@ import time
 # and restore checks, but read promptly enough to measure a 20 Hz storm.
 def session_type(ctx):
     class Prompt(ctx.Session):
+        def __init__(self, *args):
+            self.reads = []
+            self.capture_reads = False
+            super().__init__(*args)
+
         def pump(self, seconds):
             end = time.monotonic() + seconds
             while time.monotonic() < end:
@@ -23,7 +28,9 @@ def session_type(ctx):
                     try: chunk = os.read(fd, 65536)
                     except OSError: chunk = b''
                     if fd == self.master:
-                        if chunk: self.out += chunk
+                        if chunk:
+                            self.out += chunk
+                            if self.capture_reads: self.reads.append((time.monotonic(), self.out))
                         else: self.eof = True
                     elif chunk: self.err += chunk
     return Prompt
@@ -127,51 +134,80 @@ def storm(binary, ctx):
     cadence(s,binary,root)
     initial = image(binary,root,s.out)
     if initial != natural: problems.append('live and muted initial frames differ')
-    polls, presses, captures = [], [], []
+    polls, sent = [], []
+    s.capture_reads = True
     start = time.monotonic()
     for index in range(40):
-        sent = time.monotonic(); size = len(s.out)
+        sent.append(time.monotonic())
         os.write(s.master,b'#')
-        first = None
         deadline = start+(index+1)*.05
         while time.monotonic() < deadline:
             s.pump(.002)
-            if first is None and len(s.out)>size: first = time.monotonic()
-            if Path('/usr/bin/afplay').exists():
+            if is_mac:
                 pids = children(s)
                 polls.append(dict(at_ms=(time.monotonic()-start)*1000,pids=pids))
-        captures.append(s.out)
-        presses.append(dict(press=index+1,wall_ms=None if first is None else (first-sent)*1000))
-    s.pump(.15)
-    # Retain and analyse after the timed presses: applying 40 terminal models
-    # during the storm would itself change the workload being measured.
-    extra = []
-    for index,capture in enumerate(captures):
+    # The key interval is 50 ms but the frame budget is 70 ms. Capture
+    # independently of send slots so a legal late frame belongs to its
+    # actual press, not the following press. Final reads get the same budget.
+    send_span_ms = (sent[-1]-sent[0])*1000
+    if send_span_ms > 2000: problems.append(f'forty presses took {send_span_ms:.3f} ms, over two seconds')
+    s.pump(.10)
+    s.capture_reads = False
+    # Analyse read snapshots after sending, never run terminal models in the
+    # timed loop. Preserve every distinct valid state even when two writes
+    # arrive close together; only an incomplete split write may wait <=4 ms
+    # for its completing read.
+    presses, extra, captures = [], [], []
+    previous = natural
+    pending = None
+    for at,capture in s.reads:
         actual = image(binary,root,capture)
-        expected = sharp if index%2==0 else natural
-        a, sa = cells(actual); b, sb = cells(expected)
-        delta = changed(a,b); style_delta = changed(sa,sb)
-        # Linux's contract is bounded sink parity, not a native-backend
-        # frame budget. A coalesced native frame must still be one of the
-        # two independent valid states; the Mac checks each press's parity.
-        if not is_mac and actual in (natural, sharp): delta = style_delta = 0
+        valid = actual in (natural,sharp)
+        if not valid:
+            if pending is None: pending = (at,capture,actual)
+            continue
+        if pending is not None:
+            if at-pending[0]>.004:
+                a,sa = cells(pending[2])
+                delta = min(changed(a,cells(state)[0]) for state in (natural,sharp))
+                extra.append(delta)
+                problems.append(f'terminal held an unexpected state for {(at-pending[0])*1000:.3f} ms ({delta} text cells)')
+            pending = None
+        if actual == previous: continue
+        index = len(presses)
+        presses.append(dict(press=index+1,wall_ms=None if index>=len(sent) else (at-sent[index])*1000))
+        extra.append(0)
+        previous = actual
+        captures.append(capture)
+        (root/f'frame-{len(captures):02}.bin').write_bytes(capture)
+    if pending is not None:
+        a,sa = cells(pending[2])
+        delta = min(changed(a,cells(state)[0]) for state in (natural,sharp))
         extra.append(delta)
-        if delta or style_delta: problems.append(f'press {index+1}: {delta} unexpected text cells / {style_delta} style rows')
-        (root/f'press-{index+1:02}.bin').write_bytes(capture)
+        problems.append(f'player left an unexpected terminal state ({delta} text cells)')
+    final = image(binary,root,s.out)
+    if final != natural: problems.append('forty recorded toggles did not restore the exact initial frame')
     alive = max([len(p['pids']) for p in polls], default=0)
     if is_mac and (not polls or alive == 0): problems.append('storm never observed a real player')
     if alive > 1: problems.append(f'audition children alive: {alive}, wanted <=1')
     latencies = [p['wall_ms'] for p in presses if p['wall_ms'] is not None]
-    p99 = sorted(latencies)[math.ceil(len(latencies)*.99)-1] if latencies else None
-    if is_mac and len(latencies)!=40: problems.append(f'only {len(latencies)}/40 presses produced a frame')
-    if is_mac and (p99 is None or p99>70): problems.append(f'storm p99 latency {p99} ms exceeds 70 ms')
+    # Ordered state changes correspond one-to-one to presses only when all
+    # forty were drawn. Never publish a shifted, fabricated per-key p99 for
+    # a coalesced/missing intermediate state.
+    p99 = sorted(latencies)[math.ceil(len(latencies)*.99)-1] if len(latencies)==40 else None
+    if is_mac and len(latencies)!=40: problems.append(f'only {len(latencies)}/40 presses produced a distinct expected frame')
+    if is_mac and p99 is None: problems.append('per-press p99 unavailable without forty expected frames')
+    elif is_mac and (p99>70 or min(latencies)<0): problems.append(f'storm p99 latency {p99} ms exceeds 70 ms or frame preceded its press')
     if b'AudioQueueStart' in s.out or b'Error:' in s.out: problems.append('player error reached terminal during storm')
     sinks = list(root.glob('audition*.wav'))
     if not is_mac and len(sinks)!=1: problems.append(f'Linux audition sink grew to {len(sinks)} files, wanted one rewritten file')
+    if not is_mac and (not sinks or sinks[0].read_bytes() != (root/'note-21-0.wav').read_bytes()):
+        problems.append('Linux sink did not retain the final natural C3 WAV intact')
     s.type(b'q'); s.finish(); ctx.common_checks(s,0,problems)
     recorded = [line for line in (root/'record.pk').read_text().splitlines() if line.endswith(' sharp')]
     if len(recorded)!=40: problems.append(f'recording has {len(recorded)}/40 sharp keys')
     result = dict(children_alive_max=alive,p99_ms=p99,presses=presses,polls=polls,
+                  send_span_ms=send_span_ms,observed_frames=len(presses),
                   unexpected_cells_max=max(extra,default=0),unexpected_cells=extra,
                   intentional_text_cells=changed(cells(natural)[0],cells(sharp)[0]),
                   sink_files=len(sinks),recorded=len(recorded))

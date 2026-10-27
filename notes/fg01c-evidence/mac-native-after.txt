@@ -1,0 +1,3 @@
+fg01c memory gate: 10.21 GiB free+inactive, require 8
+audition-storm: children max 1, p99 48.299083005986176 ms, extra cells 0, sink files 0, keys 40/40
+pty: audition-storm ok (darwin arm64, exit 0, 45848 bytes captured)

@@ -1,0 +1,12 @@
+fg01c memory gate: 8.95 GiB free+inactive, require 8
+quiet-player-stderr: {"text_cells_changed": 1108, "style_rows_changed": 40, "alive": []}
+pty: quiet-player-stderr FAILED (darwin arm64):
+  - player stderr changed 1108 text cells / 40 style rows
+  - afplay diagnostic reached the terminal
+audition-storm: children max 32, p99 None ms, extra cells 53, sink files 0, keys 40/40
+pty: audition-storm FAILED (darwin arm64):
+  - player left an unexpected terminal state (53 text cells)
+  - forty recorded toggles did not restore the exact initial frame
+  - audition children alive: 32, wanted <=1
+  - only 32/40 presses produced a distinct expected frame
+  - storm p99 latency None ms exceeds 70 ms or frame preceded its press
