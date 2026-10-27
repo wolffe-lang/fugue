@@ -20,7 +20,7 @@ labelled Tr and Ba at the margin. Each voice retains its page-selected staff;
 the two staves share one continuous pitch map and middle C's ledger. At 80x24
 this spends the title/header space on 21 pitch rows; intervals occupy row 22
 and the hint row 23. At 120x40 the system has breathing room. A very wide edit
-scrolls the map and marks notes outside it with ^/v; it never relabels a line.
+scrolls the map and marks notes outside it with !/v; it never relabels a line.
 
 The cantus keeps its hollow circle (`○`, plain `o`) and is bold deep red:
 xterm 52 (#5f0000), against the player's blue 24. Its measured contrast is
@@ -52,9 +52,9 @@ a partially shown bar keeps its number, and `>>` marks the cut. Moving right
 scrolls whole bars until the complete selected event fits.
 
 Interval labels sit one row below the lowest note, ledger, staff line or tie
-in their column. Value labels follow when there is room. The caret advances one cell per
-editable unit inside a held event; a selected head still identifies the note
-that Up/Down will change. On the compact grand staff the caret uses the
+in their column. Value labels follow when there is room. The single caret marks
+the selected notated event's attack, including a rest. Held values retain their
+engraving width but have no intermediate selections. On the compact grand staff the caret uses the
 bar-number row, leaving the interval and permanent hint intact. Layout is
 recomputed on every pitch, rhythm and cursor change. Stems and shallow tie arcs
 are original cell drawings, not borrowed notation assets.
@@ -71,6 +71,6 @@ The sparse ground-223 cells are deliberate parchment grain, recorded in the
 style goldens even where the text capture contains a space. Whole-cell pty
 comparisons check both glyphs and styles after page changes and playback.
 
-Book VI reserves `^` for its single selection caret and uses `!` for a pitch
-outside the visible register. The caret aligns with the edited event’s head
+All books reserve `^` for the single selection caret and use `!` above the
+visible register (`v` below it in I–V). The caret aligns with the edited event's attack
 (or rest/overflow mark), never an uneditable slot between its notes.

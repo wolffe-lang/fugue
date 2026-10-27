@@ -2,7 +2,7 @@
 
 | Key | At the staff |
 |---|---|
-| Left / Right | Select a bar |
+| Left / Right | Select the previous / next notated event, including rests |
 | Up / Down | Raise / lower its note one diatonic step and audition it |
 | Shift-Up / Shift-Down | Raise / lower one octave and audition |
 | # | Toggle the raised leading tone, only at the permitted cadence position |
@@ -35,10 +35,11 @@ Each book starts with three tutorials, then seeded pages. Best stars per book
 are saved in `.fugue-state`; set `FUGUE_STATE` to use another file. A corrupt or
 unknown-format file is ignored, never interpreted as an answer.
 
-Left and Right advance by the book's smallest unit: a half in II and IV, a
-quarter in III, an eighth in V. The caret moves on every press, including inside a held note; Up and
-Down change that complete note. The selected head identifies the held event,
-while the caret marks its editable time offset. A tie carries pitch edits through the tied chain.
+Left and Right select one notated event at a time in every book, including
+rests and tied notes. A held whole or half note is one position, not a row of
+empty time slots. The caret marks that event's attack; the status gives its
+onset and Up/Down changes that same event. A tie carries pitch edits through
+the tied chain.
 
 Books II–IV keep their species rhythm. In IV, t toggles an incoming barline
 tie; in II and IV, 0 toggles the opening half rest.
@@ -51,7 +52,7 @@ Book V's bottom hint names its editable rhythm:
   that bar. It refuses by name if no valid value can remain. The bar stays full.
 - `t` toggles a tie **to the next event**, copying pitch through its tie chain.
 - `r` toggles the selected event between rest and note without changing its length.
-- `u` undoes the complete edit, including durations, pitches, ties and cursor time.
+- `u` undoes the complete edit, including durations, pitches and ties, and restores its selected event.
 
 The final whole's value remains fixed. An editable rest or tie may be illegal:
 the ordinary species judge reports it immediately rather than hiding the key.
@@ -60,9 +61,8 @@ Joins, splits and dots that cannot preserve a bar are refused by name.
 The page owns its pitch range and whether rhythm is editable. Book VI's
 integration uses the same keys for an editable countersubject, not its fixed
 answer. Its `#` cycles natural → sharp → flat → natural anywhere; Books I–V
-retain their cadence-only guard. Books I–V keep their existing time-grid
-navigation; Book VI selects notated events as described below. `v` switches
-Book VI's writing desk.
+retain their cadence-only guard. All six books use event navigation.
+`v` switches Book VI's writing desk.
 
 ## Book VI
 
@@ -89,6 +89,6 @@ top of the same status column as the other books; named findings below belong
 only to that bar. Both writing desks number their local bars from one. During
 listening, the exposition's second entry follows the subject's six bars.
 
-A Book VI pitch outside the visible register is marked `!`, not `^`; the
+A pitch above the visible register is marked `!`, not `^`; the
 caret is reserved for selection. During listening, editing is locked and
 the caret is the playhead.

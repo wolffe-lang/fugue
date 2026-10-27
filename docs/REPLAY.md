@@ -61,7 +61,10 @@ vocabulary; no earlier key number changes. Progress comments now use
 with the sixth book unlit. A `voice-switch` event changes the edit desk, never injects
 an answer. The exposition lasts 360 ticks for the six-bar tutorial subjects.
 
-Book VI arrows now select the editable voice’s next/previous notated event.
-The earlier held preview used within-note time steps; its Book VI recordings
-are superseded by the current recorded references. Books I–V and their replay
-key numbers are unchanged. Scores are still recomputed rather than trusted.
+Arrows select the editable voice's next/previous notated event in all six books.
+Key numbers and the replay envelope are unchanged, but old I–V recordings that
+used hidden within-note time steps are not semantically compatible: the same
+Right now selects the next event. The shipped authored I–V fixtures use event
+steps, and their recorded references have been captured again with real input.
+Old Book VI held-preview recordings are likewise superseded by current references.
+Scores are always recomputed rather than trusted.

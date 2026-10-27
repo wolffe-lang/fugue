@@ -44,7 +44,7 @@ assigned side. Failure is not turned into a silently easier rule set.
 The layout has a fixed requested size, default 80x24; `--size 120x40` gives more
 room to the page and critic. Resizing the terminal does not change the exercise
 or remap its notes. A smaller initial window is refused by name. The staff keeps
-one cell row per diatonic step; a range too large for the viewport gets ^/v
+one cell row per diatonic step; a range too large for the viewport gets !/v
 markers, and the selected note remains visible. C4 is bold when in view.
 
 Listening takes one second per whole note. Edits and page changes wait until
@@ -72,7 +72,7 @@ reimplementing geometry:
 - `draw_staff(mut grid, view, tier, bars)` adds the margin names and vertical
   crossings at supplied bar columns. Lay down grain/current-bar shading first.
 - `ledger(mut grid, view, pitch, column, tier, cantus) -> int` adds three-cell
-  ledgers or an edge ^/v, returning the unclamped row. It preserves existing
+  ledgers or an edge !/v, returning the unclamped row. It preserves existing
   bar crossings and heads.
 - `head(mut grid, view, pitch, column, tier, cantus, selected, lit) -> int`
   calls the ledger helper and draws the hollow cantus or filled player head.
@@ -110,10 +110,11 @@ exhaustion is a named generation failure, never an assertion or a relaxed judge.
 Florid starting grids mix wholes, halves, quarters and ties; eighths remain an
 optional subdivision rather than an obligation imposed on every exercise.
 
-The cursor advances in the book's smallest unit, even inside a held event.
-Pitch changes follow its tie chain. A history entry retains the complete small
-note/value lists, so undo restores duration, rests, ties and cursor offset as
-well as pitch. The final bar remains a whole. Playback uses the same lengths as
+The cursor selects one notated event per Left/Right press in every book,
+including rests and ties. Pitch changes follow its tie chain. A history entry
+retains the complete small note/value lists and event index, so undo restores
+duration, rests, ties, pitch and the selected event. There is no cursor offset.
+The final bar remains a whole. Playback uses the same lengths as
 the staff and score text, while the output owner remains in `ear`.
 
 `progress` validates a tiny versioned file containing only six best-star
@@ -137,9 +138,10 @@ Session fields `clef`, `grand`, `cantus_clef` and `voice_clef` are chosen once
 when the page opens. `range_low`/`range_high` are inclusive diatonic positions,
 shared by the editor and prepared audition bank. A Book VI page can set C3–C7
 (21–49) before preparation. `rhythm_editable` gates the florid keys: fixed
-answer versus editable countersubject. `editor_unit(state)` uses eighths for
-editable rhythm, otherwise the shortest written value. This controls time-slot layout and I–V navigation. Book VI navigation selects
-notated events instead. Its accidentals cycle freely; earlier books keep the guard.
+answer versus editable countersubject. Engraving density remains independent
+of navigation: `manuscript.spacing_unit` privately preserves existing held-value
+widths. There is no `session.editor_unit` or within-event cursor field.
+Book VI's accidentals cycle freely; earlier books keep the guard.
 
 Replay IDs 1–25 are unchanged, 26/27 reserved as `book-6`/`voice-switch` for
 Book VI, and `dot` is appended at 28. The terminal brackets now match their
@@ -152,8 +154,9 @@ existing classifier. `species.event_breaks` runs the same vertical/motion rule p
 but retains only findings emitted at the selected event. The separately titled bar list filters the global verdict by the active bar,
 including melodic findings at that bar. Each finding row names its bar.
 The critic card after Enter retains the complete verdict and global counts.
-In Books I–V, the caret uses the event column plus the editable within-event offset;
-held values reserve a distinct cell for each selectable time unit.
+In every book the caret uses the selected event's attack column; the panel's
+bar and eighth-beat are that event's onset. Compact grand staves fall back to
+the bar-number row rather than hiding the caret.
 
 
 ## Supplied panel status
@@ -196,17 +199,19 @@ page. Replay keys 26 (book-6) and 27 (voice-switch) append to the old vocabulary
 
 
 Book VI supplies `staff.PanelData` through `exposition.status`. One
-`session.selection` resolves the editable voice's event, within offset and
-onset time. VI's Left/Right navigation selects notated events and keeps within
-at zero. The pitch edit, audition, caret and status all consume that selection.
+`session.selection` resolves the editable voice's event and onset time.
+All six books' Left/Right navigation selects notated events, with no offset
+in State, Selection or undo history. The pitch edit, audition, caret and status
+all consume that selection.
 The merged timeline positions both voices, but an attack in the other voice
 does not create a new editable selection. Joining, splitting, dotting, tying,
 resting and undoing keep the selected event explicit.
 
 Interval and figure sample the other voice at the selected onset; both finding
 lists are restricted to the active bar. Enter opens the complete verdict.
-Entry names occupy the reserved header. A clipped pitch has a `!` marker in VI,
+Entry names occupy the reserved header. A clipped high pitch has a `!` marker,
 leaving exactly one `^` caret. The selection census checks every event in both
 desks at both sizes and tiers, then applies Up/Down and undo to verify the event
 that really changed. Tied chains are checked as chains, not mistaken for stray
-edits. Books I–V retain their time-grid navigation and shared staff behavior.
+edits. The same census covers every preset and twelve mode/side pages in I–V,
+including seven rhythm/register scenarios, both sizes and tiers.
