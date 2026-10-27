@@ -321,7 +321,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
                 // The caret marks the same attack that status and edits select.
                 // The compact grand system spends the lower rows on intervals/hints.
                 let cy = if iy + 2 < rows - 2 then iy + 2 else top - 1
-                text(mut g, cy, nx, "^", blue, bg, true)
+                text(mut g, cy, nx + s.audition, "^", blue, bg, true)
             }
         }
     }

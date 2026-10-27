@@ -234,7 +234,7 @@ pub fn step(mut s: State, k: int) {
     }
     let selected = selection(s)
     if k == 3 && selected.event > 0 { s.cursor = selected.event - 1 }
-    if k == 4 && selected.event + 1 < s.voice.len { s.cursor = selected.event + 1 }
+    if k == 4 && selected.event + 1 < s.voice.len { s.audition += 1 }
     if k == 9 && s.hearing < 0 { s.hearing = 0 }
     if k == 8 { s.audition += 1 }
     if k == 10 {
