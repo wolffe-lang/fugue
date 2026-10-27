@@ -479,18 +479,30 @@ os.execve(sys.argv[3],sys.argv[3:],os.environ)
     s.pump(.5)
     events=[];problems=[]
     def compare(name,frames=2):
-        cap=root/f'{name}.bin';cap.write_bytes(s.out)
+        cap=root/f'{name}.bin'
         script=root/f'{name}.pk'
         script.write_text(f'pk 1\nseed 0\ntier {tier}\nsize {width}x{height}\nstart 22001\n'+''.join(f't 1 {key}\n' for key in events))
-        got=subprocess.run([bin,'--apply',str(cap),'--size',f'{width}x{height}'],capture_output=True,text=True,timeout=30)
         expected=subprocess.run([bin,'--headless','--script',str(script),'--frames',str(frames),'--every',str(frames),'--dump',str(root/name),'--mute'],capture_output=True,text=True,timeout=30)
-        if got.returncode or expected.returncode:
-            problems.append(name+' terminal/headless command failed');return
-        text,styles,_=got.stdout.split('--\n')
+        if expected.returncode:
+            problems.append(name+' headless command failed');return
         want=(root/name/'final.txt').read_text();want_styles=(root/name/'final.sty').read_text()
-        glyphs=sum(a!=b for a,b in zip(text,want))+abs(len(text)-len(want))
-        good=glyphs==0 and styles==want_styles
-        print(f'fugue junk {width}x{height} {tier} {name}: {width*height} cells, glyph differences {glyphs}, styles equal {styles==want_styles}')
+        # Sound preparation can outlive a fixed settle interval on a busy host.
+        # Await this exact complete state, never a masked region or arbitrary
+        # output activity. Persistent stderr/repaint damage still fails. Live
+        # key latency remains independently gated by fugue-press-budget.
+        began=time.monotonic();deadline=began+5;attempts=0
+        while True:
+            cap.write_bytes(s.out)
+            got=subprocess.run([bin,'--apply',str(cap),'--size',f'{width}x{height}'],capture_output=True,text=True,timeout=30)
+            if got.returncode:
+                problems.append(name+' terminal model failed');return
+            text,styles,_=got.stdout.split('--\n')
+            glyphs=sum(a!=b for a,b in zip(text,want))+abs(len(text)-len(want))
+            good=glyphs==0 and styles==want_styles
+            if good or time.monotonic()>=deadline:break
+            if attempts==0:(root/f'{name}-initial.bin').write_bytes(s.out)
+            attempts+=1;s.pump(.05)
+        print(f'fugue junk {width}x{height} {tier} {name}: {width*height} cells, glyph differences {glyphs}, styles equal {styles==want_styles}, state wait {time.monotonic()-began:.3f}s ({attempts} retries)')
         if not good:problems.append(f'{name}: terminal differs from complete headless frame ({glyphs} glyph cells, styles {styles==want_styles})')
         if tier=='rich':
             grain=sum(int(token.rsplit('*',1)[1]) for line in want_styles.splitlines() for token in line.split() if token.split(',')[1]=='223')
@@ -639,7 +651,10 @@ def fugue_right_then_up(bin, ctx):
     root=Path(ctx.ROOT)/'target/pty/fugue-right-up';root.mkdir(parents=True,exist_ok=True)
     env=ctx.env_for();env['FUGUE_STATE']=str(root/'state');env['FUGUE_WAV_DIR']=str(root/'audio')
     s=ctx.Session([bin,'--book','6','--size','120x40','--no-title'],40,120,env)
-    s.pump(.3);problems=[];journal={}
+    deadline=time.monotonic()+30
+    while b'\x1b[?1049h' not in s.out and time.monotonic()<deadline:s.pump(.02)
+    if b'\x1b[?1049h' not in s.out:raise RuntimeError('Book VI did not enter the terminal before input')
+    s.pump(.1);problems=[];journal={}
     def capture(name):
         cap=root/(name+'.bin');cap.write_bytes(s.out)
         result=subprocess.run([bin,'--apply',str(cap),'--size','120x40'],capture_output=True,text=True,check=True)
