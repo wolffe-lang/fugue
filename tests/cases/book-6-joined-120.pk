@@ -1,0 +1,11 @@
+pk 1
+seed 0
+tier rich
+size 120x40
+start 22003
+# score 0
+# frames 5 every 1
+t 1 voice-switch
+t 2 join
+t 3 right
+t 4 up

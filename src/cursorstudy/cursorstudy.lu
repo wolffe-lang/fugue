@@ -91,14 +91,15 @@ fn check_position(s: session.State, expected: int, cols: int, tier: int) -> bool
 /// and backward traversals. Tied pitch chains are checked explicitly.
 pub fn census() -> int {
     var positions = 0, edits = 0
-    for page in 0..13 {
+    for page in 0..15 {
         region page_scope {
-            let initial = if page == 0 {
-                chapterstudy.solved(2)
+            let initial = if page < 3 {
+                chapterstudy.solved(page)
             } else {
-                session.with_book(take session.new(page - 1, false), 6)
+                session.with_book(take session.new(page - 3, false), 6)
             }
             for desk in 0..2 {
+                if initial.level < 2 && desk != initial.fugue.editing { continue }
                 for variant in 0..7 {
                     region scenario {
                         var s = copy initial
@@ -144,7 +145,7 @@ pub fn census() -> int {
                 }
             }
             print(
-                "cursor-census page {page}: both desks, seven rhythm/register scenarios, every event, both sizes/tiers green",
+                "cursor-census page {page}: available desks, seven rhythm/register scenarios, every event, both sizes/tiers green",
             )
         }
     }

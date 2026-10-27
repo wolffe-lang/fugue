@@ -54,4 +54,7 @@ for width in (80,120):
     status += [(3,k) for k in ['right']*4+['sharp']+['left']*4]
     status += [(4,'right')]*2+[(5,'right')]*2+[(6,'voice-switch')]+[(7,'right')]*2+[(8,'right')]*2
     write('book-6-status',width,22003,status,9,1,0)
-print('fugue fixtures: eighteen authored cases, not recordings')
+    selection=[(1,'right'),(2,'up')]+[(3,k) for k in ['left']*100+['down']*100]+[(4,k) for k in ['right']*100+['up']*100]
+    write('book-6-selection',width,22001,selection,5,1,0)
+    write('book-6-joined',width,22003,[(1,'voice-switch'),(2,'join'),(3,'right'),(4,'up')],5,1,0)
+print('fugue fixtures: twenty-two authored cases, not recordings')
