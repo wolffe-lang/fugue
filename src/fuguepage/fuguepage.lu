@@ -402,7 +402,11 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
             }
         }
     }
-    let focus = layout.cursor
+    let focus = if p.editing == 1 && s.cursor == 0 && s.beats[0].length > 4 {
+        1
+    } else {
+        layout.cursor
+    }
     let caret_x = manuscript.event_column(layout, start, focus)
     if caret_x + manuscript.event_width(layout, focus) - 2 < cols - 27 {
         let a = rhythm.at(first.beats, local_time), b = rhythm.at(second.beats, local_time)
