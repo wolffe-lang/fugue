@@ -93,7 +93,10 @@ three tutorial references and the end card. Book VI uses the same active-bar
 status column and one caret aligned with the event Up/Down edits, with every-cell repaint checks after
 page changes, voice switches, refusals and playback. Its event-selection census
 checks 1,955 positions and 7,820 frame/edit pairs per backend, including unequal
-rhythms, ties, rests and wide registers. The terminal harness has 37 rows. PR CI runs Linux; the full tier adds macOS and performance.
+rhythms, ties, rests and wide registers. The terminal harness has 38 rows on
+Linux and 40 on macOS. Sound-owner rows verify silent failing players, one
+live audition through forty rapid accidental changes, h replacing an audition,
+and Linux's single rewritten audition file. PR CI runs Linux; the full tier adds macOS and performance.
 Six cited Fux cantus firmi are historical test oracles only, never playable
 levels or source material for game music.
 
