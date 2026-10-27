@@ -460,6 +460,8 @@ fn main() -> int {
         )
         return 0
     }
+    if has(args, "--event-reachable") { return cursorstudy.reachable() }
+    if has(args, "--event-map") { return cursorstudy.event_map() }
     if has(args, "--fugue-audio-study") { return chapterstudy.audio() }
     if has(args, "--fugue-cursor-census") { return cursorstudy.census() }
     if has(args, "--fugue-census") { return chapterstudy.census() }

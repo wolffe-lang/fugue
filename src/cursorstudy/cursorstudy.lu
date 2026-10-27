@@ -4,6 +4,8 @@ use chapterstudy
 use fuguepage
 use grid
 use manuscript
+use notation
+use staff
 use rhythm
 use session
 use subject
@@ -85,6 +87,48 @@ fn check_position(s: session.State, expected: int, cols: int, tier: int) -> bool
         }
     }
     true
+}
+
+/// Count reachable selections without assuming the navigation policy under test.
+/// Musical times distinguish cells across viewport scrolls.
+pub fn reachable() -> int {
+    for book in 1..6 {
+        for page in 0..3 {
+            var s = session.with_book(take session.tutorial(page, false), book)
+            var positions = 1
+            for press in 0..1000 {
+                let before = session.selection(s)
+                session.step(mut s, 4)
+                let after = session.selection(s)
+                if before.time == after.time && before.event == after.event { break }
+                positions += 1
+            }
+            print("event-reachable book {book} preset {page + 1}: positions {positions} events {s.voice.len}")
+        }
+    }
+    0
+}
+
+/// Actual event onsets and independent attack columns for terminal witnesses.
+pub fn event_map() -> int {
+    for book in 1..7 {
+        var s = session.with_book(take session.tutorial(0, false), book)
+        for cols in [80, 120] {
+            for event in 0..s.voice.len {
+                s.cursor = event
+                let time = rhythm.onset(s.beats, event)
+                let x = if book == 6 {
+                    column(s, event, cols)
+                } else if book == 1 {
+                    8 + event * ((cols - 24 - 9) / s.cantus.len)
+                } else {
+                    manuscript.event_column(s, manuscript.first_bar(s, cols), event)
+                }
+                print("event-map {book} {cols} {event} {time} {x}")
+            }
+        }
+    }
+    0
 }
 
 /// One caret at the event actually changed by Up/Down, through complete forward
