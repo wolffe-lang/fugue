@@ -531,7 +531,7 @@ def fugue_cursor_panel(bin, ctx, width=120):
     s.type(b''.join(keys[x.split()[-1]] for x in source.splitlines() if x.startswith('t 1 ')),.5)
     s.type(b'v',.2)
     # Break the answer in bar 3, then inspect a different bar before returning.
-    s.type(b'\x1b[C'*10+b'#'+b'\x1b[D'*10,.4)
+    s.type(b'\x1b[C'*4+b'#'+b'\x1b[D'*4,.4)
     problems=[]
     def expect(label,bar,beat,pitch,figure=None):
         path=root/(label+'.bin');path.write_bytes(s.out)
@@ -548,11 +548,11 @@ def fugue_cursor_panel(bin, ctx, width=120):
         if bar==3 and not any('bar 3 -' in row for row in panel[12:]):problems.append(label+' missing active-bar findings')
         print(f'fugue cursor {width} {label}: bar {bar}, beat {beat}, {pitch}')
     expect('answer-first',1,1,'F5','tonal-mutation')
-    s.type(b'\x1b[C'*4,.25);expect('answer-second',2,1,'D5','exact-answer')
-    s.type(b'\x1b[C'*6,.25);expect('answer-third',3,5,'Fb5','answer-transposition')
+    s.type(b'\x1b[C'*2,.25);expect('answer-second',2,1,'D5','exact-answer')
+    s.type(b'\x1b[C'*2,.25);expect('answer-third',3,5,'Fb5','answer-transposition')
     s.type(b'v',.25);expect('counter-first',1,1,'A4','consonance')
-    s.type(b'\x1b[C'*8,.25);expect('counter-second',2,1,'B4','consonance')
-    s.type(b'\x1b[C'*12,.25);expect('counter-third',3,5,'D5')
+    s.type(b'\x1b[C'*2,.25);expect('counter-second',2,1,'B4','consonance')
+    s.type(b'\x1b[C'*2,.25);expect('counter-third',3,5,'D5')
     s.type(b'q');s.finish();ctx.common_checks(s,0,problems)
     return s,problems
 
@@ -579,40 +579,91 @@ def fugue_cursor_motion(bin, ctx, cases=None):
         for key in (b'\x1b[C',b'\x1b[D'):s.type(key,.2)
         for key in (b'\x1b[C',b'\x1b[D'):
             begin=time.monotonic()
-            for press in range(10):
+            for press in range(9):
                 os.write(s.master,key);s.pump(max(.001,begin+(press+1)/30-time.monotonic()))
             s.pump(.2)
         s.type(b'q');s.finish(timeout=20);ctx.common_checks(s,0,problems)
         events=[(int(x.split()[1]),x.split()[2]) for x in path.read_text().splitlines() if x.startswith('t ') and x.split()[2] in ('left','right')]
-        if [key for _,key in events]!=['right','left']+['right']*10+['left']*10:problems.append(name+' lost or reordered key')
+        if [key for _,key in events]!=['right','left']+['right']*9+['left']*9:problems.append(name+' lost or reordered key')
         def image(data):
             cap=root/'frame.bin';cap.write_bytes(data)
             out=subprocess.run([bin,'--apply',str(cap),'--size',f'{width}x{height}'],capture_output=True,text=True,check=True)
             return out.stdout.split('--\n')[0].splitlines()
         def caret(screen):return [(y,x) for y,row in enumerate(screen) for x,ch in enumerate(row[:width-24]) if ch=='^']
-        previous=caret(image(initial));position=0;records=[];unit=1 if desk else 2
+        previous=caret(image(initial));event_index=0;previous_first=0;records=[];unit=1 if desk else 2
         for tick,data in s.frames:
             keys=[(i,key) for i,(at,key) in enumerate(events) if at==tick-1]
             if not keys:continue
-            for _,key in keys:position+=unit if key=='right' else -unit
-            elapsed=0;x=9
-            for length in lengths:
-                if position<elapsed+length:break
-                x+=max(6 if length==8 else 5 if length==4 else 4,(length+unit-1)//unit)
-                elapsed+=length
-                if elapsed%8==0:x+=1
-            expected=x+(position-elapsed)//unit
+            for _,key in keys:event_index+=1 if key=='right' else -1
+            position=sum(lengths[:event_index])
+            widths=[max(6 if n==8 else 5 if n==4 else 4,(n+unit-1)//unit) for n in lengths]
+            onsets=[sum(lengths[:i]) for i in range(len(lengths))]
+            def column(first):
+                x=9
+                for i in range(event_index):
+                    if onsets[i]<first*8:continue
+                    x+=widths[i]
+                    if (onsets[i]+lengths[i])%8==0:x+=1
+                return x
+            first=0
+            while first<position//8 and column(first)+widths[event_index]-2>=width-27:first+=1
+            expected=column(first)
             screen=image(data);current=caret(screen)
             panel=f'Bar {position//8+1}, beat {position%8+1}:8' in screen[5][width-22:]
             aligned=len(current)==1 and current[0][1]==expected
             moved=bool(current) and current!=previous
-            for i,key in keys:records.append({'press':i+1,'key':key,'frame':tick,'panel_frames':1 if panel else None,'caret_frames':1 if aligned and moved else None,'caret':current,'expected_x':expected})
-            if not panel or not aligned or not moved:problems.append(f'{name} press {keys[0][0]+1}: panel {panel}, caret {current}, expected x {expected}, moved {moved}')
-            previous=current
-        if len(records)!=22:problems.append(name+f' only {len(records)} accounted presses')
+            scrolled=first!=previous_first
+            for i,key in keys:records.append({'press':i+1,'key':key,'frame':tick,'panel_frames':1 if panel else None,'caret_frames':1 if aligned and (moved or scrolled) else None,'editable_event':event_index+1,'first_bar':first+1,'scrolled':scrolled,'caret':current,'expected_x':expected})
+            if not panel or not aligned or not (moved or scrolled):problems.append(f'{name} press {keys[0][0]+1}: panel {panel}, caret {current}, expected x {expected}, moved {moved}')
+            previous=current;previous_first=first
+        if len(records)!=20:problems.append(name+f' only {len(records)} accounted presses')
         journal.append({'case':name,'presses':records})
-        print(f'fugue caret {name}: {sum(r["caret_frames"]==1 for r in records)}/22 aligned in first carrying frame')
+        print(f'fugue caret {name}: {sum(r["caret_frames"]==1 for r in records)}/20 aligned in first carrying frame')
     (root/'journal.json').write_text(json.dumps(journal,indent=2)+'\n')
     return last,problems
 
 ROWS['fugue-cursor-same-frame']=fugue_cursor_motion
+
+
+def fugue_right_then_up(bin, ctx):
+    """The maintainer's exact opening command; identify the event actually edited."""
+    import json
+    root=Path(ctx.ROOT)/'target/pty/fugue-right-up';root.mkdir(parents=True,exist_ok=True)
+    env=ctx.env_for();env['FUGUE_STATE']=str(root/'state');env['FUGUE_WAV_DIR']=str(root/'audio')
+    s=ctx.Session([bin,'--book','6','--size','120x40','--no-title'],40,120,env)
+    s.pump(.3);problems=[];journal={}
+    def capture(name):
+        cap=root/(name+'.bin');cap.write_bytes(s.out)
+        result=subprocess.run([bin,'--apply',str(cap),'--size','120x40'],capture_output=True,text=True,check=True)
+        text,styles,_=result.stdout.split('--\n');rows=text.splitlines();palette=[]
+        for row in styles.splitlines():
+            expanded=[]
+            for run in row.split():
+                style,count=run.split('*');expanded.extend([tuple(map(int,style.split(',')))]*int(count))
+            palette.append(expanded)
+        heads={x:y for y,row in enumerate(rows) for x,ch in enumerate(row[:96]) if ch in ('*','●') and palette[y][x][0] in (4,24)}
+        carets=[(y,x) for y,row in enumerate(rows) for x,ch in enumerate(row) if ch=='^']
+        data={'heads':heads,'carets':carets,'pitch_status':rows[8][98:].strip(),'bar_status':rows[5][98:].strip()}
+        journal[name]=data;print(f'VI {name}: {data}')
+        return data
+    initial=capture('initial')
+    s.type(b'\x1b[C',.2);right=capture('right-once')
+    s.type(b'\x1b[A',.2);up=capture('then-up')
+    columns=sorted(initial['heads'])
+    changed=[x for x in columns if initial['heads'][x]!=up['heads'].get(x)]
+    print(f'VI changed event columns {changed}; expected second event {columns[1]}')
+    if changed!=[columns[1]]:problems.append('Right then Up changed the wrong event: '+str(changed))
+    for name,data in [('initial',initial),('right',right),('up',up)]:
+        want=columns[0] if name=='initial' else columns[1]
+        if len(data['carets'])!=1 or data['carets'][0][1]!=want:problems.append(name+' caret does not name the editable event')
+    if up['pitch_status']!='F4':problems.append('second event did not change E4 to F4')
+    # Deliberately wide input isolates overflow markers from the selection caret.
+    s.type(b'\x1b[D'*100+b'\x1b[B'*100,.6)
+    s.type(b'\x1b[C'*100+b'\x1b[A'*100,.6)
+    wide=capture('wide-register')
+    if len(wide['carets'])!=1:problems.append('wide register draws extra cursor glyphs')
+    (root/'journal.json').write_text(json.dumps(journal,indent=2)+'\n')
+    s.type(b'q');s.finish(timeout=20);ctx.common_checks(s,0,problems)
+    return s,problems
+
+ROWS['fugue-right-then-up']=fugue_right_then_up

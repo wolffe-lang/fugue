@@ -16,6 +16,7 @@ def run(argv, status=0):
     return r
 
 run(['--fugue-audio-study'])
+run(['--fugue-cursor-census'])
 census=run(['--fugue-census']).stdout
 assert 'subjects 300/300 real 300/300 tonal 52/300 counter 174/300 three-star 21/300 certified-mode-sides 12/12' in census
 verdicts=run(['--fugue-verdicts']).stdout

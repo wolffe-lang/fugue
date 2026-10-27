@@ -14,23 +14,22 @@ ANSWERS = [[32,34,35,36,35,34,32,34,33,32],
 COUNTERS = [[30,29,30,31,33,29,30,29,28,32],
             [34,33,32,33,37,36,35,36,34,36],
             [33,32,34,35,36,35,34,35,33,32]]
-VALUES = [[4,2,2,4,4,8,4,4,8,8], [4,4,8,4,4,4,2,2,8,8], [4,4,8,4,4,4,2,2,8,8]]
 
-def edits(initial, wanted, sharps, values, unit=1):
+def edits(initial, wanted, sharps):
     keys = []
     for i, (a,b) in enumerate(zip(initial,wanted)):
         keys += ['up' if b > a else 'down'] * abs(b-a)
         if i in sharps: keys.append('sharp')
-        if i + 1 < len(initial): keys += ['right'] * (values[i]//unit)
+        if i + 1 < len(initial): keys += ['right']
     return keys
 
 def solve(index):
     out = []
     if index != 1:
-        out += edits(SUBJECTS[index], ANSWERS[index], [4,8] if index == 2 else [], VALUES[index], unit=2)
+        out += edits(SUBJECTS[index], ANSWERS[index], [4,8] if index == 2 else [])
     if index == 2: out += ['voice-switch']
     if index != 0:
-        out += edits([30 if index == 1 else 31]*10, COUNTERS[index], [], VALUES[index])
+        out += edits([30 if index == 1 else 31]*10, COUNTERS[index], [])
     return out
 
 def write(name, width, start, events, frames, every, score, seed=0):
@@ -52,7 +51,7 @@ for width in (80,120):
     write('book-6-end',width,22001,events,10,1,3)
     write('book-6-complete',width,22001,events+[(9,'desk')],11,10,3)
     status=[(1,k) for k in solve(2)]+[(2,'voice-switch')]
-    status += [(3,k) for k in ['right']*10+['sharp']+['left']*10]
-    status += [(4,'right')]*4+[(5,'right')]*6+[(6,'voice-switch')]+[(7,'right')]*8+[(8,'right')]*12
+    status += [(3,k) for k in ['right']*4+['sharp']+['left']*4]
+    status += [(4,'right')]*2+[(5,'right')]*2+[(6,'voice-switch')]+[(7,'right')]*2+[(8,'right')]*2
     write('book-6-status',width,22003,status,9,1,0)
 print('fugue fixtures: eighteen authored cases, not recordings')

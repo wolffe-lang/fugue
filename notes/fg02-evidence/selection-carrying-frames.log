@@ -1,0 +1,17 @@
+fugue caret 0-80-rich-sound: 20/20 aligned in first carrying frame
+fugue caret 0-80-rich-mute: 20/20 aligned in first carrying frame
+fugue caret 0-80-plain-sound: 20/20 aligned in first carrying frame
+fugue caret 0-80-plain-mute: 20/20 aligned in first carrying frame
+fugue caret 0-120-rich-sound: 20/20 aligned in first carrying frame
+fugue caret 0-120-rich-mute: 20/20 aligned in first carrying frame
+fugue caret 0-120-plain-sound: 20/20 aligned in first carrying frame
+fugue caret 0-120-plain-mute: 20/20 aligned in first carrying frame
+fugue caret 1-80-rich-sound: 20/20 aligned in first carrying frame
+fugue caret 1-80-rich-mute: 20/20 aligned in first carrying frame
+fugue caret 1-80-plain-sound: 20/20 aligned in first carrying frame
+fugue caret 1-80-plain-mute: 20/20 aligned in first carrying frame
+fugue caret 1-120-rich-sound: 20/20 aligned in first carrying frame
+fugue caret 1-120-rich-mute: 20/20 aligned in first carrying frame
+fugue caret 1-120-plain-sound: 20/20 aligned in first carrying frame
+fugue caret 1-120-plain-mute: 20/20 aligned in first carrying frame
+pty: fugue-cursor-same-frame ok (linux x86_64, exit 0, 22825 bytes captured)

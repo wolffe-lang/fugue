@@ -1,0 +1,11 @@
+VI initial: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(36, 9)], 'pitch_status': 'C4', 'bar_status': 'Bar 1, beat 1:8'}
+VI right-once: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(36, 10)], 'pitch_status': 'C4', 'bar_status': 'Bar 1, beat 3:8'}
+VI then-up: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 9: 32, 52: 32, 41: 33, 59: 33}, 'carets': [(36, 10)], 'pitch_status': 'D4', 'bar_status': 'Bar 1, beat 3:8'}
+VI changed event columns [9]; expected second event 14
+VI wide-register: {'heads': {23: 25, 18: 26, 28: 26, 14: 27, 34: 27, 46: 27, 52: 28, 41: 29, 9: 36}, 'carets': [(13, 59), (32, 62)], 'pitch_status': 'C7', 'bar_status': 'Bar 6, beat 7:8'}
+pty: fugue-right-then-up FAILED (linux x86_64):
+  - Right then Up changed the wrong event: [9]
+  - right caret does not name the editable event
+  - up caret does not name the editable event
+  - second event did not change E4 to F4
+  - wide register draws extra cursor glyphs
