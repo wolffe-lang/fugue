@@ -1,0 +1,7 @@
+Prediction before implementation, fg01c
+
+The 40-press, 20 Hz audition storm on trunk will peak at 8–20 live afplay children (up to the 32-owner guard), since each one-second WAV overlaps successors. Press-to-frame p99 should remain below 70 ms unless CoreAudio process startup contends severely. The intentional accidental and its pitch/status diagnostics will change; inherited afplay stderr can additionally damage staff cells, especially when a deliberately invalid WAV guarantees a player error. A normal storm may not reproduce AudioQueueStart on every host run, but multiple owned players should make that row red regardless.
+
+R-fg01c-1: recommend and implement A. Kill and reap the previous audition before starting its replacement; a cursor note is singular, and two concurrent auditions obscure which pitch is being inspected. Whole-page h playback remains separate and stops an audition before rendering/starting its score.
+
+Use pinned std.process.set_stdout/set_stderr, which builds the os_spawn_fds descriptor map, onto an opened /dev/null handle; never inherit the terminal. Keep Linux audition output at one rewritten audition.wav. No engine changes expected.
