@@ -12,6 +12,14 @@ pub fn unit(book: int) -> int {
 /// Keep four cells per smallest subdivision plus the barline and its gutter.
 pub fn bar_width(book: int) -> int { 8 / unit(book) * 4 + 2 }
 
+/// Preserve the established engraving density, independent of event navigation.
+fn spacing_unit(s: session.State) -> int {
+    if s.rhythm_editable { return 1 }
+    var value = 8
+    for b in s.beats { if b.length < value { value = b.length } }
+    value
+}
+
 /// Content width: value minimum or complete pitch/interval label, plus one gutter.
 pub fn event_width(s: session.State, event: int) -> int {
     let b = copy s.beats[event]
@@ -22,8 +30,8 @@ pub fn event_width(s: session.State, event: int) -> int {
     var width = minimum
     if name_width > width { width = name_width }
     if interval_width > width { width = interval_width }
-    // A held event needs a distinct caret cell for every editable time unit.
-    let slots = (b.length + session.editor_unit(s) - 1) / session.editor_unit(s)
+    // Held values retain their engraving width, not selectable subdivisions.
+    let slots = (b.length + spacing_unit(s) - 1) / spacing_unit(s)
     if slots > width { width = slots }
     width
 }

@@ -20,7 +20,6 @@ fn active_bar(book: int) {
     assert(bars.len > 1 && bars[0] != other, "fixture has findings in two distinct bars")
     for bar in [bars[0], other] {
         s.cursor = rhythm.at(s.beats, (bar - 1) * 8)
-        s.within = 0
         for cols in [80, 120] {
             for t in 0..2 {
                 let rows = if cols == 80 then 24 else 40

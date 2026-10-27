@@ -574,7 +574,7 @@ pub struct PanelData {
 /// Books I–V retain the state adapter; other pages may supply their own data.
 pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
     let i = s.cursor
-    let time = rhythm.onset(s.beats, i) + s.within
+    let time = session.selection(s).time
     let iv = interval_at(s, i)
     let cls = if iv.consonance == 0 {
         "perfect"

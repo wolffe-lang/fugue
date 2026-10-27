@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Long, bounded whole-page pty traversal, with per-press p99/max latency.
 
-Four full out-and-back walks (632 presses at 30 Hz) cross every held value,
+Four full out-and-back walks (160 presses at 30 Hz) cross every notated event,
 barline and scrolling boundary. p99 must be <=70 ms and worst press <=100 ms,
 so an isolated blocking handoff cannot hide behind a fast median.
 Geometry expectations are independent fixture
@@ -39,7 +39,7 @@ def check(binary, ctx):
                            for i in range(event) if onsets[i] >= first*8)
         first = 0
         while first < position//8 and x_at(first)+widths[event]-2 >= cols-27: first += 1
-        return x_at(first) + position-onsets[event]
+        return x_at(first)
 
     problems, journal, last = [], [], None
     for cols, rows in [(80,24),(120,40)]:
@@ -58,7 +58,7 @@ def check(binary, ctx):
                 s.pump(.1)
                 initial_bytes = s.out
                 sent = []; start = time.monotonic()
-                sequence = (['right']*79 + ['left']*79)*4
+                sequence = (['right']*20 + ['left']*20)*4
                 for index, key in enumerate(sequence):
                     sent.append(time.monotonic())
                     os.write(s.master, b'\x1b[C' if key == 'right' else b'\x1b[D')
@@ -93,8 +93,9 @@ def check(binary, ctx):
                                              capture_output=True, check=True)
                     image = applied.stdout.decode().split('--\n')[0].splitlines()
                     caret = [(y,x) for y,line in enumerate(image) for x,ch in enumerate(line[:cols-24]) if ch=='^']
-                    panel = f'Bar {position//8+1}, beat {position%8+1}:8' in image[5][cols-22:]
-                    aligned = len(caret)==1 and caret[0][1]==column(position,cols)
+                    onset = onsets[position]
+                    panel = f'Bar {onset//8+1}, beat {onset%8+1}:8' in image[5][cols-22:]
+                    aligned = len(caret)==1 and caret[0][1]==column(onset,cols)
                     for index,at,key in keys:
                         presses.append({'press':index+1,'key':key,'record_tick':at,'frame':tick,
                                         'frames':tick-at,'wall_ms':(s.frame_times[tick]-sent[index])*1000,
@@ -108,8 +109,8 @@ def check(binary, ctx):
                 frames = [p['frames'] for p in presses]; wall = [p['wall_ms'] for p in presses]
                 updates = [p['next_visible_change_frames'] for p in presses if p['next_visible_change_frames'] is not None]
                 wrong = [p for p in presses if not p['panel'] or not p['aligned'] or p['frames']>1]
-                if len(presses)!=632 or wrong:
-                    problems.append(f'{name}: {len(presses)}/632 captured; {len(wrong)} stale/late presses; '
+                if len(presses)!=160 or wrong:
+                    problems.append(f'{name}: {len(presses)}/160 captured; {len(wrong)} stale/late presses; '
                                     f'frame p99/max {percentile(frames,.99)}/{max(frames,default=0)}')
                 if wall and (percentile(wall,.99) > 70 or max(wall) > 100):
                     problems.append(f'{name}: periodic wall stall: p99={percentile(wall,.99):.3f} ms, max={max(wall):.3f} ms (bars 70/100)')

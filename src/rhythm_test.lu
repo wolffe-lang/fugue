@@ -25,20 +25,20 @@ fn test_rhythm_fourth_has_preparation_and_ties() {
     assert(!beats[1].tied && beats[2].tied && !beats[3].tied)
 }
 
-fn test_later_book_minimum_unit_and_reversible_rhythm_edit() {
+fn test_later_book_event_navigation_and_reversible_rhythm_edit() {
     var s = session.tutorial(0, false)
     s.book = 5
     s.rhythm_editable = true
     session.step(mut s, 4)
-    assert(s.cursor == 0 && s.within == 1)
+    assert(s.cursor == 1)
     session.step(mut s, 22)
-    assert(s.beats[0].length == 4 && s.beats[1].length == 4)
+    assert(s.beats[0].length == 8 && s.beats[1].length == 4 && s.beats[2].length == 4)
     assert(s.voice.len == 11 && rhythm.valid(s.beats, 10))
     session.step(mut s, 11)
-    assert(s.voice.len == 10 && s.beats[0].length == 8 && s.within == 1)
+    assert(s.voice.len == 10 && s.beats[1].length == 8 && s.cursor == 1)
     session.step(mut s, 22)
     session.step(mut s, 23)
-    assert(s.voice.len == 10 && s.beats[0].length == 8)
+    assert(s.voice.len == 10 && s.beats[1].length == 8)
 }
 
 fn test_replay_book_namespace_preserves_old_selectors() {

@@ -22,8 +22,8 @@ fn held_press(cols: int, t: int) {
     let before = caret(notation.frame(s, cols, rows, t), cols - 24)
     session.step(mut s, 4)
     let right = caret(notation.frame(s, cols, rows, t), cols - 24)
-    assert(s.cursor == 0 && s.within == 1)
-    assert(before >= 0 && right == before + 1, "caret moves with the panel inside a held note")
+    assert(s.cursor == 1)
+    assert(before >= 0 && right % cols == 14, "caret selects the next event attack")
     session.step(mut s, 3)
     assert(caret(notation.frame(s, cols, rows, t), cols - 24) == before)
 }
@@ -52,10 +52,10 @@ fn test_cursor_has_room_for_every_subdivision() {
 
 fn test_cursor_retains_a_cell_on_the_compact_grand_system() {
     var s = session.with_book(take session.tutorial(0, false), 5)
-    s.within = 1
+    s.cursor = 1
     s.grand = true
     for t in 0..2 {
         let at = caret(notation.frame(s, 80, 24, t), 56)
-        assert(at >= 0 && at % 80 == 10)
+        assert(at >= 0 && at % 80 == 14)
     }
 }

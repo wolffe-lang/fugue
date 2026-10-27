@@ -49,6 +49,20 @@ def frame_session(ctx):
     return Frames
 
 
+def book_five_attack(event, cols):
+    """Independent arithmetic for the shipped Book V tutorial engraving."""
+    lengths = [4,4,4,4,2,2,2,2,8,4,4,4,4,2,2,2,2,8,4,4,8]
+    onsets = [sum(lengths[:i]) for i in range(len(lengths))]
+    widths = [max(n, 6 if n >= 8 else 5 if n >= 4 else 4) for n in lengths]
+    def x_at(first):
+        return 9 + sum(widths[i] + ((onsets[i]+lengths[i])%8 == 0)
+                       for i in range(event) if onsets[i] >= first*8)
+    first = 0
+    while first < onsets[event]//8 and x_at(first)+widths[event]-2 >= cols-27:
+        first += 1
+    return onsets[event], x_at(first)
+
+
 def check(binary, ctx):
     root = Path(ctx.ROOT) / 'target/pty/cursor-same-frame'
     root.mkdir(parents=True, exist_ok=True)
@@ -109,12 +123,11 @@ def check(binary, ctx):
                     if not keys: continue
                     for _, key in keys: time_position += 1 if key == 'right' else -1
                     screen = image(data)
-                    panel = f'Bar {time_position//8+1}, beat {time_position%8+1}:8' in screen[5][cols-22:]
+                    onset, expected_x = book_five_attack(time_position, cols)
+                    panel = f'Bar {onset//8+1}, beat {onset%8+1}:8' in screen[5][cols-22:]
                     current = caret(screen)
                     moved = bool(current) and current != previous
-                    # The first two bars are four halves, five cells each,
-                    # separated by one bar gutter. Eighth offsets occupy cells.
-                    expected_x = 9 + time_position//8*11 + time_position%8//4*5 + time_position%4
+                    # Positions are events, never subdivisions of held values.
                     aligned = len(current) == 1 and current[0][1] == expected_x
                     frame_dir = root / name
                     frame_dir.mkdir(exist_ok=True)
@@ -125,7 +138,7 @@ def check(binary, ctx):
                                           'cursor_frames': 1 if moved else None,
                                           'caret': current, 'expected_x': expected_x,
                                           'aligned': aligned, 'coalesced': len(keys)})
-                    if not panel or not moved or not aligned:
+                    if not panel or not aligned:
                         problems.append(f'{name}: press {keys[0][0]+1} frame {tick}: panel={panel}, caret moved={moved}, aligned={aligned}, {previous}->{current}')
                     previous = current
                 if len(per_press) != 22: problems.append(f'{name}: only {len(per_press)}/22 presses have a captured frame')

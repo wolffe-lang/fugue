@@ -133,10 +133,10 @@ pub struct Status {
 }
 
 /// Use written time, never an event index or the playback cursor, as the bar.
-pub fn status(p: Page, cursor: int, within: int, breaks: List[theory.Break]) -> Status {
+pub fn status(p: Page, cursor: int, breaks: List[theory.Break]) -> Status {
     let active = if p.editing == 0 then copy p.response else copy p.continuation
     let other = if p.editing == 0 then copy p.given else copy p.response
-    let time = rhythm.onset(active.beats, cursor) + within
+    let time = rhythm.onset(active.beats, cursor)
     let bar = time / 8 + 1, beat = time % 8 + 1
     let j = rhythm.at(other.beats, time)
     let iv = theory.interval(other.notes[j], active.notes[cursor])

@@ -318,11 +318,10 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
                 text(mut g, iy + 1, nx - 1, "/{rhythm.value_name(beat.length)}", blue, bg, false)
             }
             if i == focus {
-                // Navigation follows cursor time, not just the held event's head.
-                let offset = if s.hearing >= 0 then 0 else s.within / session.editor_unit(s)
+                // The caret marks the same attack that status and edits select.
                 // The compact grand system spends the lower rows on intervals/hints.
                 let cy = if iy + 2 < rows - 2 then iy + 2 else top - 1
-                text(mut g, cy, nx + offset, "^", blue, bg, true)
+                text(mut g, cy, nx, "^", blue, bg, true)
             }
         }
     }

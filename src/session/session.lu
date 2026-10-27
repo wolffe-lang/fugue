@@ -7,7 +7,7 @@ use species
 use theory
 
 /// A reversible single-note edit.
-pub struct Edit { bar: int, within: int, notes: List[theory.Pitch], beats: List[rhythm.Beat] }
+pub struct Edit { bar: int, notes: List[theory.Pitch], beats: List[rhythm.Beat] }
 
 /// Deterministic editor state; no terminal or clock ownership.
 pub struct State {
@@ -26,7 +26,6 @@ pub struct State {
     beats: List[rhythm.Beat],
     seed: int,
     cursor: int,
-    within: int,
     progress: List[int],
     phase: int,
     quit: bool,
@@ -40,15 +39,13 @@ pub struct State {
     below: bool,
 }
 
-/// One authoritative editable-voice selection. Book VI selects whole notated
-/// events; its merged display timeline never creates additional edit positions.
-pub struct Selection { event: int, within: int, time: int }
+/// One authoritative editable-voice event in every book.
+/// The display timeline never creates additional edit positions.
+pub struct Selection { event: int, time: int }
 
-/// Resolve a valid editor cursor to its event, offset and musical time.
-/// Book VI snaps to the event onset; I–V retain their existing grid offsets.
+/// Resolve an editor cursor to its notated event and attack time.
 pub fn selection(s: State) -> Selection {
-    let within = if s.book == 6 then 0 else s.within
-    Selection { event: s.cursor, within: within, time: rhythm.onset(s.beats, s.cursor) + within }
+    Selection { event: s.cursor, time: rhythm.onset(s.beats, s.cursor) }
 }
 
 /// Start at the title or staff with the supplied seed.
@@ -77,7 +74,6 @@ pub fn new(seed: int, title: bool) -> State {
         beats: rhythm.pattern(1, cantus.len),
         seed: seed,
         cursor: 0,
-        within: 0,
         progress: [0, 0, 0, 0, 0, 0],
         phase: if title then 0 else 1,
         quit: false,
@@ -214,7 +210,6 @@ pub fn step(mut s: State, k: int) {
     if k == 13 {
         s.phase = 1
         s.cursor = 0
-        s.within = 0
         return
     }
     if s.phase == 2 {
@@ -233,35 +228,13 @@ pub fn step(mut s: State, k: int) {
         s.beats = line.beats
         s.below = if s.fugue.editing == 0 then s.fugue.answer_below else !s.fugue.answer_below
         s.cursor = 0
-        s.within = 0
         s.history = []
         fugue_setup(mut s)
         return
     }
-    if s.book == 6 {
-        let selected = selection(s)
-        if k == 3 && selected.event > 0 { s.cursor = selected.event - 1 }
-        if k == 4 && selected.event + 1 < s.voice.len { s.cursor = selected.event + 1 }
-        s.within = 0
-    } else {
-        let unit = editor_unit(s)
-        if k == 3 {
-            if s.within >= unit {
-                s.within -= unit
-            } else if s.cursor > 0 {
-                s.cursor -= 1
-                s.within = s.beats[s.cursor].length - unit
-            }
-        }
-        if k == 4 {
-            if s.within + unit < s.beats[s.cursor].length {
-                s.within += unit
-            } else if s.cursor + 1 < s.voice.len {
-                s.cursor += 1
-                s.within = 0
-            }
-        }
-    }
+    let selected = selection(s)
+    if k == 3 && selected.event > 0 { s.cursor = selected.event - 1 }
+    if k == 4 && selected.event + 1 < s.voice.len { s.cursor = selected.event + 1 }
     if k == 9 && s.hearing < 0 { s.hearing = 0 }
     if k == 8 { s.audition += 1 }
     if k == 10 {
@@ -282,14 +255,12 @@ pub fn step(mut s: State, k: int) {
             if best > s.progress[5] { s.progress[5] = best }
         }
         s.cursor = 0
-        s.within = 0
     }
     if k == 11 {
         let edit = (mut s.history).pop() else { return }
         s.voice = edit.notes
         s.beats = edit.beats
         s.cursor = edit.bar
-        s.within = edit.within
     }
     if k >= 22 && k <= 25 || k == 28 { edit_rhythm(mut s, k); return }
     if k >= 1 && k <= 2 || k == 5 || k == 6 || k == 7 {
@@ -352,7 +323,6 @@ pub fn tutorial(index: int, title: bool) -> State {
         beats: rhythm.pattern(1, cf.len),
         seed: index,
         cursor: 0,
-        within: 0,
         progress: [0, 0, 0, 0, 0, 0],
         phase: if title then 0 else 1,
         quit: false,
@@ -451,18 +421,9 @@ fn remember(mut s: State) {
     let selected = selection(s)
     (mut s.history).push(Edit {
         bar: selected.event,
-        within: selected.within,
         notes: copy s.voice,
         beats: copy s.beats,
     })
-}
-
-/// Cursor time is page-driven: free rhythm uses eighths, fixed rhythm its shortest value.
-pub fn editor_unit(s: State) -> int {
-    if s.rhythm_editable { return 1 }
-    var unit = 8
-    for b in s.beats { if b.length < unit { unit = b.length } }
-    unit
 }
 
 /// Rhythm edits preserve a bar's sum and undo as one transaction; refusals are named.
@@ -558,7 +519,6 @@ fn edit_rhythm(mut s: State, k: int) {
     }
     s.beats = beats
     s.voice = notes
-    s.within = 0
     assert(rhythm.valid(s.beats, s.cantus.len))
 }
 

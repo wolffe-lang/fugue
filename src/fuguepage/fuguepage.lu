@@ -38,7 +38,6 @@ fn shown(s: session.State, a: subject.Line, b: subject.Line, time: int) -> sessi
         at = next
     }
     out.cursor = rhythm.at(out.beats, time)
-    out.within = time - rhythm.onset(out.beats, out.cursor)
     out.hearing = -1
     out.cantus_clef = session.choose_clef(a.notes, a.notes)
     out.voice_clef = session.choose_clef(b.notes, b.notes)
@@ -51,7 +50,7 @@ fn panel_model(
     findings: List[theory.Break],
 ) -> staff.PanelData {
     let selected = session.selection(s)
-    let current = exposition.status(p, selected.event, selected.within, findings)
+    let current = exposition.status(p, selected.event, findings)
     let iv = current.interval
     let cls = if iv.consonance == 0 {
         "perfect"
