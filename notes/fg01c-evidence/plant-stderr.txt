@@ -1,0 +1,6 @@
+fg01c memory gate: 10.46 GiB free+inactive, require 8
+build: target/native/fugue
+quiet-player-stderr: {"text_cells_changed": 1108, "style_rows_changed": 40, "alive": []}
+pty: quiet-player-stderr FAILED (darwin arm64):
+  - player stderr changed 1108 text cells / 40 style rows
+  - afplay diagnostic reached the terminal

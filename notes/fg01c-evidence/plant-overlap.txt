@@ -1,0 +1,15 @@
+fg01c memory gate: 10.59 GiB free+inactive, require 8
+build: target/native/fugue
+audition-storm: children max 32, p99 40.96658300841227 ms, extra cells 78, sink files 0, keys 40/40
+pty: audition-storm FAILED (darwin arm64):
+  - press 14: 25 unexpected text cells / 2 style rows
+  - press 33: 53 unexpected text cells / 3 style rows
+  - press 34: 53 unexpected text cells / 3 style rows
+  - press 35: 53 unexpected text cells / 3 style rows
+  - press 36: 78 unexpected text cells / 5 style rows
+  - press 37: 78 unexpected text cells / 5 style rows
+  - press 38: 78 unexpected text cells / 5 style rows
+  - press 39: 53 unexpected text cells / 3 style rows
+  - press 40: 78 unexpected text cells / 5 style rows
+  - audition children alive: 32, wanted <=1
+  - only 36/40 presses produced a frame
