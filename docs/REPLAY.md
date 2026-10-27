@@ -60,3 +60,8 @@ vocabulary; no earlier key number changes. Progress comments now use
 `# books fugue 2 a b c d e f`; old five-book version-1 comments still load,
 with the sixth book unlit. A `voice-switch` event changes the edit desk, never injects
 an answer. The exposition lasts 360 ticks for the six-bar tutorial subjects.
+
+Book VI arrows now select the editable voice’s next/previous notated event.
+The earlier held preview used within-note time steps; its Book VI recordings
+are superseded by the current recorded references. Books I–V and their replay
+key numbers are unchanged. Scores are still recomputed rather than trusted.

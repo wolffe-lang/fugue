@@ -60,9 +60,9 @@ Joins, splits and dots that cannot preserve a bar are refused by name.
 The page owns its pitch range and whether rhythm is editable. Book VI's
 integration uses the same keys for an editable countersubject, not its fixed
 answer. Its `#` cycles natural → sharp → flat → natural anywhere; Books I–V
-retain their cadence-only guard. The cursor uses eighths for an editable
-rhythm and the shortest written value for a fixed one. `v` is reserved for
-Book VI's voice switch.
+retain their cadence-only guard. Books I–V keep their existing time-grid
+navigation; Book VI selects notated events as described below. `v` switches
+Book VI's writing desk.
 
 ## Book VI
 
@@ -80,8 +80,15 @@ The Answer desk keeps the subject's values fixed. The Countersubject desk
 uses Book V's `[`, `]`, `.`, `t` and `r` rhythm controls. Every change is judged
 against the moving answer in both octave dispositions.
 
-The caret moves with each selectable beat, even while its notehead remains
-selected through a held value. Book VI keeps Editing bar and bar/beat at the
+In Book VI, Left and Right select the previous or next notated event in the
+voice you are writing. Up and Down change that event; a tied chain still changes
+together. A held note is one selection, not several empty time slots. The single
+caret stays at that event’s column, and the status names its onset. Book VI keeps
+Editing bar and bar/beat at the
 top of the same status column as the other books; named findings below belong
 only to that bar. Both writing desks number their local bars from one. During
 listening, the exposition's second entry follows the subject's six bars.
+
+A Book VI pitch outside the visible register is marked `!`, not `^`; the
+caret is reserved for selection. During listening, editing is locked and
+the caret is the playhead.

@@ -70,3 +70,7 @@ Its voice-entry names stay in the header rather than over these diagnostics.
 The sparse ground-223 cells are deliberate parchment grain, recorded in the
 style goldens even where the text capture contains a space. Whole-cell pty
 comparisons check both glyphs and styles after page changes and playback.
+
+Book VI reserves `^` for its single selection caret and uses `!` for a pitch
+outside the visible register. The caret aligns with the edited event’s head
+(or rest/overflow mark), never an uneditable slot between its notes.

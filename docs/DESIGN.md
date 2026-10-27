@@ -138,8 +138,8 @@ when the page opens. `range_low`/`range_high` are inclusive diatonic positions,
 shared by the editor and prepared audition bank. A Book VI page can set C3–C7
 (21–49) before preparation. `rhythm_editable` gates the florid keys: fixed
 answer versus editable countersubject. `editor_unit(state)` uses eighths for
-editable rhythm, otherwise the shortest written value. This is not a numeric
-book switch. Book VI's accidentals cycle freely; earlier books keep the guard.
+editable rhythm, otherwise the shortest written value. This controls time-slot layout and I–V navigation. Book VI navigation selects
+notated events instead. Its accidentals cycle freely; earlier books keep the guard.
 
 Replay IDs 1–25 are unchanged, 26/27 reserved as `book-6`/`voice-switch` for
 Book VI, and `dot` is appended at 28. The terminal brackets now match their
@@ -152,7 +152,7 @@ existing classifier. `species.event_breaks` runs the same vertical/motion rule p
 but retains only findings emitted at the selected event. The separately titled bar list filters the global verdict by the active bar,
 including melodic findings at that bar. Each finding row names its bar.
 The critic card after Enter retains the complete verdict and global counts.
-The caret uses the same event column plus the editable within-event offset;
+In Books I–V, the caret uses the event column plus the editable within-event offset;
 held values reserve a distinct cell for each selectable time unit.
 
 
@@ -195,12 +195,18 @@ light persists, but an interrupted tutorial sequence restarts at its first
 page. Replay keys 26 (book-6) and 27 (voice-switch) append to the old vocabulary.
 
 
-Book VI supplies `staff.PanelData` through `exposition.status`. The selected
-bar and beat use the edited voice's onset plus its within-event offset, not
-its event index or the listening cursor. Interval and figure use the other
-voice sounding at that time; both diagnostic lists are restricted to the
-active bar. Enter still opens the complete verdict. Entry names occupy the
-reserved header and cannot overwrite the shared status or findings rows.
-The merged timeline also carries the within-event offset to its caret, using
-the same slot reservation as the earlier books. Joining a counterpoint note
-does not hide an answer attack or freeze the caret inside the held note.
+Book VI supplies `staff.PanelData` through `exposition.status`. One
+`session.selection` resolves the editable voice's event, within offset and
+onset time. VI's Left/Right navigation selects notated events and keeps within
+at zero. The pitch edit, audition, caret and status all consume that selection.
+The merged timeline positions both voices, but an attack in the other voice
+does not create a new editable selection. Joining, splitting, dotting, tying,
+resting and undoing keep the selected event explicit.
+
+Interval and figure sample the other voice at the selected onset; both finding
+lists are restricted to the active bar. Enter opens the complete verdict.
+Entry names occupy the reserved header. A clipped pitch has a `!` marker in VI,
+leaving exactly one `^` caret. The selection census checks every event in both
+desks at both sizes and tiers, then applies Up/Down and undo to verify the event
+that really changed. Tied chains are checked as chains, not mistaken for stray
+edits. Books I–V retain their time-grid navigation and shared staff behavior.

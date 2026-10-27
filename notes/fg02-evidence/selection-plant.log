@@ -1,0 +1,11 @@
+test src/fuguepage_test.lu::test_fugue_labels_follow_entries_on_both_sizes_and_tiers ... ok
+test src/fuguepage_test.lu::test_fugue_short_subject_uses_six_bar_editor_invariant ... ok
+test src/fuguepage_test.lu::test_completed_sixth_book_is_visibly_lit_on_the_title ... ok
+test src/fuguepage_test.lu::test_fugue_answer_panel_80 ... ok
+test src/fuguepage_test.lu::test_fugue_answer_panel_120 ... ok
+test src/fuguepage_test.lu::test_fugue_counter_panel_80 ... ok
+test src/fuguepage_test.lu::test_fugue_counter_panel_120 ... ok
+test src/fuguepage_test.lu::test_fugue_right_selects_the_event_up_will_edit ... ok
+test src/fuguepage_test.lu::test_fugue_cursor_never_selects_the_other_voices_slot ... FAILED (trap(assert))
+test src/fuguepage_test.lu::test_fugue_overflow_mark_is_not_an_extra_cursor ... ok
+wolf test: 9 passed; 1 failed; 0 rejected; 0 unsupported; 0 filtered out
