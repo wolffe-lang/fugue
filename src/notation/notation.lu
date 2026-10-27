@@ -322,6 +322,7 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
                 // The compact grand system spends the lower rows on intervals/hints.
                 let cy = if iy + 2 < rows - 2 then iy + 2 else top - 1
                 text(mut g, cy, nx, "^", blue, bg, true)
+                text(mut g, cy, nx + 1, "^", blue, bg, true)
             }
         }
     }
