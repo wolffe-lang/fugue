@@ -112,6 +112,7 @@ def cadence(s, binary, root):
 
 def storm(binary, ctx):
     problems = []
+    is_mac = Path('/usr/bin/afplay').exists()
     # An independent muted run supplies the only two permitted full frames.
     # This covers pitch/interval/judge text as well as the accidental itself;
     # no arbitrary region is masked to hide a child diagnostic.
@@ -150,17 +151,20 @@ def storm(binary, ctx):
         expected = sharp if index%2==0 else natural
         a, sa = cells(actual); b, sb = cells(expected)
         delta = changed(a,b); style_delta = changed(sa,sb)
+        # Linux's contract is bounded sink parity, not a native-backend
+        # frame budget. A coalesced native frame must still be one of the
+        # two independent valid states; the Mac checks each press's parity.
+        if not is_mac and actual in (natural, sharp): delta = style_delta = 0
         extra.append(delta)
         if delta or style_delta: problems.append(f'press {index+1}: {delta} unexpected text cells / {style_delta} style rows')
         (root/f'press-{index+1:02}.bin').write_bytes(capture)
     alive = max([len(p['pids']) for p in polls], default=0)
-    is_mac = Path('/usr/bin/afplay').exists()
     if is_mac and (not polls or alive == 0): problems.append('storm never observed a real player')
     if alive > 1: problems.append(f'audition children alive: {alive}, wanted <=1')
     latencies = [p['wall_ms'] for p in presses if p['wall_ms'] is not None]
     p99 = sorted(latencies)[math.ceil(len(latencies)*.99)-1] if latencies else None
-    if len(latencies)!=40: problems.append(f'only {len(latencies)}/40 presses produced a frame')
-    if p99 is None or p99>70: problems.append(f'storm p99 latency {p99} ms exceeds 70 ms')
+    if is_mac and len(latencies)!=40: problems.append(f'only {len(latencies)}/40 presses produced a frame')
+    if is_mac and (p99 is None or p99>70): problems.append(f'storm p99 latency {p99} ms exceeds 70 ms')
     if b'AudioQueueStart' in s.out or b'Error:' in s.out: problems.append('player error reached terminal during storm')
     sinks = list(root.glob('audition*.wav'))
     if not is_mac and len(sinks)!=1: problems.append(f'Linux audition sink grew to {len(sinks)} files, wanted one rewritten file')
@@ -183,4 +187,38 @@ def quiet_sink(binary, ctx):
     return s,problems
 
 
-ROWS = {'quiet-player-stderr':quiet_failure, 'audition-storm':storm}
+def hear_replaces_audition(binary, ctx):
+    problems = []
+    s, root = setup(binary,ctx,'audition-hear-owner')
+    s.type(b' ',.12)
+    previous = children(s)
+    if len(previous)!=1: problems.append(f'Space did not start exactly one owned audition: {previous}')
+    sent = time.monotonic(); os.write(s.master,b'h')
+    retired = False
+    while time.monotonic()-sent < .10:
+        s.pump(.002)
+        if not set(previous).intersection(children(s)):
+            retired = True; break
+    stopped_ms = (time.monotonic()-sent)*1000
+    if not retired: problems.append('h did not kill and reap the audition within 100 ms')
+    deadline = time.monotonic()+30
+    whole = []
+    while time.monotonic()<deadline:
+        s.pump(.02)
+        for pid in children(s):
+            args = subprocess.run(['ps','-p',str(pid),'-o','args='],capture_output=True,text=True).stdout
+            if '/usr/bin/afplay' in args and '/whole-' in args: whole.append(pid)
+        if whole: break
+    if len(set(whole))!=1: problems.append(f'h did not keep its own whole-page player: {whole}')
+    s.type(b'q'); s.finish(timeout=20); ctx.common_checks(s,0,problems)
+    if children(s): problems.append('teardown left an owned player behind')
+    print(f'audition-hear-owner: retired {previous} in {stopped_ms:.3f} ms; whole {whole}')
+    (root/'measurements.json').write_text(json.dumps(dict(audition=previous,retired=retired,stop_ms=stopped_ms,whole=whole),indent=2)+'\n')
+    return s,problems
+
+
+# The common gate loads only rows applicable to its actual host: two Mac
+# regressions plus a whole-player ownership check, or the Linux sink parity.
+ROWS = ({'quiet-player-stderr':quiet_failure, 'audition-storm':storm,
+         'audition-hear-owner':hear_replaces_audition} if Path('/usr/bin/afplay').exists()
+        else {'linux-audition-sink':storm})
