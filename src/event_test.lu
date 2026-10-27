@@ -1,0 +1,87 @@
+use manuscript
+use notation
+use rhythm
+use session
+
+fn test_right_never_moves_the_caret_without_selecting_the_next_event() {
+    for book in 1..7 {
+        for page in 0..3 {
+            var s = session.with_book(take session.tutorial(page, false), book)
+            for event in 0..s.voice.len {
+                assert(session.selection(s).event == event, "Right selects exactly one editable event")
+                assert(session.selection(s).time == rhythm.onset(s.beats, event))
+                session.step(mut s, 4)
+            }
+            assert(s.cursor == s.voice.len - 1)
+            for back in 0..s.voice.len {
+                assert(s.cursor == s.voice.len - 1 - back)
+                session.step(mut s, 3)
+            }
+            assert(s.cursor == 0)
+        }
+    }
+}
+
+fn sole_caret(book: int) {
+    var s = session.with_book(take session.tutorial(0, false), book)
+    session.step(mut s, 4)
+    for cols in [80, 120] {
+        for tier in [0, 1] {
+            let g = notation.frame(s, cols, if cols == 80 then 24 else 40, tier)
+            var count = 0
+            for cell in g.cells { if cell.cp == 94 { count += 1 } }
+            assert(count == 1, "exactly one caret per event frame")
+        }
+    }
+}
+
+fn test_exactly_one_event_caret_book_one() { sole_caret(1) }
+fn test_exactly_one_event_caret_book_two() { sole_caret(2) }
+fn test_exactly_one_event_caret_book_three() { sole_caret(3) }
+fn test_exactly_one_event_caret_book_four() { sole_caret(4) }
+fn test_exactly_one_event_caret_book_five() { sole_caret(5) }
+fn test_exactly_one_event_caret_book_six() { sole_caret(6) }
+
+fn test_book_five_rhythm_edits_follow_the_navigated_event() {
+    for key in [22, 23, 28, 24, 13] {
+        var s = session.with_book(take session.tutorial(0, false), 5)
+        session.step(mut s, 4)
+        session.step(mut s, 4)
+        let event = 2
+        assert(s.cursor == event)
+        let before = copy s.beats
+        let count = s.voice.len
+        session.step(mut s, key)
+        assert(s.cursor == event)
+        assert(s.beats[0].length == before[0].length && s.beats[1].length == before[1].length)
+        if key == 22 { assert(s.voice.len == count + 1 && s.beats[event].length == 2) }
+        if key == 23 { assert(s.voice.len == count - 1 && s.beats[event].length == 8) }
+        if key == 28 { assert(s.beats[event].length == 6 && s.beats[event + 1].length == 2) }
+        if key == 24 { assert(s.beats[event + 1].tied) }
+        if key == 13 { assert(s.beats[event].rest) }
+        session.step(mut s, 3)
+        session.step(mut s, 11)
+        assert(s.cursor == event && s.voice.len == count)
+        for i in 0..count {
+            assert(s.beats[i].length == before[i].length && s.beats[i].rest == before[i].rest && s.beats[i].tied == before[i].tied)
+        }
+    }
+}
+
+fn test_rest_and_audition_keep_the_selected_attack() {
+    var s = session.with_book(take session.tutorial(0, false), 5)
+    session.step(mut s, 4)
+    session.step(mut s, 13)
+    let at = session.selection(s)
+    let before = notation.frame(s, 120, 40, 1)
+    session.step(mut s, 8)
+    let after = notation.frame(s, 120, 40, 1)
+    assert(session.selection(s).event == at.event && session.selection(s).time == at.time)
+    for i in 0..before.cells.len { assert(before.cells[i].cp == after.cells[i].cp) }
+    let x = manuscript.event_column(s, manuscript.first_bar(s, 120), at.event)
+    var count = 0
+    for i in 0..after.cells.len {
+        if after.cells[i].cp == 94 { assert(i % 120 == x); count += 1 }
+    }
+    assert(count == 1)
+}

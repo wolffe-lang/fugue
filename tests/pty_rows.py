@@ -296,6 +296,14 @@ def cursor_same_frame(bin, ctx):
 ROWS['cursor-same-frame'] = cursor_same_frame
 
 
+def event_caret(bin, ctx):
+    import runpy
+    return runpy.run_path(str(Path(ctx.ROOT)/'tools/event-caret.py'))['check'](bin, ctx)
+
+
+ROWS['event-caret'] = event_caret
+
+
 def quiet_audio_page_change(bin, ctx):
     env = ctx.env_for()
     env['FUGUE_SOUND'] = '1'
