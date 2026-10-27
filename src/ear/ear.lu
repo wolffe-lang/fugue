@@ -17,6 +17,7 @@ pub struct Ear {
     owned: bool,
     base: int,
     children: List[process.Child],
+    audition_slot: int,
     serial: int,
     whole_serial: int,
     mac: bool,
@@ -41,6 +42,7 @@ pub fn open(enabled: bool) -> Ear ! {io} {
         owned: owned,
         base: 0,
         children: List[process.Child](),
+        audition_slot: -1,
         serial: 0,
         whole_serial: 0,
         mac: fs.exists("/usr/bin/afplay"),
@@ -134,20 +136,40 @@ pub fn poll(mut e: Ear) {
         for i in 0..e.children.len {
             if e.children[i].slot == change.child.slot && !process.is_stopped(change.status) {
                 trace("sound: player-end slot {change.child.slot} status {change.status.value}")
+                if e.audition_slot == change.child.slot { e.audition_slot = -1 }
                 e.children[i].slot = -1
             }
         }
     }
 }
 
-fn start(mut e: Ear, path: str) -> () ! {io} {
+/// Stop only the current audition, then reap it before another can start.
+fn stop_audition(mut e: Ear) -> () ! {io} {
+    poll(mut e)
+    if e.audition_slot < 0 { return }
+    for i in 0..e.children.len {
+        if e.children[i].slot == e.audition_slot {
+            var child = copy e.children[i]
+            // It may have exited since poll; either way wait_status must reap.
+            process.kill(mut child) else |_| {}
+            let status = process.wait_status(take child) else |_| { return io }
+            trace("sound: audition-stop slot {e.audition_slot} status {status}")
+            e.children[i].slot = -1
+            e.audition_slot = -1
+            return
+        }
+    }
+    // A lost owner must not silently permit an overlapping replacement.
+    return io
+}
+
+fn start(mut e: Ear, path: str, audition: bool) -> () ! {io} {
     e.serial += 1
     if !e.mac {
         let bytes = fs.read_bytes(path) else |_| { return io }
-        fs.write_bytes(
-            "{e.dir}/audition-{if e.owned then e.serial % 64 else e.serial}.wav",
-            bytes,
-        ) else |_| { return io }
+        let sink = if audition then "{e.dir}/audition.wav" else
+            "{e.dir}/audition-{if e.owned then e.serial % 64 else e.serial}.wav"
+        fs.write_bytes(sink, bytes) else |_| { return io }
         trace("sound: wav-sink {e.serial} {path}")
         return
     }
@@ -157,7 +179,12 @@ fn start(mut e: Ear, path: str) -> () ! {io} {
     if active >= 32 { eprint("sound: player capacity (32 owned cues)"); return io }
     var cmd = process.command("/usr/bin/afplay")
     process.push_arg(mut cmd, path)
+    let quiet = fs.open_append("/dev/null") else |_| { return io }
+    defer fs.close(take quiet) else |_| {}
+    process.set_stdout(mut cmd, quiet)
+    process.set_stderr(mut cmd, quiet)
     let child = process.start(cmd) else |_| { return io }
+    if audition { e.audition_slot = child.slot }
     let pid = process.pid(child) else -1
     trace("sound: player-start pid {pid} slot {child.slot} {path}")
     for i in 0..e.children.len {
@@ -169,12 +196,14 @@ fn start(mut e: Ear, path: str) -> () ! {io} {
 /// Audition a cached pitch; preparation never happens on this path.
 pub fn audition(mut e: Ear, p: theory.Pitch) -> () ! {io} {
     if !e.enabled { return }
-    start(mut e, "{e.dir}/note-{theory.position(p)}-{p.accidental}.wav")?
+    stop_audition(mut e)?
+    start(mut e, "{e.dir}/note-{theory.position(p)}-{p.accidental}.wav", true)?
 }
 
 /// Render and start both voices; callers reset their tick deadline after preparation.
 pub fn hear(mut e: Ear, s: session.State) -> () ! {io} {
     if !e.enabled { return }
+    stop_audition(mut e)?
     e.whole_serial += 1
     let path = "{e.dir}/whole-{if e.owned then e.whole_serial % 3 else e.whole_serial}.wav"
     region preparation {
@@ -183,7 +212,7 @@ pub fn hear(mut e: Ear, s: session.State) -> () ! {io} {
         fs.write_bytes(path, bytes) else |_| { return io }
     }
     trace("sound: whole-render {path} ticks {session.piece_ticks(s)}")
-    start(mut e, path)?
+    start(mut e, path, false)?
 }
 
 /// Reap every owned player only after restoring the terminal; remove private files.
