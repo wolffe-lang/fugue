@@ -167,8 +167,11 @@ fn start(mut e: Ear, path: str, audition: bool) -> () ! {io} {
     e.serial += 1
     if !e.mac {
         let bytes = fs.read_bytes(path) else |_| { return io }
-        let sink = if audition then "{e.dir}/audition.wav" else
+        let sink = if audition {
+            "{e.dir}/audition.wav"
+        } else {
             "{e.dir}/audition-{if e.owned then e.serial % 64 else e.serial}.wav"
+        }
         fs.write_bytes(sink, bytes) else |_| { return io }
         trace("sound: wav-sink {e.serial} {path}")
         return
