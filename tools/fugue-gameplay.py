@@ -9,14 +9,17 @@ import subprocess
 p=argparse.ArgumentParser(); p.add_argument('--bin',required=True); args=p.parse_args()
 root=Path(__file__).resolve().parents[1]; binary=str((root/args.bin).resolve())
 out=root/'target/fugue-gameplay'; out.mkdir(parents=True,exist_ok=True)
-def run(argv, status=0):
-    r=subprocess.run([binary,*argv],cwd=root,capture_output=True,text=True,timeout=180)
+def run(argv, status=0, timeout=180):
+    print('fugue-gameplay:', ' '.join(argv), f'watchdog {timeout}s', flush=True)
+    r=subprocess.run([binary,*argv],cwd=root,capture_output=True,text=True,timeout=timeout)
     print(r.stdout,end=''); print(r.stderr,end='')
     assert r.returncode==status,(argv,r.returncode,r.stderr)
     return r
 
 run(['--fugue-audio-study'])
-run(['--fugue-cursor-census'])
+# This offline traversal grew from 1,955 to 13,085 positions (6.7x). Keep the
+# same bounded watchdog allowance per position; frame/latency gates do not change.
+run(['--fugue-cursor-census'], timeout=7*180)
 census=run(['--fugue-census']).stdout
 assert 'subjects 300/300 real 300/300 tonal 52/300 counter 174/300 three-star 21/300 certified-mode-sides 12/12' in census
 verdicts=run(['--fugue-verdicts']).stdout
