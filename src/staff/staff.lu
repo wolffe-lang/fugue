@@ -226,7 +226,7 @@ pub fn ledger(mut g: grid.Grid, v: Viewport, p: theory.Pitch, x: int, t: int, ca
     if y < v.top || y > v.bottom {
         let edge = if y < v.top then v.top else v.bottom
         let bg = g.cells[edge * g.cols + x].bg
-        grid.put(mut g, edge, x, grid.cell(if y < v.top then 94 else 118, ink, bg, 1))
+        grid.put(mut g, edge, x, grid.cell(if y < v.top then 33 else 118, ink, bg, 1))
         return y
     }
     let pos = theory.position(p)

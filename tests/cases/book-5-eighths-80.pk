@@ -5,13 +5,9 @@ size 80x24
 start 20001
 # frames 32 every 10
 t 1 right
-t 1 right
-t 1 right
-t 1 right
 t 1 split
 t 1 up
 t 1 up
-t 1 right
 t 1 right
 t 1 split
 t 1 up
