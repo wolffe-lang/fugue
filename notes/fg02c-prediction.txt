@@ -1,0 +1,1 @@
+Right from the start in Book V today reaches eight positions on a whole note while selecting one event. After the fix the count of reachable positions will equal the editable voice's event count in every book. No golden outside caret cells should change; event width may retain page-time spacing to avoid unrelated layout changes.
