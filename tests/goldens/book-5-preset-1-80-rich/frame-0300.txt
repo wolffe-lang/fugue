@@ -3,7 +3,7 @@
    Ionian  seed 0  cantus below              ·              ·           ·       
          ·                                              |                       
  Treble 8        9 ·       10 ·                         | Editing bar 10     ·  
- B5      ^        ●         ·     ·                     | Bar 10, beat 1:8      
+ B5      !        ●         ·     ·                     | Bar 10, beat 1:8      
  A5              ──|               ·              ·     |  ··                   
  G5        ·       |                     ·    ·    ·    | P8 perfect            
  F5   ·│────────│──────────│──────────────────────────│ | C5    ·               
