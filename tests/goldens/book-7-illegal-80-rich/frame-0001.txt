@@ -1,0 +1,24 @@
+                ·                          ·     ·  ·  ·                        
+   fugue / VII. The cantus                                                      
+   Ionian  8 wholes  counterpoint above      ·              ·           ·       
+         ·                                                                      
+    Not yet / the cantus      ·                                    ·         ·  
+                            ·     ·                            ·                
+    Hard breaks 5; no shape score until the line is legal  ··                   
+  ·        ·                             ·    ·    ·                            
+   Bar 2: repeat / Let the melody move rather than repeat its note.             
+   Bar 2: sequence / Change the figure instead of repeating its shape in sequ   
+   Bar 5: sequence / Change the figure instead of repeating its shape in sequ   
+   Bar 1: leap-count / Use two to four leaps among the steps.               ·   
+   Bar 1: direction-changes / Turn the line at least twice.          ·          
+ ·                        ·                                    ·                
+            ·                     ·              ··  ·                  ·      ·
+                                             ·                  ·    ·          
+          ·               ·                                           ·       · 
+             ·                               ·           ·                   ·  
+    ·             ·                           ·            ·                    
+        ·         ·                                                  ·          
+                                                      ·     ·                   
+                                                                   ·          · 
+   r edit   Up/Down scroll every break   n fresh   b books   q quit             
+                                                   ·               ·       ·    

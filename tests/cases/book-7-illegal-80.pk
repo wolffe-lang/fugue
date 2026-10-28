@@ -1,0 +1,26 @@
+pk 1
+seed 0
+tier rich
+size 80x24
+start 24001
+# frames 2 every 1
+# score 0
+t 1 join
+t 1 join
+t 1 right
+t 1 right
+t 1 up
+t 1 right
+t 1 up
+t 1 up
+t 1 right
+t 1 up
+t 1 up
+t 1 up
+t 1 right
+t 1 up
+t 1 up
+t 1 right
+t 1 up
+t 1 right
+t 1 check

@@ -1,0 +1,24 @@
+                .                          .     .  .  .                        
+   fugue / VII. The cantus                                                      
+   Ionian  seed 0  cantus above              .              .           .       
+         .                                              |                       
+ Bass   1      2   .  3      4.     5      6      7>>   | Editing bar 1      .  
+ A4                         .     .                     | Bar 1, beat 1:8       
+ G4                                .             -o-    |  ..                   
+ F4        .                        o    .    .    .    | P8 perfect            
+ E4   .        .     -o-           ---    -o-    ---    | C3    .               
+ D4            o                                        | consonance            
+ C4    -o-  . ---    ---    -o-  . ---    ---    ---   .| strong beat           
+ B3   .                                              .  | Figure allowed    .   
+ A3    |------|------|------|------|------|------|----| | No local break        
+ G3    |      |      |    . |      |      |      |    | |      .                
+ F3    |------|------|------|------|-*----|------|----| |               .      .
+ E3    |      |      | *    |      |      | *.   |    | |       .    .          
+ D3    |------|-*----|------|------|------|------|----| | Breaks: bar 1       . 
+ C3    |n*   .|      |      | *    |      |  .   |    | |.No break in this bar  
+ B2 .  |------|------|------|------|------|------|----| |  .                    
+        SP8    SP8.   SP8    SP8    SP8    SP8          |            .          
+        /1     /1     /1     /1     /1     /1         . |   .                   
+         ^                                              | Your cantus; now give 
+  Arrows write  h hear  Enter check  u undo  n next  b books  q quit            
+                                                   .               .       .    

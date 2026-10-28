@@ -1,0 +1,59 @@
+pk 1
+seed 7
+tier rich
+size 80x24
+start 24001
+# score 3
+t 4 right
+t 4 up
+t 4 right
+t 4 up
+t 4 up
+t 4 right
+t 4 right
+t 4 up
+t 4 up
+t 4 up
+t 4 right
+t 4 up
+t 4 up
+t 4 right
+t 4 up
+t 4 up
+t 4 up
+t 4 up
+t 4 right
+t 4 up
+t 4 up
+t 4 right
+t 4 up
+t 4 right
+t 8 check
+t 11 check
+t 15 right
+t 15 down
+t 15 down
+t 15 right
+t 15 down
+t 15 down
+t 15 right
+t 15 up
+t 15 right
+t 15 up
+t 15 right
+t 15 up
+t 15 right
+t 15 down
+t 15 down
+t 15 right
+t 15 down
+t 15 down
+t 15 right
+t 15 up
+t 15 right
+t 15 up
+t 15 up
+t 15 up
+t 18 check
+t 22 quit
+# books fugue 3 1 2 3 1 2 3 0

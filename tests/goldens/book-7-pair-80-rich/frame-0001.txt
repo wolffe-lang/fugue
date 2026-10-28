@@ -1,0 +1,24 @@
+                ·                          ·     ·  ·  ·                        
+   fugue / VII. The cantus                                                      
+   Ionian  seed 0  cantus below              ·              ·           ·       
+         ·                                              |                       
+ Treble 1      2   ·  3      4·     5      6      7>>   | Editing bar 1      ·  
+ G5                         ·     ·                     | Bar 1, beat 1:8       
+ F5    │──────│──────│──────│──────│──────│──────│────│ |  ··                   
+ E5    │   ·  │      │      │      │     ·│   ·  │ ·  │ | P5 perfect            
+ D5   ·│──────│──────│──────│──────│──────│──────│────│ | G4    ·               
+ C5    │      │      │      │      │ ●    │      │    │ | consonance            
+ B4    │──────│──────│─●────│──────│──────│─●────│────│·| strong beat           
+ A4   ·│      │ ●    │      │      │      │      │   ·│ | Figure allowed    ·   
+ G4    │♮●────│──────│──────│─●────│──────│──────│○───│ | No local break        
+ F4    │      │      │    · │      │○     │      │    │ |      ·                
+ E4    │──────│──────│○─────│──────│──────│○─────│────│ |               ·      ·
+ D4            ○      SP5           SP5    SP5          |       ·    ·          
+ C4    ─○─·    SP5    /1  · ─○─     /1     /1           | Breaks: bar 1       · 
+ B3     SP5  · /1            SP5             ·          |·No break in this bar  
+ A3 ·   /1        ·          /1               ·         |  ·                    
+        ·^        ·                                     |            ·          
+                                                      · |   ·                   
+                                                        | Your cantus; now give 
+  Arrows write  h hear  Enter check  u undo  n next  b books  q quit            
+                                                   ·               ·       ·    

@@ -17,8 +17,8 @@
                                  4  IV. The suspended voice  [0*]               
                                  5  V. The florid voice  [0*]                   
                                  6  VI. The fugue  [3*]                         
-                                                                                
+                                 7  VII. The cantus  [0*]                       
   .                                                                             
-    1-6 choose a book   Enter resumes   q leaves the desk                       
+    1-7 choose a book   Enter resumes   q leaves the desk                       
              .                         .                                        
 ..    .                    .                      .  .                          
