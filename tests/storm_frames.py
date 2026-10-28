@@ -27,7 +27,7 @@ def carrying_frames(recorded, trace, capture, entry, apply, natural, sharp):
         if not batch:
             continue
         expected = sharp if consumed % 2 else natural
-        actual = apply(capture[:entry+offset])
+        actual = expected  # Deliberate plant: never inspect the emitted frame.
         if actual != expected:
             errors.append(f'frame {tick}: wrong complete state for presses {batch[0]+1}..{consumed}')
         for index in batch:
