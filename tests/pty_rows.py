@@ -650,11 +650,31 @@ def fugue_right_then_up(bin, ctx):
     import json
     root=Path(ctx.ROOT)/'target/pty/fugue-right-up';root.mkdir(parents=True,exist_ok=True)
     env=ctx.env_for();env['FUGUE_STATE']=str(root/'state');env['FUGUE_WAV_DIR']=str(root/'audio')
+    expected=root/'initial-expected'
+    subprocess.run([bin,'--book','6','--size','120x40','--no-title','--headless',
+                    '--mute','--frames','1','--every','1','--dump',str(expected)],
+                   env=env,capture_output=True,check=True,timeout=30)
+    wanted=((expected/'final.txt').read_text(),(expected/'final.sty').read_text())
     s=ctx.Session([bin,'--book','6','--size','120x40','--no-title'],40,120,env)
-    deadline=time.monotonic()+30
-    while b'\x1b[?1049h' not in s.out and time.monotonic()<deadline:s.pump(.02)
-    if b'\x1b[?1049h' not in s.out:raise RuntimeError('Book VI did not enter the terminal before input')
-    s.pump(.1);problems=[];journal={}
+    # Alternate-screen entry precedes the 150-ms keyboard negotiation. It is
+    # not a first-frame fence, especially when cold sound preparation ends
+    # just before Session's constructor returns. Await every initial cell/style.
+    began=time.monotonic();deadline=began+30;attempts=0;ready=False
+    while True:
+        cap=root/'initial-wait.bin';cap.write_bytes(s.out)
+        applied=subprocess.run([bin,'--apply',str(cap),'--size','120x40'],capture_output=True,text=True,timeout=30)
+        parts=applied.stdout.split('--\n')
+        if applied.returncode==0 and len(parts)==3 and (parts[0],parts[1])==wanted:
+            ready=True;break
+        if attempts==0:(root/'initial-not-ready.bin').write_bytes(s.out)
+        if time.monotonic()>=deadline:break
+        attempts+=1;s.pump(.01)
+    problems=[];journal={}
+    print(f'VI initial complete frame: {ready}, wait {time.monotonic()-began:.3f}s, retries {attempts}')
+    if not ready:
+        problems.append('Book VI never drew its exact complete initial frame before input')
+        s.type(b'q');s.finish();ctx.common_checks(s,0,problems)
+        return s,problems
     def capture(name):
         cap=root/(name+'.bin');cap.write_bytes(s.out)
         result=subprocess.run([bin,'--apply',str(cap),'--size','120x40'],capture_output=True,text=True,check=True)
@@ -689,7 +709,28 @@ def fugue_right_then_up(bin, ctx):
     s.type(b'q');s.finish(timeout=20);ctx.common_checks(s,0,problems)
     return s,problems
 
+def fugue_cold_initial(bin,ctx):
+    """Return the pty constructor at entry, while negotiation is still pending."""
+    class Early(ctx.Session):
+        def __init__(self,*args):
+            self.constructing=True
+            super().__init__(*args)
+            self.constructing=False
+        def pump(self,seconds):
+            if not getattr(self,'constructing',False):return super().pump(seconds)
+            deadline=time.monotonic()+seconds
+            while time.monotonic()<deadline:
+                super().pump(.001)
+                if b'\x1b[?1049h' in self.out:return
+    class Cold(ctx):
+        Session=Early
+        @staticmethod
+        def env_for():
+            env=ctx.env_for();env['FUGUE_SOUND']='0';return env
+    return fugue_right_then_up(bin,Cold)
+
 ROWS['fugue-right-then-up']=fugue_right_then_up
+ROWS['fugue-cold-initial']=fugue_cold_initial
 
 
 # Sound-owner rows share the real-pty/restoration runner with the editor rows.
