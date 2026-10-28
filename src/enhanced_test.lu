@@ -20,4 +20,7 @@ fn test_enhanced_printable_and_quit_projection() {
     assert(event_key(input.KEY_ESC, 0, input.RELEASE) == 0)
     assert(event_key(input.char_key(99), input.MOD_CTRL, input.PRESS) == 15)
     assert(event_key(input.char_key(113), 0, input.RELEASE) == 0)
+    assert(event_key(input.char_key(55), input.MOD_SHIFT, input.PRESS) == 0)
+    assert(event_key(input.char_key(104), input.MOD_SHIFT, input.PRESS) == 0)
+    assert(event_key(input.char_key(32), input.MOD_SHIFT, input.PRESS) == 8)
 }

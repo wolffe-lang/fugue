@@ -450,7 +450,7 @@ def fugue_end(bin,ctx):
     s.type(b'b',.2)
     if 'VI. The fugue  [3*]' not in ctx.screen_text(bin,s.out):problems.append('sixth title book did not light')
     s.type(b'q');s.finish();ctx.common_checks(s,0,problems)
-    if not state.exists() or state.read_text().split()[-1]!='3':problems.append('sixth-book completion did not persist')
+    if not state.exists() or state.read_text().split()[7]!='3':problems.append('sixth-book completion did not persist')
     return s,problems
 
 ROWS['fugue-exposition-record']=fugue_record

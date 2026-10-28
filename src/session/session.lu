@@ -169,6 +169,7 @@ pub fn event_key(e: input.Event) -> int {
         if e.key == input.KEY_UP { return 5 }
         if e.key == input.KEY_DOWN { return 6 }
         if e.key == input.char_key(51) { return 7 }
+        if e.key != input.char_key(32) { return 0 }
     }
     key(e.key)
 }
