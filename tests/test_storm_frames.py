@@ -44,4 +44,4 @@ class StormFrames(unittest.TestCase):
         _, errors = self.run_frames(offsets=list(range(1,40)))
         self.assertIn('only 39/40 presses have a completed frame', errors)
 
-if __name__ == '__main__': unittest.main()
+if __name__ == '__main__': unittest.main(verbosity=2)

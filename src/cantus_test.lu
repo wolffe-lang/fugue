@@ -19,9 +19,10 @@ fn write_cantus(positions: List[int], mode: int) -> session.State {
 }
 
 fn test_own_cantus_repeated_note_is_never_accepted() {
-    var s = write_cantus([28, 28, 29, 30, 31, 30, 29, 28], 0)
+    var s = write_cantus([28, 28, 29, 30, 28, 31, 30, 32, 30, 29, 28], 0)
     session.step(mut s, 10)
     assert(s.phase == 2 && !s.cantus_written)
+    assert(session.verdict(s).breaks.len == 1)
     var repeated = false
     for b in session.verdict(s).breaks { if b.rule == "repeat" && b.bar == 2 { repeated = true } }
     assert(repeated)
@@ -47,6 +48,20 @@ fn test_own_cantus_is_accepted_scored_and_becomes_the_exercise_unchanged() {
     s.voice = answer
     session.step(mut s, 10)
     assert(session.score(s) > 0 && s.progress[6] == session.score(s))
+}
+
+fn test_own_cantus_can_be_the_upper_voice_of_a_solved_pair() {
+    let line = first.exercise(0, 0, true) else []
+    var positions = List[int]()
+    for p in line { (mut positions).push(theory.position(p)) }
+    var s = write_cantus(positions, 0)
+    session.step(mut s, 27)
+    session.step(mut s, 10)
+    assert(session.verdict(s).breaks.len == 0)
+    session.step(mut s, 10)
+    assert(s.below && s.cantus_written && s.cantus.len == line.len)
+    s.voice = first.solve(s.cantus, s.mode, true)
+    assert(session.score(s) > 0)
 }
 
 fn test_seventh_book_title_and_progress_v2_migration() {

@@ -29,3 +29,11 @@ ticks=int([x.split()[1] for x in record.read_text().splitlines() if x.endswith('
 p=run(['--headless','--script',str(record),'--frames',str(ticks),'--dump','target/gameplay/recorded'])
 assert 'verified score 3' in p.stderr
 print('gameplay: census, three references, score-tampering and minimum refusals green')
+record=root/'tests/replays/book-7-solved.pk'
+ticks=max(int(line.split()[1]) for line in record.read_text().splitlines() if line.startswith('t '))+1
+p=run(['--headless','--script',str(record),'--frames',str(ticks),'--every',str(ticks),'--dump','target/gameplay/own-cantus-recorded'])
+assert 'verified score 3' in p.stderr
+case.write_text(record.read_text().replace('# score 3','# score 2'))
+p=run(['--headless','--script',str(case),'--frames',str(ticks),'--every',str(ticks),'--dump','target/gameplay/own-cantus-tampered'],1)
+assert 'UNVERIFIED score 3, claimed 2' in p.stderr
+print('gameplay: complete own-cantus recording and tampered-score refusal green')
