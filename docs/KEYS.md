@@ -15,8 +15,10 @@
 
 Enter or any mapped non-quit key opens the title. On the critic's card, r
 returns to editing, n turns the page, Up/Down scroll the findings, and q leaves.
-A quit or interrupt never starts a page. Shift arrows use the terminal's legacy
-CSI modifier form; the pinned engine does not yet decode CSI-u forms.
+A quit or interrupt never starts a page. The game negotiates kitty keyboard
+flags 11 when the terminal answers its query, and falls back to legacy keys
+otherwise. Press and repeat each perform one action; release performs none.
+Shift arrows work on both paths.
 
 `--mute` and `FUGUE_SOUND=0` suppress preparation and audio output, but not the
 listening animation. `--plain` selects ASCII and the sixteen console colours.
@@ -30,8 +32,9 @@ lists only that bar's findings. A clean bar says **No break in this bar**.
 The critic card after Enter still reports every bar and the global counts.
 ## Books II–V
 
-At the title, 1–6 opens a book; b returns to that desk from a page or card.
-Each book starts with three tutorials, then seeded pages. Best stars per book
+At the title, 1–7 opens a book; b returns to that desk from a page or card.
+Books I–VI start with three tutorials, then seeded pages. The seventh desk is
+for your own cantus. Best stars per book
 are saved in `.fugue-state`; set `FUGUE_STATE` to use another file. A corrupt or
 unknown-format file is ignored, never interpreted as an answer.
 
@@ -92,3 +95,48 @@ listening, the exposition's second entry follows the subject's six bars.
 A pitch above the visible register is marked `!`, not `^`; the
 caret is reserved for selection. During listening, editing is locked and
 the caret is the playhead.
+
+## Book VII: your cantus
+
+7 or `--book 7` opens a blank ten-whole line. `m` cycles the six modes without
+transposing what you wrote. Left/Right selects a whole note; Up/Down writes it,
+Shift-Up/Down moves an octave, Space sounds it, and h hears the one line.
+`[` adds a whole at the end; `]` removes the selected whole. Undo restores
+notes, length and selection together. The editor permits one to sixteen notes;
+the critic requires eight to sixteen. The usual cadence-only # guard remains.
+`v` chooses whether the subsequent counterpoint will be above or below.
+
+Enter checks the melody with the same validator as the generator. Every break
+has its bar, rule and tutor's explanation on the scrollable card. A legal card
+shows the generator's exact shape score, summit penalty, ascent/descent counts
+and interval-variety bonus. Enter again keeps that exact cantus and opens a
+first-species exercise. Solve it with the usual editor and critic. Only the
+solved pair earns the seventh book's stars; accepting the melody alone does not.
+`r` edits again, `n` starts a fresh line, and b returns to the books. Mode/side
+choices are not note edits and do not enter the note-undo history.
+
+## Enhanced-path fixtures
+
+The `enhanced-keys` pty row negotiates flags 11 and injects the kitty protocol
+forms expected from Ghostty on macOS, in rich/plain at both sizes in all seven
+books. These are protocol fixtures, **not a physical Ghostty capture**. A real
+terminal capture is still needed to certify a particular Ghostty version.
+The legacy pty rows remain the fallback proof.
+
+Here ESC is byte 1b; `k` is 1 press, 2 repeat or 3 release:
+
+| Control | Enhanced fixture bytes |
+|---|---|
+| Up/Down/Right/Left | `ESC [ 1 ; 1 : k A/B/C/D` |
+| Shift-Up/Down | `ESC [ 1 ; 2 : k A/B` |
+| Enter / Space / Escape | `ESC [ 13/32/27 ; 1 : k u` |
+| # (Shift-3) | `ESC [ 51 ; 2 : k u` |
+| h/u/n/r/q/b/v/m | `ESC [ 104/117/110/114/113/98/118/109 ; 1 : k u` |
+| 0 and 1–7 | `ESC [ 48–55 ; 1 : k u` |
+| [ / ] / . / t | `ESC [ 91/93/46/116 ; 1 : k u` |
+
+The row holds Right through seven repeat events, then releases it: eight events,
+eight selections, never a timer-driven ninth. Left returns by the same count.
+Every action's first carrying frame is compared with its complete independent
+headless state; releases must leave the frame unchanged and add no replay key.
+The keyboard flag stack is popped before leaving the alternate screen.

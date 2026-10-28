@@ -56,7 +56,7 @@ pseudo-terminal recordings, verified by recomputing their scores.
 
 Book VI uses the same namespace: 22001–22003 are its tutorials and 22101–22103
 are their title-start recordings. `book-6` and `voice-switch` append to the key
-vocabulary; no earlier key number changes. Progress comments now use
+vocabulary; no earlier key number changes. Version-2 progress comments use
 `# books fugue 2 a b c d e f`; old five-book version-1 comments still load,
 with the sixth book unlit. A `voice-switch` event changes the edit desk, never injects
 an answer. The exposition lasts 360 ticks for the six-bar tutorial subjects.
@@ -68,3 +68,21 @@ Right now selects the next event. The shipped authored I–V fixtures use event
 steps, and their recorded references have been captured again with real input.
 Old Book VI held-preview recordings are likewise superseded by current references.
 Scores are always recomputed rather than trusted.
+
+Book VII uses start 24001 (24101 when a recording begins at its title).
+`book-7` is key 29 and `mode` key 30; IDs 1–28 stay unchanged. On its writing
+desk `split` appends a whole and `join` removes the selected whole, while
+`voice-switch` chooses the future counterpoint side. `check` opens the melodic
+critic; another `check` on a legal melodic card starts the first-species pair.
+All written notes and subsequent counterpoint edits come from the event stream.
+The same key names retain their previous meanings in Books I–VI.
+
+New cosmetic comments use `# books fugue 3 a b c d e f g`. Versions 1 and 2
+migrate with their missing book counts at zero. None of those comments supplies
+music or a trusted score. The own-cantus session row records write, check,
+confirm, solve and card through a real pty, then replays the entire recording
+and recomputes three stars. Authored `book-7-*` cases remain labelled as authored.
+
+Negotiated keyboard press/repeat events each record one ordinary game key;
+releases record none. No held-set timer invents extra arrows. The replay is
+independent of whether its original terminal used legacy bytes or kitty forms.

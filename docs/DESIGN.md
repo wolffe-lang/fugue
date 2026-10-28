@@ -50,9 +50,11 @@ markers, and the selected note remains visible. C4 is bold when in view.
 Listening takes one second per whole note. Edits and page changes wait until
 the listening pass ends, so the highlighted notes continue to describe the WAV
 being played. Quit always works. Terminal restoration happens before waiting
-for any remaining audio release tail. The engine's decoder currently ignores
-CSI-u keys; legacy Enter and arrow sequences work. Enhanced keyboard decoding
-is an engine follow-on, not implemented privately here.
+for any remaining audio release tail. `term.open_input` negotiates kitty
+flags 11 at the requested layout floor. Its buffered startup bytes are fed once
+to `input.events_all`; press/repeat events are projected to one editor action,
+and releases are ignored. Legacy bytes follow the same event path without a
+negotiated keyboard stack. Close pops a negotiated stack before restoration.
 
 
 ## Staff drawing seam
@@ -117,7 +119,7 @@ duration, rests, ties, pitch and the selected event. There is no cursor offset.
 The final bar remains a whole. Playback uses the same lengths as
 the staff and score text, while the output owner remains in `ear`.
 
-`progress` validates a tiny versioned file containing only six best-star
+`progress` validates a tiny versioned file containing only seven best-star
 counts. It cannot supply music or bypass the judge. Recordings snapshot those
 cosmetic title counts in an optional comment; the event stream still determines
 all notes, rhythm, verdicts and final stars.
@@ -191,8 +193,8 @@ alone, then answer with continuation. Its named three-track part uses explicit
 rests, preserving `ear`'s output owner. The clock is twelve wholes, not the
 subject's ten attacks. No third entry is implied by the three track names.
 
-Progress version 2 stores six best-star counts and reads version 1 with a zero
-sixth count. The sixth count is earned only after all three tutorials pass.
+Progress version 3 stores seven best-star counts, reads version 2 with a zero
+seventh count, and version 1 with zero sixth/seventh counts. The sixth count is earned only after all three tutorials pass.
 The current three tutorial scores live in the session; a completed sixth-book
 light persists, but an interrupted tutorial sequence restarts at its first
 page. Replay keys 26 (book-6) and 27 (voice-switch) append to the old vocabulary.
@@ -215,3 +217,45 @@ desks at both sizes and tiers, then applies Up/Down and undo to verify the event
 that really changed. Tied chains are checked as chains, not mistaken for stray
 edits. The same census covers every preset and twelve mode/side pages in I–V,
 including seven rhythm/register scenarios, both sizes and tiers.
+
+## The player's cantus
+
+The seventh title entry and `--book 7` open the same session editor with one
+whole per event. `cantus_written=false` means `voice` is the player's single
+line. The composition verdict calls `theory.validate` directly; there is no
+second melodic checker, generator exception or historical waiver. `cantuspage`
+draws that voice with the shared paper, fixed-clef staff/head and status column.
+The complete critic card is scrollable, with every original tutor reason and bar.
+
+`theory.shape_measures` exposes the generator's unchanged numeric ranking:
+`100 - 3*abs(3*zero_based_summit - 2*length) + 4*interval_size_count`.
+The card also shows rising/falling motion counts and their balance gap. Balance
+is a hard admission rule, not an extra scoring bonus. `theory.shape` delegates
+to those same measures, preserving every existing candidate score and order.
+A melody alone earns no stars.
+
+Confirming a legal card copies the exact written pitches to `cantus`, marks
+`cantus_written=true`, clears undo and opens the ordinary first-species editor.
+The chosen upper/lower voice starts unsolved; `first.check`, not a reference or
+search result, judges it. The scrolling rhythmic layout keeps eight-to-sixteen
+whole-note lines legible. A completed legal pair earns the seventh best-star
+count. No bounded solver may reject or silently rewrite a legal player melody;
+there is no promise that every player-written line admits a solution on both
+sides. Change the line or chosen side if it makes an impractical study.
+
+Length edits and pitches share the existing note/beat/selection undo transaction.
+Mode and side choices are separate controls. `h` plays the single written line
+before acceptance and the exact two-voice pair afterwards, with the same owner
+and one-second whole-note clock. Replays contain only ordinary keys; no written
+cantus or accepted verdict is injected from a file.
+
+## Audition witness boundaries
+
+`--trace` reports cumulative successful grid-write byte counts after complete
+frames. The storm row applies each exact byte prefix through the terminal model
+and independently derives its expected full state from the ordered recorded
+sharp keys. Several presses can share a carrying frame; all are accounted for,
+with that batch's exact final parity. A terminal read containing two writes is
+not mistaken for one frame. Zero-byte even-parity batches still require their
+completed frame boundary. The forty-key and seventy-ms p99 requirements remain;
+a failed intermediate frame cannot be excused by a later correct final screen.
