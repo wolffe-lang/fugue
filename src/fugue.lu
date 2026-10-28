@@ -277,6 +277,7 @@ fn live(o: Options, r: replay.Replay) -> int {
     var key_read_ns = clock.now_ns()
     var reason = "--ticks"
     var tick = 0
+    var output_bytes = 0
     var recorded = replay.new(r.seed, r.tier, r.cols, r.rows)
     recorded.start = r.start
     if o.title && o.script == "" {
@@ -333,7 +334,13 @@ fn live(o: Options, r: replay.Replay) -> int {
             var bytes = List[byte]()
             grid.diff(prev, g, tick <= 1, mut pen, mut bytes, tier.dialect(r.tier, false))
             term.write(bytes) else |_| { return 2 }
+            output_bytes += bytes.len
             for j in 0..g.cells.len { prev.cells[j] = g.cells[j] }
+        }
+        if o.trace {
+            // A successful write boundary, independent of terminal read chunks.
+            // The witness applies exactly this prefix and recomputes its state.
+            eprint("trace output frame {tick} bytes {output_bytes}")
         }
         if carries && o.trace {
             eprint(

@@ -17,6 +17,7 @@ def session_type(ctx):
         def __init__(self, *args):
             self.reads = []
             self.capture_reads = False
+            self.trace_reads = []
             super().__init__(*args)
 
         def pump(self, seconds):
@@ -32,11 +33,13 @@ def session_type(ctx):
                             self.out += chunk
                             if self.capture_reads: self.reads.append((time.monotonic(), self.out))
                         else: self.eof = True
-                    elif chunk: self.err += chunk
+                    elif chunk:
+                        self.err += chunk
+                        if self.capture_reads: self.trace_reads.append((time.monotonic(), self.err))
     return Prompt
 
 
-def setup(binary, ctx, name, mute=False):
+def setup(binary, ctx, name, mute=False, trace=False):
     root = Path(ctx.ROOT)/'target/pty'/name
     if root.exists(): shutil.rmtree(root)
     root.mkdir(parents=True)
@@ -45,7 +48,12 @@ def setup(binary, ctx, name, mute=False):
                FUGUE_STATE=str(root/'state'), TMPDIR=os.environ.get('TMPDIR', str(root)))
     args = [binary, '--book', '5', '--seed', '7', '--no-title', '--size', '120x40',
             '--record', str(root/'record.pk')] + (['--mute'] if mute else [])
-    s = session_type(ctx)(['/bin/sh', '-c', 'exec "$@" 2>&1', 'ear-row']+args, 40, 120, env)
+    if trace:
+        args.append('--trace')
+        argv = args
+    else:
+        argv = ['/bin/sh', '-c', 'exec "$@" 2>&1', 'ear-row']+args
+    s = session_type(ctx)(argv, 40, 120, env)
     deadline = time.monotonic()+30
     while b'\x1b[?1049h' not in s.out and time.monotonic() < deadline: s.pump(.02)
     s.pump(.15)
@@ -132,7 +140,7 @@ def storm(binary, ctx):
     ref.type(b'#',.10); restored = image(binary,rr,ref.out)
     if natural == sharp or natural != restored: problems.append('cadence fixture did not alternate two distinct spellings')
     ref.type(b'q'); ref.finish(); ctx.common_checks(ref,0,problems)
-    s, root = setup(binary,ctx,'audition-storm')
+    s, root = setup(binary,ctx,'audition-storm',trace=True)
     cadence(s,binary,root)
     initial = image(binary,root,s.out)
     if initial != natural: problems.append('live and muted initial frames differ')
@@ -155,39 +163,30 @@ def storm(binary, ctx):
     if send_span_ms > 2000: problems.append(f'forty presses took {send_span_ms:.3f} ms, over two seconds')
     s.pump(.10)
     s.capture_reads = False
-    # Analyse read snapshots after sending, never run terminal models in the
-    # timed loop. Preserve every distinct valid state even when two writes
-    # arrive close together; only an incomplete split write may wait <=4 ms
-    # for its completing read.
-    presses, extra, captures = [], [], []
-    previous = natural
-    pending = None
-    for at,capture in s.reads:
-        actual = image(binary,root,capture)
-        valid = actual in (natural,sharp)
-        if not valid:
-            if pending is None: pending = (at,capture,actual)
-            continue
-        if pending is not None:
-            if at-pending[0]>.004:
-                a,sa = cells(pending[2])
-                delta = min(changed(a,cells(state)[0]) for state in (natural,sharp))
-                extra.append(delta)
-                problems.append(f'terminal held an unexpected state for {(at-pending[0])*1000:.3f} ms ({delta} text cells)')
-            pending = None
-        if actual == previous: continue
-        index = len(presses)
-        presses.append(dict(press=index+1,wall_ms=None if index>=len(sent) else (at-sent[index])*1000))
-        extra.append(0)
-        previous = actual
-        captures.append(capture)
-        (root/f'frame-{len(captures):02}.bin').write_bytes(capture)
-    if pending is not None:
-        a,sa = cells(pending[2])
-        delta = min(changed(a,cells(state)[0]) for state in (natural,sharp))
-        extra.append(delta)
-        problems.append(f'player left an unexpected terminal state ({delta} text cells)')
-    final = image(binary,root,s.out)
+    measured = s.out
+    # Analyse successful write prefixes, never terminal-read chunk boundaries.
+    import runpy
+    checker = runpy.run_path(str(Path(__file__).with_name('storm_frames.py')))['carrying_frames']
+    # Recording is the independent ordered input journal. Trace supplies only
+    # successful byte-write boundaries; never a claimed pitch or verdict.
+    s.type(b'q'); s.finish(); ctx.common_checks(s,0,problems)
+    recorded = [int(line.split()[1]) for line in (root/'record.pk').read_text().splitlines() if line.endswith(' sharp')]
+    entry = s.out.index(b'\x1b[1;1H')
+    presses, errors = checker(recorded, s.err, s.out, entry,
+                              lambda data: image(binary,root,data), natural, sharp)
+    problems.extend(errors)
+    extra = [0 if p['correct'] else 1 for p in presses]
+    for p in presses:
+        arrived = next((at for at,data in s.reads if len(data)>=p['output_bytes']), None)
+        marker = f"trace output frame {p['frame']} bytes {p['output_bytes']-entry}\n".encode()
+        traced = next((at for at,data in s.trace_reads if marker in data), None)
+        # An unchanged (even-parity) batch still needs a completed frame trace.
+        completed = max(at for at in (arrived,traced) if at is not None) if arrived is not None or traced is not None else None
+        p['wall_ms'] = (completed-sent[p['press']-1])*1000 if completed is not None else None
+        (root/f"frame-{p['press']:02}.bin").write_bytes(s.out[:p['output_bytes']])
+    (root/'trace.err').write_bytes(s.err)
+    (root/'complete.bin').write_bytes(s.out)
+    final = image(binary,root,measured)
     if final != natural: problems.append('forty recorded toggles did not restore the exact initial frame')
     alive = max([len(p['pids']) for p in polls], default=0)
     if is_mac and (not polls or alive == 0): problems.append('storm never observed a real player')
@@ -197,17 +196,14 @@ def storm(binary, ctx):
     # forty were drawn. Never publish a shifted, fabricated per-key p99 for
     # a coalesced/missing intermediate state.
     p99 = sorted(latencies)[math.ceil(len(latencies)*.99)-1] if len(latencies)==40 else None
-    if is_mac and len(latencies)!=40: problems.append(f'only {len(latencies)}/40 presses produced a distinct expected frame')
-    if is_mac and p99 is None: problems.append('per-press p99 unavailable without forty expected frames')
+    if len(latencies)!=40: problems.append(f'only {len(latencies)}/40 presses have an exact correct carrying frame')
+    if p99 is None: problems.append('per-press p99 unavailable without forty accounted presses')
     elif is_mac and (p99>70 or min(latencies)<0): problems.append(f'storm p99 latency {p99} ms exceeds 70 ms or frame preceded its press')
     if b'AudioQueueStart' in s.out or b'Error:' in s.out: problems.append('player error reached terminal during storm')
     sinks = list(root.glob('audition*.wav'))
     if not is_mac and len(sinks)!=1: problems.append(f'Linux audition sink grew to {len(sinks)} files, wanted one rewritten file')
     if not is_mac and (not sinks or sinks[0].read_bytes() != (root/'note-21-0.wav').read_bytes()):
         problems.append('Linux sink did not retain the final natural C3 WAV intact')
-    s.type(b'q'); s.finish(); ctx.common_checks(s,0,problems)
-    recorded = [line for line in (root/'record.pk').read_text().splitlines() if line.endswith(' sharp')]
-    if len(recorded)!=40: problems.append(f'recording has {len(recorded)}/40 sharp keys')
     result = dict(children_alive_max=alive,p99_ms=p99,presses=presses,polls=polls,
                   send_span_ms=send_span_ms,observed_frames=len(presses),
                   unexpected_cells_max=max(extra,default=0),unexpected_cells=extra,
