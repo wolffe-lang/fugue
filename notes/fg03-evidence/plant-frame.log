@@ -1,0 +1,27 @@
+test_coalesced_terminal_read_keeps_forty_frames (__main__.StormFrames.test_coalesced_terminal_read_keeps_forty_frames) ... ok
+test_dropped_press_frame_cannot_pass (__main__.StormFrames.test_dropped_press_frame_cannot_pass) ... FAIL
+test_forty_separate_frames (__main__.StormFrames.test_forty_separate_frames) ... ok
+test_last_frame_cannot_hide_missing_intermediate (__main__.StormFrames.test_last_frame_cannot_hide_missing_intermediate) ... FAIL
+test_missing_boundary_is_not_a_completed_press (__main__.StormFrames.test_missing_boundary_is_not_a_completed_press) ... ok
+test_twenty_two_press_batches_still_account_forty (__main__.StormFrames.test_twenty_two_press_batches_still_account_forty) ... ok
+
+======================================================================
+FAIL: test_dropped_press_frame_cannot_pass (__main__.StormFrames.test_dropped_press_frame_cannot_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mfwolffe/lanes/fg03/plant-frame/tests/test_storm_frames.py", line 36, in test_dropped_press_frame_cannot_pass
+    self.assertTrue(errors)
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_last_frame_cannot_hide_missing_intermediate (__main__.StormFrames.test_last_frame_cannot_hide_missing_intermediate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mfwolffe/lanes/fg03/plant-frame/tests/test_storm_frames.py", line 41, in test_last_frame_cannot_hide_missing_intermediate
+    self.assertTrue(errors)
+AssertionError: [] is not true
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+FAILED (failures=2)

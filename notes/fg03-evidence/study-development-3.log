@@ -1,0 +1,76 @@
+test src/cantus_test.lu::test_own_cantus_repeated_note_is_never_accepted ... ok
+test src/cantus_test.lu::test_own_cantus_is_accepted_scored_and_becomes_the_exercise_unchanged ... ok
+test src/cantus_test.lu::test_seventh_book_title_and_progress_v2_migration ... ok
+test src/cantus_test.lu::test_study_critic_length ... ok
+test src/cantus_test.lu::test_study_critic_final ... ok
+test src/cantus_test.lu::test_study_critic_diatonic ... ok
+test src/cantus_test.lu::test_study_critic_repeat ... ok
+test src/cantus_test.lu::test_study_critic_leap_quality ... ok
+test src/cantus_test.lu::test_study_critic_recovery ... ok
+test src/cantus_test.lu::test_study_critic_successive_leaps ... ok
+test src/cantus_test.lu::test_study_critic_outlined_tritone ... ok
+test src/cantus_test.lu::test_study_critic_sequence ... ok
+test src/cantus_test.lu::test_study_critic_one_climax ... ok
+test src/cantus_test.lu::test_study_critic_climax_position ... ok
+test src/cantus_test.lu::test_study_critic_climax_leading ... ok
+test src/cantus_test.lu::test_study_critic_leap_count ... ok
+test src/cantus_test.lu::test_study_critic_octave_count ... ok
+test src/cantus_test.lu::test_study_critic_range ... ok
+test src/cantus_test.lu::test_study_critic_direction_changes ... ok
+test src/cantus_test.lu::test_study_critic_balance ... ok
+test src/cantus_test.lu::test_study_critic_cadence ... ok
+test src/cantus_test.lu::test_study_length_edits_and_pitch_undo_keep_selected_events ... ok
+test src/enhanced_test.lu::test_enhanced_arrows_are_one_action_per_press_and_repeat ... ok
+test src/enhanced_test.lu::test_enhanced_printable_and_quit_projection ... ok
+test src/exposition_test.lu::test_book_six_selection_keeps_old_replay_numbers ... ok
+test src/exposition_test.lu::test_book_six_three_tutorials_end_and_light_the_title ... ok
+test src/exposition_test.lu::test_voice_switch_preserves_independent_writing ... ok
+test src/exposition_test.lu::test_exposition_clock_entries_and_part_agree ... ok
+test src/exposition_test.lu::test_progress_v1_migrates_without_lighting_sixth_book ... ok
+test src/exposition_test.lu::test_fugue_uses_shared_spelled_pitch_and_page_range_editor ... ok
+test src/exposition_test.lu::test_fugue_status_follows_bar_beat_and_both_voice_desks ... ok
+test src/exposition_test.lu::test_fugue_panel_findings_never_borrow_another_bar ... ok
+test src/progress_test.lu::test_book_progress_round_trip_and_refusals ... ok
+wolf test: 33 passed; 0 failed; 0 rejected; 0 unsupported; 0 filtered out
+build: target/native/fugue
+own-cantus session 80 rich: write, legal shape, unchanged cantus, solve, card, v2->v3, verified replay
+own-cantus session 80 plain: write, legal shape, unchanged cantus, solve, card, v2->v3, verified replay
+own-cantus session 120 rich: write, legal shape, unchanged cantus, solve, card, v2->v3, verified replay
+own-cantus session 120 plain: write, legal shape, unchanged cantus, solve, card, v2->v3, verified replay
+pty: own-cantus-session ok (linux x86_64, exit 0, 16435 bytes captured)
+own-cantus Fux Dorian: keyed critic [(3, 'sequence'), (5, 'sequence'), (7, 'sequence'), (8, 'sequence'), (1, 'balance')]; oracle [(3, 'sequence'), (5, 'sequence'), (7, 'sequence'), (8, 'sequence'), (1, 'balance')]
+own-cantus Fux Phrygian: keyed critic [(3, 'sequence')]; oracle [(3, 'sequence')]
+own-cantus Fux Lydian: keyed critic [(5, 'successive-leaps'), (9, 'recovery'), (10, 'successive-leaps'), (1, 'leap-count')]; oracle [(5, 'successive-leaps'), (9, 'recovery'), (10, 'successive-leaps'), (1, 'leap-count')]
+own-cantus Fux Mixolydian: keyed critic [(6, 'recovery'), (6, 'successive-leaps'), (9, 'recovery'), (9, 'sequence'), (10, 'successive-leaps'), (1, 'leap-count')]; oracle [(6, 'recovery'), (6, 'successive-leaps'), (9, 'recovery'), (9, 'sequence'), (10, 'successive-leaps'), (1, 'leap-count')]
+own-cantus Fux Aeolian: keyed critic [(1, 'sequence'), (2, 'sequence'), (3, 'sequence'), (7, 'sequence'), (7, 'sequence'), (8, 'sequence'), (9, 'sequence')]; oracle [(1, 'sequence'), (2, 'sequence'), (3, 'sequence'), (7, 'sequence'), (7, 'sequence'), (8, 'sequence'), (9, 'sequence')]
+own-cantus Fux Ionian: keyed critic [(9, 'sequence')]; oracle [(9, 'sequence')]
+pty: own-cantus-fux-keys ok (linux x86_64, exit 0, 9376 bytes captured)
+enhanced keys book 1 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+pty: enhanced-keys ok (linux x86_64, exit 0, 34433 bytes captured)

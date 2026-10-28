@@ -1,0 +1,3 @@
+pty: fugue-end-card ok (linux x86_64, exit 0, 53610 bytes captured)
+audition-storm: children max 0, p99 27.77438799967058 ms, extra cells 0, sink files 1, keys 40/40
+pty: linux-audition-sink ok (linux x86_64, exit 0, 45823 bytes captured)

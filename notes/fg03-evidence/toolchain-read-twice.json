@@ -1,0 +1,42 @@
+{
+  "archives": {
+    "wolf": {
+      "wolf-0.2.35-aarch64-apple-darwin.tar.gz": "240b84d079b1b9a0d88681ac08fca4816f84778e2d6c94c435ceb2dd6a5f042a",
+      "wolf-0.2.35-aarch64-unknown-linux-gnu.tar.gz": "30ccded432264b7ddd4ebf738d4f895d12091ca604e2da4c2f831da807886f3e",
+      "wolf-0.2.35-x86_64-pc-windows-msvc.tar.gz": "1ccba47c61369f48be292c1e847ef673372637f14e8a9d4abbbf86190bb4214b",
+      "wolf-0.2.35-x86_64-unknown-linux-gnu.tar.gz": "4cc4045bbbb605c07835bc4f32685953c784eeef4cd3139a48b457dfc90dad1a"
+    },
+    "lupin": {
+      "lupin-0.1.56-aarch64-apple-darwin.tar.gz": "9133bfdbb95f6a18745439bf0b2b5280860a5bfeaf9ae038ea120a72d58f7687",
+      "lupin-0.1.56-aarch64-unknown-linux-gnu.tar.gz": "e2719ab28df566ad7b92714191bac00599fbca6c95b6b579d470497b482dd591",
+      "lupin-0.1.56-x86_64-pc-windows-msvc.zip": "4e8d88b7088b34711bddd288ec2653a1a04c0213ed9555343853db90ae2305b1",
+      "lupin-0.1.56-x86_64-unknown-linux-gnu.tar.gz": "ad703550ac4787e8e4bb26989d591a731410274d7332f2b4e8b9a64c878822cc",
+      "lupin-0.1.56-x86_64-unknown-linux-musl.tar.gz": "6303b47a8634e21d30336227022d4e70cf7cc6272946aa523b8edcee205cceb3",
+      "lupin.exe": "6cc163a46026e2c660e4d822d55f54902f2843d796a4e1f04c7c077fb32ac392"
+    }
+  },
+  "installed": [
+    {
+      "wolf": "8a88813e434bdbbe4ea2b2b718c9771f982d588597fe3e44af776c9c42029bcb",
+      "_wolf": "a368c8eccce8b1800c80aa818ae482e541aa9636b676540851e23863d333eb8b",
+      "wolf-cimport-worker": "806d01669d13656059fda0f488b9e437a261f98c1a26abc9daa80f8d658f2fbc",
+      "lupin": "5f010730c3e6b4cc806a9ff8eddb0582078585cafe13d86d5e438e45e3c3b7a8",
+      "libwolf_rt.a": "62eeafa9d275220e7ca5fff9ab1c34a688adfd0a658983f4d8c2057eb8f73f19",
+      "STAMP": "d8ac20d9a9a5e4796a88bca687e82d0a1681ca6528bf398efd18a9945c97f6f9",
+      "std/STD-REV": "90b4aaa504470a99ac3b69c0fabd0990f8c9a1977f1a41c236b674270147106b",
+      "wolf_version": "wolf 0.2.35 (wolfgang, pin cf0c13d)",
+      "lupin_version": "lupin 0.1.56 (wolf-interp, reference interpreter at pin 294d626)"
+    },
+    {
+      "wolf": "8a88813e434bdbbe4ea2b2b718c9771f982d588597fe3e44af776c9c42029bcb",
+      "_wolf": "a368c8eccce8b1800c80aa818ae482e541aa9636b676540851e23863d333eb8b",
+      "wolf-cimport-worker": "806d01669d13656059fda0f488b9e437a261f98c1a26abc9daa80f8d658f2fbc",
+      "lupin": "5f010730c3e6b4cc806a9ff8eddb0582078585cafe13d86d5e438e45e3c3b7a8",
+      "libwolf_rt.a": "62eeafa9d275220e7ca5fff9ab1c34a688adfd0a658983f4d8c2057eb8f73f19",
+      "STAMP": "d8ac20d9a9a5e4796a88bca687e82d0a1681ca6528bf398efd18a9945c97f6f9",
+      "std/STD-REV": "90b4aaa504470a99ac3b69c0fabd0990f8c9a1977f1a41c236b674270147106b",
+      "wolf_version": "wolf 0.2.35 (wolfgang, pin cf0c13d)",
+      "lupin_version": "lupin 0.1.56 (wolf-interp, reference interpreter at pin 294d626)"
+    }
+  ]
+}

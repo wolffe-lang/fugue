@@ -1,0 +1,34 @@
+fg03 storm reproduction evidence
+
+Baseline binary: /Users/mfwolffe/lanes/fg02c/fugue-play-d1d21fe
+SHA256: 0ed96312666e4bebe448d059499f3b8c8a762eeae919afb0407d9f8903b5cc6f
+
+The original nightly 40489392508 records forty sharp keys. Four recorded ticks
+carry two sharp keys each: 68, 73, 78, 115. The other 32 ticks carry one each.
+All 32 retained terminal captures match the baseline binary's independent
+headless replay in every glyph and style. At each paired tick, replayed glyphs
+and styles equal the previous frame exactly. See nightly-storm-replay.json and
+nightly-storm.pk; original captures are retained under
+/Users/mfwolffe/lanes/fg03/nightly-artifacts/pty/audition-storm/.
+
+Unmodified witness, normal reader scheduling under owned CPU burners:
+- 8 burners: 40/40 frames, p99 46.976958 ms.
+- 24 burners: 40/40 frames, p99 44.374084 ms.
+- 64 burners: 40/40 frames, p99 47.492875 ms.
+All three observed at most one afplay child and zero extra cells.
+
+Controlled scheduling reproduction under 64 owned CPU burners: every third
+measured reader pump yielded 60 ms. The unchanged row reported only 14/40
+expected frames, despite forty recorded keys, zero extra cells and one child.
+Capture: /Users/mfwolffe/lanes/fg03/baseline-descheduled-reader/.
+This is an injected scheduling reproduction, not a measured CI scheduling delay.
+
+The corrected boundary-accounting row under the same controlled reader delay
+accounts for all 40/40 presses and exact expected states, but remains RED on its
+unchanged 70 ms bound (109.457791 ms p99). It does not excuse real observation
+latency. Under ordinary reader scheduling plus 64 burners it passes 40/40,
+53.689583 ms p99, one child and zero extra cells (native development binary).
+Final-head repeated measurements are recorded separately outside the git tree.
+
+Every burner was started as a child by pid, terminated by that pid, and waited
+for inside the Mac build lock. No process group or maintainer service was touched.

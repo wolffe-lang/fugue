@@ -1,0 +1,25 @@
+Cloning into '/home/mfwolffe/lanes/fg03/plant-repeat'...
+test src/cantus_test.lu::test_own_cantus_repeated_note_is_never_accepted ... FAILED (trap(assert))
+test src/cantus_test.lu::test_own_cantus_is_accepted_scored_and_becomes_the_exercise_unchanged ... ok
+test src/cantus_test.lu::test_own_cantus_can_be_the_upper_voice_of_a_solved_pair ... ok
+test src/cantus_test.lu::test_seventh_book_title_and_progress_v2_migration ... ok
+test src/cantus_test.lu::test_study_critic_length ... ok
+test src/cantus_test.lu::test_study_critic_final ... ok
+test src/cantus_test.lu::test_study_critic_diatonic ... ok
+test src/cantus_test.lu::test_study_critic_repeat ... FAILED (trap(assert))
+test src/cantus_test.lu::test_study_critic_leap_quality ... ok
+test src/cantus_test.lu::test_study_critic_recovery ... ok
+test src/cantus_test.lu::test_study_critic_successive_leaps ... ok
+test src/cantus_test.lu::test_study_critic_outlined_tritone ... ok
+test src/cantus_test.lu::test_study_critic_sequence ... ok
+test src/cantus_test.lu::test_study_critic_one_climax ... ok
+test src/cantus_test.lu::test_study_critic_climax_position ... ok
+test src/cantus_test.lu::test_study_critic_climax_leading ... ok
+test src/cantus_test.lu::test_study_critic_leap_count ... ok
+test src/cantus_test.lu::test_study_critic_octave_count ... ok
+test src/cantus_test.lu::test_study_critic_range ... ok
+test src/cantus_test.lu::test_study_critic_direction_changes ... ok
+test src/cantus_test.lu::test_study_critic_balance ... ok
+test src/cantus_test.lu::test_study_critic_cadence ... ok
+test src/cantus_test.lu::test_study_length_edits_and_pitch_undo_keep_selected_events ... ok
+wolf test: 21 passed; 2 failed; 0 rejected; 0 unsupported; 0 filtered out

@@ -1,0 +1,581 @@
+build: target/native/fugue
+build: target/release/fugue
+goldens: wrote tests/goldens/active-bar-120-rich
+goldens: wrote tests/goldens/active-bar-120-plain
+goldens: wrote tests/goldens/active-bar-80-rich
+goldens: wrote tests/goldens/active-bar-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-120-plain
+goldens: wrote tests/goldens/book-2-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-2-80-plain
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-preset-3-80-rich
+goldens: wrote tests/goldens/book-2-preset-3-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-2-seed-120-rich
+goldens: wrote tests/goldens/book-2-seed-120-plain
+goldens: wrote tests/goldens/book-2-seed-80-rich
+goldens: wrote tests/goldens/book-2-seed-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-120-plain
+goldens: wrote tests/goldens/book-3-preset-1-80-rich
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-2-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-2-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-3-preset-3-80-plain
+goldens: wrote tests/goldens/book-3-seed-120-rich
+goldens: wrote tests/goldens/book-3-seed-120-plain
+goldens: wrote tests/goldens/book-3-seed-80-rich
+goldens: wrote tests/goldens/book-3-seed-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-120-rich
+goldens: wrote tests/goldens/book-4-preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-1-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-2-80-rich
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-2-80-plain
+goldens: wrote tests/goldens/book-4-preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-preset-3-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-4-seed-120-rich
+goldens: wrote tests/goldens/book-4-seed-120-plain
+goldens: wrote tests/goldens/book-4-seed-80-rich
+goldens: wrote tests/goldens/book-4-seed-80-plain
+goldens: wrote tests/goldens/book-5-eighths-120-rich
+goldens: wrote tests/goldens/book-5-eighths-120-plain
+goldens: wrote tests/goldens/book-5-eighths-80-rich
+goldens: wrote tests/goldens/book-5-eighths-80-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-120-plain
+goldens: wrote tests/goldens/book-5-preset-1-80-rich
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-1-80-plain
+goldens: wrote tests/goldens/book-5-preset-2-80-rich
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-2-80-plain
+goldens: wrote tests/goldens/book-5-preset-3-80-rich
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-5-preset-3-80-plain
+goldens: wrote tests/goldens/book-5-seed-120-rich
+goldens: wrote tests/goldens/book-5-seed-120-plain
+goldens: wrote tests/goldens/book-5-seed-80-rich
+goldens: wrote tests/goldens/book-5-seed-80-plain
+goldens: wrote tests/goldens/book-6-complete-120-rich
+goldens: wrote tests/goldens/book-6-complete-120-plain
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-complete-80-rich
+goldens: wrote tests/goldens/book-6-complete-80-plain
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-end-120-rich
+goldens: wrote tests/goldens/book-6-end-120-plain
+goldens: wrote tests/goldens/book-6-end-80-rich
+goldens: wrote tests/goldens/book-6-end-80-plain
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-hear-120-rich
+goldens: wrote tests/goldens/book-6-hear-120-plain
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-hear-80-rich
+goldens: wrote tests/goldens/book-6-hear-80-plain
+fugue: verified score 3
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-joined-120-rich
+goldens: wrote tests/goldens/book-6-joined-120-plain
+goldens: wrote tests/goldens/book-6-joined-80-rich
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-joined-80-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-preset-1-120-rich
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-1-120-plain
+goldens: wrote tests/goldens/book-6-preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-1-80-plain
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-2-120-rich
+goldens: wrote tests/goldens/book-6-preset-2-120-plain
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-2-80-rich
+goldens: wrote tests/goldens/book-6-preset-2-80-plain
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-3-120-rich
+goldens: wrote tests/goldens/book-6-preset-3-120-plain
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/book-6-preset-3-80-rich
+goldens: wrote tests/goldens/book-6-preset-3-80-plain
+fugue: verified score 3
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-seed-120-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-seed-120-plain
+goldens: wrote tests/goldens/book-6-seed-80-rich
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-seed-80-plain
+goldens: wrote tests/goldens/book-6-selection-120-rich
+goldens: wrote tests/goldens/book-6-selection-120-plain
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-selection-80-rich
+goldens: wrote tests/goldens/book-6-selection-80-plain
+goldens: wrote tests/goldens/book-6-status-120-rich
+fugue: verified score 0
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-status-120-plain
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-status-80-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-status-80-plain
+goldens: wrote tests/goldens/book-6-wrong-120-rich
+goldens: wrote tests/goldens/book-6-wrong-120-plain
+fugue: verified score 0
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-6-wrong-80-rich
+goldens: wrote tests/goldens/book-6-wrong-80-plain
+goldens: wrote tests/goldens/book-7-illegal-120-rich
+fugue: verified score 0
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-7-illegal-120-plain
+goldens: wrote tests/goldens/book-7-illegal-80-rich
+goldens: wrote tests/goldens/book-7-illegal-80-plain
+goldens: wrote tests/goldens/book-7-legal-120-rich
+fugue: verified score 0
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-7-legal-120-plain
+goldens: wrote tests/goldens/book-7-legal-80-rich
+fugue: verified score 0
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-7-legal-80-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-7-lower-120-rich
+fugue: verified score 0
+goldens: wrote tests/goldens/book-7-lower-120-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/book-7-lower-80-rich
+goldens: wrote tests/goldens/book-7-lower-80-plain
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-7-pair-120-rich
+goldens: wrote tests/goldens/book-7-pair-120-plain
+goldens: wrote tests/goldens/book-7-pair-80-rich
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-7-pair-80-plain
+goldens: wrote tests/goldens/book-7-solved-120-rich
+fugue: verified score 0
+fugue: verified score 3
+goldens: wrote tests/goldens/book-7-solved-120-plain
+goldens: wrote tests/goldens/book-7-solved-80-rich
+goldens: wrote tests/goldens/book-7-solved-80-plain
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 0
+goldens: wrote tests/goldens/book-7-write-120-rich
+goldens: wrote tests/goldens/book-7-write-120-plain
+fugue: verified score 0
+fugue: verified score 0
+goldens: wrote tests/goldens/book-7-write-80-rich
+goldens: wrote tests/goldens/book-7-write-80-plain
+goldens: wrote tests/goldens/critic-120-rich
+goldens: wrote tests/goldens/critic-120-plain
+fugue: verified score 0
+goldens: wrote tests/goldens/critic-80-rich
+goldens: wrote tests/goldens/critic-80-plain
+goldens: wrote tests/goldens/cursor-1-120-rich
+goldens: wrote tests/goldens/cursor-1-120-plain
+goldens: wrote tests/goldens/cursor-1-80-rich
+goldens: wrote tests/goldens/cursor-1-80-plain
+goldens: wrote tests/goldens/cursor-3-120-rich
+goldens: wrote tests/goldens/cursor-3-120-plain
+goldens: wrote tests/goldens/cursor-3-80-rich
+goldens: wrote tests/goldens/cursor-3-80-plain
+goldens: wrote tests/goldens/hear-120-rich
+goldens: wrote tests/goldens/hear-120-plain
+goldens: wrote tests/goldens/hear-80-rich
+goldens: wrote tests/goldens/hear-80-plain
+goldens: wrote tests/goldens/ledger-120-rich
+goldens: wrote tests/goldens/ledger-120-plain
+goldens: wrote tests/goldens/ledger-80-rich
+goldens: wrote tests/goldens/ledger-80-plain
+goldens: wrote tests/goldens/partial-120-rich
+goldens: wrote tests/goldens/partial-120-plain
+goldens: wrote tests/goldens/partial-80-rich
+goldens: wrote tests/goldens/partial-80-plain
+goldens: wrote tests/goldens/preset-1-120-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-1-80-plain
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-120-rich
+goldens: wrote tests/goldens/preset-2-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-2-80-rich
+goldens: wrote tests/goldens/preset-2-80-plain
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-120-rich
+goldens: wrote tests/goldens/preset-3-120-plain
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/preset-3-80-plain
+goldens: wrote tests/goldens/rhythm-edit-120-rich
+goldens: wrote tests/goldens/rhythm-edit-120-plain
+goldens: wrote tests/goldens/rhythm-edit-80-rich
+fugue: verified score 3
+goldens: wrote tests/goldens/rhythm-edit-80-plain
+goldens: wrote tests/goldens/staff-120-rich
+goldens: wrote tests/goldens/staff-120-plain
+goldens: wrote tests/goldens/staff-80-rich
+goldens: wrote tests/goldens/staff-80-plain
+goldens: wrote tests/goldens/title-120-rich
+goldens: wrote tests/goldens/title-120-plain
+goldens: wrote tests/goldens/title-80-rich
+goldens: wrote tests/goldens/title-80-plain
+goldens: wrote tests/goldens/walk-120-rich
+goldens: wrote tests/goldens/walk-120-plain
+goldens: wrote tests/goldens/walk-80-rich
+goldens: wrote tests/goldens/walk-80-plain
+goldens: wrote tests/goldens/art
+goldens: active-bar-120-rich ok
+goldens: active-bar-120-plain ok
+goldens: active-bar-80-rich ok
+goldens: active-bar-80-plain ok
+fugue: verified score 3
+goldens: book-2-preset-1-120-rich ok
+fugue: verified score 3
+goldens: book-2-preset-1-120-plain ok
+goldens: book-2-preset-1-80-rich ok
+fugue: verified score 3
+goldens: book-2-preset-1-80-plain ok
+fugue: verified score 3
+goldens: book-2-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-2-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-2-preset-3-80-rich ok
+fugue: verified score 3
+fugue: verified score 3
+goldens: book-2-preset-3-80-plain ok
+goldens: book-2-seed-120-rich ok
+goldens: book-2-seed-120-plain ok
+goldens: book-2-seed-80-rich ok
+goldens: book-2-seed-80-plain ok
+fugue: verified score 3
+goldens: book-3-preset-1-120-rich ok
+fugue: verified score 3
+goldens: book-3-preset-1-120-plain ok
+goldens: book-3-preset-1-80-rich ok
+fugue: verified score 3
+fugue: verified score 3
+goldens: book-3-preset-1-80-plain ok
+fugue: verified score 3
+goldens: book-3-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-3-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-3-preset-3-80-rich ok
+fugue: verified score 3
+goldens: book-3-preset-3-80-plain ok
+goldens: book-3-seed-120-rich ok
+goldens: book-3-seed-120-plain ok
+goldens: book-3-seed-80-rich ok
+goldens: book-3-seed-80-plain ok
+fugue: verified score 3
+goldens: book-4-preset-1-120-rich ok
+goldens: book-4-preset-1-120-plain ok
+fugue: verified score 3
+fugue: verified score 3
+goldens: book-4-preset-1-80-rich ok
+fugue: verified score 3
+goldens: book-4-preset-1-80-plain ok
+goldens: book-4-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-4-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-4-preset-3-80-rich ok
+fugue: verified score 3
+goldens: book-4-preset-3-80-plain ok
+fugue: verified score 3
+goldens: book-4-seed-120-rich ok
+goldens: book-4-seed-120-plain ok
+goldens: book-4-seed-80-rich ok
+goldens: book-4-seed-80-plain ok
+goldens: book-5-eighths-120-rich ok
+goldens: book-5-eighths-120-plain ok
+goldens: book-5-eighths-80-rich ok
+goldens: book-5-eighths-80-plain ok
+fugue: verified score 3
+goldens: book-5-preset-1-120-rich ok
+goldens: book-5-preset-1-120-plain ok
+fugue: verified score 3
+goldens: book-5-preset-1-80-rich ok
+fugue: verified score 3
+fugue: verified score 3
+goldens: book-5-preset-1-80-plain ok
+goldens: book-5-preset-2-80-rich ok
+fugue: verified score 3
+goldens: book-5-preset-2-80-plain ok
+fugue: verified score 3
+goldens: book-5-preset-3-80-rich ok
+fugue: verified score 3
+fugue: verified score 3
+goldens: book-5-preset-3-80-plain ok
+goldens: book-5-seed-120-rich ok
+goldens: book-5-seed-120-plain ok
+goldens: book-5-seed-80-rich ok
+goldens: book-5-seed-80-plain ok
+goldens: book-6-complete-120-rich ok
+goldens: book-6-complete-120-plain ok
+goldens: book-6-complete-80-rich ok
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+goldens: book-6-complete-80-plain ok
+fugue: verified score 3
+fugue: verified score 3
+goldens: book-6-end-120-rich ok
+goldens: book-6-end-120-plain ok
+goldens: book-6-end-80-rich ok
+goldens: book-6-end-80-plain ok
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+goldens: book-6-hear-120-rich ok
+fugue: verified score 3
+goldens: book-6-hear-120-plain ok
+fugue: verified score 3
+goldens: book-6-hear-80-rich ok
+fugue: verified score 3
+goldens: book-6-hear-80-plain ok
+goldens: book-6-joined-120-rich ok
+goldens: book-6-joined-120-plain ok
+fugue: verified score 3
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-6-joined-80-rich ok
+goldens: book-6-joined-80-plain ok
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-6-preset-1-120-rich ok
+fugue: verified score 3
+goldens: book-6-preset-1-120-plain ok
+fugue: verified score 3
+goldens: book-6-preset-1-80-rich ok
+fugue: verified score 3
+goldens: book-6-preset-1-80-plain ok
+fugue: verified score 3
+goldens: book-6-preset-2-120-rich ok
+fugue: verified score 3
+goldens: book-6-preset-2-120-plain ok
+fugue: verified score 3
+goldens: book-6-preset-2-80-rich ok
+goldens: book-6-preset-2-80-plain ok
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+goldens: book-6-preset-3-120-rich ok
+goldens: book-6-preset-3-120-plain ok
+fugue: verified score 3
+goldens: book-6-preset-3-80-rich ok
+fugue: verified score 3
+goldens: book-6-preset-3-80-plain ok
+fugue: verified score 3
+fugue: verified score 0
+goldens: book-6-seed-120-rich ok
+fugue: verified score 0
+goldens: book-6-seed-120-plain ok
+goldens: book-6-seed-80-rich ok
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-6-seed-80-plain ok
+goldens: book-6-selection-120-rich ok
+fugue: verified score 0
+goldens: book-6-selection-120-plain ok
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-6-selection-80-rich ok
+goldens: book-6-selection-80-plain ok
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-6-status-120-rich ok
+fugue: verified score 0
+goldens: book-6-status-120-plain ok
+goldens: book-6-status-80-rich ok
+fugue: verified score 0
+goldens: book-6-status-80-plain ok
+fugue: verified score 0
+goldens: book-6-wrong-120-rich ok
+goldens: book-6-wrong-120-plain ok
+goldens: book-6-wrong-80-rich ok
+goldens: book-6-wrong-80-plain ok
+goldens: book-7-illegal-120-rich ok
+fugue: verified score 0
+fugue: verified score 0
+fugue: verified score 0
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-7-illegal-120-plain ok
+goldens: book-7-illegal-80-rich ok
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-7-illegal-80-plain ok
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-7-legal-120-rich ok
+goldens: book-7-legal-120-plain ok
+fugue: verified score 0
+goldens: book-7-legal-80-rich ok
+goldens: book-7-legal-80-plain ok
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-7-lower-120-rich ok
+goldens: book-7-lower-120-plain ok
+goldens: book-7-lower-80-rich ok
+goldens: book-7-lower-80-plain ok
+fugue: verified score 0
+fugue: verified score 0
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-7-pair-120-rich ok
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-7-pair-120-plain ok
+goldens: book-7-pair-80-rich ok
+goldens: book-7-pair-80-plain ok
+goldens: book-7-solved-120-rich ok
+goldens: book-7-solved-120-plain ok
+fugue: verified score 0
+fugue: verified score 0
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+goldens: book-7-solved-80-rich ok
+fugue: verified score 3
+goldens: book-7-solved-80-plain ok
+goldens: book-7-write-120-rich ok
+fugue: verified score 0
+fugue: verified score 0
+goldens: book-7-write-120-plain ok
+goldens: book-7-write-80-rich ok
+goldens: book-7-write-80-plain ok
+goldens: critic-120-rich ok
+goldens: critic-120-plain ok
+goldens: critic-80-rich ok
+goldens: critic-80-plain ok
+goldens: cursor-1-120-rich ok
+fugue: verified score 0
+fugue: verified score 0
+goldens: cursor-1-120-plain ok
+goldens: cursor-1-80-rich ok
+goldens: cursor-1-80-plain ok
+goldens: cursor-3-120-rich ok
+goldens: cursor-3-120-plain ok
+goldens: cursor-3-80-rich ok
+goldens: cursor-3-80-plain ok
+goldens: hear-120-rich ok
+goldens: hear-120-plain ok
+goldens: hear-80-rich ok
+goldens: hear-80-plain ok
+goldens: ledger-120-rich ok
+goldens: ledger-120-plain ok
+goldens: ledger-80-rich ok
+goldens: ledger-80-plain ok
+goldens: partial-120-rich ok
+goldens: partial-120-plain ok
+goldens: partial-80-rich ok
+goldens: partial-80-plain ok
+goldens: preset-1-120-rich ok
+goldens: preset-1-120-plain ok
+fugue: verified score 3
+fugue: verified score 3
+goldens: preset-1-80-rich ok
+goldens: preset-1-80-plain ok
+fugue: verified score 3
+fugue: verified score 3
+goldens: preset-2-120-rich ok
+fugue: verified score 3
+goldens: preset-2-120-plain ok
+goldens: preset-2-80-rich ok
+goldens: preset-2-80-plain ok
+fugue: verified score 3
+fugue: verified score 3
+fugue: verified score 3
+goldens: preset-3-120-rich ok
+fugue: verified score 3
+goldens: preset-3-120-plain ok
+fugue: verified score 3
+goldens: preset-3-80-rich ok
+goldens: preset-3-80-plain ok
+goldens: rhythm-edit-120-rich ok
+fugue: verified score 3
+fugue: verified score 3
+goldens: rhythm-edit-120-plain ok
+goldens: rhythm-edit-80-rich ok
+goldens: rhythm-edit-80-plain ok
+goldens: staff-120-rich ok
+goldens: staff-120-plain ok
+goldens: staff-80-rich ok
+goldens: staff-80-plain ok
+goldens: title-120-rich ok
+goldens: title-120-plain ok
+goldens: title-80-rich ok
+goldens: title-80-plain ok
+goldens: walk-120-rich ok
+goldens: walk-120-plain ok
+goldens: walk-80-rich ok
+goldens: walk-80-plain ok
+goldens: art ok
+glyphs: 9 non-ASCII code points, both-way inventory green; plain is ASCII
