@@ -68,14 +68,21 @@ def enhanced_keys(binary,ctx):
                         deadline=time.monotonic()+5
                         while b'carries_key' not in s.err[before:] and time.monotonic()<deadline:s.pump(.002)
                         trace=s.err[before:]
-                        matches=re.findall(rb'trace output frame (\d+) bytes (\d+)',trace)
-                        if not matches:raise AssertionError('no completed carrying frame for '+key)
-                        tick,offset=map(int,matches[0])
+                        carrying=re.search(rb'trace frame (\d+) carries_key',trace)
+                        if carrying is None:raise AssertionError('no completed carrying frame for '+key)
+                        tick=int(carrying[1])
+                        boundary=re.search(rb'trace output frame '+str(tick).encode()+rb' bytes (\d+)',trace)
+                        if boundary is None:raise AssertionError('missing output boundary for carrying frame')
+                        offset=int(boundary[1])
                         entry=s.out.index(b'\x1b[1;1H')
                         deadline=time.monotonic()+5
                         while len(s.out)<entry+offset and time.monotonic()<deadline:s.pump(.002)
                         actual=inspect(s.out[:entry+offset])
-                        if actual!=want():raise AssertionError(f'book {book} {width} {tier}: {key} kind {kind} has wrong first carrying-frame state')
+                        if actual!=want():
+                            (root/'mismatch.bin').write_bytes(s.out[:entry+offset])
+                            (root/'mismatch-trace.err').write_bytes(s.err)
+                            s.type(wire('quit'));s.finish()
+                            raise AssertionError(f'book {book} {width} {tier}: {key} kind {kind} has wrong first carrying-frame state')
                         journal.append(dict(book=book,size=f'{width}x{height}',tier=tier,key=key,kind=kind,frame=tick,bytes=wire(key,kind).hex(),exact=True))
                     else:
                         s.pump(.04)
