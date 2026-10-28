@@ -1,0 +1,3 @@
+fg03 memory gate: 33.964 GiB available; require 8 GiB
+audition-storm: children max 1, observer p99 32.892708986764774 ms, game-inner p99 32.795 ms, extra cells 0, sink files 0, keys 40/40
+delayed owner observer problems: []

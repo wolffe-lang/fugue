@@ -1,0 +1,5 @@
+fg03 memory gate: 34.372 GiB available; require 8 GiB
+VI initial: {'heads': {}, 'carets': [], 'pitch_status': '', 'bar_status': ''}
+VI right-once: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'E4', 'bar_status': 'Bar 1, beat 5:8'}
+VI then-up: {'heads': {23: 29, 14: 30, 18: 30, 28: 30, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'F4', 'bar_status': 'Bar 1, beat 5:8'}
+cold negotiation row FAILED: IndexError('list index out of range')

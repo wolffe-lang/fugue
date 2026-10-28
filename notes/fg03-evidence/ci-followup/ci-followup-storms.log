@@ -1,0 +1,20 @@
+fg03 memory gate: 34.091 GiB available; require 8 GiB
+fg03 owned CPU burners: 17242,17246,17248,17249,17250,17251,17252,17253,17254,17255,17256,17259,17262,17264,17267,17268,17269,17272,17273,17274,17277,17278,17280,17281,17282,17283,17285,17289,17292,17296,17298,17300,17304,17310,17315,17319,17322,17324,17326,17327,17328,17330,17331,17333,17336,17337,17338,17339,17341,17345,17348,17349,17352,17354,17356,17358,17359,17361,17363,17364,17369,17372,17374,17377
+audition-storm: children max 1, observer p99 31.941041990648955 ms, game-inner p99 31.843 ms, extra cells 0, sink files 0, keys 40/40
+pty: audition-storm ok (darwin arm64, exit 0, 39264 bytes captured)
+ci follow-up storm {"tier": "native", "trial": 1, "status": 0, "presses": 40, "accounted": 40, "correct": 40, "observer_p99_ms": 31.941041990648955, "game_inner_p99_ms": 31.843, "owner_max": 1, "polls": 51, "send_span_ms": 1950.7395419932436}
+audition-storm: children max 1, observer p99 28.29612500499934 ms, game-inner p99 28.25 ms, extra cells 0, sink files 0, keys 40/40
+pty: audition-storm ok (darwin arm64, exit 0, 39264 bytes captured)
+ci follow-up storm {"tier": "native", "trial": 2, "status": 0, "presses": 40, "accounted": 40, "correct": 40, "observer_p99_ms": 28.29612500499934, "game_inner_p99_ms": 28.25, "owner_max": 1, "polls": 47, "send_span_ms": 1951.4188749890309}
+audition-storm: children max 1, observer p99 39.590333006344736 ms, game-inner p99 39.237 ms, extra cells 0, sink files 0, keys 40/40
+pty: audition-storm ok (darwin arm64, exit 0, 39264 bytes captured)
+ci follow-up storm {"tier": "native", "trial": 3, "status": 0, "presses": 40, "accounted": 40, "correct": 40, "observer_p99_ms": 39.590333006344736, "game_inner_p99_ms": 39.237, "owner_max": 1, "polls": 47, "send_span_ms": 1949.167832994135}
+audition-storm: children max 1, observer p99 33.30658399499953 ms, game-inner p99 33.245 ms, extra cells 0, sink files 0, keys 40/40
+pty: audition-storm ok (darwin arm64, exit 0, 39264 bytes captured)
+ci follow-up storm {"tier": "release", "trial": 1, "status": 0, "presses": 40, "accounted": 40, "correct": 40, "observer_p99_ms": 33.30658399499953, "game_inner_p99_ms": 33.245, "owner_max": 1, "polls": 47, "send_span_ms": 1950.4326669848524}
+audition-storm: children max 1, observer p99 26.10750001622364 ms, game-inner p99 26.059 ms, extra cells 0, sink files 0, keys 40/40
+pty: audition-storm ok (darwin arm64, exit 0, 39264 bytes captured)
+ci follow-up storm {"tier": "release", "trial": 2, "status": 0, "presses": 40, "accounted": 40, "correct": 40, "observer_p99_ms": 26.10750001622364, "game_inner_p99_ms": 26.059, "owner_max": 1, "polls": 48, "send_span_ms": 1950.5482920212671}
+audition-storm: children max 1, observer p99 25.342667009681463 ms, game-inner p99 25.29 ms, extra cells 0, sink files 0, keys 40/40
+pty: audition-storm ok (darwin arm64, exit 0, 39264 bytes captured)
+ci follow-up storm {"tier": "release", "trial": 3, "status": 0, "presses": 40, "accounted": 40, "correct": 40, "observer_p99_ms": 25.342667009681463, "game_inner_p99_ms": 25.29, "owner_max": 1, "polls": 48, "send_span_ms": 1950.6187920051161}

@@ -1,0 +1,3 @@
+fg03 memory gate: 34.194 GiB available; require 8 GiB
+audition-storm: children max 1, p99 109.82487502042204 ms, extra cells 0, sink files 0, keys 40/40
+delayed owner observer problems: ['forty presses took 2053.482 ms, over two seconds', 'storm p99 latency 109.82487502042204 ms exceeds 70 ms or frame preceded its press']

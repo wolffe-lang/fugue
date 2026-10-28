@@ -1,0 +1,44 @@
+test_blocked_process_poll_cannot_block_forty_key_deliveries (__main__.OwnerObserver.test_blocked_process_poll_cannot_block_forty_key_deliveries) ... ok
+test_coalesced_terminal_read_keeps_forty_frames (__main__.StormFrames.test_coalesced_terminal_read_keeps_forty_frames) ... ok
+test_dropped_press_frame_cannot_pass (__main__.StormFrames.test_dropped_press_frame_cannot_pass) ... ok
+test_forty_separate_frames (__main__.StormFrames.test_forty_separate_frames) ... ok
+test_last_frame_cannot_hide_missing_intermediate (__main__.StormFrames.test_last_frame_cannot_hide_missing_intermediate) ... ok
+test_missing_boundary_is_not_a_completed_press (__main__.StormFrames.test_missing_boundary_is_not_a_completed_press) ... ok
+test_twenty_two_press_batches_still_account_forty (__main__.StormFrames.test_twenty_two_press_batches_still_account_forty) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+OK
+VI initial complete frame: True, wait 0.208s, retries 10
+VI initial: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(36, 9)], 'pitch_status': 'C4', 'bar_status': 'Bar 1, beat 1:8'}
+VI right-once: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'E4', 'bar_status': 'Bar 1, beat 5:8'}
+VI then-up: {'heads': {23: 29, 14: 30, 18: 30, 28: 30, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'F4', 'bar_status': 'Bar 1, beat 5:8'}
+VI changed event columns [14]; expected second event 14
+VI wide-register: {'heads': {23: 25, 14: 26, 18: 26, 28: 26, 34: 27, 46: 27, 52: 28, 41: 29, 9: 36}, 'carets': [(32, 59)], 'pitch_status': 'C7', 'bar_status': 'Bar 6, beat 1:8'}
+pty: fugue-cold-initial ok (linux x86_64, exit 0, 29818 bytes captured)
+VI initial complete frame: True, wait 0.342s, retries 16
+VI initial: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(36, 9)], 'pitch_status': 'C4', 'bar_status': 'Bar 1, beat 1:8'}
+VI right-once: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'E4', 'bar_status': 'Bar 1, beat 5:8'}
+VI then-up: {'heads': {23: 29, 14: 30, 18: 30, 28: 30, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'F4', 'bar_status': 'Bar 1, beat 5:8'}
+VI changed event columns [14]; expected second event 14
+VI wide-register: {'heads': {23: 25, 14: 26, 18: 26, 28: 26, 34: 27, 46: 27, 52: 28, 41: 29, 9: 36}, 'carets': [(32, 59)], 'pitch_status': 'C7', 'bar_status': 'Bar 6, beat 1:8'}
+pty: fugue-right-then-up ok (linux x86_64, exit 0, 29818 bytes captured)
+audition-storm: children max 0, observer p99 33.712299991748296 ms, game-inner p99 33.613 ms, extra cells 0, sink files 1, keys 40/40
+pty: linux-audition-sink ok (linux x86_64, exit 0, 45823 bytes captured)
+VI initial complete frame: True, wait 0.207s, retries 10
+VI initial: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(36, 9)], 'pitch_status': 'C4', 'bar_status': 'Bar 1, beat 1:8'}
+VI right-once: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'E4', 'bar_status': 'Bar 1, beat 5:8'}
+VI then-up: {'heads': {23: 29, 14: 30, 18: 30, 28: 30, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'F4', 'bar_status': 'Bar 1, beat 5:8'}
+VI changed event columns [14]; expected second event 14
+VI wide-register: {'heads': {23: 25, 14: 26, 18: 26, 28: 26, 34: 27, 46: 27, 52: 28, 41: 29, 9: 36}, 'carets': [(32, 59)], 'pitch_status': 'C7', 'bar_status': 'Bar 6, beat 1:8'}
+pty: fugue-cold-initial ok (linux x86_64, exit 0, 29818 bytes captured)
+VI initial complete frame: True, wait 0.070s, retries 3
+VI initial: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(36, 9)], 'pitch_status': 'C4', 'bar_status': 'Bar 1, beat 1:8'}
+VI right-once: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'E4', 'bar_status': 'Bar 1, beat 5:8'}
+VI then-up: {'heads': {23: 29, 14: 30, 18: 30, 28: 30, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'F4', 'bar_status': 'Bar 1, beat 5:8'}
+VI changed event columns [14]; expected second event 14
+VI wide-register: {'heads': {23: 25, 14: 26, 18: 26, 28: 26, 34: 27, 46: 27, 52: 28, 41: 29, 9: 36}, 'carets': [(32, 59)], 'pitch_status': 'C7', 'bar_status': 'Bar 6, beat 1:8'}
+pty: fugue-right-then-up ok (linux x86_64, exit 0, 29818 bytes captured)
+audition-storm: children max 0, observer p99 34.56804000597913 ms, game-inner p99 34.42 ms, extra cells 0, sink files 1, keys 40/40
+pty: linux-audition-sink ok (linux x86_64, exit 0, 45823 bytes captured)

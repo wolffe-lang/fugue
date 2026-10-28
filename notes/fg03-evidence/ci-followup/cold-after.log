@@ -1,0 +1,8 @@
+fg03 memory gate: 33.840 GiB available; require 8 GiB
+VI initial complete frame: True, wait 0.219s, retries 8
+VI initial: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(36, 9)], 'pitch_status': 'C4', 'bar_status': 'Bar 1, beat 1:8'}
+VI right-once: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'E4', 'bar_status': 'Bar 1, beat 5:8'}
+VI then-up: {'heads': {23: 29, 14: 30, 18: 30, 28: 30, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'F4', 'bar_status': 'Bar 1, beat 5:8'}
+VI changed event columns [14]; expected second event 14
+VI wide-register: {'heads': {23: 25, 14: 26, 18: 26, 28: 26, 34: 27, 46: 27, 52: 28, 41: 29, 9: 36}, 'carets': [(32, 59)], 'pitch_status': 'C7', 'bar_status': 'Bar 6, beat 1:8'}
+cold negotiation row problems: []

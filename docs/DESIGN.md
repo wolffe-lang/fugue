@@ -259,3 +259,19 @@ with that batch's exact final parity. A terminal read containing two writes is
 not mistaken for one frame. Zero-byte even-parity batches still require their
 completed frame boundary. The forty-key and seventy-ms p99 requirements remain;
 a failed intermediate frame cannot be excused by a later correct final screen.
+
+The p99 is from the parent's key write to its receipt of both complete terminal
+bytes and their boundary trace, not the game's `inner_us` read-to-frame timing.
+A separate joined owner-observer thread samples real child pids, with a 20-ms
+pause between polls. Slow process-table commands cannot block key delivery or
+pty reads and turn the intended 20-Hz stimulus into catch-up bursts. Owner count
+must still be at most one, all forty expected states must match, delivery must
+span at most two seconds, and observed p99 must stay within 70 ms. Measurements
+retain actual send gaps, game-inner timing and observer timing separately.
+
+Book VI readiness is likewise a state condition, not a sleep: alternate-screen
+entry precedes the engine's bounded keyboard negotiation. The right-then-up row
+awaits the exact complete independently rendered initial glyph/style frame
+before sending either key. The cold-initial row deliberately returns the pty
+constructor at terminal entry while negotiation is pending; no timeout or game
+startup sequence is changed to satisfy it.
