@@ -1,6 +1,7 @@
 #!/bin/sh
 set -eu
 cd "$(dirname "$0")/.."
+python3 -I tests/test_storm_frames.py
 .lair/tools/check-linux
 .lair/tools/goldens --bin target/native/fugue
 python3 -I tools/gameplay.py --bin target/native/fugue
@@ -18,3 +19,4 @@ python3 -I tools/fugue-gameplay.py --bin target/native/fugue
 python3 -I tools/fugue-gameplay.py --bin target/release/fugue
 target/native/fugue --event-reachable
 target/release/fugue --event-reachable
+python3 -I .lair/tools/pty --bin target/native/fugue --rows own-cantus-session,own-cantus-fux-keys,enhanced-keys,linux-audition-sink --keep

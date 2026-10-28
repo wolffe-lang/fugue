@@ -1,0 +1,159 @@
+use first
+use grid
+use notation
+use progress
+use session
+use theory
+
+fn write_cantus(positions: List[int], mode: int) -> session.State {
+    var s = session.with_book(take session.tutorial(0, false), 7)
+    for _ in 0..mode { session.step(mut s, 30) }
+    while s.voice.len < positions.len { session.step(mut s, 22) }
+    while s.voice.len > positions.len { session.step(mut s, 23) }
+    for i in 0..positions.len {
+        let delta = positions[i] - theory.position(s.voice[s.cursor])
+        for _ in 0..theory.magnitude(delta) { session.step(mut s, if delta > 0 then 1 else 2) }
+        if i + 1 < positions.len { session.step(mut s, 4) }
+    }
+    s
+}
+
+fn test_own_cantus_repeated_note_is_never_accepted() {
+    var s = write_cantus([28, 28, 29, 30, 31, 30, 29, 28], 0)
+    session.step(mut s, 10)
+    assert(s.phase == 2 && !s.cantus_written)
+    var repeated = false
+    for b in session.verdict(s).breaks { if b.rule == "repeat" && b.bar == 2 { repeated = true } }
+    assert(repeated)
+    session.step(mut s, 10)
+    assert(!s.cantus_written)
+    assert(s.progress[6] == 0)
+}
+
+fn test_own_cantus_is_accepted_scored_and_becomes_the_exercise_unchanged() {
+    var s = write_cantus([28, 29, 30, 28, 31, 30, 32, 30, 29, 28], 0)
+    let written = copy s.voice
+    session.step(mut s, 10)
+    assert(session.verdict(s).breaks.len == 0)
+    assert(theory.shape_measures(written).score == theory.shape(written))
+    assert(theory.shape_measures(written).ascent == 4)
+    assert(theory.shape_measures(written).descent == 5)
+    assert(s.progress[6] == 0)
+    session.step(mut s, 10)
+    assert(s.cantus_written && s.phase == 1)
+    for i in 0..written.len { assert(theory.name(s.cantus[i]) == theory.name(written[i])) }
+    let answer = first.solve(written, 0, false)
+    assert(answer.len == written.len)
+    s.voice = answer
+    session.step(mut s, 10)
+    assert(session.score(s) > 0 && s.progress[6] == session.score(s))
+}
+
+fn test_seventh_book_title_and_progress_v2_migration() {
+    var s = session.tutorial(0, true)
+    session.step(mut s, 29)
+    assert(s.book == 7 && !s.cantus_written && s.voice.len == 10)
+    let old = progress.decode("fugue 2 1 2 3 1 2 3") else []
+    assert(old.len == 7 && old[5] == 3 && old[6] == 0)
+    assert(progress.format(old) == "fugue 3 1 2 3 1 2 3 0\n")
+}
+
+fn critic_rule(positions: List[int], rule: str, altered: bool) {
+    var s = write_cantus(positions, 0)
+    if altered { s.voice[3].accidental = 1 }
+    session.step(mut s, 10)
+    let breaks = session.verdict(s).breaks
+    var found = false
+    for i in 0..breaks.len {
+        let b = copy breaks[i]
+        if b.rule == rule {
+            found = true
+            s.cursor = i
+            for tier in 0..2 {
+                let frame = notation.frame(s, 120, 40, tier)
+                var bytes = List[byte]()
+                grid.dump_text(frame, mut bytes)
+                let text = str_from_utf8(bytes) else ""
+                assert(text.contains("Bar {b.bar}: {rule} /"))
+                assert(text.contains("Not yet / the cantus"))
+            }
+        }
+    }
+    assert(found)
+}
+
+fn test_study_critic_length() { critic_rule([28], "length", false) }
+
+fn test_study_critic_final() { critic_rule([29, 30, 31, 32, 33, 32, 30, 29], "final", false) }
+
+fn test_study_critic_diatonic() {
+    critic_rule([28, 29, 30, 28, 31, 30, 32, 30, 29, 28], "diatonic", true)
+}
+
+fn test_study_critic_repeat() { critic_rule([28, 28, 29, 30, 31, 30, 29, 28], "repeat", false) }
+
+fn test_study_critic_leap_quality() {
+    critic_rule([28, 34, 33, 32, 31, 30, 29, 28], "leap-quality", false)
+}
+
+fn test_study_critic_recovery() { critic_rule([28, 31, 32, 33, 32, 30, 29, 28], "recovery", false) }
+
+fn test_study_critic_successive_leaps() {
+    critic_rule([28, 30, 32, 33, 32, 30, 29, 28], "successive-leaps", false)
+}
+
+fn test_study_critic_outlined_tritone() {
+    critic_rule([28, 31, 32, 34, 32, 30, 29, 28], "outlined-tritone", false)
+}
+
+fn test_study_critic_sequence() { critic_rule([28, 29, 30, 31, 32, 30, 29, 28], "sequence", false) }
+
+fn test_study_critic_one_climax() {
+    critic_rule([28, 30, 32, 31, 32, 30, 29, 28], "one-climax", false)
+}
+
+fn test_study_critic_climax_position() {
+    critic_rule([28, 32, 31, 30, 29, 30, 29, 28], "climax-position", false)
+}
+
+fn test_study_critic_climax_leading() {
+    critic_rule([28, 30, 32, 34, 33, 30, 29, 28], "climax-leading", false)
+}
+
+fn test_study_critic_leap_count() {
+    critic_rule([28, 29, 30, 31, 30, 29, 28, 28], "leap-count", false)
+}
+
+fn test_study_critic_octave_count() {
+    critic_rule([28, 35, 34, 27, 28, 30, 29, 28], "octave-count", false)
+}
+
+fn test_study_critic_range() { critic_rule([28, 38, 37, 35, 33, 30, 29, 28], "range", false) }
+
+fn test_study_critic_direction_changes() {
+    critic_rule([28, 29, 30, 31, 32, 33, 34, 35], "direction-changes", false)
+}
+
+fn test_study_critic_balance() { critic_rule([28, 29, 30, 31, 32, 33, 34, 28], "balance", false) }
+
+fn test_study_critic_cadence() { critic_rule([28, 30, 29, 32, 31, 30, 30, 28], "cadence", false) }
+
+fn test_study_length_edits_and_pitch_undo_keep_selected_events() {
+    var s = session.with_book(take session.tutorial(0, false), 7)
+    session.step(mut s, 22)
+    assert(s.voice.len == 11 && s.beats.len == 11 && s.cursor == 0)
+    session.step(mut s, 11)
+    assert(s.voice.len == 10 && s.beats.len == 10)
+    for _ in 0..3 { session.step(mut s, 23) }
+    assert(s.voice.len == 7)
+    var length = false
+    for b in session.verdict(s).breaks { if b.rule == "length" { length = true } }
+    assert(length)
+    session.step(mut s, 11)
+    assert(s.voice.len == 8)
+    session.step(mut s, 4)
+    session.step(mut s, 1)
+    assert(s.cursor == 1 && theory.position(s.voice[1]) == 29)
+    session.step(mut s, 11)
+    assert(s.cursor == 1 && theory.position(s.voice[1]) == 28)
+}

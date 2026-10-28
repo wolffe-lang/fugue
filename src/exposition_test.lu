@@ -21,7 +21,7 @@ fn test_book_six_selection_keeps_old_replay_numbers() {
     var s = session.tutorial(0, true)
     session.step(mut s, 26)
     assert(s.book == 6 && s.phase == 1)
-    assert(s.progress.len == 6 && session.piece_ticks(s) == 360)
+    assert(s.progress.len == 7 && session.piece_ticks(s) == 360)
 }
 
 fn test_book_six_three_tutorials_end_and_light_the_title() {
@@ -73,9 +73,9 @@ fn test_exposition_clock_entries_and_part_agree() {
 
 fn test_progress_v1_migrates_without_lighting_sixth_book() {
     let old = progress.decode("fugue 1 1 2 3 2 1") else []
-    assert(old.len == 6 && old[5] == 0 && old[2] == 3)
-    let fresh = progress.decode(progress.format([1, 2, 3, 2, 1, 3])) else []
-    assert(fresh.len == 6 && fresh[5] == 3)
+    assert(old.len == 7 && old[5] == 0 && old[6] == 0 && old[2] == 3)
+    let fresh = progress.decode(progress.format([1, 2, 3, 2, 1, 3, 0])) else []
+    assert(fresh.len == 7 && fresh[5] == 3 && fresh[6] == 0)
 }
 
 fn test_fugue_uses_shared_spelled_pitch_and_page_range_editor() {

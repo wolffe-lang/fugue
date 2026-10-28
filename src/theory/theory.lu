@@ -258,17 +258,45 @@ pub fn validate(notes: List[Pitch], mode: int) -> List[Break] {
     out
 }
 
-/// Shape preference: late summit, balanced motion and varied interval sizes.
-pub fn shape(notes: List[Pitch]) -> int {
+/// Transparent generator ranking; balance remains its unchanged hard admission rule.
+pub struct Shape {
+    summit_bar: int,
+    placement_penalty: int,
+    ascent: int,
+    descent: int,
+    variety: int,
+    score: int,
+}
+
+/// Shape preference: late summit, balanced admission and varied interval sizes.
+pub fn shape_measures(notes: List[Pitch]) -> Shape {
     var hi = 0, top = 0, seen: int = 0
+    var ascent = 0, descent = 0
     for i in 0..notes.len {
         if position(notes[i]) > hi { hi = position(notes[i]); top = i }
-        if i > 0 { seen |= 1 << magnitude(position(notes[i]) - position(notes[i - 1])) }
+        if i > 0 {
+            let delta = position(notes[i]) - position(notes[i - 1])
+            if delta > 0 { ascent += 1 }
+            if delta < 0 { descent += 1 }
+            let distance = magnitude(delta)
+            if distance <= 7 { seen |= 1 << distance }
+        }
     }
     var variety = 0
     for bit in 1..8 { if seen & 1 << bit != 0 { variety += 1 } }
-    100 - magnitude(top * 3 - notes.len * 2) * 3 + variety * 4
+    let penalty = magnitude(top * 3 - notes.len * 2) * 3
+    Shape {
+        summit_bar: top + 1,
+        placement_penalty: penalty,
+        ascent: ascent,
+        descent: descent,
+        variety: variety,
+        score: 100 - penalty + variety * 4,
+    }
 }
+
+/// The same numeric ranking used before the study; no candidate order changes.
+pub fn shape(notes: List[Pitch]) -> int { shape_measures(notes).score }
 
 /// Prune local rules before extending a prefix; the full validator is authoritative.
 pub fn prefix_ok(notes: List[Pitch]) -> bool { prefix_with_leaps(notes, 4) }

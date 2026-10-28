@@ -1,0 +1,23 @@
+use input
+use session
+
+fn event_key(k: int, mods: int, kind: int) -> int {
+    session.event_key(input.Event { key: k, mods: mods, kind: kind })
+}
+
+fn test_enhanced_arrows_are_one_action_per_press_and_repeat() {
+    assert(event_key(input.KEY_RIGHT, 0, input.PRESS) == 4)
+    assert(event_key(input.KEY_RIGHT, 0, input.REPEAT) == 4)
+    assert(event_key(input.KEY_RIGHT, 0, input.RELEASE) == 0)
+    assert(event_key(input.KEY_UP, input.MOD_SHIFT, input.PRESS) == 5)
+    assert(event_key(input.KEY_DOWN, input.MOD_SHIFT, input.REPEAT) == 6)
+}
+
+fn test_enhanced_printable_and_quit_projection() {
+    assert(event_key(input.char_key(51), input.MOD_SHIFT, input.PRESS) == 7)
+    assert(event_key(input.char_key(32), 0, input.PRESS) == 8)
+    assert(event_key(input.KEY_ENTER, 0, input.PRESS) == 10)
+    assert(event_key(input.KEY_ESC, 0, input.RELEASE) == 0)
+    assert(event_key(input.char_key(99), input.MOD_CTRL, input.PRESS) == 15)
+    assert(event_key(input.char_key(113), 0, input.RELEASE) == 0)
+}

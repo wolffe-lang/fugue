@@ -308,17 +308,15 @@ pub fn head(
     y
 }
 
-/// Draw the manuscript with names or the experimental cell-drawn clef.
-pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -> grid.Grid {
+/// Shared manuscript ground, including deterministic faint grain.
+pub fn paper(seed: int, cols: int, rows: int, t: int) -> grid.Grid {
     var g = grid.new(rows, cols)
     let bg = if t == tier.RICH then 230 else 7
-    let ink = if t == tier.RICH then 94 else 3
-    let blue = if t == tier.RICH then 24 else 4
     for y in 0..rows {
-        let grain = world.noise(s.seed, 19, y * 7)
+        let grain = world.noise(seed, 19, y * 7)
         for x in 0..cols {
-            let mark = world.hash(s.seed, y, x, 53) < 2
-            let ground = if t == 1 && world.hash(s.seed, y, x, 256) < grain / 12 then 223 else bg
+            let mark = world.hash(seed, y, x, 53) < 2
+            let ground = if t == 1 && world.hash(seed, y, x, 256) < grain / 12 then 223 else bg
             grid.put(
                 mut g,
                 y,
@@ -332,6 +330,15 @@ pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -
             )
         }
     }
+    g
+}
+
+/// Draw the manuscript with names or the experimental cell-drawn clef.
+pub fn study(s: session.State, cols: int, rows: int, t: int, drawn_clef: bool) -> grid.Grid {
+    var g = paper(s.seed, cols, rows, t)
+    let bg = if t == tier.RICH then 230 else 7
+    let ink = if t == tier.RICH then 94 else 3
+    let blue = if t == tier.RICH then 24 else 4
     if s.phase == 0 {
         ornament(mut g, rows / 2 - 5, cols / 2 - 22, t, bg)
         text(mut g, rows / 2 - 3, cols / 2 - 7, "fugue", blue, bg, true)
@@ -586,7 +593,7 @@ pub fn panel(mut g: grid.Grid, s: session.State, margin: int, t: int) {
     } else {
         "dissonant"
     }
-    let figure = if s.book == 1 {
+    let figure = if s.book == 1 || s.book == 7 {
         if iv.consonance == 2 then "unlicensed" else "consonance"
     } else if s.book <= 5 {
         species.classify(s.cantus, s.voice, s.beats, i, s.book, s.below)

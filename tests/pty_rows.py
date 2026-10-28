@@ -695,3 +695,5 @@ ROWS['fugue-right-then-up']=fugue_right_then_up
 # Sound-owner rows share the real-pty/restoration runner with the editor rows.
 import runpy
 ROWS.update(runpy.run_path(str(Path(__file__).with_name('ear_rows.py')))['ROWS'])
+ROWS.update(runpy.run_path(str(Path(__file__).with_name('cantus_rows.py')))['ROWS'])
+ROWS.update(runpy.run_path(str(Path(__file__).with_name('enhanced_rows.py')))['ROWS'])

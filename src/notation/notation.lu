@@ -1,5 +1,6 @@
 //! Rhythmic pages build on staff's pitch-space and head API, not a second staff.
 
+use cantuspage
 use fuguepage
 use draw
 use grid
@@ -53,8 +54,8 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
             let left = if row == rows / 2 + 1 then cols / 2 - 7 else 4
             text(mut g, row, left, " ".repeat(cols - left - 3), ink, bg, false)
         }
-        for book in 1..7 {
-            let lit = book == 6 && s.progress[5] > 0
+        for book in 1..8 {
+            let lit = (book == 6 || book == 7) && s.progress[book - 1] > 0
             text(
                 mut g,
                 rows / 2 + book,
@@ -69,13 +70,14 @@ pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
             mut g,
             rows - 3,
             4,
-            "1-6 choose a book   Enter resumes   q leaves the desk",
+            "1-7 choose a book   Enter resumes   q leaves the desk",
             ink,
             bg,
             false,
         )
         return g
     }
+    if s.book == 7 && !s.cantus_written { return cantuspage.frame(s, cols, rows, t) }
     if s.book == 6 { return fuguepage.frame(s, cols, rows, t) }
     if s.book == 1 { return staff.frame(s, cols, rows, t) }
     var g = ground(s, cols, rows, t)

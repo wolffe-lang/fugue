@@ -73,7 +73,13 @@ pub fn whole_part(s: session.State) -> str {
             30 * 60 * 4 / session.ticks_per_whole(),
         )
     }
-    if s.book == 1 { return part(s.cantus, s.voice) }
+    if s.book == 7 && !s.cantus_written {
+        let tempo = 30 * 60 * 4 / session.ticks_per_whole()
+        var text = "title Your cantus\ntempo {tempo}\nmeter 4/4\npart voice choir mp\n"
+        for i in 0..s.voice.len { text += "bar {i + 1}\nvoice {theory.name(s.voice[i])}/1\n" }
+        return text
+    }
+    if s.book == 1 || s.book == 7 { return part(s.cantus, s.voice) }
     manuscript.part(s, 30 * 60 * 4 / session.ticks_per_whole())
 }
 

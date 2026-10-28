@@ -64,6 +64,7 @@ pub fn name(book: int) -> str {
         4 => "IV. The suspended voice",
         5 => "V. The florid voice",
         6 => "VI. The fugue",
+        7 => "VII. The cantus",
         _ => "I. Note against note",
     }
 }

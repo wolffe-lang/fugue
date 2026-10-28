@@ -1,5 +1,6 @@
 use exposition
 use first
+use input
 use presets
 use replay
 use rhythm
@@ -12,6 +13,7 @@ pub struct Edit { bar: int, notes: List[theory.Pitch], beats: List[rhythm.Beat] 
 /// Deterministic editor state; no terminal or clock ownership.
 pub struct State {
     book: int,
+    cantus_written: bool,
     clef: int,
     grand: bool,
     cantus_clef: int,
@@ -60,6 +62,7 @@ pub fn new(seed: int, title: bool) -> State {
     }
     State {
         book: 1,
+        cantus_written: false,
         clef: choose_clef(cantus, voice),
         grand: needs_system(cantus, voice),
         cantus_clef: choose_clef(cantus, cantus),
@@ -74,7 +77,7 @@ pub fn new(seed: int, title: bool) -> State {
         beats: rhythm.pattern(1, cantus.len),
         seed: seed,
         cursor: 0,
-        progress: [0, 0, 0, 0, 0, 0],
+        progress: [0, 0, 0, 0, 0, 0, 0],
         phase: if title then 0 else 1,
         quit: false,
         mode: mode,
@@ -121,6 +124,8 @@ pub fn vocab() -> replay.Vocab {
             "book-6",
             "voice-switch",
             "dot",
+            "book-7",
+            "mode",
         ],
         take List[str](),
     )
@@ -149,8 +154,23 @@ pub fn key(n: int) -> int {
         1046 => 28,
         1054 => 26,
         1118 => 27,
+        1055 => 29,
+        1109 => 30,
         _ => 0,
     }
+}
+
+/// Project press/repeat events to game actions; releases never edit or quit.
+pub fn event_key(e: input.Event) -> int {
+    if e.kind == input.RELEASE { return 0 }
+    if e.mods / input.MOD_CTRL % 2 == 1 && e.key == input.char_key(99) { return 15 }
+    if e.mods / input.MOD_ALT % 2 == 1 || e.mods / input.MOD_CTRL % 2 == 1 { return 0 }
+    if e.mods % 2 == 1 {
+        if e.key == input.KEY_UP { return 5 }
+        if e.key == input.KEY_DOWN { return 6 }
+        if e.key == input.char_key(51) { return 7 }
+    }
+    key(e.key)
 }
 
 /// One playback clock constant, shared by the cursor and part tempo.
@@ -159,6 +179,7 @@ pub fn ticks_per_whole() -> int { 30 }
 /// Written phrase duration in 30 Hz ticks, independent of attack count.
 pub fn piece_ticks(s: State) -> int {
     if s.book == 6 { return exposition.bars(s.fugue) * 2 * ticks_per_whole() }
+    if s.book == 7 && !s.cantus_written { return s.voice.len * ticks_per_whole() }
     s.cantus.len * ticks_per_whole()
 }
 
@@ -183,10 +204,10 @@ pub fn step(mut s: State, k: int) {
     if k == 14 || k == 15 { s.quit = true; return }
     if s.hearing >= 0 { return }
     if k == 21 { s.phase = 0; return }
-    if s.phase == 0 && (k >= 16 && k <= 20 || k == 26) {
+    if s.phase == 0 && (k >= 16 && k <= 20 || k == 26 || k == 29) {
         let progress = copy s.progress
         let completed = copy s.completed
-        s = with_book(take tutorial(0, false), if k == 26 then 6 else k - 15)
+        s = with_book(take tutorial(0, false), if k == 29 then 7 else if k == 26 then 6 else k - 15)
         s.completed = completed
         s.progress = progress
         return
@@ -211,6 +232,22 @@ pub fn step(mut s: State, k: int) {
         s.phase = 1
         s.cursor = 0
         return
+    }
+    if s.book == 7 && !s.cantus_written {
+        if s.phase == 2 && k == 10 {
+            if verdict(s).breaks.len == 0 { begin_pair(mut s) }
+            return
+        }
+        if s.phase == 1 && k == 30 {
+            s.mode = (s.mode + 1) % 6
+            s.notice = ""
+            return
+        }
+        if s.phase == 1 && k == 27 { s.below = !s.below; return }
+        if s.phase == 1 && (k == 22 || k == 23) {
+            edit_cantus_length(mut s, k == 22)
+            return
+        }
     }
     if s.phase == 2 {
         if k == 1 && s.cursor > 0 { s.cursor -= 1 }
@@ -309,6 +346,7 @@ pub fn tutorial(index: int, title: bool) -> State {
     for p in cf { (mut cp).push(theory.pitch(theory.position(p) + 4)) }
     State {
         book: 1,
+        cantus_written: false,
         clef: choose_clef(cf, cp),
         grand: needs_system(cf, cp),
         cantus_clef: choose_clef(cf, cf),
@@ -323,7 +361,7 @@ pub fn tutorial(index: int, title: bool) -> State {
         beats: rhythm.pattern(1, cf.len),
         seed: index,
         cursor: 0,
-        progress: [0, 0, 0, 0, 0, 0],
+        progress: [0, 0, 0, 0, 0, 0, 0],
         phase: if title then 0 else 1,
         quit: false,
         mode: mode,
@@ -340,7 +378,18 @@ pub fn tutorial(index: int, title: bool) -> State {
 /// A score is recomputed from notes, never loaded from a replay comment.
 pub fn verdict(s: State) -> first.Verdict {
     if s.book == 6 { return exposition.check(exposition.written(s.fugue, s.voice, s.beats)) }
-    if s.book == 1 { return first.check(s.cantus, s.voice, s.mode, s.below) }
+    if s.book == 7 && !s.cantus_written {
+        return first.Verdict {
+            breaks: theory.validate(s.voice, s.mode),
+            stars: 0,
+            contrary: 0,
+            steps: 0,
+            separate_climax: false,
+            parallel_limit: true,
+            variety: 0,
+        }
+    }
+    if s.book == 1 || s.book == 7 { return first.check(s.cantus, s.voice, s.mode, s.below) }
     species.check(s.cantus, s.voice, s.beats, s.mode, s.below, s.book)
 }
 
@@ -349,7 +398,7 @@ pub fn score(s: State) -> int { if s.failure != "" then 0 else verdict(s).stars 
 
 /// Initialize from the replay's optional tutorial start selector.
 pub fn from_replay(r: replay.Replay, title: bool) -> State {
-    if r.start >= 14000 && r.start < 24000 {
+    if r.start >= 14000 && r.start < 26000 {
         var old = copy r
         let book = (r.start - 10000) / 2000
         old.start = (r.start - 10000) % 2000
@@ -368,6 +417,22 @@ pub fn with_book(take s: State, book: int) -> State {
     next.book = book
     next.rhythm_editable = book == 5
     if book == 1 { return next }
+    if book == 7 {
+        next.mode = 0
+        next.cantus_written = false
+        next.voice = []
+        for _ in 0..10 { (mut next.voice).push(theory.pitch(28)) }
+        next.cantus = copy next.voice
+        next.beats = rhythm.pattern(1, 10)
+        next.cursor = 0
+        next.history = []
+        next.notice = ""
+        next.clef = 30
+        next.grand = false
+        next.voice_clef = 30
+        next.cantus_clef = 30
+        return next
+    }
     if book == 6 {
         let p = exposition.new(next.level, next.seed, next.mode, next.below) else {
             next.failure = "No invertible exposition within the search budget."
@@ -415,6 +480,40 @@ pub fn with_book(take s: State, book: int) -> State {
     next.cantus_clef = choose_clef(next.cantus, next.cantus)
     next.voice_clef = choose_clef(next.voice, next.voice)
     next
+}
+
+fn begin_pair(mut s: State) {
+    s.cantus = copy s.voice
+    s.voice = []
+    for p in s.cantus {
+        (mut s.voice).push(theory.pitch(theory.position(p) + (if s.below then -7 else 4)))
+    }
+    s.cantus_written = true
+    s.phase = 1
+    s.cursor = 0
+    s.history = []
+    s.notice = "Your cantus; now give it another voice."
+    s.clef = choose_clef(s.cantus, s.voice)
+    s.grand = needs_system(s.cantus, s.voice)
+    s.cantus_clef = choose_clef(s.cantus, s.cantus)
+    s.voice_clef = choose_clef(s.voice, s.voice)
+}
+
+fn edit_cantus_length(mut s: State, append: bool) {
+    let n = s.voice.len
+    if append && n == 16 { s.notice = "Sixteen whole notes is the limit"; return }
+    if !append && n == 1 { s.notice = "Keep one note to edit"; return }
+    remember(mut s)
+    if append {
+        (mut s.voice).push(theory.pitch(28 + s.mode))
+    } else {
+        var notes = List[theory.Pitch]()
+        for i in 0..n { if i != s.cursor { (mut notes).push(copy s.voice[i]) } }
+        s.voice = notes
+        if s.cursor >= s.voice.len { s.cursor = s.voice.len - 1 }
+    }
+    s.beats = rhythm.pattern(1, s.voice.len)
+    s.notice = ""
 }
 
 fn remember(mut s: State) {

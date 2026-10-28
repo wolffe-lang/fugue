@@ -1,0 +1,203 @@
+//! The seventh desk writes one whole-note melody on the shared manuscript.
+
+use draw
+use grid
+use session
+use staff
+use theory
+
+fn text(mut g: grid.Grid, y: int, x: int, words: str, ink: int, bg: int, bold: bool) {
+    draw.put_text(mut g, y, x, words, grid.cell(32, ink, bg, if bold then 1 else 0))
+}
+
+/// Composition and its critic; the accepted pair uses the ordinary notation page.
+pub fn frame(s: session.State, cols: int, rows: int, t: int) -> grid.Grid {
+    var g = staff.paper(s.seed, cols, rows, t)
+    let bg = if t == 1 then 230 else 7
+    let ink = if t == 1 then 94 else 3
+    let blue = staff.player_ink(t)
+    let v = session.verdict(s)
+    let n = s.voice.len
+    text(mut g, 1, 3, "fugue / VII. The cantus", blue, bg, true)
+    text(
+        mut g,
+        2,
+        3,
+        "{theory.mode_name(s.mode)}  {n} wholes  counterpoint {if s.below then "below" else "above"}",
+        ink,
+        bg,
+        false,
+    )
+    if s.phase == 2 {
+        let legal = v.breaks.len == 0
+        text(
+            mut g,
+            4,
+            4,
+            if legal then "A legal cantus" else "Not yet / the cantus",
+            blue,
+            bg,
+            true,
+        )
+        if legal {
+            let shape = theory.shape_measures(s.voice)
+            text(
+                mut g,
+                6,
+                4,
+                "Shape {shape.score} = 100 - {shape.placement_penalty} + 4 x {shape.variety}",
+                ink,
+                bg,
+                true,
+            )
+            text(
+                mut g,
+                8,
+                4,
+                "Summit bar {shape.summit_bar} / {n}; late-summit penalty {shape.placement_penalty}",
+                ink,
+                bg,
+                false,
+            )
+            text(
+                mut g,
+                9,
+                4,
+                "Ascent {shape.ascent}, descent {shape.descent}; balance gap {theory.magnitude(shape.ascent - shape.descent)} / 3",
+                ink,
+                bg,
+                false,
+            )
+            text(
+                mut g,
+                10,
+                4,
+                "Interval sizes {shape.variety}; variety bonus {shape.variety * 4}",
+                ink,
+                bg,
+                false,
+            )
+            text(
+                mut g,
+                12,
+                4,
+                "Your line can stand alone. Now give it a second voice.",
+                blue,
+                bg,
+                false,
+            )
+            text(
+                mut g,
+                rows - 2,
+                3,
+                "Enter writes against it   r edit   n fresh   b books   q quit",
+                blue,
+                bg,
+                false,
+            )
+        } else {
+            text(
+                mut g,
+                6,
+                4,
+                "Hard breaks {v.breaks.len}; no shape score until the line is legal",
+                ink,
+                bg,
+                false,
+            )
+            for row in 0..rows - 11 {
+                let i = s.cursor + row
+                if i < v.breaks.len {
+                    let b = copy v.breaks[i]
+                    text(
+                        mut g,
+                        8 + row,
+                        3,
+                        draw.fit("Bar {b.bar}: {b.rule} / {b.reason}", cols - 6, false),
+                        staff.harmony_ink(2, t),
+                        bg,
+                        false,
+                    )
+                }
+            }
+            text(
+                mut g,
+                rows - 2,
+                3,
+                "r edit   Up/Down scroll every break   n fresh   b books   q quit",
+                blue,
+                bg,
+                false,
+            )
+        }
+        return g
+    }
+    let margin = cols - 24
+    let capacity = (margin - 10) / 6
+    let selected = if s.hearing >= 0 then session.event_at(s, s.hearing) else s.cursor
+    let first = if selected >= capacity then selected - capacity + 1 else 0
+    let top = 5 + (rows - 24) / 2
+    let bottom = top + 13
+    let pitch = theory.position(s.voice[selected])
+    let base = if pitch < 26 then pitch else if pitch > 39 then pitch - 13 else 26
+    let view = staff.with_clef(take staff.viewport(top, bottom, base, 7, margin - 2), 30)
+    var bars = List[int]()
+    for i in first..n { if i - first < capacity { (mut bars).push(7 + (i - first) * 6) } }
+    (mut bars).push(margin - 2)
+    staff.draw_staff(mut g, view, t, bars)
+    for i in first..n {
+        if i - first >= capacity { break }
+        let x = 9 + (i - first) * 6
+        text(mut g, top - 1, x, "{i + 1}", ink, bg, false)
+        let _ = staff.head(
+            mut g,
+            view,
+            s.voice[i],
+            x,
+            t,
+            false,
+            i == s.cursor,
+            s.hearing >= 0 && i == selected,
+        )
+        if i == selected { text(mut g, bottom + 2, x, "^", blue, bg, true) }
+    }
+    var findings = List[staff.PanelFinding]()
+    for b in v.breaks { (mut findings).push(staff.PanelFinding { bar: b.bar, rule: b.rule }) }
+    staff.panel_data(
+        mut g,
+        staff.PanelData {
+            bar: s.cursor + 1,
+            beat: 1,
+            interval: "one whole note",
+            consonance: 0,
+            pitch: theory.name(s.voice[s.cursor]),
+            figure: "your cantus",
+            strong: true,
+            allowed: v.breaks.len == 0,
+            local: copy findings,
+            findings: findings,
+            notice: s.notice,
+        },
+        margin,
+        t,
+    )
+    text(
+        mut g,
+        rows - 2,
+        3,
+        "Arrows write  Space sound  h hear  Enter check  u undo  q quit",
+        blue,
+        bg,
+        false,
+    )
+    text(
+        mut g,
+        rows - 1,
+        3,
+        "m mode  [ add whole  ] remove note  v above/below  n fresh  b books",
+        ink,
+        bg,
+        false,
+    )
+    g
+}

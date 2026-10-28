@@ -129,7 +129,7 @@ fn options() -> Options ! {parse} {
         }
         i += 1
     }
-    if o.book < 1 || o.book > 6 { return parse }
+    if o.book < 1 || o.book > 7 { return parse }
     if o.cols < 80 || o.rows < 24 || o.every < 1 || o.frames < 0 { return parse }
     o
 }
@@ -223,8 +223,12 @@ fn play_key(mut s: session.State, mut audio: ear.Ear, k: int, mut c: clock.Clock
     let before_level = s.level
     let before_seed = s.seed
     let before_book = s.book
+    let before_mode = s.mode
     session.step(mut s, k)
-    if before_level != s.level || before_seed != s.seed || before_book != s.book {
+    if before_level != s.level ||
+        before_seed != s.seed ||
+        before_book != s.book ||
+        before_mode != s.mode {
         ear.prepare(mut audio, s) else |_| { eprint("sound: preparation failed") }
         c = clock.new(clock.now_ns())
     }
@@ -262,15 +266,14 @@ fn live(o: Options, r: replay.Replay) -> int {
         }
     }
     ear.prepare(mut audio, s) else |_| { eprint("fugue: note preparation failed"); return 2 }
-    var t = term.open() else |e| { eprint(term.message("{e}", "fugue")); return 2 }
-    if t.cols < r.cols || t.rows < r.rows {
-        eprint("fugue: small (needs {r.cols}x{r.rows})")
+    var terminal = term.open_input(r.cols, r.rows) else |e| {
+        eprint(term.message_min("{e}", "fugue", r.cols, r.rows))
         return 2
     }
-    term.enter(mut t) else |_| { term.leave(mut t); return 2 }
-    defer term.leave(mut t)
+    defer term.close_input(mut terminal)
     var dec = input.new()
-    var pending = List[int]()
+    var pending = List[input.Event]()
+    input.events_all(mut dec, terminal.startup, clock.now_ns() / 1000000, mut pending)
     var c = clock.new(clock.now_ns())
     var prev = grid.new(r.rows, r.cols)
     var pen = grid.pen_new()
@@ -299,15 +302,15 @@ fn live(o: Options, r: replay.Replay) -> int {
         if wake.input_ready {
             if pending.len == 0 { key_read_ns = clock.now_ns() }
             let bytes = term.read_keys(256) else |_| { break }
-            for b in bytes { input.feed(mut dec, b, clock.now_ns() / 1000000, mut pending) }
+            input.events_all(mut dec, bytes, clock.now_ns() / 1000000, mut pending)
         }
-        input.flush(mut dec, clock.now_ns() / 1000000, mut pending)
+        input.flush_events(mut dec, clock.now_ns() / 1000000, mut pending)
         let due = clock.advance(mut c, clock.now_ns())
         if due == 0 && !s.quit { continue }
         ear.poll(mut audio)
         var carries = false
         for raw in pending {
-            let k = session.key(raw)
+            let k = session.event_key(raw)
             if k != 0 && (o.script == "" || k == 14 || k == 15) {
                 if k == 14 { reason = "the quit key" }
                 if k == 15 { reason = "the interrupt" }
@@ -316,7 +319,7 @@ fn live(o: Options, r: replay.Replay) -> int {
                 carries = true
             }
         }
-        pending = List[int]()
+        pending = List[input.Event]()
         var d = 0
         while d < due {
             if o.script != "" {
@@ -463,7 +466,7 @@ fn main() -> int {
     }
     if has(args, "--help") || has(args, "-h") {
         print(
-            "fugue / Books I-VI\n--book 1..6   --seed N | --daily   --size WxH (minimum 80x24)   --plain   --mute\n--record FILE   --replay FILE   --ticks N\nArrows write, Shift-Up/Down octave, # cadence, Space sound, h hear, Enter check, u undo, n next, q quit.",
+            "fugue / Books I-VII\n--book 1..7   --seed N | --daily   --size WxH (minimum 80x24)   --plain   --mute\n--record FILE   --replay FILE   --ticks N\nArrows write, Shift-Up/Down octave, # cadence, Space sound, h hear, Enter check, u undo, n next, q quit.",
         )
         return 0
     }
@@ -475,7 +478,7 @@ fn main() -> int {
     if has(args, "--fugue-verdicts") { print_raw(chapterstudy.verdicts()); return 0 }
     if has(args, "--species-verdicts") { print_raw(studies.verdicts()); return 0 }
     if has(args, "--verdicts") { print_raw(first.verdict_study()); return 0 }
-    if has(args, "--version") { print("fugue 0.3.0 / Books I-VI"); return 0 }
+    if has(args, "--version") { print("fugue 0.3.0 / Books I-VII"); return 0 }
     if has(args, "--selftest") { return run_selftest() }
     if has(args, "--game-census") {
         var valid = 0, leap2 = 0, leap3 = 0, leap4 = 0
