@@ -1,0 +1,5 @@
+fg03 CI follow-up prediction before changes
+
+The Book VI initial capture waits for alternate-screen entry, but open_input emits that before its up-to-150-ms keyboard negotiation and before any game frame. A cold/delayed startup can therefore expose a blank alternate screen after the row's fixed 100-ms pump. I expect a witness-readiness fault, not a missing game frame; the corrected row must await the exact complete independent initial frame.
+
+The storm's current p99 timestamps receipt of both terminal bytes and a separate trace pipe. Its timed loop synchronously spawns pgrep repeatedly, so macOS parent descheduling/child polling can delay observation after the game has already completed its write. I will compare retained game read-to-write traces with observation latencies and reproduce delayed observation before deciding. The forty-key/full-state checks and 70-ms threshold stay unchanged; write-completion timestamps, if needed, must use a verified shared monotonic clock and retain observation lag separately.
