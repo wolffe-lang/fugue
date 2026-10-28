@@ -106,7 +106,11 @@ checks 1,955 positions and 7,820 frame/edit pairs per backend, including unequal
 rhythms, ties, rests and wide registers. The same census checks another 11,130
 positions and 44,520 frame/edit pairs in I–V, with forward/backward traversal of
 every preset and twelve seeded mode/side pages per book. The terminal harness has
-42 rows on Linux and 44 on macOS. The new rows cover negotiated press/repeat/release
+43 rows on Linux and 45 on macOS. A cold-start row returns at terminal entry
+while keyboard negotiation is pending, then requires the complete first frame
+before editing. Audition timing keeps process-table sampling off the key-delivery
+and terminal-receive path; the forty-press, two-second and 70 ms bars are unchanged.
+The new rows cover negotiated press/repeat/release
 controls in all seven books, full own-cantus sessions and v2-to-v3 progress migration
 at both sizes and tiers, and Fux's six cantus firmi entered by keys with their exact
 existing oracle verdicts. Eighteen named critic-rule rows check the study's hard
