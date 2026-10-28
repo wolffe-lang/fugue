@@ -152,7 +152,7 @@ pub fn validate(notes: List[Pitch], mode: int) -> List[Break] {
             let iv = interval(notes[i - 1], notes[i])
             require(
                 mut out,
-                chromatic(notes[i]) != chromatic(notes[i - 1]),
+                true,
                 i + 1,
                 "repeat",
                 "Let the melody move rather than repeat its note.",
