@@ -32,6 +32,17 @@ class OwnerObserver(unittest.TestCase):
         self.assertEqual(sampler.polls[0]['pids'],[123])
         self.assertFalse(sampler.thread.is_alive())
 
+    def test_owner_sampler_never_hides_a_real_overlap(self):
+        entered=threading.Event()
+        def overlap():
+            entered.set();return [123,456]
+        sampler=helpers['ChildSampler'](overlap,time.monotonic())
+        sampler.begin()
+        try:self.assertTrue(entered.wait(2))
+        finally:sampler.finish()
+        self.assertEqual(sampler.polls[0]['pids'],[123,456])
+        self.assertEqual(sampler.errors,[])
+
 class StormFrames(unittest.TestCase):
     def run_frames(self, capture=b'SN'*20, width=1, offsets=None):
         ticks = [i//width for i in range(40)]
