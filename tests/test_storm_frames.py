@@ -2,8 +2,35 @@
 from pathlib import Path
 import runpy
 import unittest
+import threading
+import time
 
-check = runpy.run_path(str(Path(__file__).with_name('storm_frames.py')))['carrying_frames']
+helpers = runpy.run_path(str(Path(__file__).with_name('storm_frames.py')))
+check = helpers['carrying_frames']
+
+class OwnerObserver(unittest.TestCase):
+    def test_blocked_process_poll_cannot_block_forty_key_deliveries(self):
+        entered=threading.Event();release=threading.Event();returned=threading.Event()
+        def blocked():
+            entered.set();release.wait();return [123]
+        sampler=helpers['ChildSampler'](blocked,time.monotonic())
+        def begin():
+            sampler.begin();returned.set()
+        caller=threading.Thread(target=begin)
+        caller.start()
+        try:
+            self.assertTrue(entered.wait(2))
+            self.assertTrue(returned.wait(2),'owner polling blocked its caller')
+            sent=[]
+            for index in range(40):sent.append(index)
+            self.assertEqual(len(sent),40)
+            self.assertTrue(sampler.thread.is_alive())
+            self.assertEqual(sampler.polls,[])
+        finally:
+            sampler.stop.set();release.set();caller.join()
+            if sampler.thread.ident is not None:sampler.finish()
+        self.assertEqual(sampler.polls[0]['pids'],[123])
+        self.assertFalse(sampler.thread.is_alive())
 
 class StormFrames(unittest.TestCase):
     def run_frames(self, capture=b'SN'*20, width=1, offsets=None):

@@ -78,7 +78,7 @@ def changed(a, b):
 
 
 def children(s):
-    p = subprocess.run(['pgrep', '-P', str(s.job)], capture_output=True, text=True)
+    p = subprocess.run(['pgrep', '-P', str(s.job)], capture_output=True, text=True, timeout=2)
     if p.returncode not in (0, 1): raise RuntimeError('pgrep failed: '+p.stderr)
     return [int(pid) for pid in p.stdout.split()]
 
@@ -144,29 +144,36 @@ def storm(binary, ctx):
     cadence(s,binary,root)
     initial = image(binary,root,s.out)
     if initial != natural: problems.append('live and muted initial frames differ')
+    import runpy
+    helpers = runpy.run_path(str(Path(__file__).with_name('storm_frames.py')))
     polls, sent = [], []
     s.capture_reads = True
     start = time.monotonic()
-    for index in range(40):
-        sent.append(time.monotonic())
-        os.write(s.master,b'#')
-        deadline = start+(index+1)*.05
-        while time.monotonic() < deadline:
-            s.pump(.002)
-            if is_mac:
-                pids = children(s)
-                polls.append(dict(at_ms=(time.monotonic()-start)*1000,pids=pids))
+    sampler = helpers['ChildSampler'](lambda: children(s),start) if is_mac else None
+    if sampler is not None: sampler.begin()
+    try:
+        for index in range(40):
+            sent.append(time.monotonic())
+            os.write(s.master,b'#')
+            deadline = start+(index+1)*.05
+            while time.monotonic() < deadline:
+                s.pump(.002)
+        # Keep receiving independently through the final response budget.
+        s.pump(.10)
+    finally:
+        s.capture_reads = False
+        if sampler is not None:
+            sampler.finish()
+            polls = sampler.polls
+            problems.extend('owner observer: '+error for error in sampler.errors)
     # The key interval is 50 ms but the frame budget is 70 ms. Capture
     # independently of send slots so a legal late frame belongs to its
     # actual press, not the following press. Final reads get the same budget.
     send_span_ms = (sent[-1]-sent[0])*1000
     if send_span_ms > 2000: problems.append(f'forty presses took {send_span_ms:.3f} ms, over two seconds')
-    s.pump(.10)
-    s.capture_reads = False
     measured = s.out
     # Analyse successful write prefixes, never terminal-read chunk boundaries.
-    import runpy
-    checker = runpy.run_path(str(Path(__file__).with_name('storm_frames.py')))['carrying_frames']
+    checker = helpers['carrying_frames']
     # Recording is the independent ordered input journal. Trace supplies only
     # successful byte-write boundaries; never a claimed pitch or verdict.
     s.type(b'q'); s.finish(); ctx.common_checks(s,0,problems)
@@ -176,7 +183,10 @@ def storm(binary, ctx):
                               lambda data: image(binary,root,data), natural, sharp)
     problems.extend(errors)
     extra = [0 if p['correct'] else 1 for p in presses]
+    game_inner = {int(tick):int(micros)/1000 for tick,micros in
+                  re.findall(rb'trace frame (\d+) carries_key inner_us (\d+)',s.err)}
     for p in presses:
+        p['game_inner_ms'] = game_inner.get(p['frame'])
         arrived = next((at for at,data in s.reads if len(data)>=p['output_bytes']), None)
         marker = f"trace output frame {p['frame']} bytes {p['output_bytes']-entry}\n".encode()
         traced = next((at for at,data in s.trace_reads if marker in data), None)
@@ -192,9 +202,9 @@ def storm(binary, ctx):
     if is_mac and (not polls or alive == 0): problems.append('storm never observed a real player')
     if alive > 1: problems.append(f'audition children alive: {alive}, wanted <=1')
     latencies = [p['wall_ms'] for p in presses if p['wall_ms'] is not None]
-    # Ordered state changes correspond one-to-one to presses only when all
-    # forty were drawn. Never publish a shifted, fabricated per-key p99 for
-    # a coalesced/missing intermediate state.
+    # This is still write-to-parent-observation latency, not game_inner_us.
+    # Every press needs its exact complete carrying-frame state, even if a
+    # batch has an empty diff. Process polling cannot delay this receiver.
     p99 = sorted(latencies)[math.ceil(len(latencies)*.99)-1] if len(latencies)==40 else None
     if len(latencies)!=40: problems.append(f'only {len(latencies)}/40 presses have an exact correct carrying frame')
     if p99 is None: problems.append('per-press p99 unavailable without forty accounted presses')
@@ -204,13 +214,18 @@ def storm(binary, ctx):
     if not is_mac and len(sinks)!=1: problems.append(f'Linux audition sink grew to {len(sinks)} files, wanted one rewritten file')
     if not is_mac and (not sinks or sinks[0].read_bytes() != (root/'note-21-0.wav').read_bytes()):
         problems.append('Linux sink did not retain the final natural C3 WAV intact')
-    result = dict(children_alive_max=alive,p99_ms=p99,presses=presses,polls=polls,
+    inner_latencies = [p['game_inner_ms'] for p in presses if p['game_inner_ms'] is not None]
+    inner_p99 = max(inner_latencies) if len(inner_latencies)==40 else None
+    result = dict(children_alive_max=alive,p99_ms=p99,observer_p99_ms=p99,
+                  game_inner_p99_ms=inner_p99,
+                  send_gaps_ms=[(b-a)*1000 for a,b in zip(sent,sent[1:])],
+                  presses=presses,polls=polls,
                   send_span_ms=send_span_ms,observed_frames=len(presses),
                   unexpected_cells_max=max(extra,default=0),unexpected_cells=extra,
                   intentional_text_cells=changed(cells(natural)[0],cells(sharp)[0]),
                   sink_files=len(sinks),recorded=len(recorded))
     (root/'measurements.json').write_text(json.dumps(result,indent=2)+'\n')
-    print(f'audition-storm: children max {alive}, p99 {p99} ms, extra cells {max(extra,default=0)}, sink files {len(sinks)}, keys {len(recorded)}/40')
+    print(f'audition-storm: children max {alive}, observer p99 {p99} ms, game-inner p99 {inner_p99} ms, extra cells {max(extra,default=0)}, sink files {len(sinks)}, keys {len(recorded)}/40')
     return s, problems
 
 

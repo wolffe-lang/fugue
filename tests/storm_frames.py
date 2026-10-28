@@ -1,5 +1,35 @@
 """Frame/press accounting independent of how the kernel chunks terminal reads."""
 import re
+import threading
+import time
+
+
+class ChildSampler:
+    """Process-table observation must never block key delivery or pty reads."""
+    def __init__(self, children, start):
+        self.children = children
+        self.start = start
+        self.polls = []
+        self.errors = []
+        self.stop = threading.Event()
+        self.thread = threading.Thread(target=self.sample, name='storm-owner-observer')
+
+    def sample(self):
+        while not self.stop.is_set():
+            try:
+                pids = self.children()
+                self.polls.append(dict(at_ms=(time.monotonic()-self.start)*1000,pids=pids))
+            except Exception as error:
+                self.errors.append(str(error))
+                return
+            self.stop.wait(.02)
+
+    def begin(self):
+        self.thread.start()
+
+    def finish(self):
+        self.stop.set()
+        self.thread.join()
 
 
 def carrying_frames(recorded, trace, capture, entry, apply, natural, sharp):
