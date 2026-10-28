@@ -1,0 +1,7 @@
+fg03 prediction, before implementation
+
+I expect the intermittent audition-storm failure to be witness accounting under scheduler load: multiple keys can belong to one carrying frame, and the current alternating-sharp reference cannot uniquely identify every press after coalescing. I will reproduce under owned CPU load and distinguish a real missing game frame from a correct final batch state. The witness must still account for all forty presses and reject a dropped carrying frame.
+
+The lair pin bump alone should preserve every existing golden byte; adopting open_input and event decoding should change protocol traffic, not musical state or cells. Enhanced repeat events should select exactly one event, with releases selecting none, in both sizes and tiers.
+
+R-fg03-1: recommend and implement A: a seventh title entry, --book 7, and progress version 3 with version-2 migration. The study will call the existing cantus validator and shared candidate-shape scorer, without exceptions for player music or historical oracles. Expect all six keyed Fux verdicts to match their existing oracle findings exactly. A legal keyed cantus should survive unchanged into a first-species exercise and a whole-session replay. Existing golden changes should be limited to title book enumeration and explicitly named study frames, not existing musical answers or PCM.
