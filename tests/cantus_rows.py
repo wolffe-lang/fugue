@@ -100,25 +100,32 @@ def whole_session(binary, ctx):
     return last,problems
 
 
-def fux_by_keys(binary, ctx):
+def fux_by_keys(binary, ctx, tier='rich'):
     problems=[];last=None
     source=Path(ctx.ROOT)/'tests/oracles/fux.txt'
     for line in source.read_text().splitlines():
         if not line or line.startswith('#'):continue
         mode,_,spelling=line.split('|')
         positions=[int(p[-1])*7+'CDEFGAB'.index(p[0]) for p in spelling.split()]
-        root=Path(ctx.ROOT)/f'target/pty/cantus-fux-{mode}'
+        root=Path(ctx.ROOT)/f'target/pty/cantus-fux-{mode}-{tier}'
         root.mkdir(parents=True,exist_ok=True)
-        s=ctx.Session([binary,'--book','7','--no-title','--mute'],24,80,ctx.env_for());last=s
+        s=ctx.Session([binary,'--book','7','--no-title','--mute','--tier',tier],24,80,ctx.env_for());last=s
         actions=writing(positions,MODES.index(mode))+['check']
         s.type(b''.join(KEYS[key] for key in actions),.2)
-        screen=expect(binary,root,s,actions,80,24,'rich')
+        screen=expect(binary,root,s,actions,80,24,tier)
         actual=re.findall(r'Bar (\d+): ([a-z-]+) /',screen)
         actual=[(int(bar),rule) for bar,rule in actual]
         if actual!=FUX[mode]:problems.append(f'{mode}: keyed critic {actual}, oracle {FUX[mode]}')
         s.type(b'q');s.finish();ctx.common_checks(s,0,problems)
         (root/'capture.bin').write_bytes(s.out)
-        print(f'own-cantus Fux {mode}: keyed critic {actual}; oracle {FUX[mode]}')
+        print(f'own-cantus Fux {mode} {tier}: keyed critic {actual}; oracle {FUX[mode]}')
     return last,problems
 
-ROWS={'own-cantus-session':whole_session,'own-cantus-fux-keys':fux_by_keys}
+def fux_both_tiers(binary,ctx):
+    problems=[];last=None
+    for tier in ('rich','plain'):
+        last,errors=fux_by_keys(binary,ctx,tier)
+        problems.extend(errors)
+    return last,problems
+
+ROWS={'own-cantus-session':whole_session,'own-cantus-fux-keys':fux_both_tiers}
