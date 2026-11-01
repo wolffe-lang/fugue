@@ -46,18 +46,22 @@ def run(args):
     runner = load_runner(os.path.abspath(args.tree))
     out = os.path.abspath(args.out)
     os.makedirs(out, exist_ok=True)
+    reads = []            # every os.read: (time, fd, bytes); a session's own fds are unique in its window
     masters = {}          # fd -> session log
     errs = {}             # fd -> session log
     real_write, real_read = os.write, os.read
 
     def write(fd, data):
-        log = masters.get(fd)
+        log = None if args.light else masters.get(fd)
         if log is not None:
             log['writes'].append([time.monotonic(), bytes(data).hex()])
         return real_write(fd, data)
 
     def read(fd, n):
         chunk = real_read(fd, n)
+        if args.light:
+            return chunk
+        reads.append((time.monotonic(), fd, len(chunk)))
         log = masters.get(fd)
         if log is not None:
             log['out_len'] += len(chunk)
@@ -88,6 +92,11 @@ def run(args):
                                 'writes': [], 'out_reads': [], 'err_reads': [], 'out_len': 0, 'err_len': 0}
             self._measure_registered = False
             super().__init__(argv, *rest, **kw)
+            # Every session's holder and game, recorded, so a row that raises
+            # mid-session (trunk's enhanced row does) leaves nothing unnamed:
+            # locked-rows.sh ends what is still alive by these pids alone.
+            with open(os.path.join(out, 'pids.txt'), 'a') as f:
+                f.write('%d %d %s\n' % (self.pid, self.job, self.measure_dir))
 
         def pump(self, seconds):
             if not self._measure_registered and hasattr(self, 'master'):
@@ -105,6 +114,15 @@ def run(args):
         def measure_save(self):
             log = self.measure_log
             log['end'] = time.monotonic()
+            # Rows whose own pump bypasses this class's (trunk's Frames) still
+            # read through os.read: rebuild their read logs from the global one.
+            for fd, key in ((getattr(self, 'master', None), 'out_reads'), (getattr(self, 'r_err', None), 'err_reads')):
+                if fd is not None and not log[key]:
+                    total = 0
+                    for t, f, n in reads:
+                        if f == fd and log['start'] <= t <= log['end']:
+                            total += n
+                            log[key].append([t, total])
             log['status'] = getattr(self, 'status', None)
             d = self.measure_dir
             open(os.path.join(d, 'out.bin'), 'wb').write(self.out)
@@ -296,6 +314,7 @@ def main():
     r.add_argument('--rows', required=True)
     r.add_argument('--out', required=True)
     r.add_argument('--instrument', action='store_true')
+    r.add_argument('--light', action='store_true', help='no read/write logs: pids, output, stderr, recordings')
     a = sub.add_parser('analyse')
     a.add_argument('dir')
     a.add_argument('--bin')
