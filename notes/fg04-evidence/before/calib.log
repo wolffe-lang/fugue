@@ -1,0 +1,6 @@
+fg04: 18:29:51 gate ok: 10035 MiB free+inactive+speculative
+ANALYSE /Users/mfwolffe/lanes/fg04/evidence/before/trunk-L0-1 exit=0
+ANALYSE /Users/mfwolffe/lanes/fg04/evidence/before/trunk-L2-1 exit=0
+ANALYSE /Users/mfwolffe/lanes/fg04/evidence/before/trunk-L3-1 exit=0
+ANALYSE /Users/mfwolffe/lanes/fg04/evidence/ci-artifact-analysis exit=0
+fg04: 18:30:50 lock released (exit 0); 60 s before the next take

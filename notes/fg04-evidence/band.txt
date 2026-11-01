@@ -1,0 +1,10 @@
+band: k= 1 per-process 1.00 of k=1, total 1.00 cores
+band: k= 2 per-process 1.05 of k=1, total 2.10 cores
+band: k= 3 per-process 1.05 of k=1, total 3.15 cores
+band: k= 4 per-process 1.09 of k=1, total 4.34 cores
+band: k= 5 per-process 1.05 of k=1, total 5.27 cores
+band: k= 6 per-process 0.97 of k=1, total 5.83 cores
+band: k= 7 per-process 0.82 of k=1, total 5.76 cores
+band: k= 8 per-process 0.73 of k=1, total 5.82 cores
+band: k= 9 per-process 0.63 of k=1, total 5.71 cores
+band: k=10 per-process 0.58 of k=1, total 5.80 cores
