@@ -124,7 +124,7 @@ def run(args):
     runner.Ctx.Session = Recorded
     runner.Session = Recorded
     rows = runner.game_rows()
-    names = args.rows.split(',')
+    names = list(rows) if args.rows == 'all' else args.rows.split(',')
     verdicts = {}
     for name in names:
         state['row'], state['n'] = name, 0
