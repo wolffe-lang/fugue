@@ -347,7 +347,9 @@ def session(ctx, base=None):
                     self.wait(lambda: self._line_after(after()[1][0]), 'end of frame %d' % after()[1][0])
                 if not mine():
                     raise AssertionError('ACK: %r was read and applied in no carrying frame' % piece)
-                frame = mine()[0][0]
+                # PLANT (fg04-plant-ack): the acknowledged tick read off by one,
+                # the frame traced before the carrying frame.
+                frame = max(t for t, _, _, _ in self.outputs if t < mine()[0][0])
             else:
                 self.wait(lambda: len(after()) >= 2, 'second frame after %r' % piece)
                 frame = after()[1][0]
