@@ -73,6 +73,10 @@ def drain(s):
         if (len(s.out), len(s.err)) == before: return
 
 
+# The editor's state once a single audition's listening animation is over.
+SETTLED_TICKS = 91
+
+
 def quiet_failure(binary, ctx):
     if not Path('/usr/bin/afplay').exists():
         print('SKIP quiet-player-stderr: macOS afplay required; Linux has its own sink row')
@@ -103,6 +107,14 @@ def quiet_failure(binary, ctx):
             acked = True
         except AssertionError as e:
             problems.append(str(e)); acked = False
+        # Space starts the listening animation (state, not sound), so the
+        # screen moves on after that frame; the damage check is the replayed
+        # state once the animation is over, three seconds of ticks in.
+        want = PACED['replayed'](binary, root, head, ['sound', 'right'], SIZE, frames=SETTLED_TICKS)
+        try:
+            PACED['await_state'](s, binary, root, want, SIZE, 'the settled frame after Space then Right')
+        except AssertionError as e:
+            problems.append(str(e))
         while time.monotonic() < began + PACED['LIVENESS_S']:
             alive = children(s)
             seen = seen or alive
