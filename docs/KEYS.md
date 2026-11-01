@@ -140,3 +140,24 @@ eight selections, never a timer-driven ninth. Left returns by the same count.
 Every action's first carrying frame is compared with its complete independent
 headless state; releases must leave the frame unchanged and add no replay key.
 The keyboard flag stack is popped before leaving the alternate screen.
+A session whose stand-in answer the game read only after its 150 ms window
+starts on legacy keys; that session is out of its case and is driven again.
+
+## Late keys and the terminal rows
+
+The game reads the terminal when it wakes, applies every key it read on that
+wake's first due tick, steps every tick then due and draws once. A key read on
+a late wake is therefore applied on the earliest tick then due, and presses
+that arrive during one late wake are applied in order and drawn in one frame:
+two Rights move the caret two events in that frame, never one. Replays stay
+exact, because the recording holds the tick each key was applied on.
+
+So the terminal rows never decide anything by a sleep. Each key is written
+once the game's `--trace` shows the previous one applied (a 30 Hz burst is one
+press a tick by that trace), each frame is read at the exact byte boundary the
+trace names, and each recorded key is judged in the first frame that carried
+it. A late byte is input, never a verdict. A session a stall pushed out of its
+case is driven again, up to four times, each re-drive printed; a case never
+realised fails as `SCHEDULE`. Rows whose stderr shares the terminal cannot
+carry the trace; they wait instead for the exact replayed frame, or for the
+player process a key starts.
