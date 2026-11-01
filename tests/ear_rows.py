@@ -1,42 +1,23 @@
-"""Live sound-owner witnesses: real players, merged stderr and exact cells."""
+"""Live sound-owner witnesses: real players, merged stderr and exact cells.
+
+Keys are typed through tests/paced.py (fg04, fugue#36). A traced session is
+paced and acknowledged by the game's own trace; a session whose stderr shares
+the terminal cannot carry --trace, so its keys are acknowledged by the exact
+replayed frame or by the owned player process they start, each with a
+liveness bound, never a fixed settle.
+"""
 import json
 import math
 import os
 from pathlib import Path
 import re
-import select
+import runpy
 import shutil
 import subprocess
 import time
 
-
-# The ordinary pty runner waits 20 ms per read. Retain its terminal ownership
-# and restore checks, but read promptly enough to measure a 20 Hz storm.
-def session_type(ctx):
-    class Prompt(ctx.Session):
-        def __init__(self, *args):
-            self.reads = []
-            self.capture_reads = False
-            self.trace_reads = []
-            super().__init__(*args)
-
-        def pump(self, seconds):
-            end = time.monotonic() + seconds
-            while time.monotonic() < end:
-                fds = [self.r_err] + ([] if self.eof else [self.master])
-                ready, _, _ = select.select(fds, [], [], min(.002, max(0, end-time.monotonic())))
-                for fd in ready:
-                    try: chunk = os.read(fd, 65536)
-                    except OSError: chunk = b''
-                    if fd == self.master:
-                        if chunk:
-                            self.out += chunk
-                            if self.capture_reads: self.reads.append((time.monotonic(), self.out))
-                        else: self.eof = True
-                    elif chunk:
-                        self.err += chunk
-                        if self.capture_reads: self.trace_reads.append((time.monotonic(), self.err))
-    return Prompt
+PACED = runpy.run_path(str(Path(__file__).with_name('paced.py')))
+SIZE = '120x40'
 
 
 def setup(binary, ctx, name, mute=False, trace=False):
@@ -46,24 +27,21 @@ def setup(binary, ctx, name, mute=False, trace=False):
     env = ctx.env_for()
     env.update(FUGUE_SOUND='1', FUGUE_AUDIO_TRACE='0', FUGUE_WAV_DIR=str(root),
                FUGUE_STATE=str(root/'state'), TMPDIR=os.environ.get('TMPDIR', str(root)))
-    args = [binary, '--book', '5', '--seed', '7', '--no-title', '--size', '120x40',
+    args = [binary, '--book', '5', '--seed', '7', '--no-title', '--size', SIZE,
             '--record', str(root/'record.pk')] + (['--mute'] if mute else [])
     if trace:
-        args.append('--trace')
-        argv = args
+        s = PACED['session'](ctx)(args + ['--trace'], 40, 120, env)
+        s.ready()
     else:
-        argv = ['/bin/sh', '-c', 'exec "$@" 2>&1', 'ear-row']+args
-    s = session_type(ctx)(argv, 40, 120, env)
-    deadline = time.monotonic()+30
-    while b'\x1b[?1049h' not in s.out and time.monotonic() < deadline: s.pump(.02)
-    s.pump(.15)
-    if b'\x1b[?1049h' not in s.out: raise RuntimeError('sound preparation never entered terminal')
+        s = PACED['tracked'](ctx)(['/bin/sh', '-c', 'exec "$@" 2>&1', 'ear-row']+args, 40, 120, env, 0.0)
+        PACED['await_state'](s, binary, root, PACED['replayed'](binary, root, PACED['header'](5, SIZE, 'rich', seed=7), [], SIZE),
+                             SIZE, name + ' initial page')
     return s, root
 
 
 def image(binary, root, data):
     path = root/'apply.bin'; path.write_bytes(data)
-    return subprocess.run([binary, '--apply', str(path), '--size', '120x40'],
+    return subprocess.run([binary, '--apply', str(path), '--size', SIZE],
                           capture_output=True, check=True).stdout
 
 
@@ -83,39 +61,80 @@ def children(s):
     return [int(pid) for pid in p.stdout.split()]
 
 
+def drain(s):
+    """Read every byte already on the terminal (and stderr), without waiting."""
+    import select
+    while True:
+        fds = [s.r_err] + ([] if s.eof else [s.master])
+        ready, _, _ = select.select(fds, [], [], 0)
+        if not ready: return
+        before = (len(s.out), len(s.err))
+        s.pump(.001)
+        if (len(s.out), len(s.err)) == before: return
+
+
 def quiet_failure(binary, ctx):
     if not Path('/usr/bin/afplay').exists():
         print('SKIP quiet-player-stderr: macOS afplay required; Linux has its own sink row')
         return quiet_sink(binary, ctx)
     problems = []
-    s, root = setup(binary, ctx, 'quiet-player-stderr')
-    before = image(binary, root, s.out)
-    bank = list(root.glob('note-*.wav'))
-    if not bank: problems.append('prepared note bank absent')
-    # Fault the real input, not the program or executable: spawn still succeeds,
-    # afplay itself must diagnose this empty WAV. Space makes no editor change.
-    for path in bank: path.write_bytes(b'')
-    s.type(b' ', .7)
-    after = image(binary, root, s.out)
-    a, sa = cells(before); b, sb = cells(after)
-    delta = changed(a,b); style_delta = changed(sa,sb)
-    if delta or style_delta: problems.append(f'player stderr changed {delta} text cells / {style_delta} style rows')
-    if b'Error:' in s.out or b'AudioQueueStart' in s.out: problems.append('afplay diagnostic reached the terminal')
-    alive = children(s)
-    if alive: problems.append('failed player remained alive after .7 seconds')
-    s.type(b'q'); s.finish(); ctx.common_checks(s,0,problems)
-    result = dict(text_cells_changed=delta, style_rows_changed=style_delta, alive=alive)
-    (root/'measurements.json').write_text(json.dumps(result,indent=2)+'\n')
-    print('quiet-player-stderr: '+json.dumps(result))
+
+    def attempt(n):
+        s, root = setup(binary, ctx, 'quiet-player-stderr')
+        bank = list(root.glob('note-*.wav'))
+        if not bank: problems.append('prepared note bank absent')
+        # Fault the real input, not the program or executable: spawn still succeeds,
+        # afplay itself must diagnose this empty WAV. Space makes no editor change.
+        for path in bank: path.write_bytes(b'')
+        s.type(b' ', 0)
+        # This session's stderr shares the terminal, so it has no trace, and the
+        # failed player can end before any process poll sees it. Right is the
+        # acknowledgement: it auditions nothing, and once the exact replayed
+        # frame of Space then Right is drawn, Space was read and its player
+        # started (keys apply in order). A player diagnostic that reached the
+        # terminal keeps that frame from ever being drawn.
+        began = time.monotonic()
+        s.type(b'\x1b[C', 0)
+        head = PACED['header'](5, SIZE, 'rich', seed=7)
+        want = PACED['replayed'](binary, root, head, ['sound', 'right'], SIZE)
+        seen = []
+        try:
+            PACED['await_state'](s, binary, root, want, SIZE, 'Space then Right')
+            acked = True
+        except AssertionError as e:
+            problems.append(str(e)); acked = False
+        while time.monotonic() < began + PACED['LIVENESS_S']:
+            alive = children(s)
+            seen = seen or alive
+            if not alive: break
+            s.pump(.01)
+        gone_s = time.monotonic() - began
+        drain(s)
+        after = image(binary, root, s.out)
+        a, sa = list(want[0]), want[1].splitlines()
+        b, sb = cells(after)
+        delta = changed(a,b); style_delta = changed(sa,sb)
+        if delta or style_delta: problems.append(f'player stderr changed {delta} text cells / {style_delta} style rows')
+        if b'Error:' in s.out or b'AudioQueueStart' in s.out: problems.append('afplay diagnostic reached the terminal')
+        alive = children(s)
+        if alive: problems.append(f'failed player remained alive {gone_s:.1f} s after Space')
+        s.type(b'q'); s.finish(); ctx.common_checks(s,0,problems)
+        result = dict(text_cells_changed=delta, style_rows_changed=style_delta, alive=alive, seen_alive=seen,
+                      acknowledged=acked, gone_after_s=gone_s, session=n)
+        (root/'measurements.json').write_text(json.dumps(result,indent=2)+'\n')
+        print('quiet-player-stderr: '+json.dumps(result))
+        return s
+
+    s = PACED['redrive']('quiet-player-stderr', attempt, problems)
     return s, problems
 
 
 def cadence(s, binary, root):
     # Seed 7 is Dorian. Walk to the final event, then one event back to
     # the penultimate event. Its seventh is C; C3 is inside the bass bank.
-    s.type(b'\x1b[C'*200, .15)
-    s.type(b'\x1b[D', .15)
-    screen = image(binary, root, s.out).decode().split('--\n')[0].splitlines()
+    s.send(b'\x1b[C'*200)
+    ack = s.send(b'\x1b[D')
+    screen = image(binary, root, s.frame(ack['frame'])).decode().split('--\n')[0].splitlines()
     if 'Bar 9, beat 5:8' not in screen[5]:
         raise RuntimeError('cadence setup did not select the penultimate event: '+screen[5])
     label = screen[8][98:].strip()
@@ -123,8 +142,25 @@ def cadence(s, binary, root):
     if not match: raise RuntimeError('cannot read selected pitch: '+label)
     pos = int(match[3])*7 + 'CDEFGAB'.index(match[1])
     target = 21
-    s.type((b'\x1b[A' if pos < target else b'\x1b[B')*abs(target-pos), .15)
-    s.pump(1.2)  # setup players have ended before the measured storm
+    if pos != target:
+        ack = s.send((b'\x1b[A' if pos < target else b'\x1b[B')*abs(target-pos))
+    # Setup players have ended before the measured storm: the old row's 1.2 s
+    # of wall time, in the game's ticks.
+    s.until(ack['frame'] + 36)
+
+
+# The storm: forty presses at 20 Hz in the game's own ticks (three presses
+# every two ticks), each written once the trace makes it due, without waiting
+# for the last one's frame: a late wake reads several and draws them in one
+# frame, which the recording accounts for. The storm is delivered when the row
+# wrote every press within ROW_LATE_S of the trace making it due; a session in
+# which the row itself was held up is out of its case and is driven again.
+STORM_TARGETS = [(3 * i) // 2 for i in range(40)]
+# A press written within half an audition (0.5 s) of its due tick still lands
+# while the press before it sounds: still a storm. (The owner sampler's pgrep
+# spawns hold Python's GIL for up to ~20 ms, so the row is never exact.)
+ROW_LATE_S = 0.5
+LATENCY_MIN = 20
 
 
 def storm(binary, ctx):
@@ -133,99 +169,116 @@ def storm(binary, ctx):
     # An independent muted run supplies the only two permitted full frames.
     # This covers pitch/interval/judge text as well as the accidental itself;
     # no arbitrary region is masked to hide a child diagnostic.
-    ref, rr = setup(binary, ctx, 'audition-reference', mute=True)
+    ref, rr = setup(binary, ctx, 'audition-reference', mute=True, trace=True)
     cadence(ref,binary,rr)
-    natural = image(binary,rr,ref.out)
-    ref.type(b'#',.10); sharp = image(binary,rr,ref.out)
-    ref.type(b'#',.10); restored = image(binary,rr,ref.out)
+    natural = image(binary,rr,ref.frame())
+    sharp = image(binary,rr,ref.frame(ref.send(b'#')['frame']))
+    restored = image(binary,rr,ref.frame(ref.send(b'#')['frame']))
     if natural == sharp or natural != restored: problems.append('cadence fixture did not alternate two distinct spellings')
     ref.type(b'q'); ref.finish(); ctx.common_checks(ref,0,problems)
-    s, root = setup(binary,ctx,'audition-storm',trace=True)
-    cadence(s,binary,root)
-    initial = image(binary,root,s.out)
-    if initial != natural: problems.append('live and muted initial frames differ')
-    import runpy
     helpers = runpy.run_path(str(Path(__file__).with_name('storm_frames.py')))
-    polls, sent = [], []
-    s.capture_reads = True
-    start = time.monotonic()
-    sampler = helpers['ChildSampler'](lambda: children(s),start) if is_mac else None
-    if sampler is not None: sampler.begin()
-    try:
-        for index in range(40):
-            sent.append(time.monotonic())
-            os.write(s.master,b'#')
-            deadline = start+(index+1)*.05
-            while time.monotonic() < deadline:
-                s.pump(.002)
-        # Keep receiving independently through the final response budget.
-        s.pump(.10)
-    finally:
-        s.capture_reads = False
-        if sampler is not None:
-            sampler.finish()
-            polls = sampler.polls
-            problems.extend('owner observer: '+error for error in sampler.errors)
-    # The key interval is 50 ms but the frame budget is 70 ms. Capture
-    # independently of send slots so a legal late frame belongs to its
-    # actual press, not the following press. Final reads get the same budget.
-    send_span_ms = (sent[-1]-sent[0])*1000
-    if send_span_ms > 2000: problems.append(f'forty presses took {send_span_ms:.3f} ms, over two seconds')
-    measured = s.out
-    # Analyse successful write prefixes, never terminal-read chunk boundaries.
-    checker = helpers['carrying_frames']
-    # Recording is the independent ordered input journal. Trace supplies only
-    # successful byte-write boundaries; never a claimed pitch or verdict.
-    s.type(b'q'); s.finish(); ctx.common_checks(s,0,problems)
-    recorded = [int(line.split()[1]) for line in (root/'record.pk').read_text().splitlines() if line.endswith(' sharp')]
-    entry = s.out.index(b'\x1b[1;1H')
-    presses, errors = checker(recorded, s.err, s.out, entry,
-                              lambda data: image(binary,root,data), natural, sharp)
-    problems.extend(errors)
-    extra = [0 if p['correct'] else 1 for p in presses]
-    game_inner = {int(tick):int(micros)/1000 for tick,micros in
-                  re.findall(rb'trace frame (\d+) carries_key inner_us (\d+)',s.err)}
-    for p in presses:
-        p['game_inner_ms'] = game_inner.get(p['frame'])
-        arrived = next((at for at,data in s.reads if len(data)>=p['output_bytes']), None)
-        marker = f"trace output frame {p['frame']} bytes {p['output_bytes']-entry}\n".encode()
-        traced = next((at for at,data in s.trace_reads if marker in data), None)
-        # An unchanged (even-parity) batch still needs a completed frame trace.
-        completed = max(at for at in (arrived,traced) if at is not None) if arrived is not None or traced is not None else None
-        p['wall_ms'] = (completed-sent[p['press']-1])*1000 if completed is not None else None
-        (root/f"frame-{p['press']:02}.bin").write_bytes(s.out[:p['output_bytes']])
-    (root/'trace.err').write_bytes(s.err)
-    (root/'complete.bin').write_bytes(s.out)
-    final = image(binary,root,measured)
-    if final != natural: problems.append('forty recorded toggles did not restore the exact initial frame')
-    alive = max([len(p['pids']) for p in polls], default=0)
-    if is_mac and (not polls or alive == 0): problems.append('storm never observed a real player')
-    if alive > 1: problems.append(f'audition children alive: {alive}, wanted <=1')
-    latencies = [p['wall_ms'] for p in presses if p['wall_ms'] is not None]
-    # This is still write-to-parent-observation latency, not game_inner_us.
-    # Every press needs its exact complete carrying-frame state, even if a
-    # batch has an empty diff. Process polling cannot delay this receiver.
-    p99 = sorted(latencies)[math.ceil(len(latencies)*.99)-1] if len(latencies)==40 else None
-    if len(latencies)!=40: problems.append(f'only {len(latencies)}/40 presses have an exact correct carrying frame')
-    if p99 is None: problems.append('per-press p99 unavailable without forty accounted presses')
-    elif is_mac and (p99>70 or min(latencies)<0): problems.append(f'storm p99 latency {p99} ms exceeds 70 ms or frame preceded its press')
-    if b'AudioQueueStart' in s.out or b'Error:' in s.out: problems.append('player error reached terminal during storm')
-    sinks = list(root.glob('audition*.wav'))
-    if not is_mac and len(sinks)!=1: problems.append(f'Linux audition sink grew to {len(sinks)} files, wanted one rewritten file')
-    if not is_mac and (not sinks or sinks[0].read_bytes() != (root/'note-21-0.wav').read_bytes()):
-        problems.append('Linux sink did not retain the final natural C3 WAV intact')
-    inner_latencies = [p['game_inner_ms'] for p in presses if p['game_inner_ms'] is not None]
-    inner_p99 = max(inner_latencies) if len(inner_latencies)==40 else None
-    result = dict(children_alive_max=alive,p99_ms=p99,observer_p99_ms=p99,
-                  game_inner_p99_ms=inner_p99,
-                  send_gaps_ms=[(b-a)*1000 for a,b in zip(sent,sent[1:])],
-                  presses=presses,polls=polls,
-                  send_span_ms=send_span_ms,observed_frames=len(presses),
-                  unexpected_cells_max=max(extra,default=0),unexpected_cells=extra,
-                  intentional_text_cells=changed(cells(natural)[0],cells(sharp)[0]),
-                  sink_files=len(sinks),recorded=len(recorded))
-    (root/'measurements.json').write_text(json.dumps(result,indent=2)+'\n')
-    print(f'audition-storm: children max {alive}, observer p99 {p99} ms, game-inner p99 {inner_p99} ms, extra cells {max(extra,default=0)}, sink files {len(sinks)}, keys {len(recorded)}/40')
+
+    def attempt(n):
+        s, root = setup(binary,ctx,'audition-storm',trace=True)
+        cadence(s,binary,root)
+        initial = image(binary,root,s.frame())
+        if initial != natural: problems.append('live and muted initial frames differ')
+        polls = []
+        start = time.monotonic()
+        sampler = helpers['ChildSampler'](lambda: children(s),start) if is_mac else None
+        probe = PACED['StallProbe'](root)
+        if sampler is not None: sampler.begin()
+        try:
+            first = s.tick + 1
+            writes = [s.write_at(b'#', first + target) for target in STORM_TARGETS]
+            s.settle(writes[0])
+        finally:
+            probe.stop()
+            if sampler is not None:
+                sampler.finish()
+                polls = sampler.polls
+                problems.extend('owner observer: '+error for error in sampler.errors)
+        sent = [w['written'] for w in writes]
+        row_late = [w['written'] - w['due_seen'] for w in writes if w['due_seen'] is not None]
+        measured = s.frame()
+        checker = helpers['carrying_frames']
+        # Recording is the independent ordered input journal. Trace supplies only
+        # successful byte-write boundaries; never a claimed pitch or verdict.
+        s.type(b'q'); s.finish(); ctx.common_checks(s,0,problems)
+        recorded = [int(line.split()[1]) for line in (root/'record.pk').read_text().splitlines() if line.endswith(' sharp')]
+        s.verify(root/'record.pk', 'audition-storm', problems)
+        entry = s.entry()
+        presses, errors = checker(recorded, s.err, s.out, entry,
+                                  lambda data: image(binary,root,data), natural, sharp)
+        problems.extend(errors)
+        extra = [0 if p['correct'] else 1 for p in presses]
+        game_inner = {t: u/1000 for t, u, _, _ in s.carrying}
+        for p in presses:
+            p['game_inner_ms'] = game_inner.get(p['frame'])
+            arrived = s.arrived(p['output_bytes'])
+            traced = next((at for t, _, _, at in s.outputs if t == p['frame']), None)
+            # An unchanged (even-parity) batch still needs a completed frame trace.
+            completed = max(at for at in (arrived,traced) if at is not None) if arrived is not None or traced is not None else None
+            p['wall_ms'] = (completed-sent[p['press']-1])*1000 if completed is not None else None
+            p['host_stall_ms'] = probe.worst(sent[p['press']-1], completed)*1000 if completed is not None else None
+            (root/f"frame-{p['press']:02}.bin").write_bytes(s.out[:p['output_bytes']])
+        (root/'trace.err').write_bytes(s.err)
+        (root/'complete.bin').write_bytes(s.out)
+        final = image(binary,root,measured)
+        if final != natural: problems.append('forty recorded toggles did not restore the exact initial frame')
+        alive = max([len(p['pids']) for p in polls], default=0)
+        if is_mac and (not polls or alive == 0): problems.append('storm never observed a real player')
+        if alive > 1: problems.append(f'audition children alive: {alive}, wanted <=1')
+        latencies = [p['wall_ms'] for p in presses if p['wall_ms'] is not None]
+        if len(latencies)!=40: problems.append(f'only {len(latencies)}/40 presses have an exact correct carrying frame')
+        if latencies and min(latencies) < 0: problems.append('a frame preceded its press')
+        # This is still write-to-parent-observation latency, not game_inner_us,
+        # judged on the presses whose window the stall probe shows the host ran
+        # on time. Process polling cannot delay this receiver.
+        clean = [p['wall_ms'] for p in presses if p['wall_ms'] is not None and p['host_stall_ms'] == 0]
+        p99 = sorted(clean)[math.ceil(len(clean)*.99)-1] if len(clean) >= LATENCY_MIN else None
+        if p99 is not None and is_mac and p99 > 70: problems.append(f'storm p99 latency {p99} ms exceeds 70 ms over {len(clean)} presses the host ran on time')
+        if b'AudioQueueStart' in s.out or b'Error:' in s.out: problems.append('player error reached terminal during storm')
+        sinks = list(root.glob('audition*.wav'))
+        if not is_mac and len(sinks)!=1: problems.append(f'Linux audition sink grew to {len(sinks)} files, wanted one rewritten file')
+        if not is_mac and (not sinks or sinks[0].read_bytes() != (root/'note-21-0.wav').read_bytes()):
+            problems.append('Linux sink did not retain the final natural C3 WAV intact')
+        inner_latencies = [p['game_inner_ms'] for p in presses if p['game_inner_ms'] is not None]
+        inner_p99 = max(inner_latencies) if len(inner_latencies)==40 else None
+        span = presses[-1]['frame'] - presses[0]['frame'] if presses else None
+        result = dict(children_alive_max=alive,p99_ms=p99,observer_p99_ms=p99,
+                      clean_presses=len(clean),all_presses_max_ms=max(latencies,default=None),
+                      game_inner_p99_ms=inner_p99,
+                      send_gaps_ms=[(b-a)*1000 for a,b in zip(sent,sent[1:])],
+                      row_late_max_ms=max(row_late,default=0)*1000,
+                      presses=presses,polls=polls,applied_span_ticks=span,
+                      host_stalls=len(probe.stalls),host_stall_max_ms=max((d for _, d in probe.stalls), default=0)*1000,
+                      session=n,observed_frames=len(presses),
+                      unexpected_cells_max=max(extra,default=0),unexpected_cells=extra,
+                      intentional_text_cells=changed(cells(natural)[0],cells(sharp)[0]),
+                      sink_files=len(sinks),recorded=len(recorded))
+        (root/f'measurements-{n}.json').write_text(json.dumps(result,indent=2)+'\n')
+        (root/'measurements.json').write_text(json.dumps(result,indent=2)+'\n')
+        print(f'audition-storm: children max {alive}, observer p99 {p99} ms over {len(clean)}/40 presses the host ran on time, '
+              f'game-inner p99 {inner_p99} ms, extra cells {max(extra,default=0)}, sink files {len(sinks)}, keys {len(recorded)}/40, '
+              f'applied over {span} ticks, row late max {result["row_late_max_ms"]:.1f} ms, probe {result["host_stalls"]} stalls '
+              f'max {result["host_stall_max_ms"]:.1f} ms (session {n})', flush=True)
+        if max(row_late, default=0) > ROW_LATE_S:
+            return s, 'row', f'the row wrote a press {max(row_late)*1000:.1f} ms after the trace made it due'
+        if is_mac and p99 is None:
+            return s, 'latency', f'the host ran {40-len(clean)} of 40 presses late (probe: {result["host_stalls"]} stalls, max {result["host_stall_max_ms"]:.1f} ms)'
+        return s, None, None
+
+    for n in range(1, PACED['REDRIVES'] + 1):
+        s, why, detail = attempt(n)
+        if why is None: break
+        print(f'audition-storm: session {n} out of its case ({detail})' + ('; driven again' if n < PACED['REDRIVES'] else ''), flush=True)
+    else:
+        if why == 'row':
+            problems.append(f'audition-storm: SCHEDULE: the storm was never delivered in {PACED["REDRIVES"]} sessions ({detail})')
+        else:
+            print(f'SKIP audition-storm latency: the host stalled more than half the presses in {PACED["REDRIVES"]} sessions; '
+                  f'the 70 ms bar was not measured (every press judged for its state)', flush=True)
     return s, problems
 
 
@@ -238,31 +291,56 @@ def quiet_sink(binary, ctx):
 
 def hear_replaces_audition(binary, ctx):
     problems = []
-    s, root = setup(binary,ctx,'audition-hear-owner')
-    s.type(b' ',.12)
-    previous = children(s)
-    if len(previous)!=1: problems.append(f'Space did not start exactly one owned audition: {previous}')
-    sent = time.monotonic(); os.write(s.master,b'h')
-    retired = False
-    while time.monotonic()-sent < .10:
-        s.pump(.002)
-        if not set(previous).intersection(children(s)):
-            retired = True; break
-    stopped_ms = (time.monotonic()-sent)*1000
-    if not retired: problems.append('h did not kill and reap the audition within 100 ms')
-    deadline = time.monotonic()+30
-    whole = []
-    while time.monotonic()<deadline:
-        s.pump(.02)
-        for pid in children(s):
-            args = subprocess.run(['ps','-p',str(pid),'-o','args='],capture_output=True,text=True).stdout
-            if '/usr/bin/afplay' in args and '/whole-' in args: whole.append(pid)
-        if whole: break
-    if len(set(whole))!=1: problems.append(f'h did not keep its own whole-page player: {whole}')
-    s.type(b'q'); s.finish(timeout=20); ctx.common_checks(s,0,problems)
-    if children(s): problems.append('teardown left an owned player behind')
-    print(f'audition-hear-owner: retired {previous} in {stopped_ms:.3f} ms; whole {whole}')
-    (root/'measurements.json').write_text(json.dumps(dict(audition=previous,retired=retired,stop_ms=stopped_ms,whole=whole),indent=2)+'\n')
+
+    def attempt(n):
+        s, root = setup(binary,ctx,'audition-hear-owner')
+        s.type(b' ', 0)
+        # Space's acknowledgement is the owned audition it starts.
+        began = time.monotonic()
+        previous = []
+        while not previous and time.monotonic() < began + PACED['LIVENESS_S']:
+            previous = children(s)
+            s.pump(.002)
+        if len(previous)!=1: problems.append(f'Space did not start exactly one owned audition: {previous}')
+        probe = PACED['StallProbe'](root)
+        sent = time.monotonic(); os.write(s.master,b'h')
+        retired_at = None
+        # h must kill and reap the audition (a liveness bound), and within
+        # 100 ms when the host runs on time.
+        while time.monotonic()-sent < PACED['LIVENESS_S']:
+            s.pump(.002)
+            if not set(previous).intersection(children(s)):
+                retired_at = time.monotonic(); break
+        probe.stop()
+        stopped_ms = ((retired_at or time.monotonic())-sent)*1000
+        stall_ms = probe.worst(sent, sent + max(stopped_ms, 100)/1000)*1000
+        if retired_at is None: problems.append('h did not kill and reap the audition')
+        elif stopped_ms > 100 and stall_ms == 0: problems.append(f'h did not kill and reap the audition within 100 ms ({stopped_ms:.3f} ms, the host on time)')
+        deadline = time.monotonic()+30
+        whole = []
+        while time.monotonic()<deadline:
+            s.pump(.02)
+            for pid in children(s):
+                args = subprocess.run(['ps','-p',str(pid),'-o','args='],capture_output=True,text=True).stdout
+                if '/usr/bin/afplay' in args and '/whole-' in args: whole.append(pid)
+            if whole: break
+        if len(set(whole))!=1: problems.append(f'h did not keep its own whole-page player: {whole}')
+        s.type(b'q'); s.finish(timeout=20); ctx.common_checks(s,0,problems)
+        if children(s): problems.append('teardown left an owned player behind')
+        print(f'audition-hear-owner: retired {previous} in {stopped_ms:.3f} ms; whole {whole}; '
+              f'host stall in the window {stall_ms:.1f} ms (session {n})', flush=True)
+        (root/'measurements.json').write_text(json.dumps(dict(audition=previous,retired=retired_at is not None,stop_ms=stopped_ms,
+                                                              host_stall_ms=stall_ms,whole=whole,session=n),indent=2)+'\n')
+        return s, retired_at is not None and stopped_ms > 100 and stall_ms > 0, stall_ms
+
+    for n in range(1, PACED['REDRIVES'] + 1):
+        s, unmeasured, stall_ms = attempt(n)
+        if not unmeasured: break
+        print(f'audition-hear-owner: session {n} out of its case (the host stalled {stall_ms:.1f} ms in the 100 ms window)'
+              + ('; driven again' if n < PACED['REDRIVES'] else ''), flush=True)
+    else:
+        print(f'SKIP audition-hear-owner latency: the host stalled the retire window in {PACED["REDRIVES"]} sessions; '
+              f'the 100 ms bar was not measured (the retire itself judged)', flush=True)
     return s,problems
 
 
