@@ -289,8 +289,8 @@ def storm(binary, ctx):
         if why == 'row':
             problems.append(f'audition-storm: SCHEDULE: the storm was never delivered in {PACED["REDRIVES"]} sessions ({detail})')
         else:
-            print(f'SKIP audition-storm latency: the host stalled more than half the presses in {PACED["REDRIVES"]} sessions; '
-                  f'the 70 ms bar was not measured (every press judged for its state)', flush=True)
+            problems.append(f'audition-storm: SCHEDULE: the host stalled more than half the presses in each of '
+                            f'{PACED["REDRIVES"]} sessions; the 70 ms bar was never measured ({detail})')
     return s, problems
 
 
@@ -351,8 +351,8 @@ def hear_replaces_audition(binary, ctx):
         print(f'audition-hear-owner: session {n} out of its case (the host stalled {stall_ms:.1f} ms in the 100 ms window)'
               + ('; driven again' if n < PACED['REDRIVES'] else ''), flush=True)
     else:
-        print(f'SKIP audition-hear-owner latency: the host stalled the retire window in {PACED["REDRIVES"]} sessions; '
-              f'the 100 ms bar was not measured (the retire itself judged)', flush=True)
+        problems.append(f'audition-hear-owner: SCHEDULE: the host stalled the retire window in each of '
+                        f'{PACED["REDRIVES"]} sessions; the 100 ms bar was never measured')
     return s,problems
 
 
