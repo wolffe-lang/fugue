@@ -1,0 +1,25 @@
+pk 1
+seed 7
+tier plain
+size 80x24
+start 20001
+# score 0
+t 6 right
+t 8 right
+t 11 right
+t 13 right
+t 16 right
+t 18 right
+t 21 right
+t 24 right
+t 26 left
+t 30 left
+t 30 left
+t 37 left
+t 40 left
+t 43 left
+t 45 left
+t 48 left
+t 50 sound
+t 54 quit
+# books fugue 3 0 0 0 0 0 0 0

@@ -1,0 +1,30 @@
+pk 1
+seed 7
+tier plain
+size 120x40
+start 22001
+# score 0
+t 5 new
+t 5 new
+t 6 right
+t 13 left
+t 19 right
+t 21 right
+t 21 right
+t 22 right
+t 23 right
+t 24 right
+t 25 right
+t 26 right
+t 27 right
+t 34 left
+t 35 left
+t 37 left
+t 37 left
+t 38 left
+t 39 left
+t 41 left
+t 42 left
+t 42 left
+t 49 quit
+# books fugue 3 0 0 0 0 0 0 0
