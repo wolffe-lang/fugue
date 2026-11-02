@@ -1,0 +1,6 @@
+pty: cursor-same-frame FAILED (darwin arm64):
+pty: fugue-cursor-same-frame FAILED (darwin arm64):
+pty: event-caret FAILED (darwin arm64):
+  - 80x24-rich-sound: ACK: acknowledged frames [], the recording carries [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+  - 80x24-rich-sound: ACK: a single key acknowledged by frame 1, which carries 0 recorded keys
+  - 80x24-rich-sound: ACK: a single key acknowledged by frame 2, which carries 1 recorded keys

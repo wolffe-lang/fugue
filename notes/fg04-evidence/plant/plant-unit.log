@@ -1,0 +1,87 @@
+test_a_catch_up_frame_carries_the_key_trunk_left_unaccounted (__main__.CarryingFrames.test_a_catch_up_frame_carries_the_key_trunk_left_unaccounted) ... ok
+test_keys_are_cut_whole (__main__.Keys.test_keys_are_cut_whole) ... ok
+test_pieces_never_split_a_key_and_fit_one_read (__main__.Keys.test_pieces_never_split_a_key_and_fit_one_read) ... ok
+test_a_batch_is_acknowledged_once_all_of_it_is_applied (__main__.Protocol.test_a_batch_is_acknowledged_once_all_of_it_is_applied) ... FAIL
+test_a_scheduled_stream_a_stall_coalesces_is_acknowledged_whole (__main__.Protocol.test_a_scheduled_stream_a_stall_coalesces_is_acknowledged_whole) ... ok
+test_a_stalled_wake_catches_up_and_every_ack_is_still_exact (__main__.Protocol.test_a_stalled_wake_catches_up_and_every_ack_is_still_exact) ... FAIL
+test_a_tick_read_off_by_one_is_red (__main__.Protocol.test_a_tick_read_off_by_one_is_red) ... FAIL
+test_one_key_a_tick_is_acknowledged_by_its_own_frame (__main__.Protocol.test_one_key_a_tick_is_acknowledged_by_its_own_frame) ... FAIL
+test_a_key_the_recording_never_acknowledged_is_red (__main__.Verify.test_a_key_the_recording_never_acknowledged_is_red) ... ok
+test_acks_agreeing_with_the_recording_pass (__main__.Verify.test_acks_agreeing_with_the_recording_pass) ... ok
+test_an_ack_read_off_by_one_is_red_by_name (__main__.Verify.test_an_ack_read_off_by_one_is_red_by_name) ... ok
+test_parser_reads_whole_lines_once (__main__.Verify.test_parser_reads_whole_lines_once) ... ok
+
+======================================================================
+FAIL: test_a_batch_is_acknowledged_once_all_of_it_is_applied (__main__.Protocol.test_a_batch_is_acknowledged_once_all_of_it_is_applied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mfwolffe/lanes/fg04/plant/tests/test_paced.py", line 234, in test_a_batch_is_acknowledged_once_all_of_it_is_applied
+    self.assertEqual(problems, [])
+AssertionError: Lists differ: ['fake: ACK: acknowledged frames [2, 10], [113 chars]eys'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'fake: ACK: acknowledged frames [2, 10], the recording carries [2, 10, 13]'
+
++ []
+- ['fake: ACK: acknowledged frames [2, 10], the recording carries [2, 10, 13]',
+-  'fake: ACK: a single key acknowledged by frame 12, which carries 0 recorded '
+-  'keys']
+
+======================================================================
+FAIL: test_a_stalled_wake_catches_up_and_every_ack_is_still_exact (__main__.Protocol.test_a_stalled_wake_catches_up_and_every_ack_is_still_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mfwolffe/lanes/fg04/plant/tests/test_paced.py", line 222, in test_a_stalled_wake_catches_up_and_every_ack_is_still_exact
+    self.assertEqual(problems, [])
+AssertionError: Lists differ: ['fake: ACK: acknowledged frames [], the r[1707 chars]eys'] != []
+
+First list contains 21 additional elements.
+First extra element 0:
+'fake: ACK: acknowledged frames [], the recording carries [2, 3, 4, 5, 6, 7, 8, 14, 15, 16, 17, 18]'
+
+Diff is 1948 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_a_tick_read_off_by_one_is_red (__main__.Protocol.test_a_tick_read_off_by_one_is_red)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mfwolffe/lanes/fg04/plant/tests/test_paced.py", line 255, in test_a_tick_read_off_by_one_is_red
+    self.assertEqual(problems, [])
+AssertionError: Lists differ: ['fake: ACK: acknowledged frames [], the r[439 chars]eys'] != []
+
+First list contains 6 additional elements.
+First extra element 0:
+'fake: ACK: acknowledged frames [], the recording carries [2, 3, 4, 5, 6]'
+
++ []
+- ['fake: ACK: acknowledged frames [], the recording carries [2, 3, 4, 5, 6]',
+-  'fake: ACK: a single key acknowledged by frame 1, which carries 0 recorded '
+-  'keys',
+-  'fake: ACK: a single key acknowledged by frame 2, which carries 1 recorded '
+-  'keys',
+-  'fake: ACK: a single key acknowledged by frame 3, which carries 1 recorded '
+-  'keys',
+-  'fake: ACK: a single key acknowledged by frame 4, which carries 1 recorded '
+-  'keys',
+-  'fake: ACK: a single key acknowledged by frame 5, which carries 1 recorded '
+-  'keys']
+
+======================================================================
+FAIL: test_one_key_a_tick_is_acknowledged_by_its_own_frame (__main__.Protocol.test_one_key_a_tick_is_acknowledged_by_its_own_frame)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mfwolffe/lanes/fg04/plant/tests/test_paced.py", line 215, in test_one_key_a_tick_is_acknowledged_by_its_own_frame
+    self.assertEqual(problems, [])
+AssertionError: Lists differ: ['fake: ACK: acknowledged frames [], the r[1041 chars]eys'] != []
+
+First list contains 13 additional elements.
+First extra element 0:
+'fake: ACK: acknowledged frames [], the recording carries [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]'
+
+Diff is 1210 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 12 tests in 4.161s
+
+FAILED (failures=4)
