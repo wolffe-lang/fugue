@@ -61,16 +61,6 @@ def children(s):
     return [int(pid) for pid in p.stdout.split()]
 
 
-def present(pid):
-    """Whether pid names a live process (on macOS getpgid fails for a zombie,
-    as pgrep -P skips one), by a syscall that sends nothing."""
-    try:
-        os.getpgid(pid)
-        return True
-    except ProcessLookupError:
-        return False
-
-
 def drain(s):
     """Read every byte already on the terminal (and stderr), without waiting."""
     import select
@@ -331,24 +321,26 @@ def hear_replaces_audition(binary, ctx):
         if len(previous)!=1: problems.append(f'Space did not start exactly one owned audition: {previous}')
         probe = PACED['StallProbe'](root)
         sent = time.monotonic(); os.write(s.master,b'h')
-        retired_at = polled_ms = None
-        # h must stop the audition (a liveness bound), and within 100 ms when
-        # the host runs on time, as trunk's row counted it: a check begun
-        # within 100 ms of h finds the audition gone. Gone means what trunk's
-        # pgrep -P meant (it lists no zombie): the audition's own pid no longer
-        # names a live process. The check is os.getpgid on that pid (no process
-        # spawned, no signal), so the observer's own pgrep spawns, slow in a
-        # busy clamp, are not what is timed.
+        retired_at = polled_ms = None; rendered_first = False
+        # h must stop the audition (a liveness bound) before it renders the
+        # whole piece: an order no host speed changes (no whole-*.wav may exist
+        # while the audition is alive; the WAV is checked before the process
+        # table, so a hit means the audition outlived the render). And within
+        # 100 ms when the host runs on time, measured exactly as trunk's row
+        # measured it: a pgrep -P begun within 100 ms of h finds it gone.
         while time.monotonic()-sent < PACED['LIVENESS_S']:
-            s.pump(.001)
+            s.pump(.002)
             began = time.monotonic()
-            if not any(present(pid) for pid in previous):
+            wav = any(root.glob('whole-*.wav'))
+            if not set(previous).intersection(children(s)):
                 retired_at = time.monotonic(); polled_ms = (began-sent)*1000; break
+            if wav: rendered_first = True
         probe.stop()
         stopped_ms = ((retired_at or time.monotonic())-sent)*1000
         stall_ms = probe.worst(sent, sent + max(stopped_ms, 100)/1000)*1000
         if retired_at is None: problems.append('h did not kill and reap the audition')
         elif polled_ms > 100 and stall_ms == 0: problems.append(f'h did not kill and reap the audition within 100 ms (seen gone by a poll begun at {polled_ms:.3f} ms, the host on time)')
+        if rendered_first: problems.append('h rendered the whole piece before it stopped the audition')
         deadline = time.monotonic()+30
         whole = []
         while time.monotonic()<deadline:
@@ -364,6 +356,7 @@ def hear_replaces_audition(binary, ctx):
               f'{polled_ms if polled_ms is None else round(polled_ms, 3)} ms); whole {whole}; '
               f'host stall in the window {stall_ms:.1f} ms (session {n})', flush=True)
         (root/'measurements.json').write_text(json.dumps(dict(audition=previous,retired=retired_at is not None,stop_ms=stopped_ms,polled_ms=polled_ms,
+                                                              rendered_first=rendered_first,
                                                               host_stall_ms=stall_ms,whole=whole,session=n),indent=2)+'\n')
         return s, retired_at is not None and polled_ms > 100 and stall_ms > 0, stall_ms
 
