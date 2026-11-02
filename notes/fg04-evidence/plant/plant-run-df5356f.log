@@ -1,0 +1,4 @@
+fg04: 19:43:35 gate ok: 10174 MiB free+inactive+speculative
+PLANT-UNIT exit=1
+PLANT-PTY exit=1
+fg04: 19:45:19 lock released (exit 0); 60 s before the next take
