@@ -132,9 +132,11 @@ def quiet_failure(binary, ctx):
             s.pump(.01)
         gone_s = time.monotonic() - began
         drain(s)
-        after = image(binary, root, s.out)
+        # Both sides as glyphs and styles alone (the replayed .sty has no
+        # --apply tail line).
+        after = PACED['applied'](binary, root, s.out, SIZE)
         a, sa = list(want[0]), want[1].splitlines()
-        b, sb = cells(after)
+        b, sb = list(after[0]), after[1].splitlines()
         delta = changed(a,b); style_delta = changed(sa,sb)
         if delta or style_delta: problems.append(f'player stderr changed {delta} text cells / {style_delta} style rows')
         if b'Error:' in s.out or b'AudioQueueStart' in s.out: problems.append('afplay diagnostic reached the terminal')
