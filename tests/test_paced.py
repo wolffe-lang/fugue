@@ -1,5 +1,6 @@
 """tests/paced.py's rows: key cutting, the carrying-frame map, the trace parser,
-the acknowledgement check, and the whole protocol against a stand-in game.
+the acknowledgement check, the whole protocol against a stand-in game, and the
+stall probe's window.
 
 The stand-in (FAKE below) follows the rules of src/fugue.lu's live loop that
 the injector relies on, in a real pty: it reads at most 256 bytes when it
@@ -259,6 +260,28 @@ class Protocol(unittest.TestCase):
         problems = []
         s.verify(self.record, 'fake', problems)
         self.assertTrue(any('ACK:' in p for p in problems), problems)
+
+class Probe(unittest.TestCase):
+    """The stall probe vouches only for the time it ran: a row writes into its
+    window at once (audition-hear-owner writes h right after starting it), so
+    the probe must be running when it is handed back, and a window opening
+    before its start can never read as the host on time."""
+
+    def test_the_probe_is_running_when_it_is_handed_back(self):
+        SCRATCH.mkdir(parents=True, exist_ok=True)
+        before = time.monotonic()
+        probe = P['StallProbe'](SCRATCH)
+        after = time.monotonic()
+        probe.stop()
+        self.assertLessEqual(before, probe.started)
+        self.assertLessEqual(probe.started, after)
+
+    def test_a_window_before_the_probe_ran_is_never_on_time(self):
+        SCRATCH.mkdir(parents=True, exist_ok=True)
+        probe = P['StallProbe'](SCRATCH)
+        probe.stop()
+        self.assertGreater(probe.worst(probe.started - 0.05, probe.started + 0.01), 0.049)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
