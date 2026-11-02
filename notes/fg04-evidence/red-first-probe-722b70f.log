@@ -1,0 +1,90 @@
+fg04: 13:37:31 gate ok: 12711 MiB free+inactive+speculative
+RED at 722b70f
+test_a_catch_up_frame_carries_the_key_trunk_left_unaccounted (__main__.CarryingFrames.test_a_catch_up_frame_carries_the_key_trunk_left_unaccounted) ... ok
+test_keys_are_cut_whole (__main__.Keys.test_keys_are_cut_whole) ... ok
+test_pieces_never_split_a_key_and_fit_one_read (__main__.Keys.test_pieces_never_split_a_key_and_fit_one_read) ... ok
+test_a_window_before_the_probe_ran_is_never_on_time (__main__.Probe.test_a_window_before_the_probe_ran_is_never_on_time) ... ERROR
+test_the_probe_is_running_when_it_is_handed_back (__main__.Probe.test_the_probe_is_running_when_it_is_handed_back) ... ERROR
+test_a_batch_is_acknowledged_once_all_of_it_is_applied (__main__.Protocol.test_a_batch_is_acknowledged_once_all_of_it_is_applied) ... ok
+test_a_scheduled_stream_a_stall_coalesces_is_acknowledged_whole (__main__.Protocol.test_a_scheduled_stream_a_stall_coalesces_is_acknowledged_whole) ... ok
+test_a_stalled_wake_catches_up_and_every_ack_is_still_exact (__main__.Protocol.test_a_stalled_wake_catches_up_and_every_ack_is_still_exact) ... ok
+test_a_tick_read_off_by_one_is_red (__main__.Protocol.test_a_tick_read_off_by_one_is_red) ... ok
+test_one_key_a_tick_is_acknowledged_by_its_own_frame (__main__.Protocol.test_one_key_a_tick_is_acknowledged_by_its_own_frame) ... ok
+test_a_key_the_recording_never_acknowledged_is_red (__main__.Verify.test_a_key_the_recording_never_acknowledged_is_red) ... ok
+test_acks_agreeing_with_the_recording_pass (__main__.Verify.test_acks_agreeing_with_the_recording_pass) ... ok
+test_an_ack_read_off_by_one_is_red_by_name (__main__.Verify.test_an_ack_read_off_by_one_is_red_by_name) ... ok
+test_parser_reads_whole_lines_once (__main__.Verify.test_parser_reads_whole_lines_once) ... ok
+
+======================================================================
+ERROR: test_a_window_before_the_probe_ran_is_never_on_time (__main__.Probe.test_a_window_before_the_probe_ran_is_never_on_time)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mfwolffe/lanes/fg04/unit-722b70f/tests/test_paced.py", line 283, in test_a_window_before_the_probe_ran_is_never_on_time
+    self.assertGreater(probe.worst(probe.started - 0.05, probe.started + 0.01), 0.049)
+                                   ^^^^^^^^^^^^^
+AttributeError: 'StallProbe' object has no attribute 'started'
+
+======================================================================
+ERROR: test_the_probe_is_running_when_it_is_handed_back (__main__.Probe.test_the_probe_is_running_when_it_is_handed_back)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/mfwolffe/lanes/fg04/unit-722b70f/tests/test_paced.py", line 276, in test_the_probe_is_running_when_it_is_handed_back
+    self.assertLessEqual(before, probe.started)
+                                 ^^^^^^^^^^^^^
+AttributeError: 'StallProbe' object has no attribute 'started'
+
+----------------------------------------------------------------------
+Ran 14 tests in 4.171s
+
+FAILED (errors=2)
+END red-unit exit=1
+GREEN at ed7388d
+test_a_catch_up_frame_carries_the_key_trunk_left_unaccounted (__main__.CarryingFrames.test_a_catch_up_frame_carries_the_key_trunk_left_unaccounted) ... ok
+test_keys_are_cut_whole (__main__.Keys.test_keys_are_cut_whole) ... ok
+test_pieces_never_split_a_key_and_fit_one_read (__main__.Keys.test_pieces_never_split_a_key_and_fit_one_read) ... ok
+test_a_window_before_the_probe_ran_is_never_on_time (__main__.Probe.test_a_window_before_the_probe_ran_is_never_on_time) ... ok
+test_the_probe_is_running_when_it_is_handed_back (__main__.Probe.test_the_probe_is_running_when_it_is_handed_back) ... ok
+test_a_batch_is_acknowledged_once_all_of_it_is_applied (__main__.Protocol.test_a_batch_is_acknowledged_once_all_of_it_is_applied) ... ok
+test_a_scheduled_stream_a_stall_coalesces_is_acknowledged_whole (__main__.Protocol.test_a_scheduled_stream_a_stall_coalesces_is_acknowledged_whole) ... ok
+test_a_stalled_wake_catches_up_and_every_ack_is_still_exact (__main__.Protocol.test_a_stalled_wake_catches_up_and_every_ack_is_still_exact) ... ok
+test_a_tick_read_off_by_one_is_red (__main__.Protocol.test_a_tick_read_off_by_one_is_red) ... ok
+test_one_key_a_tick_is_acknowledged_by_its_own_frame (__main__.Protocol.test_one_key_a_tick_is_acknowledged_by_its_own_frame) ... ok
+test_a_key_the_recording_never_acknowledged_is_red (__main__.Verify.test_a_key_the_recording_never_acknowledged_is_red) ... ok
+test_acks_agreeing_with_the_recording_pass (__main__.Verify.test_acks_agreeing_with_the_recording_pass) ... ok
+test_an_ack_read_off_by_one_is_red_by_name (__main__.Verify.test_an_ack_read_off_by_one_is_red_by_name) ... ok
+test_parser_reads_whole_lines_once (__main__.Verify.test_parser_reads_whole_lines_once) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 4.168s
+
+OK
+END paced-unit exit=0
+test_a_catch_up_frame_carries_the_key_trunk_left_unaccounted (<run_path>.CarryingFrames.test_a_catch_up_frame_carries_the_key_trunk_left_unaccounted) ... ok
+test_keys_are_cut_whole (<run_path>.Keys.test_keys_are_cut_whole) ... ok
+test_pieces_never_split_a_key_and_fit_one_read (<run_path>.Keys.test_pieces_never_split_a_key_and_fit_one_read) ... ok
+test_blocked_process_poll_cannot_block_forty_key_deliveries (__main__.OwnerObserver.test_blocked_process_poll_cannot_block_forty_key_deliveries) ... ok
+test_owner_sampler_never_hides_a_real_overlap (__main__.OwnerObserver.test_owner_sampler_never_hides_a_real_overlap) ... ok
+test_a_window_before_the_probe_ran_is_never_on_time (<run_path>.Probe.test_a_window_before_the_probe_ran_is_never_on_time) ... ok
+test_the_probe_is_running_when_it_is_handed_back (<run_path>.Probe.test_the_probe_is_running_when_it_is_handed_back) ... ok
+test_a_batch_is_acknowledged_once_all_of_it_is_applied (<run_path>.Protocol.test_a_batch_is_acknowledged_once_all_of_it_is_applied) ... ok
+test_a_scheduled_stream_a_stall_coalesces_is_acknowledged_whole (<run_path>.Protocol.test_a_scheduled_stream_a_stall_coalesces_is_acknowledged_whole) ... ok
+test_a_stalled_wake_catches_up_and_every_ack_is_still_exact (<run_path>.Protocol.test_a_stalled_wake_catches_up_and_every_ack_is_still_exact) ... ok
+test_a_tick_read_off_by_one_is_red (<run_path>.Protocol.test_a_tick_read_off_by_one_is_red) ... ok
+test_one_key_a_tick_is_acknowledged_by_its_own_frame (<run_path>.Protocol.test_one_key_a_tick_is_acknowledged_by_its_own_frame) ... ok
+test_coalesced_terminal_read_keeps_forty_frames (__main__.StormFrames.test_coalesced_terminal_read_keeps_forty_frames) ... ok
+test_dropped_press_frame_cannot_pass (__main__.StormFrames.test_dropped_press_frame_cannot_pass) ... ok
+test_forty_separate_frames (__main__.StormFrames.test_forty_separate_frames) ... ok
+test_last_frame_cannot_hide_missing_intermediate (__main__.StormFrames.test_last_frame_cannot_hide_missing_intermediate) ... ok
+test_missing_boundary_is_not_a_completed_press (__main__.StormFrames.test_missing_boundary_is_not_a_completed_press) ... ok
+test_twenty_two_press_batches_still_account_forty (__main__.StormFrames.test_twenty_two_press_batches_still_account_forty) ... ok
+test_a_key_the_recording_never_acknowledged_is_red (<run_path>.Verify.test_a_key_the_recording_never_acknowledged_is_red) ... ok
+test_acks_agreeing_with_the_recording_pass (<run_path>.Verify.test_acks_agreeing_with_the_recording_pass) ... ok
+test_an_ack_read_off_by_one_is_red_by_name (<run_path>.Verify.test_an_ack_read_off_by_one_is_red_by_name) ... ok
+test_parser_reads_whole_lines_once (<run_path>.Verify.test_parser_reads_whole_lines_once) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 4.196s
+
+OK
+END storm-unit exit=0
+fg04: 13:37:43 lock released (exit 0); 60 s before the next take

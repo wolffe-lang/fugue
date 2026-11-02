@@ -1,0 +1,93 @@
+fg04: 13:33:01 gate ok: 12891 MiB free+inactive+speculative
+level 0 (default QoS, no load)
+probe-gap: start 1: the probe ran 7.871 ms after its Popen
+probe-gap: start 2: the probe ran 8.914 ms after its Popen
+probe-gap: start 3: the probe ran 9.343 ms after its Popen
+probe-gap: start 4: the probe ran 9.305 ms after its Popen
+probe-gap: start 5: the probe ran 9.315 ms after its Popen
+probe-gap: start 6: the probe ran 8.838 ms after its Popen
+probe-gap: start 7: the probe ran 9.310 ms after its Popen
+probe-gap: start 8: the probe ran 8.589 ms after its Popen
+probe-gap: start 9: the probe ran 8.105 ms after its Popen
+probe-gap: start 10: the probe ran 8.342 ms after its Popen
+probe-gap: start 11: the probe ran 8.581 ms after its Popen
+probe-gap: start 12: the probe ran 8.281 ms after its Popen
+probe-gap: start 13: the probe ran 8.523 ms after its Popen
+probe-gap: start 14: the probe ran 8.336 ms after its Popen
+probe-gap: start 15: the probe ran 8.172 ms after its Popen
+probe-gap: start 16: the probe ran 8.653 ms after its Popen
+probe-gap: start 17: the probe ran 8.260 ms after its Popen
+probe-gap: start 18: the probe ran 8.337 ms after its Popen
+probe-gap: start 19: the probe ran 8.481 ms after its Popen
+probe-gap: start 20: the probe ran 8.764 ms after its Popen
+probe-gap: 20 starts: min 7.871 ms, median 8.552 ms, max 9.343 ms
+level 0c (the clamp, no load)
+probe-gap: start 1: the probe ran 14.424 ms after its Popen
+probe-gap: start 2: the probe ran 18.604 ms after its Popen
+probe-gap: start 3: the probe ran 17.648 ms after its Popen
+probe-gap: start 4: the probe ran 17.112 ms after its Popen
+probe-gap: start 5: the probe ran 20.123 ms after its Popen
+probe-gap: start 6: the probe ran 21.348 ms after its Popen
+probe-gap: start 7: the probe ran 23.687 ms after its Popen
+probe-gap: start 8: the probe ran 19.744 ms after its Popen
+probe-gap: start 9: the probe ran 20.800 ms after its Popen
+probe-gap: start 10: the probe ran 20.673 ms after its Popen
+probe-gap: start 11: the probe ran 20.077 ms after its Popen
+probe-gap: start 12: the probe ran 20.191 ms after its Popen
+probe-gap: start 13: the probe ran 20.291 ms after its Popen
+probe-gap: start 14: the probe ran 18.061 ms after its Popen
+probe-gap: start 15: the probe ran 21.779 ms after its Popen
+probe-gap: start 16: the probe ran 22.335 ms after its Popen
+probe-gap: start 17: the probe ran 20.501 ms after its Popen
+probe-gap: start 18: the probe ran 16.515 ms after its Popen
+probe-gap: start 19: the probe ran 15.752 ms after its Popen
+probe-gap: start 20: the probe ran 18.772 ms after its Popen
+probe-gap: 20 starts: min 14.424 ms, median 20.100 ms, max 23.687 ms
+stall: load 0, 6 s, the command's exit 0
+level 2
+probe-gap: start 1: the probe ran 15.212 ms after its Popen
+probe-gap: start 2: the probe ran 17.977 ms after its Popen
+probe-gap: start 3: the probe ran 18.303 ms after its Popen
+probe-gap: start 4: the probe ran 18.969 ms after its Popen
+probe-gap: start 5: the probe ran 16.747 ms after its Popen
+probe-gap: start 6: the probe ran 16.442 ms after its Popen
+probe-gap: start 7: the probe ran 23.130 ms after its Popen
+probe-gap: start 8: the probe ran 18.896 ms after its Popen
+probe-gap: start 9: the probe ran 19.445 ms after its Popen
+probe-gap: start 10: the probe ran 19.379 ms after its Popen
+probe-gap: start 11: the probe ran 19.975 ms after its Popen
+probe-gap: start 12: the probe ran 16.736 ms after its Popen
+probe-gap: start 13: the probe ran 17.887 ms after its Popen
+probe-gap: start 14: the probe ran 20.778 ms after its Popen
+probe-gap: start 15: the probe ran 17.124 ms after its Popen
+probe-gap: start 16: the probe ran 20.920 ms after its Popen
+probe-gap: start 17: the probe ran 22.819 ms after its Popen
+probe-gap: start 18: the probe ran 18.079 ms after its Popen
+probe-gap: start 19: the probe ran 18.832 ms after its Popen
+probe-gap: start 20: the probe ran 18.838 ms after its Popen
+probe-gap: 20 starts: min 15.212 ms, median 18.835 ms, max 23.130 ms
+stall: load 2, 6 s, the command's exit 0
+level 3
+probe-gap: start 1: the probe ran 18.157 ms after its Popen
+probe-gap: start 2: the probe ran 21.797 ms after its Popen
+probe-gap: start 3: the probe ran 21.009 ms after its Popen
+probe-gap: start 4: the probe ran 16.921 ms after its Popen
+probe-gap: start 5: the probe ran 18.163 ms after its Popen
+probe-gap: start 6: the probe ran 21.372 ms after its Popen
+probe-gap: start 7: the probe ran 19.121 ms after its Popen
+probe-gap: start 8: the probe ran 23.428 ms after its Popen
+probe-gap: start 9: the probe ran 17.497 ms after its Popen
+probe-gap: start 10: the probe ran 23.340 ms after its Popen
+probe-gap: start 11: the probe ran 18.233 ms after its Popen
+probe-gap: start 12: the probe ran 23.015 ms after its Popen
+probe-gap: start 13: the probe ran 19.035 ms after its Popen
+probe-gap: start 14: the probe ran 20.366 ms after its Popen
+probe-gap: start 15: the probe ran 23.704 ms after its Popen
+probe-gap: start 16: the probe ran 22.932 ms after its Popen
+probe-gap: start 17: the probe ran 20.429 ms after its Popen
+probe-gap: start 18: the probe ran 18.376 ms after its Popen
+probe-gap: start 19: the probe ran 18.953 ms after its Popen
+probe-gap: start 20: the probe ran 21.291 ms after its Popen
+probe-gap: 20 starts: min 16.921 ms, median 20.397 ms, max 23.704 ms
+stall: load 3, 6 s, the command's exit 0
+fg04: 13:33:23 lock released (exit 0); 60 s before the next take
