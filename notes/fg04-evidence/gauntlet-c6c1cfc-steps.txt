@@ -1,0 +1,37 @@
+fg04: 19:24:59 gate ok: 9509 MiB free+inactive+speculative
+BEGIN paced-unit 19:24:59
+END paced-unit exit=0 19:25:03
+BEGIN storm-unit 19:25:03
+END storm-unit exit=0 19:25:12
+BEGIN lair-check 19:25:12
+wolf test: 227 passed; 0 failed; 0 rejected; 0 unsupported; 0 filtered out
+test: 0 SKIP lines
+check: green
+END lair-check exit=0 19:34:06
+BEGIN goldens-native 19:34:06
+END goldens-native exit=0 19:34:18
+BEGIN gameplay-native 19:34:18
+END gameplay-native exit=0 19:34:19
+BEGIN gameplay-release 19:34:19
+END gameplay-release exit=0 19:34:20
+BEGIN glyphs 19:34:20
+END glyphs exit=0 19:34:20
+BEGIN staff-native 19:34:20
+END staff-native exit=0 19:34:21
+BEGIN staff-release 19:34:21
+END staff-release exit=0 19:34:21
+BEGIN species-native 19:34:21
+END species-native exit=0 19:35:53
+BEGIN species-release 19:35:53
+END species-release exit=0 19:37:04
+BEGIN pitch-native 19:37:04
+END pitch-native exit=0 19:37:14
+BEGIN pitch-release 19:37:14
+END pitch-release exit=0 19:37:21
+BEGIN fugue-native 19:37:21
+END fugue-native exit=0 19:39:15
+BEGIN fugue-release 19:39:15
+END fugue-release exit=0 19:40:41
+BEGIN pty-native 19:40:41
+END pty-native exit=0 19:42:35
+GAUNTLET GREEN
