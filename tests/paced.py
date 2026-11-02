@@ -439,6 +439,7 @@ import os, select, sys, time
 TICK = 1 / 30
 start = time.monotonic(); k = 1
 waiter = select.poll(); waiter.register(0, select.POLLIN | select.POLLHUP)
+sys.stderr.write('start %%.6f\n' %% start); sys.stderr.flush()
 while True:
     due = start + k * TICK
     ready = waiter.poll(max(0.0, due - time.monotonic()) * 1000)
@@ -457,31 +458,49 @@ class StallProbe:
     """The host's stalls, measured by a process of their own that waits the
     way the game does: a 30 Hz timed poll(2) (lair's clock waits in poll;
     macOS coalesces select(2) and sleep timeouts in the background QoS
-    clamp by up to 200 ms but not poll's), catching up when it wakes late. A tick it wakes for more than `slack` late is a stall (the
-    tick's due time and the lateness, on the monotonic clock every process
-    shares). It runs in the row's scheduling class, ends when its stdin
-    closes (no signal), and sees the host's timers and CPU, never the game's
-    own work: a blocking handoff in the game does not make it late."""
+    clamp by up to 200 ms but not poll's), catching up when it wakes late.
+    A tick it wakes for more than `slack` late is a stall (the tick's due time
+    and the lateness, on the monotonic clock every process shares). It runs in
+    the row's scheduling class, ends when its stdin closes (no signal), and
+    sees the host's timers and CPU, never the game's own work: a blocking
+    handoff in the game does not make it late.
+
+    It vouches only for the time it ran. The constructor returns once the
+    probe's own script is running (its first line, `start T`, read from its
+    stderr), so neither its start-up (15-24 ms of a core in the clamp,
+    `notes/fg04-evidence/probe-gap.py`) nor an unmeasured stretch falls in the
+    window a row opens next; and a window opening before `started` reads as
+    stalled for the stretch the probe did not see, never as on time."""
 
     def __init__(self, scratch, slack=STALL_SLACK_S):
         import subprocess, sys
         self.path = os.path.join(str(scratch), 'stall-probe.txt')
         self.out = open(self.path, 'w')
         self.proc = subprocess.Popen([sys.executable, '-I', '-c', PROBE % {'slack': slack}],
-                                     stdin=subprocess.PIPE, stdout=self.out)
+                                     stdin=subprocess.PIPE, stdout=self.out, stderr=subprocess.PIPE)
         self.stalls = None
+        waiter = select.poll(); waiter.register(self.proc.stderr, select.POLLIN | select.POLLHUP)
+        line = self.proc.stderr.readline() if waiter.poll(LIVENESS_S * 1000) else b''
+        if not line.startswith(b'start '):
+            self.proc.stdin.close(); self.proc.wait(); self.out.close()
+            raise RuntimeError(f'the stall probe did not start within {LIVENESS_S:.0f} s: {line!r}')
+        self.started = float(line.split()[1])
 
     def stop(self):
         self.proc.stdin.close()
         self.proc.wait()
+        self.proc.stderr.close()
         self.out.close()
         with open(self.path) as f:
             self.stalls = [tuple(map(float, line.split())) for line in f if line.strip()]
         return self.stalls
 
     def worst(self, a, b):
-        """The latest the host ran a tick in [a, b], in seconds (0 when on time)."""
-        return max((d for t, d in self.stalls if t < b and t + d > a), default=0.0)
+        """The latest the host ran a tick in [a, b], in seconds (0 when on
+        time); the stretch of [a, b] before the probe ran counts as late by its
+        length."""
+        unseen = min(b, self.started) - a if a < self.started else 0.0
+        return max([unseen] + [d for t, d in self.stalls if t < b and t + d > a])
 
 
 def header(book, size, tier, seed=None):
