@@ -84,8 +84,11 @@ class StormFrames(unittest.TestCase):
 
 # The trace-keyed injector's rows (fg04, tests/test_paced.py) run in this
 # suite, which tools/check and tools/check-linux already run first.
+# The loop's own names are dropped after it: left bound, `_value` would hand
+# unittest the last class a second time.
 for _name, _value in runpy.run_path(str(Path(__file__).with_name('test_paced.py'))).items():
     if isinstance(_value, type) and issubclass(_value, unittest.TestCase) and _value.__module__ != __name__:
         globals()[_name] = _value
+del _name, _value
 
 if __name__ == '__main__': unittest.main(verbosity=2)
