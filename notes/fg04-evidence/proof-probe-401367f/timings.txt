@@ -1,0 +1,43 @@
+head L2 run 01: ok: session 1: poll began 68.727 ms, retired 96.646 ms, stall 0.0 ms
+head L2 run 02: ok: session 1: poll began 67.360 ms, retired 91.120 ms, stall 0.0 ms
+head L2 run 03: ok: session 1: poll began 77.642 ms, retired 108.806 ms, stall 0.0 ms
+head L2 run 04: ok: session 1: poll began 72.876 ms, retired 103.205 ms, stall 0.0 ms
+head L2 run 05: ok: session 1: poll began 35.453 ms, retired 64.156 ms, stall 0.0 ms
+head L2 run 06: ok: session 1: poll began 67.358 ms, retired 102.302 ms, stall 0.0 ms
+head L2 run 07: ok: session 1: poll began 30.776 ms, retired 67.170 ms, stall 0.0 ms
+head L2 run 08: ok: session 1: poll began 58.964 ms, retired 87.458 ms, stall 0.0 ms
+head L2 run 09: ok: session 1: poll began 55.962 ms, retired 84.269 ms, stall 0.0 ms
+head L2 run 10: ok: session 1: poll began 28.078 ms, retired 58.647 ms, stall 0.0 ms
+head L2 run 11: ok: session 1: poll began 46.826 ms, retired 88.678 ms, stall 8.2 ms
+head L2 run 12: ok: session 1: poll began 54.825 ms, retired 87.835 ms, stall 0.0 ms
+head L2 run 13: ok: session 1: poll began 47.670 ms, retired 79.388 ms, stall 0.0 ms
+head L2 run 14: ok: session 1: poll began 86.524 ms, retired 120.170 ms, stall 0.0 ms
+head L2 run 15: ok: session 1: poll began 34.800 ms, retired 73.926 ms, stall 0.0 ms
+head L2 run 16: ok: session 1: poll began 49.987 ms, retired 80.886 ms, stall 0.0 ms
+head L2 run 17: ok: session 1: poll began 61.680 ms, retired 87.661 ms, stall 0.0 ms
+head L2 run 18: ok: session 1: poll began 86.892 ms, retired 114.834 ms, stall 0.0 ms
+head L2 run 19: ok: session 1: poll began 72.072 ms, retired 101.376 ms, stall 0.0 ms
+head L2 run 20: ok: session 1: poll began 56.905 ms, retired 82.251 ms, stall 0.0 ms
+head L3 run 01: ok: session 1: poll began 59.538 ms, retired 84.527 ms, stall 0.0 ms
+head L3 run 02: ok: session 1: poll began 37.690 ms, retired 67.341 ms, stall 0.0 ms
+head L3 run 03: ok: session 1: poll began 58.641 ms, retired 82.509 ms, stall 0.0 ms
+head L3 run 04: ok: session 1: poll began 47.582 ms, retired 74.383 ms, stall 0.0 ms
+head L3 run 05: ok: session 1: poll began 55.615 ms, retired 99.149 ms, stall 10.0 ms
+head L3 run 06: ok: session 1: poll began 35.881 ms, retired 82.510 ms, stall 0.0 ms
+head L3 run 07: ok: session 1: poll began 31.406 ms, retired 64.437 ms, stall 0.0 ms
+head L3 run 08: ok: session 1: poll began 20.968 ms, retired 63.046 ms, stall 0.0 ms
+head L3 run 09: ok: session 1: poll began 68.812 ms, retired 98.848 ms, stall 0.0 ms
+head L3 run 10: ok: session 1: poll began 72.754 ms, retired 109.876 ms, stall 0.0 ms
+head L3 run 11: ok: session 1: poll began 57.267 ms, retired 108.468 ms, stall 0.0 ms
+head L3 run 12: ok: session 1: poll began 52.820 ms, retired 98.498 ms, stall 0.0 ms
+head L3 run 13: ok: session 1: poll began 98.977 ms, retired 129.092 ms, stall 0.0 ms
+head L3 run 14: ok: session 1: poll began 77.471 ms, retired 105.016 ms, stall 0.0 ms
+head L3 run 15: ok: session 1: poll began 59.929 ms, retired 88.055 ms, stall 0.0 ms
+head L3 run 16: ok: session 1: poll began 70.934 ms, retired 97.999 ms, stall 0.0 ms
+head L3 run 17: ok: session 1: poll began 50.880 ms, retired 80.267 ms, stall 0.0 ms
+head L3 run 18: ok: session 1: poll began 48.228 ms, retired 96.303 ms, stall 5.9 ms
+head L3 run 19: ok: session 1: poll began 46.127 ms, retired 77.420 ms, stall 0.0 ms
+head L3 run 20: ok: session 1: poll began 46.894 ms, retired 84.497 ms, stall 0.0 ms
+
+head level 2: 20 runs; verdicts {'ok': 20}; sessions driven {1: 20}; judged session poll began 28.078-86.892 ms; retired 58.647-120.170 ms
+head level 3: 20 runs; verdicts {'ok': 20}; sessions driven {1: 20}; judged session poll began 20.968-98.977 ms; retired 63.046-129.092 ms

@@ -1,0 +1,16 @@
+fg04: 14:26:59 gate ok: 11257 MiB free+inactive+speculative
+audition-storm: children max 1, observer p99 36.09729104209691 ms over 40/40 presses the host ran on time, game-inner p99 36.013 ms, extra cells 0, sink files 0, keys 40/40, applied over 57 ticks, row late max 55.1 ms, probe 0 stalls max 0.0 ms (session 1)
+pty: audition-storm ok (darwin arm64, exit 0)
+audition-hear-owner: retired [75053] in 84.527 ms (the poll that saw it gone began at 59.538 ms); whole [75056]; host stall in the window 0.0 ms (session 1)
+pty: audition-hear-owner ok (darwin arm64, exit 0)
+cursor-long: 80x24-rich-sound: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 33.828/34.473 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 80x24-rich-mute: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 33.551/34.328 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 80x24-plain-sound: 160 presses, stale 0, late 0; host on time for 155/160 (probe: 5 stalls, max 35.8 ms); frame p99/max 1/1; wall p99/max 38.369/38.926 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 80x24-plain-mute: 160 presses, stale 0, late 0; host on time for 159/160 (probe: 1 stalls, max 6.0 ms); frame p99/max 1/1; wall p99/max 33.763/34.353 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 120x40-rich-sound: 160 presses, stale 0, late 0; host on time for 158/160 (probe: 3 stalls, max 197.3 ms); frame p99/max 1/1; wall p99/max 34.409/34.538 ms over those; next visible change p99/max 1/7; end 0 (session 1)
+cursor-long: 120x40-rich-mute: 160 presses, stale 0, late 0; host on time for 159/160 (probe: 1 stalls, max 12.2 ms); frame p99/max 1/1; wall p99/max 33.785/33.813 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 120x40-plain-sound: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 33.735/33.772 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 120x40-plain-mute: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 33.866/34.566 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+pty: cursor-long ok (darwin arm64, exit 0)
+stall: load 3, 80 s, the command's exit 0
+fg04: 14:28:19 lock released (exit 0); 60 s before the next take
