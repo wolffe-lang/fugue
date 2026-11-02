@@ -316,18 +316,20 @@ def hear_replaces_audition(binary, ctx):
         if len(previous)!=1: problems.append(f'Space did not start exactly one owned audition: {previous}')
         probe = PACED['StallProbe'](root)
         sent = time.monotonic(); os.write(s.master,b'h')
-        retired_at = None
+        retired_at = polled_ms = None
         # h must kill and reap the audition (a liveness bound), and within
-        # 100 ms when the host runs on time.
+        # 100 ms when the host runs on time: as trunk's row counted it, a
+        # process poll begun within 100 ms of h sees the audition gone.
         while time.monotonic()-sent < PACED['LIVENESS_S']:
             s.pump(.002)
+            began = time.monotonic()
             if not set(previous).intersection(children(s)):
-                retired_at = time.monotonic(); break
+                retired_at = time.monotonic(); polled_ms = (began-sent)*1000; break
         probe.stop()
         stopped_ms = ((retired_at or time.monotonic())-sent)*1000
         stall_ms = probe.worst(sent, sent + max(stopped_ms, 100)/1000)*1000
         if retired_at is None: problems.append('h did not kill and reap the audition')
-        elif stopped_ms > 100 and stall_ms == 0: problems.append(f'h did not kill and reap the audition within 100 ms ({stopped_ms:.3f} ms, the host on time)')
+        elif polled_ms > 100 and stall_ms == 0: problems.append(f'h did not kill and reap the audition within 100 ms (seen gone by a poll begun at {polled_ms:.3f} ms, the host on time)')
         deadline = time.monotonic()+30
         whole = []
         while time.monotonic()<deadline:
@@ -339,11 +341,12 @@ def hear_replaces_audition(binary, ctx):
         if len(set(whole))!=1: problems.append(f'h did not keep its own whole-page player: {whole}')
         s.type(b'q'); s.finish(timeout=20); ctx.common_checks(s,0,problems)
         if children(s): problems.append('teardown left an owned player behind')
-        print(f'audition-hear-owner: retired {previous} in {stopped_ms:.3f} ms; whole {whole}; '
+        print(f'audition-hear-owner: retired {previous} in {stopped_ms:.3f} ms (the poll that saw it gone began at '
+              f'{polled_ms if polled_ms is None else round(polled_ms, 3)} ms); whole {whole}; '
               f'host stall in the window {stall_ms:.1f} ms (session {n})', flush=True)
-        (root/'measurements.json').write_text(json.dumps(dict(audition=previous,retired=retired_at is not None,stop_ms=stopped_ms,
+        (root/'measurements.json').write_text(json.dumps(dict(audition=previous,retired=retired_at is not None,stop_ms=stopped_ms,polled_ms=polled_ms,
                                                               host_stall_ms=stall_ms,whole=whole,session=n),indent=2)+'\n')
-        return s, retired_at is not None and stopped_ms > 100 and stall_ms > 0, stall_ms
+        return s, retired_at is not None and polled_ms > 100 and stall_ms > 0, stall_ms
 
     for n in range(1, PACED['REDRIVES'] + 1):
         s, unmeasured, stall_ms = attempt(n)
