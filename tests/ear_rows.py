@@ -61,6 +61,16 @@ def children(s):
     return [int(pid) for pid in p.stdout.split()]
 
 
+def present(pid):
+    """Whether pid names a live process (on macOS getpgid fails for a zombie,
+    as pgrep -P skips one), by a syscall that sends nothing."""
+    try:
+        os.getpgid(pid)
+        return True
+    except ProcessLookupError:
+        return False
+
+
 def drain(s):
     """Read every byte already on the terminal (and stderr), without waiting."""
     import select
@@ -317,13 +327,17 @@ def hear_replaces_audition(binary, ctx):
         probe = PACED['StallProbe'](root)
         sent = time.monotonic(); os.write(s.master,b'h')
         retired_at = polled_ms = None
-        # h must kill and reap the audition (a liveness bound), and within
-        # 100 ms when the host runs on time: as trunk's row counted it, a
-        # process poll begun within 100 ms of h sees the audition gone.
+        # h must stop the audition (a liveness bound), and within 100 ms when
+        # the host runs on time, as trunk's row counted it: a check begun
+        # within 100 ms of h finds the audition gone. Gone means what trunk's
+        # pgrep -P meant (it lists no zombie): the audition's own pid no longer
+        # names a live process. The check is os.getpgid on that pid (no process
+        # spawned, no signal), so the observer's own pgrep spawns, slow in a
+        # busy clamp, are not what is timed.
         while time.monotonic()-sent < PACED['LIVENESS_S']:
-            s.pump(.002)
+            s.pump(.001)
             began = time.monotonic()
-            if not set(previous).intersection(children(s)):
+            if not any(present(pid) for pid in previous):
                 retired_at = time.monotonic(); polled_ms = (began-sent)*1000; break
         probe.stop()
         stopped_ms = ((retired_at or time.monotonic())-sent)*1000
