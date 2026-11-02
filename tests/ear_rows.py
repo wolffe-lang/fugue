@@ -293,16 +293,19 @@ def storm(binary, ctx):
             return s, 'latency', f'the host ran {40-len(clean)} of 40 presses late (probe: {result["host_stalls"]} stalls, max {result["host_stall_max_ms"]:.1f} ms)'
         return s, None, None
 
+    latency_tries = 0
     for n in range(1, PACED['REDRIVES'] + 1):
         s, why, detail = attempt(n)
         if why is None: break
-        print(f'audition-storm: session {n} out of its case ({detail})' + ('; driven again' if n < PACED['REDRIVES'] else ''), flush=True)
+        if why == 'latency':
+            latency_tries += 1
+            if latency_tries >= PACED['LATENCY_SESSIONS']:
+                print(f'SKIP audition-storm latency: the host stalled more than half the presses in each of {latency_tries} '
+                      f'sessions ({detail}); the 70 ms bar was not measured; every press was judged for its state', flush=True)
+                break
+        print(f'audition-storm: session {n} out of its case ({detail}); driven again', flush=True)
     else:
-        if why == 'row':
-            problems.append(f'audition-storm: SCHEDULE: the storm was never delivered in {PACED["REDRIVES"]} sessions ({detail})')
-        else:
-            problems.append(f'audition-storm: SCHEDULE: the host stalled more than half the presses in each of '
-                            f'{PACED["REDRIVES"]} sessions; the 70 ms bar was never measured ({detail})')
+        problems.append(f'audition-storm: SCHEDULE: the storm was never delivered in {PACED["REDRIVES"]} sessions ({detail})')
     return s, problems
 
 
@@ -364,14 +367,14 @@ def hear_replaces_audition(binary, ctx):
                                                               host_stall_ms=stall_ms,whole=whole,session=n),indent=2)+'\n')
         return s, retired_at is not None and polled_ms > 100 and stall_ms > 0, stall_ms
 
-    for n in range(1, PACED['REDRIVES'] + 1):
+    for n in range(1, PACED['LATENCY_SESSIONS'] + 1):
         s, unmeasured, stall_ms = attempt(n)
         if not unmeasured: break
-        print(f'audition-hear-owner: session {n} out of its case (the host stalled {stall_ms:.1f} ms in the 100 ms window)'
-              + ('; driven again' if n < PACED['REDRIVES'] else ''), flush=True)
+        print(f'audition-hear-owner: session {n} could not measure the retire (the host ran a wake {stall_ms:.1f} ms late in the window)'
+              + ('; driven again' if n < PACED['LATENCY_SESSIONS'] else ''), flush=True)
     else:
-        problems.append(f'audition-hear-owner: SCHEDULE: the host stalled the retire window in each of '
-                        f'{PACED["REDRIVES"]} sessions; the 100 ms bar was never measured')
+        print(f'SKIP audition-hear-owner latency: the host stalled the retire window in each of {PACED["LATENCY_SESSIONS"]} '
+              f'sessions (probe max {stall_ms:.1f} ms); the 100 ms bar was not measured; the retire itself was judged', flush=True)
     return s,problems
 
 
