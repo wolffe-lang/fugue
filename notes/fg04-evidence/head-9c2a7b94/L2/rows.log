@@ -1,0 +1,320 @@
+fg04: 18:53:12 gate ok: 10290 MiB free+inactive+speculative
+sound: note-bank render_us 299505 base 7
+sound: player-start pid 8404 slot 0 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/audio/note-23-0.wav
+sound: audition-stop slot 0 status -9
+sound: player-start pid 8405 slot 1 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/audio/note-22-0.wav
+sound: audition-stop slot 1 status -9
+sound: whole-render /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/audio/whole-1.wav ticks 300
+sound: player-start pid 8406 slot 2 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/audio/whole-1.wav
+fugue: ended by the quit key
+
+pty: editor-ear ok (darwin arm64, exit 0)
+pty: title-quit ok (darwin arm64, exit 0)
+pty: staff-quit ok (darwin arm64, exit 0)
+pty: card-quit ok (darwin arm64, exit 0)
+pty: escape ok (darwin arm64, exit 0)
+pty: solved-record ok (darwin arm64, exit 0)
+pty: panel-right-twice ok (darwin arm64, exit 0)
+whole WAV /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/hear-whole/whole-1.wav duration 10.000000s PCM sha256 b558957b00de6c4b92494e872e088a9eb16aabf23a3a25bcff8e7d40738c17c6
+afplay appearing pid 8505: 8504 /usr/bin/afplay /usr/bin/afplay /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/hear-whole/whole-1.wav
+afplay ended pid 8505: ps exit 1, owner reaped True
+sound: note-bank render_us 323837 base 7
+sound: whole-render /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/hear-whole/whole-1.wav ticks 300
+sound: player-start pid 8505 slot 0 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/hear-whole/whole-1.wav
+sound: player-end slot 0 status 0
+fugue: ended by the quit key
+
+pty: hear-whole-is-played ok (darwin arm64, exit 0)
+pty: book-2-record ok (darwin arm64, exit 0)
+pty: book-3-record ok (darwin arm64, exit 0)
+pty: book-4-record ok (darwin arm64, exit 0)
+pty: book-5-record ok (darwin arm64, exit 0)
+pty: book-5-ear ok (darwin arm64, exit 0)
+pty: three-ledgers-below-and-back ok (darwin arm64, exit 0)
+pty: selected-event-status ok (darwin arm64, exit 0)
+pty: book-5-rhythm-edits ok (darwin arm64, exit 0)
+cursor-same-frame: 80x24-rich-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 80x24-rich-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 80x24-plain-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 80x24-plain-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 120x40-rich-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 120x40-rich-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 120x40-plain-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 120x40-plain-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+pty: cursor-same-frame ok (darwin arm64, exit 0)
+event-caret: book-1-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-1-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-1-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-1-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+pty: event-caret ok (darwin arm64, exit 0)
+pty: quiet-audio-page-change ok (darwin arm64, exit 0)
+pty: cached-arrow-auditions ok (darwin arm64, exit 0)
+cursor-long: 80x24-rich-sound: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 34.669/35.585 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 80x24-rich-mute: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 34.187/34.552 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 80x24-plain-sound: 160 presses, stale 0, late 0; host on time for 159/160 (probe: 1 stalls, max 50.9 ms); frame p99/max 1/1; wall p99/max 34.828/38.173 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 80x24-plain-mute: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 34.473/35.432 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 120x40-rich-sound: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 34.008/34.887 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 120x40-rich-mute: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 34.192/34.849 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 120x40-plain-sound: 160 presses, stale 0, late 0; host on time for 159/160 (probe: 1 stalls, max 133.9 ms); frame p99/max 1/1; wall p99/max 38.513/38.890 ms over those; next visible change p99/max 1/5; end 0 (session 1)
+cursor-long: 120x40-plain-mute: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 33.868/35.798 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+pty: cursor-long ok (darwin arm64, exit 0)
+sound: note-bank render_us 516322 base 21
+sound: player-start pid 11527 slot 0 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-29-0.wav
+sound: audition-stop slot 0 status -9
+sound: player-start pid 11528 slot 1 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-30-0.wav
+sound: audition-stop slot 1 status -9
+sound: player-start pid 11529 slot 2 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-31-0.wav
+sound: audition-stop slot 2 status -9
+sound: player-start pid 11530 slot 3 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-32-0.wav
+sound: audition-stop slot 3 status -9
+sound: player-start pid 11531 slot 4 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-31-0.wav
+sound: audition-stop slot 4 status -9
+sound: player-start pid 11532 slot 5 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-32-0.wav
+sound: audition-stop slot 5 status -9
+sound: player-start pid 11533 slot 6 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-33-0.wav
+sound: audition-stop slot 6 status -9
+sound: player-start pid 11534 slot 7 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-34-0.wav
+sound: audition-stop slot 7 status -9
+sound: player-start pid 11535 slot 8 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-32-0.wav
+sound: audition-stop slot 8 status -9
+sound: player-start pid 11536 slot 9 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-33-0.wav
+sound: audition-stop slot 9 status -9
+sound: player-start pid 11537 slot 10 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-34-0.wav
+sound: audition-stop slot 10 status -9
+sound: player-start pid 11538 slot 11 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-35-0.wav
+sound: audition-stop slot 11 status -9
+sound: player-start pid 11539 slot 12 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-33-0.wav
+sound: audition-stop slot 12 status -9
+sound: player-start pid 11540 slot 13 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-34-0.wav
+sound: audition-stop slot 13 status -9
+sound: player-start pid 11541 slot 14 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-35-0.wav
+sound: audition-stop slot 14 status -9
+sound: player-start pid 11542 slot 15 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-36-0.wav
+sound: audition-stop slot 15 status -9
+sound: player-start pid 11543 slot 16 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-32-0.wav
+sound: audition-stop slot 16 status -9
+sound: player-start pid 11544 slot 17 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-33-0.wav
+sound: audition-stop slot 17 status -9
+sound: player-start pid 11545 slot 18 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-34-0.wav
+sound: audition-stop slot 18 status -9
+sound: player-start pid 11546 slot 19 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-35-0.wav
+sound: audition-stop slot 19 status -9
+sound: player-start pid 11547 slot 20 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-31-0.wav
+sound: audition-stop slot 20 status -9
+sound: player-start pid 11548 slot 21 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-32-0.wav
+sound: audition-stop slot 21 status -9
+sound: player-start pid 11549 slot 22 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-33-0.wav
+sound: audition-stop slot 22 status -9
+sound: player-start pid 11550 slot 23 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-34-0.wav
+sound: audition-stop slot 23 status -9
+sound: player-start pid 11552 slot 24 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-29-0.wav
+sound: audition-stop slot 24 status -9
+sound: player-start pid 11553 slot 25 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-30-0.wav
+sound: audition-stop slot 25 status -9
+sound: player-start pid 11554 slot 26 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-31-0.wav
+sound: audition-stop slot 26 status -9
+sound: player-start pid 11555 slot 27 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-32-0.wav
+sound: audition-stop slot 27 status -9
+sound: player-start pid 11556 slot 28 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-31-0.wav
+sound: audition-stop slot 28 status -9
+sound: player-start pid 11557 slot 29 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-32-0.wav
+sound: audition-stop slot 29 status -9
+sound: player-start pid 11558 slot 30 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-33-0.wav
+sound: audition-stop slot 30 status -9
+sound: player-start pid 11559 slot 31 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-34-0.wav
+sound: audition-stop slot 31 status -9
+sound: player-start pid 11561 slot 32 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-30-0.wav
+sound: audition-stop slot 32 status -9
+sound: player-start pid 11562 slot 33 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-31-0.wav
+sound: audition-stop slot 33 status -9
+sound: player-start pid 11563 slot 34 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-32-0.wav
+sound: audition-stop slot 34 status -9
+sound: player-start pid 11564 slot 35 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-33-0.wav
+sound: audition-stop slot 35 status -9
+sound: player-start pid 11565 slot 36 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-29-0.wav
+sound: audition-stop slot 36 status -9
+sound: player-start pid 11566 slot 37 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-30-0.wav
+sound: audition-stop slot 37 status -9
+sound: player-start pid 11567 slot 38 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-31-0.wav
+sound: audition-stop slot 38 status -9
+sound: player-start pid 11568 slot 39 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/note-32-0.wav
+sound: audition-stop slot 39 status -9
+sound: whole-render /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/whole-1.wav ticks 360
+sound: player-start pid 11571 slot 40 /Users/mfwolffe/lanes/fg04/build-9c2a7b94/target/pty/fugue/whole-1.wav
+sound: player-end slot 40 status 0
+fugue: ended by the quit key
+
+pty: fugue-exposition-record ok (darwin arm64, exit 0)
+fugue: ended by the quit key
+
+pty: fugue-two-desks-record ok (darwin arm64, exit 0)
+pty: fugue-end-card ok (darwin arm64, exit 0)
+fugue junk 80x24 plain first: 1920 cells, glyph differences 0, styles equal True, state wait 1.344s (5 retries)
+fugue junk 80x24 plain page-2: 1920 cells, glyph differences 0, styles equal True, state wait 5.036s (9 retries)
+fugue junk 80x24 plain page-3: 1920 cells, glyph differences 0, styles equal True, state wait 1.101s (4 retries)
+fugue junk 80x24 plain voice: 1920 cells, glyph differences 0, styles equal True, state wait 0.336s (1 retries)
+fugue junk 80x24 plain refusal: 1920 cells, glyph differences 0, styles equal True, state wait 0.238s (1 retries)
+fugue junk 80x24 plain after-hear: 1920 cells, glyph differences 0, styles equal True, state wait 12.159s (67 retries)
+pty: fugue-junk-80-plain ok (darwin arm64, exit 0)
+fugue junk 80x24 rich first: 1920 cells, glyph differences 0, styles equal True, state wait 1.022s (5 retries)
+fugue deliberate grain cells: 92
+fugue junk 80x24 rich page-2: 1920 cells, glyph differences 0, styles equal True, state wait 0.820s (4 retries)
+fugue deliberate grain cells: 84
+fugue junk 80x24 rich page-3: 1920 cells, glyph differences 0, styles equal True, state wait 0.732s (3 retries)
+fugue deliberate grain cells: 85
+fugue junk 80x24 rich voice: 1920 cells, glyph differences 0, styles equal True, state wait 0.237s (1 retries)
+fugue deliberate grain cells: 80
+fugue junk 80x24 rich refusal: 1920 cells, glyph differences 0, styles equal True, state wait 0.247s (1 retries)
+fugue deliberate grain cells: 82
+fugue junk 80x24 rich after-hear: 1920 cells, glyph differences 0, styles equal True, state wait 12.174s (66 retries)
+fugue deliberate grain cells: 82
+pty: fugue-junk-80-rich ok (darwin arm64, exit 0)
+fugue junk 120x40 plain first: 4800 cells, glyph differences 0, styles equal True, state wait 1.018s (5 retries)
+fugue junk 120x40 plain page-2: 4800 cells, glyph differences 0, styles equal True, state wait 0.798s (4 retries)
+fugue junk 120x40 plain page-3: 4800 cells, glyph differences 0, styles equal True, state wait 0.821s (4 retries)
+fugue junk 120x40 plain voice: 4800 cells, glyph differences 0, styles equal True, state wait 0.246s (1 retries)
+fugue junk 120x40 plain refusal: 4800 cells, glyph differences 0, styles equal True, state wait 0.124s (1 retries)
+fugue junk 120x40 plain after-hear: 4800 cells, glyph differences 0, styles equal True, state wait 11.907s (61 retries)
+pty: fugue-junk-120-plain ok (darwin arm64, exit 0)
+fugue junk 120x40 rich first: 4800 cells, glyph differences 0, styles equal True, state wait 1.010s (5 retries)
+fugue deliberate grain cells: 252
+fugue junk 120x40 rich page-2: 4800 cells, glyph differences 0, styles equal True, state wait 0.752s (4 retries)
+fugue deliberate grain cells: 229
+fugue junk 120x40 rich page-3: 4800 cells, glyph differences 0, styles equal True, state wait 0.811s (4 retries)
+fugue deliberate grain cells: 244
+fugue junk 120x40 rich voice: 4800 cells, glyph differences 0, styles equal True, state wait 0.155s (1 retries)
+fugue deliberate grain cells: 244
+fugue junk 120x40 rich refusal: 4800 cells, glyph differences 0, styles equal True, state wait 0.257s (1 retries)
+fugue deliberate grain cells: 246
+fugue junk 120x40 rich after-hear: 4800 cells, glyph differences 0, styles equal True, state wait 11.899s (63 retries)
+fugue deliberate grain cells: 246
+pty: fugue-junk-120-rich ok (darwin arm64, exit 0)
+right: frame 2, read-to-frame 32453 us, 1 frame budgets
+right: frame 3, read-to-frame 32405 us, 1 frame budgets
+left: frame 4, read-to-frame 31338 us, 1 frame budgets
+up: frame 5, read-to-frame 33843 us, 2 frame budgets
+down: frame 6, read-to-frame 31652 us, 1 frame budgets
+hear: frame 7, read-to-frame 94296 us, 3 frame budgets
+pty: fugue-press-budget ok (darwin arm64, exit 0)
+fugue cursor 80 answer-first: bar 1, beat 1, F5
+fugue cursor 80 answer-second: bar 2, beat 1, D5
+fugue cursor 80 answer-third: bar 3, beat 5, Fb5
+fugue cursor 80 counter-first: bar 1, beat 1, A4
+fugue cursor 80 counter-second: bar 2, beat 1, B4
+fugue cursor 80 counter-third: bar 3, beat 5, D5
+pty: fugue-cursor-panel-80 ok (darwin arm64, exit 0)
+fugue cursor 120 answer-first: bar 1, beat 1, F5
+fugue cursor 120 answer-second: bar 2, beat 1, D5
+fugue cursor 120 answer-third: bar 3, beat 5, Fb5
+fugue cursor 120 counter-first: bar 1, beat 1, A4
+fugue cursor 120 counter-second: bar 2, beat 1, B4
+fugue cursor 120 counter-third: bar 3, beat 5, D5
+pty: fugue-cursor-panel-120 ok (darwin arm64, exit 0)
+fugue caret 0-80-rich-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-80-rich-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-80-plain-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-80-plain-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-120-rich-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-120-rich-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-120-plain-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-120-plain-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-80-rich-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-80-rich-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-80-plain-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-80-plain-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-120-rich-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-120-rich-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-120-plain-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-120-plain-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+pty: fugue-cursor-same-frame ok (darwin arm64, exit 0)
+VI initial complete frame: True, first traced frame 1, wait 0.767s
+VI initial: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(36, 9)], 'pitch_status': 'C4', 'bar_status': 'Bar 1, beat 1:8'}
+VI right-once: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'E4', 'bar_status': 'Bar 1, beat 5:8'}
+VI then-up: {'heads': {23: 29, 14: 30, 18: 30, 28: 30, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'F4', 'bar_status': 'Bar 1, beat 5:8'}
+VI changed event columns [14]; expected second event 14
+VI wide-register: {'heads': {23: 25, 14: 26, 18: 26, 28: 26, 34: 27, 46: 27, 52: 28, 41: 29, 9: 36}, 'carets': [(32, 59)], 'pitch_status': 'C7', 'bar_status': 'Bar 6, beat 1:8'}
+pty: fugue-right-then-up ok (darwin arm64, exit 0)
+VI initial complete frame: True, first traced frame 1, wait 0.228s
+VI initial: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(36, 9)], 'pitch_status': 'C4', 'bar_status': 'Bar 1, beat 1:8'}
+VI right-once: {'heads': {23: 29, 18: 30, 28: 30, 14: 31, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'E4', 'bar_status': 'Bar 1, beat 5:8'}
+VI then-up: {'heads': {23: 29, 14: 30, 18: 30, 28: 30, 34: 31, 46: 31, 52: 32, 9: 33, 41: 33, 59: 33}, 'carets': [(34, 14)], 'pitch_status': 'F4', 'bar_status': 'Bar 1, beat 5:8'}
+VI changed event columns [14]; expected second event 14
+VI wide-register: {'heads': {23: 25, 14: 26, 18: 26, 28: 26, 34: 27, 46: 27, 52: 28, 41: 29, 9: 36}, 'carets': [(32, 59)], 'pitch_status': 'C7', 'bar_status': 'Bar 6, beat 1:8'}
+pty: fugue-cold-initial ok (darwin arm64, exit 0)
+quiet-player-stderr: {"text_cells_changed": 0, "style_rows_changed": 2, "alive": [], "seen_alive": [], "acknowledged": true, "gone_after_s": 0.4233810000587255, "session": 1}
+pty: quiet-player-stderr FAILED (darwin arm64):
+  - player stderr changed 0 text cells / 2 style rows
+audition-storm: children max 1, observer p99 37.18220896553248 ms over 40/40 presses the host ran on time, game-inner p99 37.066 ms, extra cells 0, sink files 0, keys 40/40, applied over 58 ticks, row late max 22.4 ms, probe 0 stalls max 0.0 ms (session 1)
+pty: audition-storm ok (darwin arm64, exit 0)
+audition-hear-owner: retired [13141] in 141.403 ms; whole [13144]; host stall in the window 0.0 ms (session 1)
+pty: audition-hear-owner FAILED (darwin arm64):
+  - h did not kill and reap the audition within 100 ms (141.403 ms, the host on time)
+own-cantus session 80 rich: write, legal shape, unchanged cantus, solve, card, v2->v3, verified replay
+own-cantus session 80 plain: write, legal shape, unchanged cantus, solve, card, v2->v3, verified replay
+own-cantus session 120 rich: write, legal shape, unchanged cantus, solve, card, v2->v3, verified replay
+own-cantus session 120 plain: write, legal shape, unchanged cantus, solve, card, v2->v3, verified replay
+pty: own-cantus-session ok (darwin arm64, exit 0)
+own-cantus Fux Dorian rich: keyed critic [(3, 'sequence'), (5, 'sequence'), (7, 'sequence'), (8, 'sequence'), (1, 'balance')]; oracle [(3, 'sequence'), (5, 'sequence'), (7, 'sequence'), (8, 'sequence'), (1, 'balance')]
+own-cantus Fux Phrygian rich: keyed critic [(3, 'sequence')]; oracle [(3, 'sequence')]
+own-cantus Fux Lydian rich: keyed critic [(5, 'successive-leaps'), (9, 'recovery'), (10, 'successive-leaps'), (1, 'leap-count')]; oracle [(5, 'successive-leaps'), (9, 'recovery'), (10, 'successive-leaps'), (1, 'leap-count')]
+own-cantus Fux Mixolydian rich: keyed critic [(6, 'recovery'), (6, 'successive-leaps'), (9, 'recovery'), (9, 'sequence'), (10, 'successive-leaps'), (1, 'leap-count')]; oracle [(6, 'recovery'), (6, 'successive-leaps'), (9, 'recovery'), (9, 'sequence'), (10, 'successive-leaps'), (1, 'leap-count')]
+own-cantus Fux Aeolian rich: keyed critic [(1, 'sequence'), (2, 'sequence'), (3, 'sequence'), (7, 'sequence'), (7, 'sequence'), (8, 'sequence'), (9, 'sequence')]; oracle [(1, 'sequence'), (2, 'sequence'), (3, 'sequence'), (7, 'sequence'), (7, 'sequence'), (8, 'sequence'), (9, 'sequence')]
+own-cantus Fux Ionian rich: keyed critic [(9, 'sequence')]; oracle [(9, 'sequence')]
+own-cantus Fux Dorian plain: keyed critic [(3, 'sequence'), (5, 'sequence'), (7, 'sequence'), (8, 'sequence'), (1, 'balance')]; oracle [(3, 'sequence'), (5, 'sequence'), (7, 'sequence'), (8, 'sequence'), (1, 'balance')]
+own-cantus Fux Phrygian plain: keyed critic [(3, 'sequence')]; oracle [(3, 'sequence')]
+own-cantus Fux Lydian plain: keyed critic [(5, 'successive-leaps'), (9, 'recovery'), (10, 'successive-leaps'), (1, 'leap-count')]; oracle [(5, 'successive-leaps'), (9, 'recovery'), (10, 'successive-leaps'), (1, 'leap-count')]
+own-cantus Fux Mixolydian plain: keyed critic [(6, 'recovery'), (6, 'successive-leaps'), (9, 'recovery'), (9, 'sequence'), (10, 'successive-leaps'), (1, 'leap-count')]; oracle [(6, 'recovery'), (6, 'successive-leaps'), (9, 'recovery'), (9, 'sequence'), (10, 'successive-leaps'), (1, 'leap-count')]
+own-cantus Fux Aeolian plain: keyed critic [(1, 'sequence'), (2, 'sequence'), (3, 'sequence'), (7, 'sequence'), (7, 'sequence'), (8, 'sequence'), (9, 'sequence')]; oracle [(1, 'sequence'), (2, 'sequence'), (3, 'sequence'), (7, 'sequence'), (7, 'sequence'), (8, 'sequence'), (9, 'sequence')]
+own-cantus Fux Ionian plain: keyed critic [(9, 'sequence')]; oracle [(9, 'sequence')]
+pty: own-cantus-fux-keys ok (darwin arm64, exit 0)
+enhanced keys book 1 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+pty: enhanced-keys ok (darwin arm64, exit 0)
+stall: load 2, 605 s, the command's exit 1
+fg04: 19:03:17 lock released (exit 1); 60 s before the next take

@@ -1,0 +1,31 @@
+pk 1
+seed 7
+tier rich
+size 120x40
+start 22001
+# score 0
+t 10 new
+t 10 new
+t 26 voice-switch
+t 30 right
+t 37 left
+t 43 right
+t 44 right
+t 45 right
+t 46 right
+t 47 right
+t 48 right
+t 49 right
+t 50 right
+t 51 right
+t 59 left
+t 60 left
+t 61 left
+t 62 left
+t 63 left
+t 64 left
+t 65 left
+t 66 left
+t 69 left
+t 75 quit
+# books fugue 3 0 0 0 0 0 0 0

@@ -1,9 +1,16 @@
-"""Own-cantus real-input, complete-frame and historical-oracle witnesses."""
+"""Own-cantus real-input, complete-frame and historical-oracle witnesses.
+
+Keys are typed through tests/paced.py (fg04, fugue#36): each batch is written
+once the game has drawn, acknowledged by the game's own trace, and the frame
+at that acknowledgement's exact output boundary must equal the headless state.
+"""
 import json
 import re
+import runpy
 from pathlib import Path
 import subprocess
-import time
+
+PACED = runpy.run_path(str(Path(__file__).with_name('paced.py')))
 
 KEYS = {'up':b'\x1b[A','down':b'\x1b[B','left':b'\x1b[D','right':b'\x1b[C',
         'check':b'\r','undo':b'u','split':b'[','join':b']','mode':b'm',
@@ -54,14 +61,12 @@ def expected(binary, root, actions, width, height, tier):
     return (dest/'final.txt').read_text(),(dest/'final.sty').read_text()
 
 
-def expect(binary, root, s, actions, width, height, tier):
+def expect(binary, root, s, actions, width, height, tier, ack):
+    """The acknowledged frame, at its exact boundary, is the complete expected state."""
     want=expected(binary,root,actions,width,height,tier)
-    deadline=time.monotonic()+5
-    while True:
-        got=applied(binary,root,s.out,width,height)
-        if got==want:return got[0]
-        if time.monotonic()>=deadline:raise AssertionError('own-cantus full glyph/style state differs')
-        s.pump(.02)
+    got=applied(binary,root,s.frame(ack['frame']),width,height)
+    if got!=want:raise AssertionError('own-cantus full glyph/style state differs at frame %d' % ack['frame'])
+    return got[0]
 
 
 def whole_session(binary, ctx):
@@ -73,11 +78,12 @@ def whole_session(binary, ctx):
             state=root/'state';state.write_text('fugue 2 1 2 3 1 2 3\n')
             record=root/'session.pk'
             env=ctx.env_for();env['FUGUE_STATE']=str(state)
-            s=ctx.Session([binary,'--book','7','--no-title','--mute','--size',f'{width}x{height}','--tier',tier,'--record',str(record)],height,width,env)
+            s=PACED['session'](ctx)([binary,'--book','7','--no-title','--mute','--size',f'{width}x{height}','--tier',tier,'--record',str(record),'--trace'],height,width,env)
+            s.ready()
             last=s;actions=[]
             def send(keys):
-                actions.extend(keys);s.type(b''.join(KEYS[key] for key in keys),.1)
-                return expect(binary,root,s,actions,width,height,tier)
+                actions.extend(keys);ack=s.send(b''.join(KEYS[key] for key in keys))
+                return expect(binary,root,s,actions,width,height,tier,ack)
             send(writing(LEGAL))
             card=send(['check'])
             if not all(text in card for text in ('A legal cantus','Shape 106 = 100 - 6 + 4 x 3','Ascent 4, descent 5','Interval sizes 3')):
@@ -90,6 +96,7 @@ def whole_session(binary, ctx):
             card=send(['check'])
             if 'Legal    3 / 3 stars' not in card:problems.append('own cantus exercise did not reach three stars')
             s.type(b'q');s.finish();ctx.common_checks(s,0,problems)
+            s.verify(record,f'own-cantus-session-{width}-{tier}',problems)
             if state.read_text()!='fugue 3 1 2 3 1 2 3 3\n':problems.append('v2 migration or seventh progress count failed')
             text=record.read_text();ticks=max(int(line.split()[1]) for line in text.splitlines() if line.startswith('t '))+1
             result=subprocess.run([binary,'--headless','--script',str(record),'--frames',str(ticks),'--every',str(ticks),'--dump',str(root/'verify')],capture_output=True,text=True,timeout=30)
@@ -109,10 +116,11 @@ def fux_by_keys(binary, ctx, tier='rich'):
         positions=[int(p[-1])*7+'CDEFGAB'.index(p[0]) for p in spelling.split()]
         root=Path(ctx.ROOT)/f'target/pty/cantus-fux-{mode}-{tier}'
         root.mkdir(parents=True,exist_ok=True)
-        s=ctx.Session([binary,'--book','7','--no-title','--mute','--tier',tier],24,80,ctx.env_for());last=s
+        s=PACED['session'](ctx)([binary,'--book','7','--no-title','--mute','--tier',tier,'--trace'],24,80,ctx.env_for());last=s
+        s.ready()
         actions=writing(positions,MODES.index(mode))+['check']
-        s.type(b''.join(KEYS[key] for key in actions),.2)
-        screen=expect(binary,root,s,actions,80,24,tier)
+        ack=s.send(b''.join(KEYS[key] for key in actions))
+        screen=expect(binary,root,s,actions,80,24,tier,ack)
         actual=re.findall(r'Bar (\d+): ([a-z-]+) /',screen)
         actual=[(int(bar),rule) for bar,rule in actual]
         if actual!=FUX[mode]:problems.append(f'{mode}: keyed critic {actual}, oracle {FUX[mode]}')

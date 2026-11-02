@@ -1,52 +1,22 @@
 #!/usr/bin/env python3
-"""Actual pty presses, frame-tick traces, terminal cells and replay key accounting.
+"""Actual pty presses, the game's own trace, terminal cells and replay key accounting.
 
 Loaded by the engine's cursor-same-frame row. No synthetic input/state/frame seam.
-The capture includes one frame snapshot for every key-carrying trace; unchanged
-idle frames need no bytes. 30 Hz repeat is paced on monotonic deadlines.
+Every press goes through tests/paced.py (fg04, fugue#36): written by the game's
+trace (a 30 Hz burst is one press a tick), acknowledged by its carrying frame,
+and judged at that frame's exact output boundary. After the session each
+recorded key is placed in the first carrying frame after its record tick, so a
+frame that carries two presses (a late wake) is judged with both.
 """
 import json
 import os
 from pathlib import Path
-import re
-import select
-import time
+import runpy
+import subprocess
 
 
-def frame_session(ctx):
-    class Frames(ctx.Session):
-        def __init__(self, *args):
-            self.frames, self.trace_count = [], 0
-            self.frame_times = {}
-            super().__init__(*args)
-
-        def pump(self, seconds):
-            end = time.monotonic() + seconds
-            while time.monotonic() < end:
-                fds = [self.r_err] + ([] if self.eof else [self.master])
-                ready, _, _ = select.select(fds, [], [], min(.002, max(0, end-time.monotonic())))
-                # The write to the pty precedes the trace on the stderr pipe.
-                if self.master in ready:
-                    try: chunk = os.read(self.master, 65536)
-                    except OSError: chunk = b''
-                    if chunk: self.out += chunk
-                    else: self.eof = True
-                if self.r_err in ready:
-                    chunk = os.read(self.r_err, 65536)
-                    if chunk: self.err += chunk
-                traces = re.findall(rb'trace frame (\d+) carries_key', self.err)
-                if len(traces) > self.trace_count:
-                    while not self.eof and select.select([self.master], [], [], 0)[0]:
-                        try: chunk = os.read(self.master, 65536)
-                        except OSError: chunk = b''
-                        if not chunk: self.eof = True; break
-                        self.out += chunk
-                    for tick in traces[self.trace_count:]:
-                        self.frames.append((int(tick), self.out))
-                        self.frame_times[int(tick)] = time.monotonic()
-                    self.trace_count = len(traces)
-
-    return Frames
+def paced(ctx):
+    return runpy.run_path(str(Path(ctx.ROOT) / 'tests/paced.py'))
 
 
 def book_five_attack(event, cols):
@@ -68,8 +38,8 @@ def check(binary, ctx):
     root.mkdir(parents=True, exist_ok=True)
     problems, measurements = [], []
     last = None
-
-    Frames = frame_session(ctx)
+    P = paced(ctx)
+    Session = P['session'](ctx)
 
     for cols, rows in [(80, 24), (120, 40)]:
         for tier in ['rich', 'plain']:
@@ -81,35 +51,32 @@ def check(binary, ctx):
                 env['FUGUE_STATE'] = str(root / (name + '.state'))
                 env['FUGUE_AUDIO_TRACE'] = '1'
                 env['FUGUE_SOUND'] = '1'
-                s = Frames([binary, '--book', '5', '--no-title', '--size', f'{cols}x{rows}',
-                            '--tier', tier, '--trace', '--record', str(path)] + (['--mute'] if mute else []), rows, cols, env)
+                s = Session([binary, '--book', '5', '--no-title', '--size', f'{cols}x{rows}',
+                             '--tier', tier, '--trace', '--record', str(path)] + (['--mute'] if mute else []), rows, cols, env)
                 last = s
-                deadline = time.monotonic() + 30
-                while not s.out and time.monotonic() < deadline: s.pump(.02)
-                s.pump(.1)
-                initial = s.out
-                # Right/Left singly, then ten Rights and ten Lefts at 30 Hz.
+                s.ready()
+                initial = s.frame()
+                # Right/Left singly, then ten Rights and ten Lefts, one a tick
+                # (30 Hz) by the game's trace.
                 for key in [b'\x1b[C', b'\x1b[D']:
-                    s.type(key, .20)
+                    s.send(key)
                 for key in [b'\x1b[C', b'\x1b[D']:
-                    start = time.monotonic()
-                    for press in range(10):
-                        os.write(s.master, key)
-                        s.pump(max(.001, start + (press+1)/30 - time.monotonic()))
-                    s.pump(.2)
+                    s.burst(key, 10)
                 s.type(b'q'); s.finish()
                 ctx.common_checks(s, 0, problems)
                 (root / (name + '.bin')).write_bytes(s.out)
                 (root / (name + '.err')).write_bytes(s.err)
-                events = [(int(line.split()[1]), line.split()[2]) for line in path.read_text().splitlines()
-                          if line.startswith('t ') and line.split()[2] in ['left', 'right']]
-                if [key for _, key in events] != ['right', 'left'] + ['right']*10 + ['left']*10:
+                keys = s.verify(path, name, problems)
+                events = [(t, k) for t, k in keys if k in ('left', 'right')]
+                if [k for _, k in events] != ['right', 'left'] + ['right']*10 + ['left']*10:
                     problems.append(name + ': lost or reordered presses')
+                press_of = {}
+                for i, (t, k) in enumerate(keys):
+                    if k in ('left', 'right'):
+                        press_of[i] = len(press_of)
                 # Apply the actual output bytes with the game's terminal model.
-                # Each trace is the frame that carries all keys recorded at tick-1.
                 def image(data):
                     capture = root / 'frame.bin'; capture.write_bytes(data)
-                    import subprocess
                     applied = subprocess.run([binary, '--apply', str(capture), '--size', f'{cols}x{rows}'],
                                              capture_output=True, check=True)
                     return applied.stdout.decode().split('--\n')[0].splitlines()
@@ -118,10 +85,12 @@ def check(binary, ctx):
                 previous = caret(image(initial))
                 time_position = 0
                 per_press = []
-                for tick, data in s.frames:
-                    keys = [(index, key) for index, (at, key) in enumerate(events) if at == tick-1]
-                    if not keys: continue
-                    for _, key in keys: time_position += 1 if key == 'right' else -1
+                by_frame = P['carrying_frames'](keys, [c[0] for c in s.carrying])
+                for tick in sorted(by_frame):
+                    carried = [(press_of[i], t, k) for i, t, k in by_frame[tick] if i in press_of]
+                    if not carried: continue
+                    for _, _, key in carried: time_position += 1 if key == 'right' else -1
+                    data = s.frame(tick)
                     screen = image(data)
                     onset, expected_x = book_five_attack(time_position, cols)
                     panel = f'Bar {onset//8+1}, beat {onset%8+1}:8' in screen[5][cols-22:]
@@ -132,22 +101,24 @@ def check(binary, ctx):
                     frame_dir = root / name
                     frame_dir.mkdir(exist_ok=True)
                     (frame_dir / f'frame-{tick}.bin').write_bytes(data)
-                    for index, key in keys:
-                        per_press.append({'press': index+1, 'key': key, 'frame': tick,
+                    for index, at, key in carried:
+                        per_press.append({'press': index+1, 'key': key, 'record_tick': at, 'frame': tick,
                                           'panel_frames': 1 if panel else None,
                                           'cursor_frames': 1 if moved else None,
                                           'caret': current, 'expected_x': expected_x,
-                                          'aligned': aligned, 'coalesced': len(keys)})
+                                          'aligned': aligned, 'coalesced': len(carried)})
                     if not panel or not aligned:
-                        problems.append(f'{name}: press {keys[0][0]+1} frame {tick}: panel={panel}, caret moved={moved}, aligned={aligned}, {previous}->{current}')
+                        problems.append(f'{name}: press {carried[0][0]+1} frame {tick}: panel={panel}, caret moved={moved}, aligned={aligned}, {previous}->{current}')
                     previous = current
                 if len(per_press) != 22: problems.append(f'{name}: only {len(per_press)}/22 presses have a captured frame')
-                result = {'case': name, 'repeat_hz': 30, 'presses': per_press,
-                          'recorded': len(events), 'final_time': time_position}
+                late = s.lateness()
+                result = {'case': name, 'repeat_hz': 30, 'paced': 'trace', 'presses': per_press,
+                          'recorded': len(events), 'final_time': time_position,
+                          'late_ticks': late, 'acks': s.acks}
                 measurements.append(result)
                 (root / 'measurements.json').write_text(json.dumps(measurements, indent=2)+'\n')
                 print(f'cursor-same-frame: {name}: {len(per_press)} presses, '
                       f'panel {sum(p["panel_frames"] == 1 for p in per_press)}/22 same-frame, '
                       f'caret {sum(p["cursor_frames"] == 1 for p in per_press)}/22 same-frame; '
-                      f'end {time_position}; 30 Hz')
+                      f'end {time_position}; 30 Hz by the trace, late ticks max {max(late, default=0)}')
     return last, problems

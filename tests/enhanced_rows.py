@@ -1,12 +1,22 @@
-"""Negotiated kitty-protocol rows; injected bytes, not a physical Ghostty capture."""
+"""Negotiated kitty-protocol rows; injected bytes, not a physical Ghostty capture.
+
+Keys are typed through tests/paced.py (fg04, fugue#36). The stand-in
+terminal answers the keyboard query while the session drains output, so the
+answer never waits on a settle. The game negotiates within its own 150 ms
+window; a session the host stalled past that window starts in legacy mode, is
+out of its case and is driven again. Each press, repeat and release is
+written once the game has drawn the last, acknowledged by the game's own
+trace, and its frame is compared at the exact output boundary with the
+headless state of the same keys at the same hearing tick.
+"""
 import json
 import os
 from pathlib import Path
 import re
 import runpy
 import subprocess
-import time
 
+PACED = runpy.run_path(str(Path(__file__).with_name('paced.py')))
 QUERY=b'\x1b[?u'
 PUSH=b'\x1b[>11u'
 POP=b'\x1b[<u'
@@ -23,17 +33,13 @@ def wire(key, kind=1):
 
 
 def negotiated(ctx):
-    class Kitty(ctx.Session):
-        def __init__(self,*args):
-            self.answered=False
-            super().__init__(*args)
-        def pump(self, seconds):
-            end=time.monotonic()+seconds
-            while time.monotonic()<end:
-                super().pump(min(.002,end-time.monotonic()))
-                if not self.answered and QUERY in self.out:
-                    os.write(self.master,b'\x1b[?0u')
-                    self.answered=True
+    Paced=PACED['session'](ctx)
+    class Kitty(Paced):
+        def __init__(self,argv,rows,cols,env):
+            super().__init__(argv,rows,cols,env,0.0,[(QUERY,b'\x1b[?0u')])
+        @property
+        def answered(self):
+            return not self.replies
     return Kitty
 
 
@@ -48,45 +54,42 @@ def enhanced_keys(binary,ctx):
                 root.mkdir(parents=True,exist_ok=True)
                 record=root/'record.pk'
                 env=ctx.env_for();env['FUGUE_STATE']=str(root/'state')
-                s=Kitty([binary,'--book',str(book),'--no-title','--mute','--trace','--record',str(record),'--size',f'{width}x{height}','--tier',tier],height,width,env)
-                last=s
-                if not s.answered or PUSH not in s.out:raise AssertionError('enhanced row did not negotiate flags 11')
                 start=1 if book==1 else 10000+book*2000+1
-                actions=[]
-                def want():
+                def session(n):
+                    s=Kitty([binary,'--book',str(book),'--no-title','--mute','--trace','--record',str(record),'--size',f'{width}x{height}','--tier',tier],height,width,env)
+                    s.ready()
+                    if s.answered and s.negotiated():return s
+                    # The game's window closed before it read the answer:
+                    # this session runs legacy keys, which is not this case.
+                    answered=s.answered
+                    s.type(b'q');s.finish()
+                    raise PACED['Unrealised']('flags 11 not negotiated (query answered %s)' % answered)
+                s=PACED['redrive'](f'enhanced keys book {book} {width} {tier}',session,problems)
+                if s is None:raise AssertionError('enhanced row did not negotiate flags 11')
+                last=s
+                actions=[];hearing=[];heard_live={'on':False}
+                def want(frames=2):
                     script=root/'expected.pk';dest=root/'expected'
                     script.write_text(f'pk 1\nseed 7\ntier {tier}\nsize {width}x{height}\nstart {start}\n'+''.join(f't 1 {key}\n' for key in actions))
-                    subprocess.run([binary,'--headless','--script',str(script),'--frames','2','--every','2','--dump',str(dest)],check=True,capture_output=True,timeout=30)
+                    subprocess.run([binary,'--headless','--script',str(script),'--frames',str(frames),'--every',str(frames),'--dump',str(dest)],check=True,capture_output=True,timeout=30)
                     return (dest/'final.txt').read_text(),(dest/'final.sty').read_text()
                 def inspect(capture):
                     return cantus['applied'](binary,root,capture,width,height)
                 def send(key,kind=1):
-                    before=len(s.err)
-                    os.write(s.master,wire(key,kind))
                     if kind!=3:actions.append(key)
-                    if kind!=3:
-                        deadline=time.monotonic()+5
-                        while b'carries_key' not in s.err[before:] and time.monotonic()<deadline:s.pump(.002)
-                        trace=s.err[before:]
-                        carrying=re.search(rb'trace frame (\d+) carries_key',trace)
-                        if carrying is None:raise AssertionError('no completed carrying frame for '+key)
-                        tick=int(carrying[1])
-                        boundary=re.search(rb'trace output frame '+str(tick).encode()+rb' bytes (\d+)',trace)
-                        if boundary is None:raise AssertionError('missing output boundary for carrying frame')
-                        offset=int(boundary[1])
-                        entry=s.out.index(b'\x1b[1;1H')
-                        deadline=time.monotonic()+5
-                        while len(s.out)<entry+offset and time.monotonic()<deadline:s.pump(.002)
-                        actual=inspect(s.out[:entry+offset])
-                        if actual!=want():
-                            (root/'mismatch.bin').write_bytes(s.out[:entry+offset])
-                            (root/'mismatch-trace.err').write_bytes(s.err)
-                            s.type(wire('quit'));s.finish()
-                            raise AssertionError(f'book {book} {width} {tier}: {key} kind {kind} has wrong first carrying-frame state')
-                        journal.append(dict(book=book,size=f'{width}x{height}',tier=tier,key=key,kind=kind,frame=tick,bytes=wire(key,kind).hex(),exact=True))
-                    else:
-                        s.pump(.04)
-                        if inspect(s.out)!=want():raise AssertionError('release changed the editor: '+key)
+                    ack=s.send(wire(key,kind),carries=kind!=3)
+                    capture=s.frame(ack['frame'])
+                    if key=='hear' and kind==1:heard_live['on']=True
+                    if heard_live['on']:
+                        # The hearing's frames move with its ticks: compare these
+                        # after the session, at the same hearing tick.
+                        hearing.append((key,kind,ack,capture));return
+                    if inspect(capture)!=want():
+                        (root/'mismatch.bin').write_bytes(capture)
+                        (root/'mismatch-trace.err').write_bytes(s.err)
+                        s.type(wire('quit'));s.finish()
+                        raise AssertionError(f'book {book} {width} {tier}: {key} kind {kind} has wrong first carrying-frame state')
+                    journal.append(dict(book=book,size=f'{width}x{height}',tier=tier,key=key,kind=kind,frame=ack['frame'],bytes=wire(key,kind).hex(),exact=True))
                 # One press, seven repeats, one release: exactly eight events,
                 # then the same leftward. No timer manufactures extra actions.
                 for key in ('right','left'):
@@ -104,9 +107,18 @@ def enhanced_keys(binary,ctx):
                 send('hear');send('hear',3)
                 s.type(wire('quit'));s.finish();ctx.common_checks(s,0,problems)
                 if POP not in s.out or s.out.rfind(POP)>s.out.rfind(b'\x1b[?1049l'):problems.append('keyboard stack did not pop before leave')
-                text=record.read_text()
-                got=[line.split()[-1] for line in text.splitlines() if line.startswith('t ')]
+                keys=s.verify(record,f'enhanced-{book}-{width}-{tier}',problems)
+                got=[k for _,k in keys]
                 if got!=actions+['quit']:problems.append('enhanced row lost, doubled or acted on a release')
+                # The hearing frames: the headless state with h applied on
+                # tick 1 and the same number of hearing ticks as the live frame.
+                heard=next((t for t,k in keys if k=='hear'),None)
+                for key,kind,ack,capture in hearing:
+                    if heard is None or inspect(capture)!=want(ack['frame']-heard+1):
+                        (root/'mismatch.bin').write_bytes(capture)
+                        problems.append(f'book {book} {width} {tier}: {key} kind {kind} has wrong carrying-frame state at hearing tick {None if heard is None else ack["frame"]-heard}')
+                    else:
+                        journal.append(dict(book=book,size=f'{width}x{height}',tier=tier,key=key,kind=kind,frame=ack['frame'],bytes=wire(key,kind).hex(),exact=True,hearing_tick=ack['frame']-heard))
                 (root/'capture.bin').write_bytes(s.out);(root/'trace.err').write_bytes(s.err)
                 print(f'enhanced keys book {book} {width} {tier}: flags11, eight repeat events each way, all controls, releases inert, restored')
     (Path(ctx.ROOT)/'target/pty/enhanced-keys.json').write_text(json.dumps(journal,indent=2)+'\n')

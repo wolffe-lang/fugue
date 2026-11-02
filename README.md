@@ -85,10 +85,15 @@ line/space mapping, grand staves, three-ledger walks, selected-event status,
 partial measures and rhythm edits are exercised in both tiers. Every book has one
 caret per selected notated event, including rests; the live diagnostics list only
 the active bar, while Enter keeps the global verdict and counts. A real-pty
-`cursor-same-frame` row checks single arrows and ten-key 30 Hz bursts, with and
-without sound, in rich/plain at both sizes, retaining per-press frame evidence.
+`cursor-same-frame` row checks single arrows and ten-key bursts at one press a
+tick, with and without sound, in rich/plain at both sizes, retaining per-press
+frame evidence. Every terminal row types through one trace-keyed injector: a key
+is written once the game's trace shows the last one applied, each frame is read at
+the byte boundary the trace names, and each recorded key is judged in the frame
+that carried it, so a busy machine's late wakes are input, never a verdict.
 A 160-press whole-page traversal also checks p99 and worst-press
-latency through held events and scrolling. An all-book real-pty row checks 408
+latency through held events and scrolling, on the presses a stall probe shows the
+host ran on time. An all-book real-pty row checks 408
 arrow/audition keys against event onsets and attack columns at both sizes and
 tiers. Audio rows join stderr to the
 terminal for page changes and verify that arrow auditions reuse the note bank. A 30-page
@@ -109,7 +114,8 @@ every preset and twelve seeded mode/side pages per book. The terminal harness ha
 43 rows on Linux and 45 on macOS. A cold-start row returns at terminal entry
 while keyboard negotiation is pending, then requires the complete first frame
 before editing. Audition timing keeps process-table sampling off the key-delivery
-and terminal-receive path; the forty-press, two-second and 70 ms bars are unchanged.
+and terminal-receive path; the forty presses span two seconds of the game's own
+ticks, and the 70 ms bar is judged on the presses the host ran on time.
 The new rows cover negotiated press/repeat/release
 controls in all seven books, full own-cantus sessions and v2-to-v3 progress migration
 at both sizes and tiers, and Fux's six cantus firmi entered by keys with their exact

@@ -1,0 +1,303 @@
+{
+ "dir": "/Users/mfwolffe/lanes/fg04/evidence/ci-artifact-analysis/event-caret/001",
+ "argv": [
+  "fugue",
+  "--book",
+  "5",
+  "--size",
+  "80x24",
+  "--no-title",
+  "--tier",
+  "plain",
+  "--trace",
+  "--record",
+  "record.pk"
+ ],
+ "keys": 18,
+ "carrying_frames": 17,
+ "entry": 25,
+ "frames": [
+  {
+   "frame": 7,
+   "keys": [
+    "right"
+   ],
+   "record_ticks": [
+    6
+   ],
+   "inner_us": 30637,
+   "boundary": 4211,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 9,
+   "keys": [
+    "right"
+   ],
+   "record_ticks": [
+    8
+   ],
+   "inner_us": 8351,
+   "boundary": 4598,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 12,
+   "keys": [
+    "right"
+   ],
+   "record_ticks": [
+    11
+   ],
+   "inner_us": 22668,
+   "boundary": 4922,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 14,
+   "keys": [
+    "right"
+   ],
+   "record_ticks": [
+    13
+   ],
+   "inner_us": 10039,
+   "boundary": 5245,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 17,
+   "keys": [
+    "right"
+   ],
+   "record_ticks": [
+    16
+   ],
+   "inner_us": 22718,
+   "boundary": 5425,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 19,
+   "keys": [
+    "right"
+   ],
+   "record_ticks": [
+    18
+   ],
+   "inner_us": 488,
+   "boundary": 5564,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 22,
+   "keys": [
+    "right"
+   ],
+   "record_ticks": [
+    21
+   ],
+   "inner_us": 20955,
+   "boundary": 5664,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 25,
+   "keys": [
+    "right"
+   ],
+   "record_ticks": [
+    24
+   ],
+   "inner_us": 33323,
+   "boundary": 7661,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 30,
+   "keys": [
+    "left"
+   ],
+   "record_ticks": [
+    26
+   ],
+   "inner_us": 288888,
+   "boundary": 9678,
+   "due": 4,
+   "tick_minus_one_keys": 0,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 35,
+   "keys": [
+    "left",
+    "left"
+   ],
+   "record_ticks": [
+    30
+   ],
+   "inner_us": 441,
+   "boundary": 9839,
+   "due": 5,
+   "tick_minus_one_keys": 0,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 38,
+   "keys": [
+    "left"
+   ],
+   "record_ticks": [
+    37
+   ],
+   "inner_us": 10936,
+   "boundary": 10029,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 41,
+   "keys": [
+    "left"
+   ],
+   "record_ticks": [
+    40
+   ],
+   "inner_us": 24677,
+   "boundary": 10394,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 44,
+   "keys": [
+    "left"
+   ],
+   "record_ticks": [
+    43
+   ],
+   "inner_us": 32854,
+   "boundary": 10688,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 46,
+   "keys": [
+    "left"
+   ],
+   "record_ticks": [
+    45
+   ],
+   "inner_us": 13097,
+   "boundary": 11107,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 49,
+   "keys": [
+    "left"
+   ],
+   "record_ticks": [
+    48
+   ],
+   "inner_us": 30040,
+   "boundary": 11314,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 51,
+   "keys": [
+    "sound"
+   ],
+   "record_ticks": [
+    50
+   ],
+   "inner_us": 16035,
+   "boundary": 11314,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  },
+  {
+   "frame": 55,
+   "keys": [
+    "quit"
+   ],
+   "record_ticks": [
+    54
+   ],
+   "inner_us": 14485,
+   "boundary": 11314,
+   "due": 1,
+   "tick_minus_one_keys": 1,
+   "row_snapshot": null,
+   "snapshot_ahead_bytes": null,
+   "game_agrees": true
+  }
+ ],
+ "game_agrees": 17,
+ "game_disagrees": 0,
+ "unmapped_keys": [],
+ "catch_up_frames": 2,
+ "coalesced_frames": 1,
+ "row_unaccounted_keys": 3,
+ "snapshot_ahead_frames": 0,
+ "max_due": 5,
+ "max_inner_ms": 288.888
+}
