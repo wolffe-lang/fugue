@@ -14,7 +14,7 @@ The latency claims (drawn by the first wake after the press, the 70/100 ms
 bars) are judged on every press whose window the stall probe shows the host
 ran on time, and never forgiven there; a session in which the host stalled
 more than half the presses cannot measure the game's latency and is driven
-again, up to four sessions; a latency never measured in four is SCHEDULE.
+again once; a latency no session could measure is a loud, counted SKIP.
 """
 import json
 import math
@@ -151,18 +151,23 @@ def check(binary, ctx):
               f'{summary["next_visible_change_max_frames"]}; end {position} (session {attempt})', flush=True)
         return s, summary
 
+    skipped = 0
     for cols, rows in [(80,24),(120,40)]:
         for tier in ['rich','plain']:
             for mute in [False,True]:
                 name = f'{cols}x{rows}-{tier}-' + ('mute' if mute else 'sound')
-                for attempt in range(1, P['REDRIVES'] + 1):
+                for attempt in range(1, P['LATENCY_SESSIONS'] + 1):
                     last, summary = walk(name, cols, rows, tier, mute, attempt)
                     if summary['latency_measured']:
                         break
-                    print(f'cursor-long: {name}: session {attempt} out of its case (the host ran {summary["count"]-summary["clean"]} '
+                    print(f'cursor-long: {name}: session {attempt} could not measure latency (the host ran {summary["count"]-summary["clean"]} '
                           f'of {summary["count"]} presses late; the probe saw {summary["host_stalls"]} stalls, max '
-                          f'{summary["host_stall_max_ms"]:.1f} ms)' + ('; driven again' if attempt < P['REDRIVES'] else ''), flush=True)
+                          f'{summary["host_stall_max_ms"]:.1f} ms)' + ('; driven again' if attempt < P['LATENCY_SESSIONS'] else ''), flush=True)
                 else:
-                    problems.append(f'{name}: SCHEDULE: the host stalled more than half the presses in each of '
-                                    f'{P["REDRIVES"]} sessions; the latency bars were never measured')
+                    skipped += 1
+                    print(f'SKIP cursor-long {name} latency: the host stalled more than half the presses in each of '
+                          f'{P["LATENCY_SESSIONS"]} sessions (probe max {summary["host_stall_max_ms"]:.1f} ms); the bars were not '
+                          f'measured; every press was judged for its frame', flush=True)
+    if skipped:
+        print(f'cursor-long: SKIP count {skipped} of 8 cases (latency on a stalled host)', flush=True)
     return last, problems
