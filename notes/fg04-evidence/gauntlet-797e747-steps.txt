@@ -1,0 +1,40 @@
+fg04: 12:36:33 gate ok: 9028 MiB free+inactive+speculative
+BEGIN paced-unit 12:36:33
+END paced-unit exit=0 12:36:37
+BEGIN storm-unit 12:36:37
+END storm-unit exit=0 12:36:45
+BEGIN lair-check 12:36:45
+wolf test: 227 passed; 0 failed; 0 rejected; 0 unsupported; 0 filtered out
+test: 0 SKIP lines
+END lair-check exit=0 12:45:41
+BEGIN goldens-native 12:45:41
+END goldens-native exit=0 12:45:54
+BEGIN gameplay-native 12:45:54
+END gameplay-native exit=0 12:45:55
+BEGIN gameplay-release 12:45:55
+END gameplay-release exit=0 12:45:56
+BEGIN glyphs 12:45:56
+END glyphs exit=0 12:45:56
+BEGIN staff-native 12:45:56
+END staff-native exit=0 12:45:57
+BEGIN staff-release 12:45:57
+END staff-release exit=0 12:45:57
+BEGIN species-native 12:45:57
+END species-native exit=0 12:47:32
+BEGIN species-release 12:47:32
+END species-release exit=0 12:48:45
+BEGIN pitch-native 12:48:45
+END pitch-native exit=0 12:48:55
+BEGIN pitch-release 12:48:55
+END pitch-release exit=0 12:49:03
+BEGIN fugue-native 12:49:03
+END fugue-native exit=0 12:50:59
+BEGIN fugue-release 12:50:59
+END fugue-release exit=0 12:52:25
+BEGIN pty-native 12:52:25
+END pty-native exit=0 12:54:19
+GAUNTLET GREEN
+binaries (built by lair-check in build-797e7476):
+5c8d708025cf57b3c868ffc14f90de82e20239e1cdd13c44e7d8645a47fb7a59  target/release/fugue
+325c5b49ab6d59d48a838fcfab386d4fa39762480fc7acceec16fc5322ad6796  target/native/fugue
+pty ok lines: 48 (45 in lair-check, 3 in pty-native); FAILED or SKIP: 0
