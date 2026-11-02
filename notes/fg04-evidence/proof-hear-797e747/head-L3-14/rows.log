@@ -1,0 +1,5 @@
+fg04: 13:59:59 gate ok: 12718 MiB free+inactive+speculative
+audition-hear-owner: retired [91027] in 68.630 ms (the poll that saw it gone began at 21.212 ms); whole [91030]; host stall in the window 0.0 ms (session 1)
+pty: audition-hear-owner ok (darwin arm64, exit 0)
+stall: load 3, 12 s, the command's exit 0
+fg04: 14:00:12 lock released (exit 0); 60 s before the next take

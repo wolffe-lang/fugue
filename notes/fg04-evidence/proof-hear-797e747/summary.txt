@@ -1,0 +1,7 @@
+head level 2: 20 runs, 1 red, 20 row verdicts
+  audition-hear-owner          red in 1: run 19: - h did not kill and reap the audition within 100 ms (seen gone by a poll begun at 143.709 ms, the host on time)
+  re-drives: 0
+  SCHEDULE: 0
+head level 3: 20 runs, 0 red, 20 row verdicts
+  re-drives: 0
+  SCHEDULE: 0
