@@ -426,6 +426,14 @@ def session(ctx, base=None):
     return Paced
 
 
+# A quiet Mac's poll(2) wakes within 3 ms of its deadline, at default QoS and in
+# the background clamp alike; a wake later than this is the host's doing.
+STALL_SLACK_S = 0.005
+# A latency sample the host stalled is not the game's: a session that could
+# not measure is driven once more (a transient load passes), then the bar is a
+# loud, counted SKIP naming what the probe saw. Every frame is still judged.
+LATENCY_SESSIONS = 2
+
 PROBE = r'''
 import os, select, sys, time
 TICK = 1 / 30
@@ -455,7 +463,7 @@ class StallProbe:
     closes (no signal), and sees the host's timers and CPU, never the game's
     own work: a blocking handoff in the game does not make it late."""
 
-    def __init__(self, scratch, slack=0.020):
+    def __init__(self, scratch, slack=STALL_SLACK_S):
         import subprocess, sys
         self.path = os.path.join(str(scratch), 'stall-probe.txt')
         self.out = open(self.path, 'w')
