@@ -1,0 +1,98 @@
+fg04: 20:37:44 gate ok: 9710 MiB free+inactive+speculative
+cursor-same-frame: 80x24-rich-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 80x24-rich-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 80x24-plain-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 80x24-plain-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 120x40-rich-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 120x40-rich-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 120x40-plain-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+cursor-same-frame: 120x40-plain-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz by the trace, late ticks max 0
+pty: cursor-same-frame ok (darwin arm64, exit 0)
+event-caret: book-1-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-1-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-1-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-1-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+pty: event-caret ok (darwin arm64, exit 0)
+cursor-long: 80x24-rich-sound: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 34.621/34.744 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 80x24-rich-mute: 160 presses, stale 0, late 0; host on time for 159/160 (probe: 1 stalls, max 8.6 ms); frame p99/max 1/1; wall p99/max 33.750/33.809 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 80x24-plain-sound: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 33.881/34.638 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 80x24-plain-mute: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 34.606/35.658 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 120x40-rich-sound: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 34.004/34.918 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 120x40-rich-mute: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 34.983/35.024 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 120x40-plain-sound: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 33.945/35.757 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+cursor-long: 120x40-plain-mute: 160 presses, stale 0, late 0; host on time for 160/160 (probe: 0 stalls, max 0.0 ms); frame p99/max 1/1; wall p99/max 34.877/35.719 ms over those; next visible change p99/max 1/1; end 0 (session 1)
+pty: cursor-long ok (darwin arm64, exit 0)
+fugue caret 0-80-rich-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-80-rich-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-80-plain-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-80-plain-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-120-rich-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-120-rich-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-120-plain-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 0-120-plain-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-80-rich-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-80-rich-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-80-plain-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-80-plain-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-120-rich-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-120-rich-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-120-plain-sound: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+fugue caret 1-120-plain-mute: 20/20 aligned in first carrying frame; 30 Hz by the trace, late ticks max 0
+pty: fugue-cursor-same-frame ok (darwin arm64, exit 0)
+audition-storm: children max 1, observer p99 38.23008295148611 ms over 40/40 presses the host ran on time, game-inner p99 38.19 ms, extra cells 0, sink files 0, keys 40/40, applied over 57 ticks, row late max 39.5 ms, probe 0 stalls max 0.0 ms (session 1)
+pty: audition-storm ok (darwin arm64, exit 0)
+audition-hear-owner: retired [9471] in 88.213 ms (the poll that saw it gone began at 88.059 ms); whole [9478]; host stall in the window 0.0 ms (session 1)
+pty: audition-hear-owner ok (darwin arm64, exit 0)
+quiet-player-stderr: {"text_cells_changed": 0, "style_rows_changed": 0, "alive": [], "seen_alive": [], "acknowledged": true, "gone_after_s": 0.3670535000273958, "session": 1}
+pty: quiet-player-stderr ok (darwin arm64, exit 0)
+enhanced keys book 1 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 3 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 4 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 5 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 6 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 7 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+pty: enhanced-keys ok (darwin arm64, exit 0)
+stall: load 2, 331 s, the command's exit 0
+fg04: 20:43:15 lock released (exit 0); 60 s before the next take

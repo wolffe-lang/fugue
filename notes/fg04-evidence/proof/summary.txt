@@ -1,0 +1,22 @@
+head level 2: 20 runs, 3 red, 160 row verdicts
+  audition-hear-owner          red in 3: run 3: - h did not kill and reap the audition within 100 ms (seen gone by a poll begun at 107.012 ms, the host on time)
+  re-drives: 0
+  SCHEDULE: 0
+head level 3: 20 runs, 10 red, 160 row verdicts
+  audition-hear-owner          red in 10: run 2: - h did not kill and reap the audition within 100 ms (seen gone by a poll begun at 105.096 ms, the host on time)
+  re-drives: 0
+  SCHEDULE: 0
+trunk level 2: 5 runs, 5 red, 40 row verdicts
+  enhanced-keys                red in 5: run 1: pty: enhanced-keys FAILED: enhanced row did not negotiate flags 11
+  cursor-same-frame            red in 3: run 5: - 80x24-rich-mute: press 18 frame 45: panel=False, caret moved=True, aligned=False, [(19, 37)]->[(17, 31)]
+  quiet-player-stderr          red in 3: run 9: - player stderr changed 900 text cells / 40 style rows
+  re-drives: 0
+  SCHEDULE: 0
+trunk level 3: 5 runs, 5 red, 40 row verdicts
+  enhanced-keys                red in 5: run 1: pty: enhanced-keys FAILED: enhanced row did not negotiate flags 11
+  cursor-long                  red in 2: run 1: - 80x24-rich-sound: 160/160 captured; 2 stale/late presses; frame p99/max 4/4
+  quiet-player-stderr          red in 2: run 5: - player stderr changed 842 text cells / 36 style rows
+  cursor-same-frame            red in 2: run 9: - 80x24-rich-sound: press 17 frame 36: panel=False, caret moved=True, aligned=False, [(19, 37)]->[(17, 31)]
+  event-caret                  red in 1: run 1: - book-6-120-plain: event-caret frame 5 selected 1: {'case': 'book-6-120-plain', 'frame': 5, 'keys': ['right'], 'event': 1, 'onset': 4, 'expected_column': 14, 'carets': [(34, 23)], 'aligned': False, '
+  re-drives: 0
+  SCHEDULE: 0

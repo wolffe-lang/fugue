@@ -1,0 +1,78 @@
+fg04: 00:02:59 gate ok: 9791 MiB free+inactive+speculative
+cursor-same-frame: 80x24-rich-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz
+cursor-same-frame: 80x24-rich-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz
+cursor-same-frame: 80x24-plain-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz
+cursor-same-frame: 80x24-plain-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz
+cursor-same-frame: 120x40-rich-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz
+cursor-same-frame: 120x40-rich-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz
+cursor-same-frame: 120x40-plain-sound: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz
+cursor-same-frame: 120x40-plain-mute: 22 presses, panel 22/22 same-frame, caret 22/22 same-frame; end 0; 30 Hz
+pty: cursor-same-frame ok (darwin arm64, exit 0)
+event-caret: book-1-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-1-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-1-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-1-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-2-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-3-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-4-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-5-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-80-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-80-plain: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-120-rich: 17/17 presses; event/attack/status and stationary audition checked
+event-caret: book-6-120-plain: 17/17 presses; event/attack/status and stationary audition checked
+pty: event-caret ok (darwin arm64, exit 0)
+cursor-long: 80x24-rich-sound: 160 presses, stale/late 0; frame p99/max 1/1; wall p99/max 35.865/35.911 ms; next visible change p99/max 3/3; end 0
+cursor-long: 80x24-rich-mute: 160 presses, stale/late 0; frame p99/max 1/1; wall p99/max 36.223/36.399 ms; next visible change p99/max 3/5; end 0
+cursor-long: 80x24-plain-sound: 160 presses, stale/late 0; frame p99/max 1/1; wall p99/max 35.055/35.228 ms; next visible change p99/max 3/3; end 0
+cursor-long: 80x24-plain-mute: 160 presses, stale/late 0; frame p99/max 1/1; wall p99/max 35.836/35.895 ms; next visible change p99/max 3/3; end 0
+cursor-long: 120x40-rich-sound: 160 presses, stale/late 0; frame p99/max 1/1; wall p99/max 34.532/34.617 ms; next visible change p99/max 3/3; end 0
+cursor-long: 120x40-rich-mute: 160 presses, stale/late 0; frame p99/max 1/1; wall p99/max 36.131/36.222 ms; next visible change p99/max 3/3; end 0
+cursor-long: 120x40-plain-sound: 160 presses, stale/late 0; frame p99/max 1/1; wall p99/max 35.136/35.216 ms; next visible change p99/max 2/2; end 0
+cursor-long: 120x40-plain-mute: 160 presses, stale/late 0; frame p99/max 1/1; wall p99/max 35.263/35.404 ms; next visible change p99/max 1/1; end 0
+pty: cursor-long ok (darwin arm64, exit 0)
+fugue caret 0-80-rich-sound: 20/20 aligned in first carrying frame
+fugue caret 0-80-rich-mute: 20/20 aligned in first carrying frame
+fugue caret 0-80-plain-sound: 20/20 aligned in first carrying frame
+fugue caret 0-80-plain-mute: 20/20 aligned in first carrying frame
+fugue caret 0-120-rich-sound: 20/20 aligned in first carrying frame
+fugue caret 0-120-rich-mute: 20/20 aligned in first carrying frame
+fugue caret 0-120-plain-sound: 20/20 aligned in first carrying frame
+fugue caret 0-120-plain-mute: 20/20 aligned in first carrying frame
+fugue caret 1-80-rich-sound: 20/20 aligned in first carrying frame
+fugue caret 1-80-rich-mute: 20/20 aligned in first carrying frame
+fugue caret 1-80-plain-sound: 20/20 aligned in first carrying frame
+fugue caret 1-80-plain-mute: 20/20 aligned in first carrying frame
+fugue caret 1-120-rich-sound: 20/20 aligned in first carrying frame
+fugue caret 1-120-rich-mute: 20/20 aligned in first carrying frame
+fugue caret 1-120-plain-sound: 20/20 aligned in first carrying frame
+fugue caret 1-120-plain-mute: 20/20 aligned in first carrying frame
+pty: fugue-cursor-same-frame ok (darwin arm64, exit 0)
+audition-storm: children max 1, observer p99 37.31387504376471 ms, game-inner p99 37.228 ms, extra cells 0, sink files 0, keys 40/40
+pty: audition-storm ok (darwin arm64, exit 0)
+audition-hear-owner: retired [14133] in 111.698 ms; whole [14135]
+pty: audition-hear-owner ok (darwin arm64, exit 0)
+quiet-player-stderr: {"text_cells_changed": 842, "style_rows_changed": 36, "alive": []}
+pty: quiet-player-stderr FAILED (darwin arm64):
+  - player stderr changed 842 text cells / 36 style rows
+enhanced keys book 1 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 120 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 1 120 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 80 rich: flags11, eight repeat events each way, all controls, releases inert, restored
+enhanced keys book 2 80 plain: flags11, eight repeat events each way, all controls, releases inert, restored
+pty: enhanced-keys FAILED: enhanced row did not negotiate flags 11
+stall: load 3, 302 s, the command's exit 1
+fg04: 00:08:01 lock released (exit 1); 60 s before the next take
+ROWS orphan: game 14970 under holder 14968 (/Users/mfwolffe/lanes/fg04/evidence/proof/trunk-L3-13/enhanced-keys/007) still alive after the run; ended
