@@ -1,0 +1,75 @@
+{
+  "main": "ci.yml",
+  "main_name": "ci",
+  "root": "plan",
+  "new_router": false,
+  "router_body": "    name: plan\n    runs-on: ubuntu-latest\n    timeout-minutes: 5\n    steps:\n      - name: full job set selected\n        if: ${{ github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-matrix') || contains(github.event.pull_request.labels.*.name, 'ci') || contains(github.event.pull_request.labels.*.name, 'release-matrix') }}\n        run: echo 'SELECTED plan-test linux macos perf tier'\n      - uses: actions/checkout@v4\n        if: ${{ github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-matrix') || contains(github.event.pull_request.labels.*.name, 'ci') || contains(github.event.pull_request.labels.*.name, 'release-matrix') }}\n      - name: local gate wiring proof\n        if: ${{ github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-matrix') || contains(github.event.pull_request.labels.*.name, 'ci') || contains(github.event.pull_request.labels.*.name, 'release-matrix') }}\n        run: python3 -I ci/local-gate-test.py\n      - name: local evidence gate\n        if: ${{ !(github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-matrix') || contains(github.event.pull_request.labels.*.name, 'ci') || contains(github.event.pull_request.labels.*.name, 'release-matrix')) }}\n        run: echo 'Local gauntlet evidence is the gate; request ci or full-matrix for CI.'\n",
+  "planner": [
+    "python3",
+    ".lair/ci/tiers.py",
+    "plan"
+  ],
+  "full": {
+    "tier": "full",
+    "jobs": [
+      "plan-test",
+      "linux",
+      "macos",
+      "perf"
+    ]
+  },
+  "selected": [
+    "plan-test",
+    "linux",
+    "macos",
+    "perf",
+    "tier"
+  ],
+  "module_path": "src/local-module.lu",
+  "cross_paths": [
+    ".github/workflows/ci.yml",
+    "ci/local-gate-test.py",
+    "tools/shared.sh",
+    "wolf-toolchain.toml"
+  ],
+  "push_patterns": [
+    ".github/**",
+    "ci/**",
+    "!ci/*.md",
+    "!ci/**/*.md",
+    "tools/**",
+    "spec/**",
+    "**/wolf-toolchain.toml",
+    "**/rust-toolchain.toml",
+    "**/*.pin",
+    "**/PAIRING",
+    "**/STD-PIN",
+    "vendor/tools.toml",
+    "gnu-oracle.toml",
+    ".gitmodules",
+    "Cargo.toml",
+    "Cargo.lock"
+  ],
+  "push_before": "  push:\n    branches: [trunk]\n",
+  "preserve_push": false,
+  "workflows": {
+    "ci.yml": {
+      "plan": "    runs-on: ubuntu-24.04\n    outputs:\n      tier: ${{ steps.plan.outputs.tier }}\n      jobs: ${{ steps.plan.outputs.jobs }}\n    steps:\n      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 2\n      - name: the engine, at lair.pin\n        run: tools/fetch-lair\n      - id: plan\n        env:\n          EVENT: ${{ github.event_name }}\n          ACTION: ${{ github.event.action }}\n          LABEL: ${{ github.event.label.name }}\n          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}\n          HEAD_SHA: ${{ github.event.pull_request.head.sha }}\n          IN_JOBS: ${{ inputs.jobs }}\n        run: python3 .lair/ci/tiers.py plan --merge --github-output \"$GITHUB_OUTPUT\"\n",
+      "plan-test": "    # tier: pr\n    needs: plan\n    if: contains(fromJSON(needs.plan.outputs.jobs || '[]'), 'plan-test')\n    runs-on: ubuntu-24.04\n    steps:\n      - uses: actions/checkout@v4\n      - name: the engine, at lair.pin\n        run: tools/fetch-lair\n      - run: python3 -I .lair/ci/tiers-test.py\n      - run: python3 -I .lair/ci/memgate-test.py\n",
+      "linux": "    # tier: pr\n    name: linux x86-64 (fmt, tests, builds, goldens, pty rows in the container)\n    needs: plan\n    if: contains(fromJSON(needs.plan.outputs.jobs || '[]'), 'linux')\n    runs-on: ubuntu-24.04\n    timeout-minutes: 40\n    steps:\n      - uses: actions/checkout@v4\n      - name: the engine, at lair.pin\n        run: tools/fetch-lair\n      - uses: actions/cache@v4\n        with:\n          path: .wolf-bin\n          key: lair-toolchain-linux-${{ hashFiles('.lair/wolf-toolchain.toml') }}\n      - name: the pinned toolchain, by digest\n        run: .lair/tools/fetch-toolchain\n      - name: the Linux leg, in the container\n        env:\n          LAIR_ENGINE: docker\n        run: .lair/tools/in-container tools/check-linux\n      - uses: actions/upload-artifact@v4\n        if: ${{ !cancelled() }}\n        with:\n          name: linux-evidence\n          path: |\n            target/goldens\n            target/pty\n            target/test.log\n            target/gameplay\n            target/species-gameplay\n            target/fugue-gameplay\n            target/fugue-audio\n",
+      "macos": "    name: macOS arm64 (build, goldens, pty rows)\n    needs: plan\n    if: contains(fromJSON(needs.plan.outputs.jobs || '[]'), 'macos')\n    runs-on: macos-latest\n    timeout-minutes: 40\n    steps:\n      - uses: actions/checkout@v4\n      - name: the engine, at lair.pin\n        run: tools/fetch-lair\n      - uses: actions/cache@v4\n        with:\n          path: .wolf-bin\n          key: lair-toolchain-macos-${{ hashFiles('.lair/wolf-toolchain.toml') }}\n      - name: the pinned toolchain, by digest\n        run: .lair/tools/fetch-toolchain\n      - name: wolf fmt --check\n        run: .lair/tools/check-fmt\n      - name: the unit tests\n        run: .lair/tools/test\n      # RULES section 4's memory gate is nomad's (the maintainer's Mac); the\n      # runner's free-memory figure means nothing for it (lair's lib-mem.sh).\n      - name: build, both tiers\n        env:\n          LAIR_MEMORY_GATE: '0'\n        run: .lair/tools/build --all\n      - name: the goldens, both tiers\n        env:\n          LAIR_MEMORY_GATE: '0'\n        run: .lair/tools/goldens\n      - name: native goldens and gameplay semantics on both backends\n        env:\n          LAIR_MEMORY_GATE: '0'\n        run: |\n          .lair/tools/goldens --bin target/native/fugue\n          python3 -I tools/gameplay.py --bin target/native/fugue\n          python3 -I tools/gameplay.py --bin target/release/fugue\n          python3 -I tools/species-gameplay.py --bin target/native/fugue\n          python3 -I tools/species-gameplay.py --bin target/release/fugue\n          python3 -I tools/fugue-gameplay.py --bin target/native/fugue\n          python3 -I tools/fugue-gameplay.py --bin target/release/fugue\n          python3 -I tools/glyphs.py\n          python3 -I tools/staff-check.py --bin target/native/fugue\n          python3 -I tools/staff-check.py --bin target/release/fugue\n          python3 -I tools/pitch-check.py --bin target/native/fugue\n          python3 -I tools/pitch-check.py --bin target/release/fugue\n      - name: manuscript frame costs\n        run: |\n          target/release/fugue --bench --size 120x40 --tier rich --frames 300 --mute\n          target/release/fugue --bench --size 120x40 --tier plain --frames 300 --mute\n          for book in 2 3 4 5 6; do\n            for tier in rich plain; do\n              target/release/fugue --bench --script \"tests/cases/book-$book-preset-1-120.pk\" --size 120x40 --tier \"$tier\" --frames 300 --mute\n            done\n          done\n      - name: the pty rows\n        env:\n          LAIR_MEMORY_GATE: '0'\n        run: python3 -I .lair/tools/pty --bin target/release/fugue\n      - uses: actions/upload-artifact@v4\n        if: ${{ !cancelled() }}\n        with:\n          name: macos-evidence\n          path: |\n            target/goldens\n            target/pty\n",
+      "perf": "    name: performance (render, idle, input latency)\n    needs: plan\n    if: contains(fromJSON(needs.plan.outputs.jobs || '[]'), 'perf')\n    runs-on: ubuntu-24.04\n    timeout-minutes: 20\n    steps:\n      - uses: actions/checkout@v4\n      - run: tools/fetch-lair\n      - uses: actions/cache@v4\n        with:\n          path: .wolf-bin\n          key: lair-toolchain-linux-${{ hashFiles('.lair/wolf-toolchain.toml') }}\n      - run: .lair/tools/fetch-toolchain\n      - name: release bench and live latency, in the container\n        env:\n          LAIR_ENGINE: docker\n        run: .lair/tools/in-container tools/check-perf\n      - uses: actions/upload-artifact@v4\n        if: ${{ !cancelled() }}\n        with:\n          name: perf-evidence\n          path: target/perf\n",
+      "tier": "    name: tier ${{ needs.plan.outputs.tier || 'unplanned' }}\n    if: ${{ !cancelled() }}\n    needs:\n      - plan\n      - plan-test\n      - linux\n      - macos\n      - perf\n    runs-on: ubuntu-24.04\n    steps:\n      - uses: actions/checkout@v4\n      - name: the engine, at lair.pin\n        run: tools/fetch-lair\n      - env:\n          NEEDS: ${{ toJSON(needs) }}\n        run: python3 .lair/ci/tiers.py verdict\n",
+      "nightly-red": "    name: nightly red, an issue\n    needs: tier\n    if: ${{ failure() && github.event_name == 'schedule' }}\n    runs-on: ubuntu-24.04\n    permissions:\n      contents: read\n      issues: write\n    steps:\n      - uses: actions/checkout@v4\n      - name: the engine, at lair.pin\n        run: tools/fetch-lair\n      - env:\n          GH_TOKEN: ${{ github.token }}\n          REPO: ${{ github.repository }}\n          WORKFLOW: ${{ github.workflow }}\n          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\n        run: .lair/ci/nightly-red.sh\n"
+    }
+  },
+  "schedules": {
+    "ci.yml": "    - cron: '17 5 * * *'"
+  },
+  "unchanged": {},
+  "exempt_jobs": [
+    "nightly-red",
+    "notify",
+    "sleep-alarm"
+  ]
+}
