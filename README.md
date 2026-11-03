@@ -122,7 +122,7 @@ at both sizes and tiers, and Fux's six cantus firmi entered by keys with their e
 existing oracle verdicts. Eighteen named critic-rule rows check the study's hard
 rules. Sound-owner rows verify silent failing players, one
 live audition through forty rapid accidental changes, h replacing an audition,
-and Linux's single rewritten audition file. PR CI runs Linux; the full tier adds macOS and performance.
+and Linux's single rewritten audition file. Unlabelled PRs run one cheap job; `ci` or `full-matrix` runs the full set, including macOS and performance. Trunk pushes run it only on cross-cutting paths; the nightly still runs the full set.
 Six cited Fux cantus firmi are historical test oracles only, never playable
 levels or source material for game music.
 
