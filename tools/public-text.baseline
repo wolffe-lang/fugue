@@ -1,0 +1,15 @@
+# public-text baseline: known internal references, per file, as counts of word digests.
+# It may only shrink. After a cleanup: python3 -I tools/check-public-text --shrink
+1	9c5646b582f1	.github/workflows/ci.yml
+1	b684e5a7d576	.github/workflows/ci.yml
+1	707a5d08953f	tests/cantus_rows.py
+1	707a5d08953f	tests/ear_rows.py
+1	707a5d08953f	tests/enhanced_rows.py
+1	707a5d08953f	tests/paced.py
+1	707a5d08953f	tests/pty_rows.py
+1	9c5646b582f1	tests/pty_rows.py
+1	707a5d08953f	tests/test_storm_frames.py
+1	707a5d08953f	tools/cursor-check.py
+1	707a5d08953f	tools/cursor-long.py
+1	707a5d08953f	tools/event-caret.py
+2	b3c56dd2dd89	tools/fetch-lair
