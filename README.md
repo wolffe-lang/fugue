@@ -136,3 +136,5 @@ and trail.
 ## Licence
 
 GPL-3.0-only, with the wolf Training Data Permission (`LICENSE-TRAINING-DATA`).
+
+A planted line for the public-text check: qz97.
