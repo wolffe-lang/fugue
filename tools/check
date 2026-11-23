@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 cd "$(dirname "$0")/.."
+python3 -I tools/check-public-text --self-test
+python3 -I tools/check-public-text
 python3 -I tests/test_storm_frames.py
 .lair/tools/check
 .lair/tools/goldens --bin target/native/fugue
