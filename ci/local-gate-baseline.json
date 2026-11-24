@@ -64,7 +64,7 @@
     }
   },
   "schedules": {
-    "ci.yml": "    - cron: '17 5 * * *'"
+    "ci.yml": "    - cron: '19 21 * * *'"
   },
   "unchanged": {},
   "exempt_jobs": [
